@@ -21,6 +21,7 @@ Le associazioni individuate sono essenziali nell'indicare relazioni logiche tra 
 {\Huge Foto}
 \clearpage        
 \section{Dizionario delle classi}
+
 \begin{longtable}{p{0.1\textwidth}p{0.3\textwidth}p{0.5\textwidth}}
 \toprule
 Classe & Descrizione & Attributi                                                                                                                         
@@ -74,6 +75,7 @@ Nickname(varchar): indica il nickname associato a un account.
 \\ \bottomrule
 \end{longtable}
 \clearpage
+
 \section{Dizionario delle associazioni}
 \begin{longtable}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
 \toprule
@@ -121,5 +123,51 @@ Rubrica [1]: indica la rubrica che contiene un contatto;\newline
 Contatto[0..*]: indica il contatto appartenente a una rubrica.
 \\ \bottomrule
 \end{longtable}
+\clearpage
 
 \section{Dizionario dei vincoli}
+\begin{longtable}{p{0.3\textwidth}p{0.6\textwidth}}
+\toprule
+Vincolo & Descrizione
+\\ \midrule
+Group Membership Coherency &
+Un gruppo può raggruppare esclusivamente i contatti appartenenti alla stessa rubrica del gruppo.
+\\ \midrule
+Mobile And Landline Number Existence & 
+Ogni contatto deve avere almeno un telefono mobile e fisso. 
+\\ \midrule
+Not redundant Telephone Number & 
+Un contatto non può registrare più volte lo stesso numero telefonico.
+\\ \midrule
+Not redundant Email & 
+Un contatto non può registare più volte la stessa email. 
+\\ \midrule
+Email Uniqueness & 
+Non possono esistere due contatti distinti in una stessa rubrica a cui sia associata la stessa email. 
+\\ \midrule
+Automatic Email Association & 
+Ad ogni registrazione di email per un contatto avviene l'automatica ricerca ed, eventualmente, associazione delle informazioni associate ai sistemi di messaggistica. 
+\\ \midrule
+Automatic Messaging System Association & 
+Ad ogni registrazione di una email relativa a un sistema di messaggistica avviene l'automatica ricerca ed, eventualmente, associazione delle informazioni associate alle email dei contatti memorizzati nelle rubriche. 
+\\ \midrule
+Unique Provider-Email & 
+Le informazioni di un'email rilasciate da un fornitore sono uniche. 
+\\ \midrule
+Undeletable Main Address & 
+L'indirizzo principale associato a un contatto non può essere eliminato, se non con tutto il contatto, ma può essere soltanto modificato
+\\ \midrule
+Unchangeable Address Description  & 
+Gli indirizzi principali non possono diventare secondari e viceversa. Il vincolo garantisce che esista sempre un indirizzo principale associato a un contatto
+\\ \midrule
+Vincolo & 
+Rispettiva descrizione
+\\ \midrule
+Vincolo & 
+Rispettiva descrizione
+\\ \midrule
+Vincolo & 
+Rispettiva descrizione
+\\ \bottomrule
+\endhead
+\end{longtable}
