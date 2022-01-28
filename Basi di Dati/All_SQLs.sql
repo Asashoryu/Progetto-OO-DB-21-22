@@ -245,3 +245,22 @@ CREATE OR REPLACE TRIGGER automatic_account_association
 	AFTER INSERT ON Account
 	FOR EACH ROW
 	EXECUTE PROCEDURE automatic_account_association_f();
+	
+--Vincolo che impedisce l'eliminazione di indirizzi con
+--descrizione 'principale'
+CREATE OR REPLACE FUNCTION no_delete_principale_f() 
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		IF (OLD.Descrizione= 'Principale') THEN
+			RAISE NOTICE 'Tale indirizzo non può essere eliminato essendo principale.';
+			RETURN NEW;
+		ELSE 
+			RETURN OLD;
+		END IF;
+	END;$$;
+
+CREATE OR REPLACE TRIGGER no_delete_principale
+BEFORE DELETE ON Indirizzo FOR EACH ROW
+EXECUTE PROCEDURE no_delete_principale_f();
