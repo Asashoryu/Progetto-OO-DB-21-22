@@ -191,3 +191,57 @@ CREATE OR REPLACE TRIGGER unique_email
 	BEFORE INSERT ON Email
 	FOR EACH ROW
 	EXECUTE PROCEDURE unique_email_f();
+	
+--Regola attiva che dopo ogni inserimento di una nuova email
+--la associa a tutti i suoi account
+CREATE OR REPLACE FUNCTION automatic_email_association_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		cur_account CURSOR FOR
+			SELECT *
+			FROM Account
+			WHERE IndirizzoEmail=NEW.IndirizzoEmail;
+	BEGIN
+		FOR cur_var IN cur_account LOOP
+			--Si inserisce in associa il codice dell'account a cui appartiene
+			--la data email e l'account associato ai sistemi di messaging
+			--con la stessa email
+			INSERT INTO Associa VALUES
+			(NEW.Contatto_FK,cur_var.Account_ID);
+		END LOOP;
+		RETURN NEW;
+	END; $$;
+	
+CREATE OR REPLACE TRIGGER automatic_email_association
+	AFTER INSERT ON Email
+	FOR EACH ROW
+	EXECUTE PROCEDURE automatic_email_association_f();
+	
+--Regola attiva che dopo ogni inserimento di un nuovo account
+--la sua email viene associata a quella dei contatti che la condividono
+CREATE OR REPLACE FUNCTION automatic_account_association_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		cur_account CURSOR FOR
+			SELECT *
+			FROM Email
+			WHERE IndirizzoEmail=NEW.IndirizzoEmail;
+	BEGIN
+		FOR cur_var IN cur_account LOOP
+			--Si inserisce in associa il codice dell'account a cui appartiene
+			--la data email e l'account associato ai sistemi di messaging
+			--con la stessa email
+			INSERT INTO Associa VALUES
+			(cur_var.Contatto_FK,NEW.Account_ID);
+		END LOOP;
+		RETURN NEW;
+	END; $$;
+	
+CREATE OR REPLACE TRIGGER automatic_account_association
+	AFTER INSERT ON Account
+	FOR EACH ROW
+	EXECUTE PROCEDURE automatic_account_association_f();
