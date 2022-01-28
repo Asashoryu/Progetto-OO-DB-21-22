@@ -248,19 +248,43 @@ CREATE OR REPLACE TRIGGER automatic_account_association
 	
 --Vincolo che impedisce l'eliminazione di indirizzi con
 --descrizione 'principale'
-CREATE OR REPLACE FUNCTION no_delete_principale_f() 
+CREATE OR REPLACE FUNCTION undeletable_main_address_f() 
 	RETURNS TRIGGER
 	LANGUAGE PLPGSQL
 	AS $$
 	BEGIN
-		IF (OLD.Descrizione= 'Principale') THEN
-			RAISE NOTICE 'Tale indirizzo non può essere eliminato essendo principale.';
+		IF (OLD.Descrizione = 'Principale') THEN
+			RAISE NOTICE 'Questo indirizzo è principale e non può essere eliminato';
 			RETURN NEW;
 		ELSE 
 			RETURN OLD;
 		END IF;
 	END;$$;
 
-CREATE OR REPLACE TRIGGER no_delete_principale
+CREATE OR REPLACE TRIGGER undeletable_main_address
 BEFORE DELETE ON Indirizzo FOR EACH ROW
-EXECUTE PROCEDURE no_delete_principale_f();
+EXECUTE PROCEDURE undeletable_main_address_f();	
+
+--Regola attiva che dopo ogni inserimento di un nuovo account
+--la sua email viene associata a quella dei contatti che la condividono
+CREATE OR REPLACE FUNCTION unchangeable_address_description_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		IF OLD.Descrizione='Principale' AND NEW.Descrizione<>'Principale' THEN
+			RAISE NOTICE 'Tentativo di modifica un indirizzo principale in uno secondario abortito';
+			UPDATE INDIRIZZO
+			SET Descrizione = 'Principale'
+			WHERE Indirizzo_ID=NEW.Indirizzo_ID;
+		END IF;
+		RETURN NEW;
+	END; $$;
+	
+CREATE OR REPLACE TRIGGER unchangeable_address_description
+	--L'attivazione del vincolo interviene per aggiustare solamente
+	--la modifica della descrizione principale, mentre le restanti 
+	--modifiche sono mantenute
+	AFTER UPDATE ON Indirizzo
+	FOR EACH ROW
+	EXECUTE PROCEDURE unchangeable_address_description_f();
