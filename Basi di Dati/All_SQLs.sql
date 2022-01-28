@@ -43,21 +43,21 @@ ALTER TABLE Contatto
 CREATE TABLE Account(
 Account_ID SERIAL ,
 Fornitore VARCHAR(20) NOT NULL,
-
-IndirizzoEmail VARCHAR(256) NOT NULL UNIQUE,
+IndirizzoEmail VARCHAR(256) NOT NULL,
 FraseStato VARCHAR(256),
 Nickname VARCHAR(30)
 );
 
 ALTER TABLE Account
  ADD CONSTRAINT account_pk PRIMARY KEY(Account_ID),
+ ADD CONSTRAINT unique_provider_email UNIQUE (Fornitore,IndirizzoEmail),
  --L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo utilizzando un CHECK per verificare tale condizione
  ADD CONSTRAINT correct_email_formatting CHECK ( IndirizzoEmail LIKE '_%@_%.__%');
 
 --Crea la tabella Email
 CREATE TABLE Email(
 Email_ID SERIAL,
-IndirizzoEmail VARCHAR(256) NOT NULL UNIQUE,
+IndirizzoEmail VARCHAR(256) NOT NULL,
 Descrizione VARCHAR(30),
 Contatto_FK SERIAL
 );
@@ -67,8 +67,8 @@ ALTER TABLE Email
  ADD CONSTRAINT email_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON DELETE CASCADE,
  --L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo utilizzando un CHECK per verificare tale condizione
- ADD CONSTRAINT correct_email_formatting CHECK (IndirizzoEmail LIKE '_%@_%.__%');
- ADD CONSTRAINT not_redundant_email UNIQUE (Contatto_FK,indirizzoEmail)
+ ADD CONSTRAINT correct_email_formatting CHECK (IndirizzoEmail LIKE '_%@_%.__%'),
+ ADD CONSTRAINT not_redundant_email UNIQUE (Contatto_FK,indirizzoEmail);
  
 --Crea la tabella Indirizzo
 CREATE TABLE Indirizzo(
@@ -89,7 +89,7 @@ ALTER TABLE Indirizzo
 --Crea la tabella Telefono
 CREATE TABLE Telefono (
 Telefono_ID SERIAL,
-Numero INTEGER NOT NULL,
+Numero BIGINT NOT NULL,
 Descrizione VARCHAR(20),
 Contatto_FK SERIAL
 );
@@ -143,7 +143,8 @@ CREATE OR REPLACE FUNCTION group_coherency_membership_f()
 		WHERE Gruppo_ID=NEW.Gruppo_FK;
 		
 		IF (r_contatto<>r_gruppo) THEN
-			RAISE NOTICE 'Il contatto di ID % non appartiene alla stessa rubrica del gruppo di ID %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Gruppo_FK;
+			RAISE NOTICE 'Il contatto di ID % non appartiene alla stessa rubrica
+			              del gruppo di ID %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Gruppo_FK;
 			RETURN OLD;
 		ELSE
 			RETURN NEW;
@@ -153,3 +154,40 @@ CREATE OR REPLACE TRIGGER group_coherency_membership
 	BEFORE INSERT ON Composizione
 	FOR EACH ROW
 	EXECUTE PROCEDURE group_coherency_membership_f();
+	
+--Vincolo per l'unicità	dell'email per rubrica
+CREATE OR REPLACE FUNCTION unique_email_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		cur_seaker CURSOR FOR(
+			SELECT *
+			FROM Contatto AS CNEW, Contatto as C1
+			WHERE CNEW.Contatto_ID=NEW.Contatto_FK AND
+				  CNEW.Contatto_ID<>C1.Contatto_ID AND
+				  CNEW.Rubrica_FK=C1.Rubrica_FK AND
+				  C1.Contatto_ID IN
+				  (SELECT Em.Contatto_FK
+				   FROM Email AS Em
+				   WHERE Em.IndirizzoEmail=NEW.IndirizzoEmail));
+		cur_var cur_seaker%TYPE;
+	BEGIN
+		OPEN cur_seaker;
+		FETCH cur_seaker INTO cur_var;
+		--FOUND è una variabile di sistema che, in questo caso, verifica 
+		--se la fetch ha restituito almeno una tupla, nel qual caso l'email già esiste
+		IF FOUND THEN 
+			RAISE NOTICE 'L''email che si intende aggiungere è già in uso da qualche altro contatto della stessa rubrica';
+			CLOSE cur_seaker;
+			RETURN OLD;
+		ELSE
+			CLOSE cur_seaker;
+			RETURN NEW;
+		END IF;
+	END; $$;
+	
+CREATE OR REPLACE TRIGGER unique_email
+	BEFORE INSERT ON Email
+	FOR EACH ROW
+	EXECUTE PROCEDURE unique_email_f();

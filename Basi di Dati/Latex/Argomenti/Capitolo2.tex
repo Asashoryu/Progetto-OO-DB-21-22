@@ -24,21 +24,21 @@ Le associazioni individuate sono essenziali nell'indicare relazioni logiche tra 
 
 \begin{longtable}{p{0.1\textwidth}p{0.3\textwidth}p{0.5\textwidth}}
 \toprule
-Classe & Descrizione & Attributi                                                                                                                         
+\textit{Classe} & \textit{Descrizione} & \textit{Attributi}
 \\ \midrule
 \endhead
 \textbf{Rubrica} &
 Descrittore delle rubriche aggiunte &
-\verb|Utente_ID (varchar)|: Chiave tecnica. Identifica l’utente proprietario di una rubrica. 
+Utente$\_$ID (varchar): Chiave tecnica. Identifica l’utente proprietario di una rubrica. 
 \\ \midrule
 \textbf{Gruppo} &
 Descrittore di una collezione di contatti in rubrica &
-\verb|Gruppo_ID (integer)|: Chiave tecnica. Identifica univocamente ciascun gruppo;\newline
+Gruppo$\_$ID (integer): Chiave tecnica. Identifica univocamente ciascun gruppo;\newline
 Nome(varchar): Nome del gruppo.
 \\ \midrule
 \textbf{Contatto} &
 Descrittore di un'entità contatto &
-\verb|Contatto_ID (integer)|: Chiave tecnica. Identifica univocamente ogni contatto;\newline
+Contatto$\_$ID (integer): Chiave tecnica. Identifica univocamente ogni contatto;\newline
 Nome (varchar): indica il primo nome del contatto;\newline
 SecondoNome (varchar):indica il secondo nome del contatto;\newline
 Cognome (varchar):indica il cognome del contatto;\newline
@@ -46,13 +46,13 @@ Foto (blobs): immagine associata al contatto.
 \\ \midrule
 \textbf{Email} &
 Descrittore di un entità indirizzo di posta elettronica di un contatto &
-\verb|Email_ID (integer)|: Chiave tecnica. Identifica univocamente un'email di un contatto;\newline
+Email$\_$ID (integer): Chiave tecnica. Identifica univocamente un'email di un contatto;\newline
 IndirizzoEmail (varchar): stringa dell'email;\newline
 Descrizione (varchar): informazione aggiuntiva di un email (privata, ufficio, ecc).
 \\ \midrule
 \textbf{Indirizzo} &
 Descrittore di un entità indirizzo fisico di un contatto &
-\verb|Indirizzo_ID (integer)|: Chiave tecnica. Identifica univocamente un indirizzo fisico di un contatto; \newline
+Indirizzo$\_$ID (integer): Chiave tecnica. Identifica univocamente un indirizzo fisico di un contatto; \newline
 Via (varchar): indica la via dell’indirizzo;\newline
 Città (varchar): indica la città dell’indirizzo;\newline
 Nazione(string): indica la nazione dell’indirizzo;\newline
@@ -61,13 +61,13 @@ Tipo(TipoA): indica se l’indirizzo è principale o secondario
 \\ \midrule
 \textbf{Telefono} &
 Descrittore di un'entità numero telefonico di un contatto &
-\verb|Telefono_ID (integer)|: Chiave tecnica. Identifica univocamente un numero di telefono di un contatto; \newline
+Telefono$\_$ID (integer): Chiave tecnica. Identifica univocamente un numero di telefono di un contatto; \newline
 Numero (varchar): stringa del numero;\newline
 Descrizione (varchar): informazione aggiuntiva di un numero di telefono (mobile, fisso, ufficio ecc).
 \\ \midrule
 \textbf{Account} &
 Descrittore delle informazioni recuperate da un account &
-\verb|Account_ID (varchar)|: Chiave tecnica. Identifica l’utente proprietario di una rubrica;\newline
+Account$\_$ID (varchar): Chiave tecnica. Identifica l’utente proprietario di una rubrica;\newline
 Fornitore (varchar): indica il fornitore da cui è recuperato l'account (Whatsapp, Telegram, Teams, ecc..);\newline
 IndirizzoEmail (varchar): indirizzo email associato a un account;\newline
 FraseStato (varchar): frase di benvenuto associata a un account;\newline
@@ -79,7 +79,7 @@ Nickname(varchar): indica il nickname associato a un account.
 \section{Dizionario delle associazioni}
 \begin{longtable}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
 \toprule
-Associazione & Descrizione & Classi coinvolte
+\textit{Associazione} & \textit{Descrizione} & \textit{Classi coinvolte}
 \\ \midrule
 \endhead
 \textbf{AppartenenzaGruppo} &
@@ -128,7 +128,7 @@ Contatto[0..*]: indica il contatto appartenente a una rubrica.
 \section{Dizionario dei vincoli}
 \begin{longtable}{p{0.3\textwidth}p{0.6\textwidth}}
 \toprule
-Vincolo & Descrizione
+\textit{Vincolo} & \textit{Descrizione}
 \\ \midrule
 Group Membership Coherency &
 Un gruppo può raggruppare esclusivamente i contatti appartenenti alla stessa rubrica del gruppo.
