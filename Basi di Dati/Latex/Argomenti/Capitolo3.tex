@@ -24,22 +24,22 @@
 (\uline{\textbf{Account$\_$ID}}, Fornitore, IndirizzoEmail, FraseStato, Nickname)\\
 & \\
 \textbf{Associa} &
-(\uuline{Contatto$\_$ID}, \uuline{Account$\_$ID})\\
-& Contatto$\_$ID $\rightarrow$ Contatto.Contatto$\_$ID\\
-& Account$\_$ID $\rightarrow$ Account.Account$\_$ID\\
+(\uuline{Contatto$\_$FK}, \uuline{Account$\_$FK})\\
+& Contatto$\_$FK $\rightarrow$ Contatto.Contatto$\_$ID\\
+& Account$\_$FK $\rightarrow$ Account.Account$\_$ID\\
 & \\
 \textbf{Email} &
-(\uline{\textbf{Email$\_$ID}}, IndirizzoEmail, Descrizione, \uuline{Contatto$\_$ID})\\
+(\uline{\textbf{Email$\_$ID}}, IndirizzoEmail, Descrizione, \uuline{Contatto$\_$FK})\\
 & \\
-& Contatto$\_$ID $\rightarrow$ Contatto.Contatto$\_$ID\\
+& Contatto$\_$FK $\rightarrow$ Contatto.Contatto$\_$ID\\
 & \\
 \textbf{Indirizzo} &
-(\uline{\textbf{Indirizzo$\_$ID}}, Via, Città, CAP, Nazione, Tipo, \uuline{Contatto$\_$ID})\\
+(\uline{\textbf{Indirizzo$\_$ID}}, Via, Città, CAP, Nazione, Tipo, \uuline{Contatto$\_$FK})\\
 & \\
-& Contatto$\_$ID $\rightarrow$ Contatto.Contatto$\_$ID\\
+& Contatto$\_$FK $\rightarrow$ Contatto.Contatto$\_$ID\\
 & \\
 \textbf{Telefono} &
-(\uline{\textbf{Telefono$\_$ID}}, Numero, Descrizione, \uuline{Contatto$\_$ID})\\
+(\uline{\textbf{Telefono$\_$ID}}, Numero, Descrizione, \uuline{Contatto$\_$FK})\\
 & \\
-& Contatto$\_$ID $\rightarrow$ Contatto.Contatto$\_$ID
+& Contatto$\_$FK $\rightarrow$ Contatto.Contatto$\_$ID
 \end{longtable}
