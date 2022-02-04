@@ -1,17 +1,10 @@
 package model;
 
-public class Gruppo {
-	private String nome;
+public class Gruppo extends Elemento{
+	
 	
 	public Gruppo (String name) {
-		this.nome=name;
+		super(name);
 	}
-	public void setNome (String name) {
-		this.nome=name;
-		return;
-	}
-	
-	public String getNome() {
-		return nome;
-	}
+
 }
