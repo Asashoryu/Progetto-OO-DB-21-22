@@ -5,28 +5,34 @@ import java.sql.*;
 public class ConnessioneDatabase {
 	
 	private static ConnessioneDatabase instance;
-	private Connection conn = null;
+	private Connection connection = null;
 	private String nomeutente = "postgres";
 	private String password = "admin";
-	private String url = "jdbc:postgresql://localhost:5432/Rubrica";
+	private String url = "jdbc:postgresql://localhost:5432/Borsa";
 	private String driver = "org.postgresql.Driver";
 	
-	class Connessione {
-		public static void main(String args[]) throws Exception {
-			try {
-				Class.forName(driver);
-				conn = DriverManager.getConnection(url, nomeutente, password);
-				System.out.println("Connessione OK \n");
-				conn.close();
-			}
-			catch (ClassNotFoundException e) {
-				System.out.println("DB driver not found \n");
-				System.out.println(e);
-			}
-			catch(SqlException e) {
-				System.out.println("Connessione Fallita \n");
-				System.out.println(e);
-			}
+	public ConnessioneDatabase() throws SQLException {
+		try {
+			Class.forName(driver);
+			connection = DriverManager.getConnection(url, nomeutente, password);
+
+		} catch (ClassNotFoundException ex) {
+			System.out.println("Database Connection Creation Failed : " + ex.getMessage());
+			ex.printStackTrace();
 		}
+
+	}
+
+	public Connection getConnection() {
+			return connection;
+	}
+	
+	public static ConnessioneDatabase getInstance() throws SQLException {
+		if (instance == null) {
+			instance = new ConnessioneDatabase();
+		} else if (instance.getConnection().isClosed()) {
+			instance = new ConnessioneDatabase();
+		}
+		return instance;
 	}
 }
