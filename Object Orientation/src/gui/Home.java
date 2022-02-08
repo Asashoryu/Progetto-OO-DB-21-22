@@ -1,7 +1,5 @@
 package gui;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -12,9 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-public class Home {
+import controller.Controller;
 
-	private JFrame frame;
+public class Home {
+	private Controller controller;
+
+	JFrame frame;
 	private JPanel panel;
 	private JLabel lblNewLabel;
 	private JTextField textField;
@@ -22,26 +23,12 @@ public class Home {
 	private JButton btnNewButton;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Home window = new Home();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public Home() {
+	public Home(Controller c) {
+		controller=c;
 		initialize();
+		frame.setVisible(true);
 	}
 
 	/**
