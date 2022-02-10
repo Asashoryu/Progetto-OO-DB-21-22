@@ -13,6 +13,7 @@ public class ConnessioneDatabase {
 	
 	public ConnessioneDatabase() throws SQLException {
 		try {
+			//Estrae l'oggetto driver dalla stringa
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, nomeutente, password);
 
@@ -29,8 +30,10 @@ public class ConnessioneDatabase {
 	
 	public static ConnessioneDatabase getInstance() throws SQLException {
 		if (instance == null) {
+			//Se la connessione non è stata aperta, la apre
 			instance = new ConnessioneDatabase();
 		} else if (instance.getConnection().isClosed()) {
+			//Se la connessione è stata chiusa, la riapre
 			instance = new ConnessioneDatabase();
 		}
 		return instance;

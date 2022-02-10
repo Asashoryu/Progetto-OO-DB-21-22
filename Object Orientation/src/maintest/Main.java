@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import database.ConnessioneDatabase;
 
-// Classe Main di test per il corretto funzionamento della connessione App - DB
+//Classe Main di test per il corretto funzionamento della connessione App - DB
 public class Main {
 	private static Connection connection;
 	public static void main(String[] args) {
@@ -21,6 +21,7 @@ public class Main {
 			PreparedStatement comandodajava = connection.prepareStatement(
 					"INSERT INTO RUBRICA(utente_id) VALUES ('Utente_da_java')");
 			System.out.println("Query preparata...");
+			//Operazione DML
 			comandodajava.executeUpdate();
 			System.out.println("Query eseguita...");
 			connection.close();

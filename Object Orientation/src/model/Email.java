@@ -1,29 +1,30 @@
 package model;
 
 public class Email {
-	private String indirizzoEmail;
+	
+	private String stringaEmail;
 	
 	private enum tipoEmail{Principale,Secondario};
 	
 	private tipoEmail tipo;
 	
 	
-	public Email(String s,String t) {
-		setIndirizzoEmail(s);
-		setTipo(t);
+	public Email(String stringaEmail,String tipo) {
+		setStringaEmail(stringaEmail);
+		setTipo(tipo);
 	}
 	
-	private void setTipo(String t) {
-		indirizzoEmail=t;
+	private void setStringaEmail(String stringaEmail) {
+		this.stringaEmail=stringaEmail;
 	}
 
-	private void setIndirizzoEmail(String s) {
+	private void setTipo(String tipo) {
 		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
-		tipo=tipoEmail.valueOf(s);
+		this.tipo=tipoEmail.valueOf(tipo);
 	}
 	
-	private String getIndirizzoEmail() {
-		return indirizzoEmail;
+	private String getStringaEmail() {
+		return stringaEmail;
 	}
 	
 	private String getTipo() {
