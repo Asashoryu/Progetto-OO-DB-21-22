@@ -13,20 +13,20 @@ public class Telefono {
 		setTipo(tipo);
 	}
 	
-	private void setNumero(String numero) {
+	public void setNumero(String numero) {
 		this.numero=numero;
 	}
 
-	private void setTipo(String tipo) {
+	public void setTipo(String tipo) {
 		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
 		this.tipo=tipoTelefono.valueOf(tipo);
 	}
 	
-	private String getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 	
-	private String getTipo() {
+	public String getTipo() {
 		return tipo.toString();
 	}
 }

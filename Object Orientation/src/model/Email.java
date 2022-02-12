@@ -14,20 +14,20 @@ public class Email {
 		setTipo(tipo);
 	}
 	
-	private void setStringaEmail(String stringaEmail) {
+	public void setStringaEmail(String stringaEmail) {
 		this.stringaEmail=stringaEmail;
 	}
 
-	private void setTipo(String tipo) {
+	public void setTipo(String tipo) {
 		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
 		this.tipo=tipoEmail.valueOf(tipo);
 	}
 	
-	private String getStringaEmail() {
+	public String getStringaEmail() {
 		return stringaEmail;
 	}
 	
-	private String getTipo() {
+	public String getTipo() {
 		return tipo.toString();
 	}
 

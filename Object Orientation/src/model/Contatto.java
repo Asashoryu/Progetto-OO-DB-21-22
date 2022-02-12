@@ -20,11 +20,11 @@ public class Contatto{
 		setNome(primonome, secondonome, cognome);
 	}
 	
-	public void setNome(String p, String s, String c) {
+	public void setNome(String primonome, String secondonome, String cognome) {
 		// TODO Auto-generated method stub
-		primonome=p;
-		secondonome=s;
-		cognome=c;
+		this.primonome=primonome;
+		this.secondonome=secondonome;
+		this.cognome=cognome;
 	}
 
 	public void addNumero(String numero,String tipotelefono) {
@@ -35,6 +35,11 @@ public class Contatto{
 	public void addEmail(String indirizzoemail,String tipoemail) {
 		Email NuovaEmail = new Email(indirizzoemail,tipoemail);
 		email.add(NuovaEmail);
+	}
+	
+	public void addIndirizzo(String via, String citta, String nazione, String cap, String tipo) {
+		Indirizzo NuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
+		indirizzi.add(NuovoIndirizzo);
 	}
 	
 }

@@ -13,6 +13,7 @@ public class Rubrica {
 	public Rubrica(String nome) {
 		setNome(nome);
 	}
+	
 	public void setNome(String nome) {
 		this.nome=nome;
 	}
@@ -24,9 +25,19 @@ public class Rubrica {
 	public void addContatto(String primonome, String secondonome, String cognome,
 						    ArrayList<Telefono> telefoni, ArrayList<Email> email,
 						    ArrayList<Indirizzo> indirizzi) {
+		
 		Contatto contatto = new Contatto(primonome, secondonome,cognome);
+		
 		for(Telefono t: telefoni) {
 			contatto.addNumero(t.getNumero(), t.getTipo());
+		}
+		
+		for(Email em: email) {
+			contatto.addEmail(em.getStringaEmail(),em.getTipo());
+		}
+		
+		for(Indirizzo i: indirizzi) {
+			contatto.addIndirizzo(i.getVia(), i.getCitta(), i.getNazione(), i.getCap(), i.getTipo());
 		}
 		
 	}

@@ -19,7 +19,7 @@ public class Main {
 		
 		try {
 			PreparedStatement comandodajava = connection.prepareStatement(
-					"INSERT INTO RUBRICA(utente_id) VALUES ('Utente_da_java')");
+					"INSERT INTO RUBRICA(utente_id) VALUES ('Utente_ciao')");
 			System.out.println("Query preparata...");
 			//Operazione DML
 			comandodajava.executeUpdate();
