@@ -43,7 +43,26 @@ public class Controller {
 	
 	public void updateRubrica(String nuovoNome) throws SQLException {
 		try {
+			//nella rubrica selezionata viene inserito il nuovo nome
 			sistema.updateRubrica(rubricaSelezionata, nuovoNome);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
+	}
+	
+	public void addRubrica(String nomeRubrica) throws SQLException {
+		try {
+			rubricaSelezionata=sistema.addRubrica(nomeRubrica);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
+	}
+	
+	public void deleteRubrica() throws SQLException {
+		try {
+			sistema.deleteRubrica(rubricaSelezionata);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw e;

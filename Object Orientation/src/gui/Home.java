@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import controller.Controller;
 import dao.SistemaDAO;
@@ -98,27 +99,31 @@ public class Home extends JFrame {
 		btnModifica = new JButton("Modifica");
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//Seleziono la stringa corrispondente alla stringa selezionata nella combobox
+				//così da evitare la ricerca della stessa
 				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
 					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
 					String stringa = JOptionPane.showInputDialog(visualizzata);
-					if(stringa.isEmpty()==false) {
+					if(stringa!= null && stringa.isBlank()==false) {
 						try {
 						controller.updateRubrica(stringa);
+						//In caso di Exception non entra in questo punto
+						int indiceSelezionato = comboBox.getSelectedIndex();
+						comboBox.removeItemAt(indiceSelezionato);
+						comboBox.insertItemAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
+						comboBox.setSelectedIndex(indiceSelezionato);
+						txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
+						System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
 						} catch (Exception e2) {
 							System.out.println("Entrato nel Catch..");
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
                                                  			JOptionPane.ERROR_MESSAGE );
 						}
-						finally {
-							//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
-							int indiceSelezionato = comboBox.getSelectedIndex();
-							comboBox.removeItemAt(indiceSelezionato);
-							comboBox.insertItemAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
-							comboBox.setSelectedIndex(indiceSelezionato);
-							txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
-							System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
-						}
 						System.out.println("Superato il Catch..");
+						for(Rubrica r:controller.getRubriche()) {
+							System.out.print(r.getNome()+"   ");
+						}
+						System.out.println(controller.getRubricaSelezionata().getNome());
 					}
 				}
 		});
@@ -127,15 +132,67 @@ public class Home extends JFrame {
 		btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for(Rubrica r:controller.getRubriche()) {
-					System.out.print(r.getNome()+"   ");
+				String visualizzata = "Inserisci il nome della Rubrica da aggiungere";
+				String stringa = JOptionPane.showInputDialog(visualizzata);
+				if(stringa!= null && stringa.isBlank()==false) {
+					try {
+					//aggiunge la rubrica nel DB e in memoria
+						
+					controller.addRubrica(stringa);
+					//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
+					int indiceSelezionato = comboBox.getSelectedIndex();
+					comboBox.addItem((Object) stringa);
+					System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+					} catch (Exception e2) {
+						System.out.println("Entrato nel Catch..");
+						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+                                             			JOptionPane.ERROR_MESSAGE );
+					}
+					//debug manuale
+					System.out.println("Superato il Catch..");
+					for(Rubrica r:controller.getRubriche()) {
+						System.out.print(r.getNome()+"   ");
+					}
+					System.out.println(controller.getRubricaSelezionata().getNome());
 				}
-				System.out.print("      "+controller.getRubricaSelezionata().getNome());
 			}
 		});
 		panel_1.add(btnAggiungi);
 		
 		btnElimina = new JButton("Elimina");
+		btnElimina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String stringa=txtUtenteSelezionato.getText();
+				String visualizzata = "Confermi di voler eliminare la Rubrica ".concat(stringa);
+				// 0=Procedi, 1=Annulla
+				Object[] opzioni = {"Procedi","Annulla"};
+				// finestra di conferma per la cancellazione
+				int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina", JOptionPane.YES_NO_OPTION,
+														 JOptionPane.WARNING_MESSAGE, null, opzioni, null);
+				if(input==0 && stringa!= null && stringa.isBlank()==false) {
+					try {
+					//rimuove dalla rubrica nel DB e in memoria
+					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+					controller.deleteRubrica();
+					//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
+					comboBox.removeItemAt(comboBox.getSelectedIndex());
+					comboBox.setSelectedIndex(0);
+					txtUtenteSelezionato.setText("");
+					System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+					} catch (Exception e2) {
+						System.out.println("Entrato nel Catch..");
+						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+                                             			JOptionPane.ERROR_MESSAGE );
+					}
+					//debug manuale
+					System.out.println("Superato il Catch..");
+					for(Rubrica r:controller.getRubriche()) {
+						System.out.print(r.getNome()+"   ");
+					}
+					System.out.println(controller.getRubricaSelezionata().getNome());
+				}
+			}
+		});
 		panel_1.add(btnElimina);
 	}
 }

@@ -29,7 +29,29 @@ public class Sistema {
 			// TODO Auto-generated catch block
 			throw e;
 		}
-		
+	}
+	
+	public Rubrica addRubrica(String nomeRubrica) throws SQLException {
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
+		try {
+			sistemaPosgr.addRubrica(nomeRubrica);
+			Rubrica rubrica = new Rubrica(nomeRubrica);
+			return rubrica;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
+	}
+	
+	public void deleteRubrica(Rubrica rubricaSelezionata) throws SQLException {
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
+		try {
+			sistemaPosgr.deleteRubrica(rubricaSelezionata.getNome());
+			getRubriche().remove(rubricaSelezionata);
+		} catch (SQLException e) {
+			// TODO: handle exception
+			throw e;
+		}
 	}
 	
 }

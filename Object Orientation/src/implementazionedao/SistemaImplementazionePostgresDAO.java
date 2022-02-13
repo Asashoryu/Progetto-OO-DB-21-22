@@ -49,18 +49,45 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	
 	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) throws SQLException {
 		System.out.println("UPDATE Rubrica "+
-					"SET utente_id = "+" \'"+nuovaRubrica+"\'" + 
-					"WHERE utente_id = "+" \'"+vecchiaRubrica+"\'");
+				"SET utente_id = "+"\'"+nuovaRubrica+"\' " + 
+				"WHERE utente_id = "+"\'"+vecchiaRubrica+"\'");
 		try {
 			PreparedStatement modificaRubrica = connection.prepareStatement(
 					"UPDATE Rubrica "+
-					"SET utente_id = "+" \'"+nuovaRubrica+"\'" + 
-					"WHERE utente_id = "+" \'"+vecchiaRubrica+"\'");
+					"SET utente_id = "+"\'"+nuovaRubrica+"\' " + 
+					"WHERE utente_id = "+"\'"+vecchiaRubrica+"\'");
 				
 			modificaRubrica.executeUpdate();
 			connection.close();
-			} catch (SQLException e) {
-				throw e;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
+	
+	public void addRubrica(String nomeRubrica) throws SQLException {
+		System.out.println("INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
+		try {
+			PreparedStatement aggiungiRubrica = connection.prepareStatement(
+					"INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
+			aggiungiRubrica.executeUpdate();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	public void deleteRubrica(String nomeRubrica) throws SQLException {
+		try {
+			PreparedStatement cancellaRubrica = connection.prepareStatement(
+					"DELETE FROM Rubrica WHERE utente_id = "+"\'"+nomeRubrica+"\'");
+			cancellaRubrica.executeUpdate();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 }
