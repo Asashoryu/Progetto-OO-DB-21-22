@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Rubrica;
@@ -40,7 +41,12 @@ public class Controller {
 		return rubricaSelezionata;
 	}
 	
-	public void updateRubrica(String nuovoNome) {
-		sistema.updateRubrica(rubricaSelezionata, nuovoNome);
+	public void updateRubrica(String nuovoNome) throws SQLException {
+		try {
+			sistema.updateRubrica(rubricaSelezionata, nuovoNome);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
 	}
 }

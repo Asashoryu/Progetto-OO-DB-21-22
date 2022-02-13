@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import dao.SistemaDAO;
@@ -19,10 +20,16 @@ public class Sistema {
 		return rubriche;
 	}
 	
-	public void updateRubrica(Rubrica rubricaSelezionata, String nuovoNome) {
+	public void updateRubrica(Rubrica rubricaSelezionata, String nuovoNome) throws SQLException {
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
-		sistemaPosgr.updateRubrica(rubricaSelezionata.getNome(), nuovoNome);
-		rubricaSelezionata.setNome(nuovoNome);
+		try {
+			sistemaPosgr.updateRubrica(rubricaSelezionata.getNome(), nuovoNome);
+			rubricaSelezionata.setNome(nuovoNome);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw e;
+		}
+		
 	}
 	
 }

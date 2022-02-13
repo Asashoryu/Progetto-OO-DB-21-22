@@ -47,7 +47,7 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	return rubriche;		
 	}
 	
-	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) {
+	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) throws SQLException {
 		System.out.println("UPDATE Rubrica "+
 					"SET utente_id = "+" \'"+nuovaRubrica+"\'" + 
 					"WHERE utente_id = "+" \'"+vecchiaRubrica+"\'");
@@ -60,7 +60,7 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 			modificaRubrica.executeUpdate();
 			connection.close();
 			} catch (SQLException e) {
-		e.printStackTrace();
+				throw e;
 		}
 	}
 }

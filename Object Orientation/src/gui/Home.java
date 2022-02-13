@@ -5,9 +5,12 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.management.RuntimeErrorException;
 import javax.sound.midi.ControllerEventListener;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -59,7 +62,7 @@ public class Home extends JFrame {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(500, 200, 650, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel = new JPanel();
@@ -96,8 +99,28 @@ public class Home extends JFrame {
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
-				ModificaRubrica modificaRubrica = new ModificaRubrica(controller,frame);
-			}
+					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
+					String stringa = JOptionPane.showInputDialog(visualizzata);
+					if(stringa.isEmpty()==false) {
+						try {
+						controller.updateRubrica(stringa);
+						} catch (Exception e2) {
+							System.out.println("Entrato nel Catch..");
+							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+                                                 			JOptionPane.ERROR_MESSAGE );
+						}
+						finally {
+							//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
+							int indiceSelezionato = comboBox.getSelectedIndex();
+							comboBox.removeItemAt(indiceSelezionato);
+							comboBox.insertItemAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
+							comboBox.setSelectedIndex(indiceSelezionato);
+							txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
+							System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+						}
+						System.out.println("Superato il Catch..");
+					}
+				}
 		});
 		panel_1.add(btnModifica);
 		
@@ -107,17 +130,12 @@ public class Home extends JFrame {
 				for(Rubrica r:controller.getRubriche()) {
 					System.out.print(r.getNome()+"   ");
 				}
-				System.out.println(" "+controller.getRubricaSelezionata().getNome());
+				System.out.print("      "+controller.getRubricaSelezionata().getNome());
 			}
 		});
 		panel_1.add(btnAggiungi);
 		
 		btnElimina = new JButton("Elimina");
 		panel_1.add(btnElimina);
-	}
-	// metodo introdotto per mantenere la combobox aggiornata senza dover richiamare il DB
-	// per dopo ogni modifica
-	public void refreshComboBox() {
-		comboBox.revalidate();
 	}
 }
