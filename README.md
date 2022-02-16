@@ -1,7 +1,9 @@
 # Progetto-OO-DB-21-22
 Università degli Studi di Napoli Federico II.
 
-![FedericoII](https://user-images.githubusercontent.com/97637922/154233657-a91e6862-10e3-46a3-b939-d858347e4a00.png)
+<p align="center">
+![R](https://user-images.githubusercontent.com/97637922/154233983-ed5174f5-02d6-439c-80bc-d35d4d6ccedd.png)
+</p>
 
 Repository del progetto di Basi di Dati e di Object Orientation. 
 
