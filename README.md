@@ -2,7 +2,8 @@
 Università degli Studi di Napoli Federico II.
 
 <p align="center">
-![R](https://user-images.githubusercontent.com/97637922/154233983-ed5174f5-02d6-439c-80bc-d35d4d6ccedd.png)
+![R](https://user-images.githubusercontent.com/97637922/154234253-72eb617e-1635-42a8-be53-6f537eed08a7.png)
+
 </p>
 
 Repository del progetto di Basi di Dati e di Object Orientation. 
