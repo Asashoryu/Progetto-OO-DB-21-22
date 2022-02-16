@@ -21,4 +21,4 @@ Porfirio Tramontana | ptramont@unina.it | Object Orientation
 * java version "17"
 * Eclipse IDE (+ Window Builder)
 * UML version 3.0.2.0
-* Texmaker
+* Texmaker (+ librerie)
