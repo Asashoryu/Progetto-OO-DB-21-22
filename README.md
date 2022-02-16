@@ -2,7 +2,7 @@
 Università degli Studi di Napoli Federico II.
 
 <p align="center">
-  <img width="600" height="600" src="https://th.bing.com/th/id/R.210fa1dda1124896f3fbe28eb81de9c4?rik=9u0UZY27zIgN4A&riu=http%3a%2f%2fareacomunicazione.policlinico.unina.it%2fwp-content%2fuploads%2f2014%2f02%2flogo-federico-II-blu.png&ehk=9M0Ci770QB53aufNk2BdPQ%2fOSomlMt8rfsIWYa6a1UA%3d&risl=&pid=ImgRaw&r=0">
+  <img width="400" height="400" src="https://th.bing.com/th/id/R.210fa1dda1124896f3fbe28eb81de9c4?rik=9u0UZY27zIgN4A&riu=http%3a%2f%2fareacomunicazione.policlinico.unina.it%2fwp-content%2fuploads%2f2014%2f02%2flogo-federico-II-blu.png&ehk=9M0Ci770QB53aufNk2BdPQ%2fOSomlMt8rfsIWYa6a1UA%3d&risl=&pid=ImgRaw&r=0">
 </p>
 
 
