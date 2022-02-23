@@ -1,5 +1,11 @@
 package dao;
 
-public interface RubricaDAO {
+import java.util.ArrayList;
 
+import model.Contatto;
+import model.Rubrica;
+
+public interface RubricaDAO {
+	
+	public ArrayList<Contatto> loadContatti(String nomeRubrica);
 }

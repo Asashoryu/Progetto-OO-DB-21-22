@@ -3,10 +3,13 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dao.RubricaDAO;
 import dao.SistemaDAO;
+import implementazionedao.RubricaImplementazionePostgresDAO;
 import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
+import model.Contatto;
 
 public class Controller {
 	
@@ -40,7 +43,8 @@ public class Controller {
 		return sistema.getRubriche();
 	}
 	
-	//fissa la rubrica selezionata nella combobox per le successive operazioni di manipolazione
+	//rubrica selezionata dalla combobox, ricavata sfruttando lo stesso ordine 
+	//di indicizzazione rubrica-nomerubrica
 	public void setRubricaSelezionata(int indice) {
 		rubricaSelezionata = sistema.getRubriche().get(indice);
 	}
@@ -90,7 +94,24 @@ public class Controller {
 		}
 	}
 	
-	/*public String[] getNomiContattiRubrica() {
-		
-	}*/
+	public void loadContatti() {
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		System.out.println("Rubrica selezionata è: "+rubricaSelezionata.getNome());
+		rubricaSelezionata.setContatti(rubricaPosgr.loadContatti(rubricaSelezionata.getNome()));
+	}
+	
+	public String[] getNomiContattiRubrica() {
+		String[] nomiContattiRubriche = new String[rubricaSelezionata.getContatti().size()];
+		for(Contatto c: rubricaSelezionata.getContatti()) {
+			// sono riunite tutte le parti di un nome di un contatto in una stringa
+			String nomeCompleto;
+			if(c.getSecondoNome()!=null) {
+				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
+			} else {
+				nomeCompleto = c.getNome() +" "+ c.getCognome();
+			}
+			nomiContattiRubriche[rubricaSelezionata.getContatti().indexOf(c)]=nomeCompleto;
+		}
+		return nomiContattiRubriche;
+	}
 }

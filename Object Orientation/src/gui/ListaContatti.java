@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.Controller;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JList;
 import java.awt.FlowLayout;
@@ -13,11 +16,15 @@ import java.awt.FlowLayout;
 public class ListaContatti extends JFrame {
 
 	private JPanel contentPane;
-
+	
+	private JFrame frame;
+	private Controller controller;
 	/**
 	 * Create the frame.
 	 */
-	public ListaContatti() {
+	public ListaContatti(Controller c, JFrame frameChiamante) {
+		frame = this;
+		controller=c;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -28,7 +35,7 @@ public class ListaContatti extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane);
 		
-		JList list = new JList();
+		JList<Object> list = new JList<Object>(controller.getNomiContattiRubrica());
 		tabbedPane.addTab("tblListaContatti", null, list, null);
 	}
 

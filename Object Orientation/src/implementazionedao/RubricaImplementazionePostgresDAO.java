@@ -12,7 +12,7 @@ import model.Contatto;
 import model.Rubrica;
 
 public class RubricaImplementazionePostgresDAO implements RubricaDAO{
-/*	
+	
 	private ArrayList<Contatto> contatti;
 	
 	private Connection connection;
@@ -26,17 +26,17 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
-	public ArrayList<Contatti> loadContatti() {
-		PreparedStatement recuperaRubriche;
+	public ArrayList<Contatto> loadContatti(String nomeRubrica) {
+		System.out.println("SELECT * FROM Contatto WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'");
+		PreparedStatement recuperaContatti;
 		try {
 			recuperaContatti = connection.prepareStatement(
-				"SELECT * FROM Contatto, Rubrica WHERE ");
-			ResultSet rs = recuperaRubriche.executeQuery();
+				"SELECT * FROM Contatto WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'");
+			ResultSet rs = recuperaContatti.executeQuery();
 			contatti = new ArrayList<Contatto>();
 			while (rs.next()) {
-				System.out.println("valore trovato: " + rs.getString("utente_id") );
-				Rubrica nuovaRubrica = new Rubrica(rs.getString("utente_id"));
-				rubriche.add(nuovaRubrica);	
+				Contatto nuovoContatto = new Contatto(rs.getString("nome"), rs.getString("secondonome"), rs.getString("cognome"));
+				contatti.add(nuovoContatto);
 			}
 			connection.close();
 			rs.close();
@@ -44,6 +44,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return contatti;
 	}
-	*/
 }

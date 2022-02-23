@@ -80,22 +80,26 @@ public class Home extends JFrame {
 				txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
 			}
 		});
-		
+				
 		panel.add(comboBox);
 		txtUtenteSelezionato = new JTextField();
 		txtUtenteSelezionato.setEditable(false);
 		panel.add(txtUtenteSelezionato);
 		txtUtenteSelezionato.setColumns(10);
 		
+		controller.setRubricaSelezionata(0);
+		txtUtenteSelezionato.setText(comboBox.getItemAt(0).toString());
+		
 		btnEntra = new JButton("Entra");
 		panel.add(btnEntra);
 		btnEntra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//il controller prende l'arraylist delle rubriche, tra cui selezioniamo
-				//quella che ha lo stesso nome dell'utente selezionato dalla combobox
-				//(gli indici delle rubriche e dei loro nomi coincidono)
-				System.out.println(controller.getRubriche().get(comboBox.getSelectedIndex()).getNome());
-				txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
+				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+				controller.loadContatti();
+				JFrame contattiFrame = new ListaContatti(controller, frame);
+				System.out.println("Frame Contatti caricato");
+				frame.setVisible(false);
+				contattiFrame.setVisible(true);
 			}
 		});
 		

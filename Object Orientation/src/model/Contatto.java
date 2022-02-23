@@ -17,14 +17,33 @@ public class Contatto{
 	private ArrayList<Indirizzo> indirizzi;
 	
 	public Contatto(String primonome, String secondonome, String cognome) {
-		setNome(primonome, secondonome, cognome);
+		setNome(primonome);
+		setSecondoNome(secondonome);
+		setCognome(cognome);
 	}
 	
-	public void setNome(String primonome, String secondonome, String cognome) {
-		// TODO Auto-generated method stub
+	public void setNome(String primonome) {
 		this.primonome=primonome;
+	}
+	
+	public String getNome() {
+		return primonome;
+	}
+	
+	public void setSecondoNome(String secondonome) {
 		this.secondonome=secondonome;
+	}
+	
+	public String getSecondoNome() {
+		return secondonome;
+	}
+	
+	public void setCognome(String cognome) {
 		this.cognome=cognome;
+	}
+	
+	public String getCognome() {
+		return cognome;
 	}
 
 	public void addNumero(String numero,String tipotelefono) {

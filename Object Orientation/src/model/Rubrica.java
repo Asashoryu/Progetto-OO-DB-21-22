@@ -26,6 +26,14 @@ public class Rubrica {
 		return nome;
 	}
 	
+	public ArrayList<Contatto> getContatti() {
+		return contatti;
+	}
+	
+	public void setContatti(ArrayList<Contatto> contatti) {
+		this.contatti=contatti;
+	}
+	
 	public void addContatto(String primonome, String secondonome, String cognome,
 						    ArrayList<Telefono> telefoni, ArrayList<Email> email,
 						    ArrayList<Indirizzo> indirizzi) {
