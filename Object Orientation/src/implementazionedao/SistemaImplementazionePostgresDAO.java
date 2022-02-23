@@ -79,6 +79,7 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	}
 	
 	public void deleteRubrica(String nomeRubrica) throws SQLException {
+		System.out.println("DELETE FROM Rubrica WHERE utente_id = "+"\'"+nomeRubrica+"\'");
 		try {
 			PreparedStatement cancellaRubrica = connection.prepareStatement(
 					"DELETE FROM Rubrica WHERE utente_id = "+"\'"+nomeRubrica+"\'");

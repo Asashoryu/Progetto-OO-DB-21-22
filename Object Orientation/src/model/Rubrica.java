@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 
+import dao.SistemaDAO;
+import implementazionedao.SistemaImplementazionePostgresDAO;
+
 public class Rubrica {
 	
 	private String nome;
@@ -10,6 +13,7 @@ public class Rubrica {
 	
 	private ArrayList<Gruppo> gruppi;
 	
+	//Alla creazione di una rubrica vengono caricati tutti i suoi contatti
 	public Rubrica(String nome) {
 		setNome(nome);
 	}

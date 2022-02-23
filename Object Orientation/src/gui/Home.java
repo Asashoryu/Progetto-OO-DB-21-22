@@ -21,6 +21,7 @@ import model.Rubrica;
 import model.Sistema;
 
 import javax.swing.JComboBox;
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JToolBar;
 import javax.swing.JSplitPane;
@@ -74,8 +75,13 @@ public class Home extends JFrame {
 		panel.add(lblNewLabel);
 		
 		comboBox = new JComboBox<Object>(controller.getNomiRubriche());
-		panel.add(comboBox);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
+			}
+		});
 		
+		panel.add(comboBox);
 		txtUtenteSelezionato = new JTextField();
 		txtUtenteSelezionato.setEditable(false);
 		panel.add(txtUtenteSelezionato);
@@ -119,11 +125,11 @@ public class Home extends JFrame {
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
                                                  			JOptionPane.ERROR_MESSAGE );
 						}
-						System.out.println("Superato il Catch..");
+						System.out.println("Superato il Catch.. In memoria: ");
 						for(Rubrica r:controller.getRubriche()) {
 							System.out.print(r.getNome()+"   ");
 						}
-						System.out.println(controller.getRubricaSelezionata().getNome());
+						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
 				}
 		});
@@ -142,6 +148,7 @@ public class Home extends JFrame {
 					//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
 					int indiceSelezionato = comboBox.getSelectedIndex();
 					comboBox.addItem((Object) stringa);
+					comboBox.setSelectedIndex(indiceSelezionato);
 					System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
 					} catch (Exception e2) {
 						System.out.println("Entrato nel Catch..");
@@ -149,11 +156,11 @@ public class Home extends JFrame {
                                              			JOptionPane.ERROR_MESSAGE );
 					}
 					//debug manuale
-					System.out.println("Superato il Catch..");
+					System.out.println("Superato il Catch.. In memoria: ");
 					for(Rubrica r:controller.getRubriche()) {
 						System.out.print(r.getNome()+"   ");
 					}
-					System.out.println(controller.getRubricaSelezionata().getNome());
+					System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}
 			}
 		});
@@ -182,14 +189,15 @@ public class Home extends JFrame {
 					} catch (Exception e2) {
 						System.out.println("Entrato nel Catch..");
 						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
-                                             			JOptionPane.ERROR_MESSAGE );
+                                             		   JOptionPane.ERROR_MESSAGE );
 					}
+					
 					//debug manuale
-					System.out.println("Superato il Catch..");
+					System.out.println("Superato il Catch.. In memoria: ");
 					for(Rubrica r:controller.getRubriche()) {
 						System.out.print(r.getNome()+"   ");
 					}
-					System.out.println(controller.getRubricaSelezionata().getNome());
+					System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}
 			}
 		});

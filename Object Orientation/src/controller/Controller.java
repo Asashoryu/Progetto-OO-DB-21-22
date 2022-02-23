@@ -3,18 +3,26 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dao.SistemaDAO;
+import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
 
 public class Controller {
 	
 	private Sistema sistema;
-	
+	// serve da puntatore alla rubrica che viene modificata nella home
 	private Rubrica rubricaSelezionata;
 	
-	// Alla creazione del controller, sono caricate le Rubriche dal DB
+	// Alla creazione del controller, sono caricate tutte le Rubriche
 	public Controller() {
 		sistema = new Sistema();
+		loadRubriche();
+	}
+	
+	public void loadRubriche() {
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
+		sistema.setRubriche(sistemaPosgr.loadRubriche());
 	}
 	
 	// Metodo usato dalla ComboBox del main. Ritorna un array di nomi delle
@@ -42,9 +50,13 @@ public class Controller {
 	}
 	
 	public void updateRubrica(String nuovoNome) throws SQLException {
+		
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
-			//nella rubrica selezionata viene inserito il nuovo nome
-			sistema.updateRubrica(rubricaSelezionata, nuovoNome);
+			//update nel DB
+			sistemaPosgr.updateRubrica(rubricaSelezionata.getNome(), nuovoNome);
+			//update in memoria
+			rubricaSelezionata.setNome(nuovoNome);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw e;
@@ -52,8 +64,13 @@ public class Controller {
 	}
 	
 	public void addRubrica(String nomeRubrica) throws SQLException {
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
-			rubricaSelezionata=sistema.addRubrica(nomeRubrica);
+			//add nel DB
+			sistemaPosgr.addRubrica(nomeRubrica);
+			//add in memoria
+			Rubrica rubrica = new Rubrica(nomeRubrica);
+			getRubriche().add(rubrica);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			throw e;
@@ -61,11 +78,19 @@ public class Controller {
 	}
 	
 	public void deleteRubrica() throws SQLException {
+		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
-			sistema.deleteRubrica(rubricaSelezionata);
+			//remove dal DB, per nome
+			sistemaPosgr.deleteRubrica(rubricaSelezionata.getNome());
+			//remove dalla memoria, per rubrica selezionata nella UI
+			getRubriche().remove(rubricaSelezionata);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// TODO: handle exception
 			throw e;
 		}
 	}
+	
+	/*public String[] getNomiContattiRubrica() {
+		
+	}*/
 }
