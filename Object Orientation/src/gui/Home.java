@@ -57,13 +57,14 @@ public class Home extends JFrame {
 		controller=c;
 		initialize();
 		frame.setVisible(true);
+		frame.setResizable(false);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
+		frame = new JFrame("Home");
 		frame.setBounds(500, 200, 650, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
