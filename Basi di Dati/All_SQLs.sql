@@ -1,4 +1,18 @@
 --Al fine di evitare la distruzione e poi la ricreazione del database, si suggerisce di usare la seguente sequenza di comandi (togliendo i commenti)
+
+--Creazione datatype EmailType per indirizzi email
+--L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo.
+Create Domain EmailType AS VARCHAR(256) 
+CHECK (Value like '_%@_%.__%');
+
+--Crea il datatype per il CAP
+ CREATE DOMAIN CAPType AS CHAR(5) 
+ CHECK (VALUE NOT LIKE '%[^0-9]%' AND LENGTH(VALUE)>4);
+ 
+--Creazione dominio per numero telefonico
+CREATE DOMAIN NUMType AS VARCHAR(10) 
+ CHECK (VALUE NOT LIKE '%[^0-9]%' AND LENGTH(VALUE)>9);
+ 
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 GRANT ALL ON SCHEMA public TO postgres;
@@ -22,7 +36,7 @@ Rubrica_FK VARCHAR(30) NOT NULL
 ALTER TABLE Gruppo
  ADD CONSTRAINT gruppo_pk PRIMARY KEY(Gruppo_ID),
  ADD CONSTRAINT gruppo_rubrica_fk FOREIGN KEY(Rubrica_FK) REFERENCES Rubrica(Utente_ID)
- ON DELETE CASCADE;
+ ON UPDATE CASCADE ON DELETE CASCADE;
  
 --Crea la tabella Contatto
 CREATE TABLE Contatto(
@@ -34,30 +48,32 @@ Foto VARCHAR(20),
 Rubrica_FK VARCHAR(20) NOT NULL
 );
 
-ALTER TABLE Contatto
+ ALTER TABLE Contatto
  ADD CONSTRAINT contatto_pk PRIMARY KEY(Contatto_ID),
  ADD CONSTRAINT contatto_rubica_fk FOREIGN KEY(Rubrica_FK) REFERENCES Rubrica(Utente_ID)
- ON DELETE CASCADE;
+ ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 
 --Crea la tabella Account
 CREATE TABLE Account(
 Account_ID SERIAL ,
 Fornitore VARCHAR(20) NOT NULL,
-IndirizzoEmail VARCHAR(256) NOT NULL,
+IndirizzoEmail EmailType NOT NULL,
 FraseStato VARCHAR(256),
 Nickname VARCHAR(30)
 );
 
 ALTER TABLE Account
  ADD CONSTRAINT account_pk PRIMARY KEY(Account_ID),
- ADD CONSTRAINT unique_provider_email UNIQUE (Fornitore,IndirizzoEmail),
- --L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo utilizzando un CHECK per verificare tale condizione
- ADD CONSTRAINT correct_email_formatting CHECK ( IndirizzoEmail LIKE '_%@_%.__%');
+ ADD CONSTRAINT unique_provider_email UNIQUE (Fornitore,IndirizzoEmail);
+ 
+ 
 
 --Crea la tabella Email
 CREATE TABLE Email(
 Email_ID SERIAL,
-IndirizzoEmail VARCHAR(256) NOT NULL,
+IndirizzoEmail EmailType,
 Descrizione VARCHAR(30),
 Contatto_FK SERIAL
 );
@@ -65,10 +81,11 @@ Contatto_FK SERIAL
 ALTER TABLE Email
  ADD CONSTRAINT email_pk PRIMARY KEY(Email_ID),
  ADD CONSTRAINT email_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
- ON DELETE CASCADE,
- --L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo utilizzando un CHECK per verificare tale condizione
- ADD CONSTRAINT correct_email_formatting CHECK (IndirizzoEmail LIKE '_%@_%.__%'),
+ ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT not_redundant_email UNIQUE (Contatto_FK,indirizzoEmail);
+ 
+ 
+
  
 --Crea la tabella Indirizzo
 CREATE TABLE Indirizzo(
@@ -76,7 +93,7 @@ Indirizzo_ID SERIAL ,
 Via VARCHAR(20) NOT NULL,
 Città VARCHAR(30),
 Nazione VARCHAR(30) NOT NULL,
-CAP INTEGER NOT NULL,
+CAP CAPType NOT NULL,
 Descrizione VARCHAR(20) NOT NULL,
 Contatto_FK SERIAL
 );
@@ -84,12 +101,14 @@ Contatto_FK SERIAL
 ALTER TABLE Indirizzo
  ADD CONSTRAINT indirizzo_pk PRIMARY KEY(Indirizzo_ID),
  ADD CONSTRAINT indirizzo_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
- ON DELETE CASCADE;
+ ON UPDATE CASCADE ON DELETE CASCADE;
 
+
+ 
 --Crea la tabella Telefono
 CREATE TABLE Telefono (
 Telefono_ID SERIAL,
-Numero BIGINT NOT NULL,
+Numero NUMType NOT NULL,
 Descrizione VARCHAR(20),
 Contatto_FK SERIAL
 );
@@ -97,7 +116,7 @@ Contatto_FK SERIAL
 ALTER TABLE Telefono
  ADD CONSTRAINT telefono_pk PRIMARY KEY(Telefono_ID),
  ADD CONSTRAINT telefono_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
- ON DELETE CASCADE,
+ ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT not_redundant_telephone_number UNIQUE(Contatto_FK,Numero);
 
 --Crea la tabella Associa 
@@ -108,9 +127,9 @@ Account_FK SERIAL
 
 ALTER TABLE Associa
  ADD CONSTRAINT associa_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
- ON DELETE CASCADE,
+ ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT associa_account_fk FOREIGN KEY(Account_FK) REFERENCES Account(Account_ID)
- ON DELETE CASCADE;
+ ON UPDATE CASCADE ON DELETE CASCADE;
 
 --Crea la tabella Composizione
 CREATE TABLE Composizione(
@@ -119,9 +138,9 @@ Gruppo_FK SERIAL
 );
 ALTER TABLE Composizione
  ADD CONSTRAINT composizione_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
- ON DELETE CASCADE,
+ ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT composizione_gruppo_fk FOREIGN KEY(Gruppo_FK) REFERENCES Gruppo(Gruppo_ID)
- ON DELETE CASCADE;
+ ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --Definizione dei trigger per implementare i vincoli
@@ -288,3 +307,4 @@ CREATE OR REPLACE TRIGGER unchangeable_address_description
 	AFTER UPDATE ON Indirizzo
 	FOR EACH ROW
 	EXECUTE PROCEDURE unchangeable_address_description_f();
+
