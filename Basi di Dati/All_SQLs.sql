@@ -1,23 +1,22 @@
 --Al fine di evitare la distruzione e poi la ricreazione del database, si suggerisce di usare la seguente sequenza di comandi (togliendo i commenti)
-
---Creazione datatype EmailType per indirizzi email
---L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo.
-Create Domain EmailType AS VARCHAR(256) 
-CHECK (Value like '_%@_%.__%');
-
---Crea il datatype per il CAP
- CREATE DOMAIN CAPType AS CHAR(5) 
- CHECK (VALUE NOT LIKE '%[^0-9]%' AND LENGTH(VALUE)>4);
- 
---Creazione dominio per numero telefonico
-CREATE DOMAIN NUMType AS VARCHAR(10) 
- CHECK (VALUE NOT LIKE '%[^0-9]%' AND LENGTH(VALUE)>9);
- 
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO public;
 
+--Creazione datatype EmailType per indirizzi email
+--L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo.
+CREATE DOMAIN EmailType AS VARCHAR(256) 
+CHECK (VALUE LIKE '_%@_%.__%');
+
+--Crea il datatype per il CAP
+ CREATE DOMAIN CAPType AS CHAR(5) 
+ CHECK (VALUE NOT LIKE '%[^0-9]%');
+ 
+--Creazione dominio per numero telefonico
+CREATE DOMAIN NUMType AS VARCHAR(10) 
+ CHECK (VALUE NOT LIKE '%[^0-9]%');
+ 
 --Crea la tabella Rubrica
 CREATE TABLE Rubrica(
 Utente_ID VARCHAR(30)
@@ -307,4 +306,43 @@ CREATE OR REPLACE TRIGGER unchangeable_address_description
 	AFTER UPDATE ON Indirizzo
 	FOR EACH ROW
 	EXECUTE PROCEDURE unchangeable_address_description_f();
-
+	
+--blocca l'inserimento in Contatto
+CREATE OR REPLACE FUNCTION block_direct_insertion_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		RAISE NOTICE 'Inserimento diretto in contatto bloccato';
+		RETURN OLD;
+	END; $$;
+	
+CREATE OR REPLACE TRIGGER block_direct_insertion
+	BEFORE INSERT ON Contatto
+	FOR EACH ROW
+	EXECUTE PROCEDURE block_direct_insertion_f();
+	
+--Funzione che garantisce il corretto inserimento di un contatto con un numero 
+--fisso e uno mobile e un indirizzo fisico
+CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE, nome_par Contatto.nome%TYPE, 
+												cognome_par Contatto.cognome%TYPE, numero_mobile_par Telefono.numero%TYPE, 
+												numero_fisso_par Telefono.numero%TYPE, indirizzo_principale_par Indirizzo.via%TYPE,
+											    citta_par Indirizzo.città%TYPE, cap_par Indirizzo.cap%TYPE, nazione_par Indirizzo.nazione%TYPE)
+	RETURNS INTEGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		codice_contatto INTEGER := (SELECT max(contatto_id) FROM Contatto GR)+1;
+	BEGIN
+		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
+		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
+		INSERT INTO Contatto (contatto_id,nome, cognome, rubrica_fk) VALUES (codice_contatto, nome_par, cognome_par, rubrica_par);
+		INSERT INTO Telefono (numero, descrizione, contatto_fk) VALUES (numero_mobile_par, 'Mobile', codice_contatto);
+		INSERT INTO Telefono (numero, descrizione, contatto_fk) VALUES (numero_fisso_par, 'Fisso', codice_contatto);
+		INSERT INTO Indirizzo (via, descrizione, città, cap, nazione, contatto_fk) 
+							   VALUES (indirizzo_principale_par, 'Principale', citta_par, cap_par, nazione_par, codice_contatto);
+		--Riattivo il trigger
+		ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
+		--Viene ritornato il codice del contatto creato
+		RETURN codice_contatto;
+		END; $$;
