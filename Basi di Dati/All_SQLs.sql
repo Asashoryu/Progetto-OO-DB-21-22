@@ -273,15 +273,16 @@ CREATE OR REPLACE FUNCTION undeletable_main_address_f()
 	BEGIN
 		IF (OLD.Descrizione = 'Principale') THEN
 			RAISE NOTICE 'Questo indirizzo è principale e non può essere eliminato';
-			RETURN NEW;
+			RETURN NULL;
 		ELSE 
 			RETURN OLD;
 		END IF;
 	END;$$;
 
 CREATE OR REPLACE TRIGGER undeletable_main_address
-BEFORE DELETE ON Indirizzo FOR EACH ROW
-EXECUTE PROCEDURE undeletable_main_address_f();	
+	BEFORE DELETE ON Indirizzo 
+	FOR EACH ROW
+	EXECUTE PROCEDURE undeletable_main_address_f();	
 
 --Regola attiva che dopo ogni inserimento di un nuovo account
 --la sua email viene associata a quella dei contatti che la condividono
@@ -292,18 +293,17 @@ CREATE OR REPLACE FUNCTION unchangeable_address_description_f()
 	BEGIN
 		IF OLD.Descrizione='Principale' AND NEW.Descrizione<>'Principale' THEN
 			RAISE NOTICE 'Tentativo di modifica un indirizzo principale in uno secondario abortito';
-			UPDATE INDIRIZZO
-			SET Descrizione = 'Principale'
-			WHERE Indirizzo_ID=NEW.Indirizzo_ID;
+			RETURN NULL;
+		ELSE
+			RETURN NEW;
 		END IF;
-		RETURN NEW;
 	END; $$;
 	
 CREATE OR REPLACE TRIGGER unchangeable_address_description
 	--L'attivazione del vincolo interviene per aggiustare solamente
 	--la modifica della descrizione principale, mentre le restanti 
 	--modifiche sono mantenute
-	AFTER UPDATE ON Indirizzo
+	BEFORE UPDATE ON Indirizzo
 	FOR EACH ROW
 	EXECUTE PROCEDURE unchangeable_address_description_f();
 	
@@ -321,7 +321,32 @@ CREATE OR REPLACE TRIGGER block_direct_insertion
 	BEFORE INSERT ON Contatto
 	FOR EACH ROW
 	EXECUTE PROCEDURE block_direct_insertion_f();
+
+--Trigger che assicura che per ogni contatto esistano sempre 
+--un numero fisso e uno mobile
+CREATE OR REPLACE FUNCTION check_mobile_landline_numbers_existence_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		--tg_op è una metavariabile che indica l'operazione che innesca il trigger
+		IF (SELECT count(*) FROM Telefono WHERE Contatto_fk=OLD.Contatto_fk AND Descrizione=OLD.Descrizione)<=1 THEN
+			RAISE NOTICE 'operazione di % del numero % del contatto % non consentita',tg_op, OLD.Numero, OLD.Contatto_fk;
+			RETURN NULL;
+		ELSE 
+			IF tg_op='UPDATE' THEN
+				RETURN NEW;
+			ELSE 
+				RETURN OLD;
+			END IF;
+		END IF;
+	END; $$;
 	
+CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
+	BEFORE DELETE OR UPDATE ON Telefono
+	FOR EACH ROW
+	EXECUTE PROCEDURE check_mobile_landline_numbers_existence_f();
+
 --Funzione che garantisce il corretto inserimento di un contatto con un numero 
 --fisso e uno mobile e un indirizzo fisico
 CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE, nome_par Contatto.nome%TYPE, 
@@ -332,7 +357,7 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 	LANGUAGE PLPGSQL
 	AS $$
 	DECLARE
-		codice_contatto INTEGER := (SELECT max(contatto_id) FROM Contatto GR)+1;
+		codice_contatto INTEGER := (SELECT max(contatto_id) FROM Contatto)+1;
 	BEGIN
 		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
 		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
