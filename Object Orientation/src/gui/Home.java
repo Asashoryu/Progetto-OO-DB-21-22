@@ -10,6 +10,8 @@ import javax.management.RuntimeErrorException;
 import javax.sound.midi.ControllerEventListener;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
@@ -33,17 +35,21 @@ import java.awt.Insets;
 import javax.swing.SpringLayout;
 import javax.swing.BoxLayout;
 import javax.swing.ComboBoxEditor;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDesktopPane;
 import javax.swing.JTextArea;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class Home extends JFrame {
 	private Controller controller;
 
 	JFrame frame;
-	private JPanel panel;
 	private JLabel lblNewLabel;
-	private JPanel panel_1;
-	private JComboBox comboBox;
+	private DefaultComboBoxModel<Object> comboBoxModel;
+	private JComboBox<Object> comboBox;
 	private JButton btnModifica;
 	private JTextField txtUtenteSelezionato;
 	private JButton btnEntra;
@@ -64,99 +70,122 @@ public class Home extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("Home");
-		frame.setBounds(500, 200, 650, 400);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.NORTH);
+		/**
+		 * Set dei Components
+		 */
+		frame = new JFrame("Home");
+		frame.getContentPane().setBackground(new Color(248, 248, 255));
+		frame.setBounds(500, 200, 646, 480);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Benvenuto nella Rubrica Avanzata");
+		lblNewLabel_1.setBackground(Color.CYAN);
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 30));
+		lblNewLabel_1.setBounds(-20, 0, 656, 86);
+		frame.getContentPane().add(lblNewLabel_1);
 		
 		lblNewLabel = new JLabel("Utente");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel.add(lblNewLabel);
+		lblNewLabel.setBounds(148, 98, 57, 15);
+		frame.getContentPane().add(lblNewLabel);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		comboBox = new JComboBox<Object>(controller.getNomiRubriche());
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
-			}
-		});
-				
-		panel.add(comboBox);
-		txtUtenteSelezionato = new JTextField();
+		comboBoxModel = new DefaultComboBoxModel<Object>(controller.getNomiRubriche());
+		comboBox = new JComboBox<Object>(comboBoxModel);
+		comboBox.setBounds(200, 97, 90, 17);
+		frame.getContentPane().add(comboBox);
+		comboBox.setBackground(new Color(248, 248, 255));
+		
+		txtUtenteSelezionato = new JTextField("");
+		txtUtenteSelezionato.setBounds(300, 97, 90, 16);
+		frame.getContentPane().add(txtUtenteSelezionato);
+		txtUtenteSelezionato.setBackground(new Color(211, 211, 211));
 		txtUtenteSelezionato.setEditable(false);
-		panel.add(txtUtenteSelezionato);
 		txtUtenteSelezionato.setColumns(10);
 		
-		controller.setRubricaSelezionata(0);
-		txtUtenteSelezionato.setText(comboBox.getItemAt(0).toString());
-		
 		btnEntra = new JButton("Entra");
-		panel.add(btnEntra);
-		btnEntra.addActionListener(new ActionListener() {
+		btnEntra.setBounds(400, 96, 65, 18);
+		frame.getContentPane().add(btnEntra);
+		btnEntra.setBackground(new Color(248, 248, 255));
+		
+		btnAggiungi = new JButton("Aggiungi");
+		btnAggiungi.setBounds(253, 151, 89, 21);
+		frame.getContentPane().add(btnAggiungi);
+		btnAggiungi.setBackground(new Color(248, 248, 255));
+		
+		btnElimina = new JButton("Elimina");
+		btnElimina.setBounds(352, 151, 82, 21);
+		frame.getContentPane().add(btnElimina);
+		btnElimina.setBackground(new Color(248, 248, 255));
+		
+		btnModifica = new JButton("Modifica");
+		btnModifica.setBounds(161, 151, 82, 21);
+		frame.getContentPane().add(btnModifica);
+		btnModifica.setForeground(new Color(0, 0, 0));
+		btnModifica.setBackground(new Color(248, 248, 255));
+		
+		/**
+		 * Set della comobox e del text label all'avvio
+		 */
+		if(controller.getRubriche().size()!=0) {
+			txtUtenteSelezionato.setText(comboBox.getItemAt(0).toString());
+			controller.setRubricaSelezionata(0);
+		}
+		
+		/**
+		 * Quando è selezionato un campo della combobox il suo valore 
+		 * è visualizzato nella label affianco
+		 */
+		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
-				controller.loadContatti();
-				JFrame contattiFrame = new ListaContatti(controller, frame);
-				System.out.println("Frame Contatti caricato");
-				frame.setVisible(false);
-				contattiFrame.setVisible(true);
+				if(comboBoxModel.getSelectedItem()!=null) {
+					System.out.println("\nEntrato nell'action listener di combobox  "+ e.getActionCommand());
+					txtUtenteSelezionato.setText(comboBoxModel.getSelectedItem().toString());
+				}
+				else {
+					txtUtenteSelezionato.setText("");
+				}
 			}
 		});
 		
-		panel_1 = new JPanel();
-		frame.getContentPane().add(panel_1, BorderLayout.CENTER);
-		
-		btnModifica = new JButton("Modifica");
-		btnModifica.addActionListener(new ActionListener() {
+		/**
+		 * Quando è premuto il button entra
+		 */
+		btnEntra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Seleziono la stringa corrispondente alla stringa selezionata nella combobox
-				//così da evitare la ricerca della stessa
-				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
-					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
-					String stringa = JOptionPane.showInputDialog(visualizzata);
-					if(stringa!= null && stringa.isBlank()==false) {
-						try {
-						controller.updateRubrica(stringa);
-						//In caso di Exception non entra in questo punto
-						int indiceSelezionato = comboBox.getSelectedIndex();
-						comboBox.removeItemAt(indiceSelezionato);
-						comboBox.insertItemAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
-						comboBox.setSelectedIndex(indiceSelezionato);
-						txtUtenteSelezionato.setText(comboBox.getSelectedItem().toString());
-						System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
-						} catch (Exception e2) {
-							System.out.println("Entrato nel Catch..");
-							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
-                                                 			JOptionPane.ERROR_MESSAGE );
-						}
-						System.out.println("Superato il Catch.. In memoria: ");
-						for(Rubrica r:controller.getRubriche()) {
-							System.out.print(r.getNome()+"   ");
-						}
-						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
-					}
+				if(txtUtenteSelezionato.getText().isBlank()==false) {
+					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+					controller.loadContatti();
+					JFrame contattiFrame = new ListaContatti(controller, frame);
+					System.out.println("Frame Contatti caricato");
+					frame.setVisible(false);
+					contattiFrame.setVisible(true);
 				}
+			}
 		});
-		panel_1.add(btnModifica);
 		
-		btnAggiungi = new JButton("Aggiungi");
+		/**
+		 * Quando è premuto il button aggiungi
+		 */
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String visualizzata = "Inserisci il nome della Rubrica da aggiungere";
-				String stringa = JOptionPane.showInputDialog(visualizzata);
-				if(stringa!= null && stringa.isBlank()==false) {
+				String stringaDaInserire = JOptionPane.showInputDialog(visualizzata);
+				if(stringaDaInserire!= null && stringaDaInserire.isBlank()==false) {
 					try {
-					//aggiunge la rubrica nel DB e in memoria
-						
-					controller.addRubrica(stringa);
+					//aggiunge la rubrica nel DB e in memoria	
+					controller.addRubrica(stringaDaInserire);
 					//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
-					int indiceSelezionato = comboBox.getSelectedIndex();
-					comboBox.addItem((Object) stringa);
-					comboBox.setSelectedIndex(indiceSelezionato);
-					System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+					System.out.println("Valore aggiunto con successo!\n");
+					comboBox.addItem((Object) stringaDaInserire);
+					comboBox.setSelectedIndex(comboBoxModel.getIndexOf(stringaDaInserire));
+					txtUtenteSelezionato.setText(stringaDaInserire);
+					System.out.println("Utente aggiunto è "+ comboBox.getSelectedItem().toString());
 					} catch (Exception e2) {
-						System.out.println("Entrato nel Catch..");
+						e2.printStackTrace();
+						System.out.println("Entrato nel Catch.. valore aggiunto non valido\n");
 						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
                                              			JOptionPane.ERROR_MESSAGE );
 					}
@@ -165,47 +194,83 @@ public class Home extends JFrame {
 					for(Rubrica r:controller.getRubriche()) {
 						System.out.print(r.getNome()+"   ");
 					}
-					System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
+					//System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}
 			}
 		});
-		panel_1.add(btnAggiungi);
 		
-		btnElimina = new JButton("Elimina");
+		/**
+		 * Quando è premuto il button elimina
+		 */
 		btnElimina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String stringa=txtUtenteSelezionato.getText();
-				String visualizzata = "Confermi di voler eliminare la Rubrica ".concat(stringa);
-				// 0=Procedi, 1=Annulla
-				Object[] opzioni = {"Procedi","Annulla"};
-				// finestra di conferma per la cancellazione
-				int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina", JOptionPane.YES_NO_OPTION,
-														 JOptionPane.WARNING_MESSAGE, null, opzioni, null);
-				if(input==0 && stringa!= null && stringa.isBlank()==false) {
-					try {
-					//rimuove dalla rubrica nel DB e in memoria
-					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
-					controller.deleteRubrica();
-					//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
-					comboBox.removeItemAt(comboBox.getSelectedIndex());
-					comboBox.setSelectedIndex(0);
-					txtUtenteSelezionato.setText("");
-					System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
-					} catch (Exception e2) {
-						System.out.println("Entrato nel Catch..");
-						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
-                                             		   JOptionPane.ERROR_MESSAGE );
+				if(txtUtenteSelezionato.getText().isBlank()==false) {
+					String stringaUtenteDaEliminare = txtUtenteSelezionato.getText();
+					String visualizzata = "Confermi di voler eliminare la Rubrica ".concat(stringaUtenteDaEliminare);
+					// 0=Procedi, 1=Annulla
+					Object[] opzioni = {"Procedi","Annulla"};
+					// finestra di conferma per la cancellazione
+					int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina", JOptionPane.YES_NO_OPTION,
+													 		JOptionPane.WARNING_MESSAGE, null, opzioni, null);
+					if(input==0) {
+						try {
+							int indiceSelezionato = comboBox.getSelectedIndex();
+							//rimuove dalla rubrica nel DB e in memoria
+							controller.setRubricaSelezionata(indiceSelezionato);
+							controller.deleteRubrica();
+							//Una volta effettuate le modifiche nel DB e in memoria, si aggiorna il frame
+							comboBoxModel.removeElementAt(indiceSelezionato);
+						} catch (Exception e2) {
+							e2.printStackTrace();
+							System.out.println("\nEntrato nel Catch.. valore non valido");
+							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+                                            		   	   JOptionPane.ERROR_MESSAGE );
+						}
+						
+						//debug manuale
+						System.out.println("Superato il Catch.. In memoria sono presenti le seguenti rubriche: ");
+						for(Rubrica r:controller.getRubriche()) {
+							System.out.print(r.getNome()+"   ");
+						}
+						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
-					
-					//debug manuale
-					System.out.println("Superato il Catch.. In memoria: ");
-					for(Rubrica r:controller.getRubriche()) {
-						System.out.print(r.getNome()+"   ");
-					}
-					System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}
 			}
 		});
-		panel_1.add(btnElimina);
+			
+		/**
+		 * Quando è premuto il button modifica
+		 */
+		btnModifica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtUtenteSelezionato.getText().isBlank()==false) {
+				//Fisso la rubrica selezionata dalla combobox attraverso il suo nome
+				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
+					String stringa = JOptionPane.showInputDialog(visualizzata);
+					if(stringa!= null && stringa.isBlank()==false) {
+						try {
+						controller.updateRubrica(stringa);
+						//In caso di Exception non entra in questo punto
+						int indiceSelezionato = comboBox.getSelectedIndex();
+						comboBoxModel.removeElementAt(indiceSelezionato);
+						comboBoxModel.insertElementAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
+						comboBox.setSelectedIndex(indiceSelezionato);
+						System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+						} catch (Exception e2) {
+							System.out.println("Entrato nel Catch..");
+							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+	                                                			JOptionPane.ERROR_MESSAGE );
+						}
+						System.out.println("Superato il Catch.. In memoria: ");
+						for(Rubrica r:controller.getRubriche()) {
+							System.out.print(r.getNome()+"   ");
+						}
+						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
+					}
+				}
+			}
+		});
+		
 	}
 }

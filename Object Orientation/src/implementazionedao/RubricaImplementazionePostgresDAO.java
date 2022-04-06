@@ -46,4 +46,18 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 		return contatti;
 	}
+	
+	public void addContatti(String nome, String secondonome, String cognome, String nomerubrica) {
+		System.out.println("INSERT INTO Contatto (nome, secondonome, cognome) VALUES "+"(\'"+nomeRubrica+"\')");
+		try {
+			PreparedStatement aggiungiContatto = connection.prepareStatement(
+					"INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
+			aggiungiRubrica.executeUpdate();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+		
 }

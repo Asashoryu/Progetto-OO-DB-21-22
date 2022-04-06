@@ -11,26 +11,34 @@ import model.Rubrica;
 import model.Sistema;
 import model.Contatto;
 
+/** Gestisce l'interazione dell'interfaccia col model e col DB. */
 public class Controller {
 	
+	/** Oggetto contenitore delle rubriche. */
 	private Sistema sistema;
-	// serve da puntatore alla rubrica che viene modificata nella home
+	/** Rubrica soggetta a operazioni di modifica, cancellazione o selezione. */
 	private Rubrica rubricaSelezionata;
 	
-	// Alla creazione del controller, sono caricate tutte le Rubriche
+	/**Costruttore del Controller. Carica le rubriche dal DB in memoria */
 	public Controller() {
 		sistema = new Sistema();
 		loadRubriche();
 	}
 	
+	/**
+	 * Questo metodo carica le rubriche dal database e le inserisce in memoria
+	 */
 	public void loadRubriche() {
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		sistema.setRubriche(sistemaPosgr.loadRubriche());
 	}
 	
-	// Metodo usato dalla ComboBox del main. Ritorna un array di nomi delle
-	// rubriche cui si riferiscono, enumerati nello stesso ordine degli oggetti,
-	// quindi l'indice di un nome consente di recuperare l'oggetto rubrica
+	/**
+	 * Metodo usato dalla ComboBox del main. Ritorna un array di nomi delle
+	 * rubriche cui si riferiscono, enumerati nello stesso ordine degli oggetti,
+	 * quindi l'indice di un nome consente di recuperare l'oggetto rubrica
+	 * @return
+	 */
 	public String[] getNomiRubriche(){
 		String[] nomiRubriche = new String[sistema.getRubriche().size()];
 		for(Rubrica r: sistema.getRubriche()) {
@@ -39,20 +47,35 @@ public class Controller {
 		return nomiRubriche;
 	}
 	
+	/**
+	 * Ritorna le rubriche presenti in memoria.
+	 * @return arrayList delle rubriche caricate in memoria.
+	 */
 	public ArrayList<Rubrica> getRubriche(){
 		return sistema.getRubriche();
 	}
 	
-	//rubrica selezionata dalla combobox, ricavata sfruttando lo stesso ordine 
-	//di indicizzazione rubrica-nomerubrica
+	/**
+	 * Imposta la rubrica selezionata dalla combobox attraverso il suo nome, univoco per ogni rubrica
+	 * @param indice
+	 */
 	public void setRubricaSelezionata(int indice) {
 		rubricaSelezionata = sistema.getRubriche().get(indice);
 	}
 	
+	/**
+	 * Restituisce la rubrica selezionata.
+	 * @return
+	 */
 	public Rubrica getRubricaSelezionata() {
 		return rubricaSelezionata;
 	}
 	
+	/**
+	 * Modifica il nome della rubrica selezionata
+	 * @param nuovoNome
+	 * @throws SQLException
+	 */
 	public void updateRubrica(String nuovoNome) throws SQLException {
 		
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
@@ -67,6 +90,11 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Crea e aggiunge una rubrica nel DB e in memoria.
+	 * @param nomeRubrica
+	 * @throws SQLException
+	 */
 	public void addRubrica(String nomeRubrica) throws SQLException {
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
@@ -81,6 +109,10 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Cancella dal DB e dalla memoria la rubrica selezionata
+	 * @throws SQLException
+	 */
 	public void deleteRubrica() throws SQLException {
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
@@ -89,17 +121,27 @@ public class Controller {
 			//remove dalla memoria, per rubrica selezionata nella UI
 			getRubriche().remove(rubricaSelezionata);
 		} catch (SQLException e) {
-			// TODO: handle exception
 			throw e;
 		}
 	}
 	
+	/**
+	 * Carica i contatti dal DB in memoria.
+	 */
 	public void loadContatti() {
-		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-		System.out.println("Rubrica selezionata è: "+rubricaSelezionata.getNome());
-		rubricaSelezionata.setContatti(rubricaPosgr.loadContatti(rubricaSelezionata.getNome()));
+		// Se la rubrica non ha contatti allora sono caricati dal DB
+		if(rubricaSelezionata.getContatti()==null) {
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			System.out.println("Rubrica selezionata è: "+rubricaSelezionata.getNome());
+			rubricaSelezionata.setContatti(rubricaPosgr.loadContatti(rubricaSelezionata.getNome()));
+		}
 	}
 	
+	/**
+	 * Restituisce i nomi di tutti i contatti della rubrica selezionata.
+	 * Necessario per visualizare i nomi nell'interfaccia UI.
+	 * @return	Array di nomi in forma di strighe
+	 */
 	public String[] getNomiContattiRubrica() {
 		String[] nomiContattiRubriche = new String[rubricaSelezionata.getContatti().size()];
 		for(Contatto c: rubricaSelezionata.getContatti()) {
@@ -114,4 +156,13 @@ public class Controller {
 		}
 		return nomiContattiRubriche;
 	}
+	
+	/*public void addContatto(String nome, String secondonome, String cognome) {
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		try {
+			rubricaPosgr.addContatto(nome, secondonome, cognome, getRubricaSelezionata().getNome());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}*/
 }
