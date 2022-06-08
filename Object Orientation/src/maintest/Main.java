@@ -23,6 +23,7 @@ public class Main {
 			System.out.println("Query preparata...");
 			//Operazione DML 
 			// Ciao da commit
+			// Hey, ciao da GitHub
 			comandodajava.executeUpdate();
 			System.out.println("Query eseguita...");
 			connection.close();
