@@ -25,8 +25,6 @@ public class AddSecondaryInfo extends JFrame {
 	
 	public AddSecondaryInfo(Controller c, String Utente) {
 		
-		frame
-		
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 242, 221);

@@ -12,11 +12,14 @@ import controller.Controller;
 import model.Rubrica;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
+
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
-public class ModificaRubrica extends JDia {
+public class ModificaRubrica extends JDialog {
 	
 	private Controller controller;
 	private JFrame frameChiamante;
@@ -71,7 +74,12 @@ public class ModificaRubrica extends JDia {
 		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				controller.updateRubrica(textNuovoUtente.getText());
+				try {
+					controller.updateRubrica(textNuovoUtente.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				frameChiamante.dispose();
 				Home home = new Home(controller);
 				frame.dispose();

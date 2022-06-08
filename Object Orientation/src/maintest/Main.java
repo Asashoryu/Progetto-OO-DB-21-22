@@ -21,7 +21,8 @@ public class Main {
 			PreparedStatement comandodajava = connection.prepareStatement(
 					"INSERT INTO RUBRICA(utente_id) VALUES ('Utente_ciao')");
 			System.out.println("Query preparata...");
-			//Operazione DML
+			//Operazione DML 
+			// Ciao da commit
 			comandodajava.executeUpdate();
 			System.out.println("Query eseguita...");
 			connection.close();

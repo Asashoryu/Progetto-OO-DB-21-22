@@ -1,6 +1,5 @@
 package gui;
 import javax.swing.event.*;
-import model.Provatext;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
