@@ -45,14 +45,14 @@ import javax.swing.BoxLayout;
 
 public class ListaContatti extends JFrame {
 	
-	private JFrame frame;
+	private JFrame     frame;
 	private Controller controller;
-	private String Nome;
-	private String SecondoNome;
-	private String Cognome;
+	private String 	   Nome;
+	private String     SecondoNome;
+	private String     Cognome;
 	
 	/**
-	 * Create the frame.
+	 * Crea frame.
 	 */
 	public ListaContatti(Controller c, JFrame frameChiamante) {
 		setResizable(false);
@@ -103,10 +103,6 @@ public class ListaContatti extends JFrame {
 		label_5.setBounds(-10007, -10030, 718, 448);
 		getContentPane().add(label_5);
 		
-		
-		/**
-		 * Quando è premuto il button "indietro"
-		 */
 		JButton btnUscita = new JButton("Indietro");
 		btnUscita.setBounds(10, 10, 82, 23);
 		btnUscita.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -149,7 +145,7 @@ public class ListaContatti extends JFrame {
 		btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 11));
 		
 		/**
-		 * Quando si clicca il button per tornare indietro
+		 * Quando è premuto il button "Indietro"
 		 */
 		btnUscita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,16 +155,35 @@ public class ListaContatti extends JFrame {
 		});
 		
 		/**
-		 * Quando cliccato button per aggiunger un contatto
+		 * Quando è premuto il button "Aggiungi"
 		 */
 		getContentPane().add(btnAggiungi);
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String visualizzata = controller.getRubricaSelezionata().getNome();
-				JFrame Contatto = new AddContatto(controller,visualizzata);
+				String utenteRubrica = controller.getRubricaSelezionata().getNome();
+				JFrame Contatto     = new AddContatto(controller, utenteRubrica);
+				frame.setVisible(false);
 				Contatto.setVisible(true);
 			}
 		});
+		
+		/**
+		 * Quando è premuto il button "Modifica"
+		 */
+		
+		/**
+		 * Quando è premuto il button "Elimina"
+		 */
+		
+		/**
+		 * Quando è premuto il button "GRUPPI"
+		 */
+		
+		/**
+		 * Quando è premuto il button "ricerca"
+		 * TODO : implementare le varie forme di ricerca di un contatto, secondo
+		 * 		  diversi criteri
+		 */
 	}
 }
 

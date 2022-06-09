@@ -20,7 +20,8 @@ public class Controller {
 	private Rubrica rubricaSelezionata;
 	
 	/**Costruttore del Controller. Carica le rubriche dal DB in memoria */
-	public Controller() {
+	public Controller() 
+	{
 		sistema = new Sistema();
 		loadRubriche();
 	}
@@ -28,7 +29,8 @@ public class Controller {
 	/**
 	 * Questo metodo carica le rubriche dal database e le inserisce in memoria
 	 */
-	public void loadRubriche() {
+	public void loadRubriche() 
+	{
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		sistema.setRubriche(sistemaPosgr.loadRubriche());
 	}
@@ -39,7 +41,8 @@ public class Controller {
 	 * quindi l'indice di un nome consente di recuperare l'oggetto rubrica
 	 * @return
 	 */
-	public String[] getNomiRubriche(){
+	public String[] getNomiRubriche()
+	{
 		String[] nomiRubriche = new String[sistema.getRubriche().size()];
 		for(Rubrica r: sistema.getRubriche()) {
 			nomiRubriche[sistema.getRubriche().indexOf(r)]=r.getNome();
@@ -51,7 +54,8 @@ public class Controller {
 	 * Ritorna le rubriche presenti in memoria.
 	 * @return arrayList delle rubriche caricate in memoria.
 	 */
-	public ArrayList<Rubrica> getRubriche(){
+	public ArrayList<Rubrica> getRubriche()
+	{
 		return sistema.getRubriche();
 	}
 	
@@ -59,7 +63,8 @@ public class Controller {
 	 * Imposta la rubrica selezionata dalla combobox attraverso il suo nome, univoco per ogni rubrica
 	 * @param indice
 	 */
-	public void setRubricaSelezionata(int indice) {
+	public void setRubricaSelezionata(int indice) 
+	{
 		rubricaSelezionata = sistema.getRubriche().get(indice);
 	}
 	
@@ -67,7 +72,8 @@ public class Controller {
 	 * Restituisce la rubrica selezionata.
 	 * @return
 	 */
-	public Rubrica getRubricaSelezionata() {
+	public Rubrica getRubricaSelezionata() 
+	{
 		return rubricaSelezionata;
 	}
 	
@@ -76,7 +82,8 @@ public class Controller {
 	 * @param nuovoNome
 	 * @throws SQLException
 	 */
-	public void updateRubrica(String nuovoNome) throws SQLException {
+	public void updateRubrica(String nuovoNome) throws SQLException 
+	{
 		
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
@@ -95,7 +102,8 @@ public class Controller {
 	 * @param nomeRubrica
 	 * @throws SQLException
 	 */
-	public void addRubrica(String nomeRubrica) throws SQLException {
+	public void addRubrica(String nomeRubrica) throws SQLException 
+	{
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try {
 			//add nel DB
@@ -103,7 +111,9 @@ public class Controller {
 			//add in memoria
 			Rubrica rubrica = new Rubrica(nomeRubrica);
 			getRubriche().add(rubrica);
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			// TODO Auto-generated catch block
 			throw e;
 		}
@@ -113,14 +123,18 @@ public class Controller {
 	 * Cancella dal DB e dalla memoria la rubrica selezionata
 	 * @throws SQLException
 	 */
-	public void deleteRubrica() throws SQLException {
+	public void deleteRubrica() throws SQLException 
+	{
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
-		try {
+		try 
+		{
 			//remove dal DB, per nome
 			sistemaPosgr.deleteRubrica(rubricaSelezionata.getNome());
 			//remove dalla memoria, per rubrica selezionata nella UI
 			getRubriche().remove(rubricaSelezionata);
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) 
+		{
 			throw e;
 		}
 	}
@@ -128,11 +142,14 @@ public class Controller {
 	/**
 	 * Carica i contatti dal DB in memoria.
 	 */
-	public void loadContatti() {
-		// Se la rubrica non ha contatti allora sono caricati dal DB
-		if(rubricaSelezionata.getContatti()==null) {
+	public void loadContatti() 
+	{
+		// Se la rubrica non è inizializzata
+		// allora i contatti sono caricati dal DB
+		if(rubricaSelezionata.getContatti() == null) 
+		{
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-			System.out.println("Rubrica selezionata è: "+rubricaSelezionata.getNome());
+			System.out.println("Rubrica selezionata è: " + rubricaSelezionata.getNome());
 			rubricaSelezionata.setContatti(rubricaPosgr.loadContatti(rubricaSelezionata.getNome()));
 		}
 	}
@@ -142,14 +159,19 @@ public class Controller {
 	 * Necessario per visualizare i nomi nell'interfaccia UI.
 	 * @return	Array di nomi in forma di strighe
 	 */
-	public String[] getNomiContattiRubrica() {
+	public String[] getNomiContattiRubrica() 
+	{
 		String[] nomiContattiRubriche = new String[rubricaSelezionata.getContatti().size()];
-		for(Contatto c: rubricaSelezionata.getContatti()) {
+		for(Contatto c : rubricaSelezionata.getContatti()) 
+		{
 			// sono riunite tutte le parti di un nome di un contatto in una stringa
 			String nomeCompleto;
-			if(c.getSecondoNome()!=null) {
+			if(c.getSecondoNome()!=null) 
+			{
 				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
-			} else {
+			} 
+			else 
+			{
 				nomeCompleto = c.getNome() +" "+ c.getCognome();
 			}
 			nomiContattiRubriche[rubricaSelezionata.getContatti().indexOf(c)]=nomeCompleto;
@@ -157,7 +179,8 @@ public class Controller {
 		return nomiContattiRubriche;
 	}
 	
-	/*public void addContatto(String nome, String secondonome, String cognome) {
+	/*public void addContatto(String nome, String secondonome, String cognome) 
+	 * {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try {
 			rubricaPosgr.addContatto(nome, secondonome, cognome, getRubricaSelezionata().getNome());

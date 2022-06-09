@@ -3,7 +3,10 @@ package gui;
 import java.awt.EventQueue;
 
 import controller.Controller;
-
+/**
+ * Classe di avvio dell'interfaccia del programma
+ *
+ */
 public class MainEntryPoint {
 	/**
 	 * Launch the application.
