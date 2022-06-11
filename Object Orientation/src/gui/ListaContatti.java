@@ -161,7 +161,7 @@ public class ListaContatti extends JFrame {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String utenteRubrica = controller.getRubricaSelezionata().getNome();
-				JFrame Contatto     = new AddContatto(controller, utenteRubrica);
+				JFrame Contatto      = new AddContatto(controller, utenteRubrica);
 				frame.setVisible(false);
 				Contatto.setVisible(true);
 			}

@@ -18,6 +18,7 @@ import model.Rubrica;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Spring;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -36,6 +37,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import java.awt.Dimension;
@@ -46,6 +49,20 @@ import java.awt.TextField;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.EtchedBorder;
 import gui.AddSecondaryInfo;
+import javax.swing.JScrollBar;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.ComponentOrientation;
+import java.awt.Rectangle;
+import java.awt.Component;
+import javax.swing.ScrollPaneConstants;
 
 public class AddContatto extends JFrame {
 
@@ -72,6 +89,17 @@ public class AddContatto extends JFrame {
 	private JTextField textFieldNazione;
 	private JTextField textFieldCap;
 	private JTextField textFieldDescrizioneEmail;
+	private JPanel panelMain;
+	private JPanel pannelloElemScrollPane;
+	private JPanel pannelloIndPrincipale;
+	private JPanel pannelloNumTel;
+	private JPanel pannelloIndMail;
+	private JPanel pannelloNumTelSec;
+	private JPanel pannelloEmailAddSec;
+	private JLabel lblNumSecondari;
+	private JLabel lblEmailSecondarie;
+	private JPanel pannelloScrolNumTel;
+	private JPanel panelloScrollMail;
 
 	public AddContatto(Controller c, String Utente) {
 		setResizable(false);
@@ -89,216 +117,439 @@ public class AddContatto extends JFrame {
 		getContentPane().setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 397, 434);
+		setBounds(100, 100, 793, 464);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		getContentPane().setBackground(new Color(224, 255, 255));
 		contentPane.setLayout(null);
 
-		textFieldNome = new JTextField();
-		textFieldNome.setBounds(20, 62, 90, 19);
-		contentPane.add(textFieldNome);
-		textFieldNome.setColumns(10);
-		textFieldNome.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void insertUpdate(DocumentEvent e) {
-
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-
-			}
-		});
-
-		textFieldSecondoNome = new JTextField();
-		textFieldSecondoNome.setBounds(149, 62, 96, 19);
-		contentPane.add(textFieldSecondoNome);
-		textFieldSecondoNome.setColumns(10);
-
-		textFieldCognome = new JTextField();
-		textFieldCognome.setBounds(278, 62, 90, 19);
-		contentPane.add(textFieldCognome);
-		textFieldCognome.setColumns(10);
-
 		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + Utente);
 		lblTitolo.setBounds(10, 10, 362, 19);
 		contentPane.add(lblTitolo);
 
-		lblLabelNome = new JLabel("Nome ");
-		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLabelNome.setBounds(14, 39, 96, 13);
-		contentPane.add(lblLabelNome);
-
-		lblSecondoNome = new JLabel("Secondo Nome");
-		lblSecondoNome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSecondoNome.setBounds(149, 39, 96, 13);
-		contentPane.add(lblSecondoNome);
-
-		lblCognome = new JLabel("Cognome ");
-		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCognome.setBounds(274, 39, 96, 13);
-		contentPane.add(lblCognome);
-
+		/**
+		 * Button "annulla"
+		 */
 		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(10, 355, 85, 21);
+		btnAnnulla.setBounds(492, 393, 85, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
 			}
 		});
-
-		textFieldNumFisso = new JTextField();
-		textFieldNumFisso.setBounds(65, 203, 96, 19);
-		contentPane.add(textFieldNumFisso);
-		textFieldNumFisso.setColumns(10);
-		textFieldNumFisso.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void insertUpdate(DocumentEvent e) {
-
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-
-			}
-		});
-
-		textFieldNumMobile = new JTextField();
-		textFieldNumMobile.setBounds(65, 174, 96, 19);
-		contentPane.add(textFieldNumMobile);
-		textFieldNumMobile.setColumns(10);
-		textFieldNumMobile.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void insertUpdate(DocumentEvent e) {
-
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-
-			}
-		});
-
-		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
-		lblNumeriTelefono.setBounds(21, 152, 112, 13);
-		contentPane.add(lblNumeriTelefono);
-
-		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(65, 263, 96, 19);
-		contentPane.add(textFieldEmail);
-		textFieldEmail.setColumns(10);
-
-		JLabel lblIndirizzoMail = new JLabel("Indirizzo Mail");
-		lblIndirizzoMail.setBounds(20, 240, 96, 13);
-		contentPane.add(lblIndirizzoMail);
-
-		textFieldVia = new JTextField();
-		textFieldVia.setBounds(272, 177, 96, 19);
-		contentPane.add(textFieldVia);
-		textFieldVia.setColumns(10);
-		textFieldVia.getDocument().addDocumentListener(new DocumentListener() {
-
-			public void insertUpdate(DocumentEvent e) {
-
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-
-			}
-
-			public void changedUpdate(DocumentEvent e) {
-
-			}
-		});
-
-		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Fisico");
-		lblIndirizzoFisico.setBounds(228, 152, 97, 13);
-		contentPane.add(lblIndirizzoFisico);
-
-		lblNumMobile = new JLabel("Mobile ");
-		lblNumMobile.setBounds(10, 177, 45, 13);
-		contentPane.add(lblNumMobile);
-
-		lblNumFisso = new JLabel("Fisso ");
-		lblNumFisso.setBounds(10, 206, 45, 13);
-		contentPane.add(lblNumFisso);
-
-		lblVia = new JLabel("Via");
-		lblVia.setHorizontalAlignment(SwingConstants.LEFT);
-		lblVia.setBounds(217, 180, 45, 13);
-		contentPane.add(lblVia);
-
+		
+		/**
+		 * Button "vai"
+		 */
 		JButton btnAzione = new JButton("Vai");
-		btnAzione.setBounds(283, 355, 85, 21);
+		btnAzione.setBounds(593, 393, 85, 21);
 		contentPane.add(btnAzione);
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
 				// passato come parametro
 				// Creazione frame per informazioni secondarie
-				AddSecondaryInfo MoreInfo = new AddSecondaryInfo(Utente);
-				MoreInfo.setVisible(true);
 			}
 		});
+		
+		/**
+		 * Inserimentoi 
+		 */
 
+		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
+		lblNumeriTelefono.setBounds(366, 128, 112, 13);
+		contentPane.add(lblNumeriTelefono);
+
+		JLabel lblIndirizzoMail = new JLabel("Indirizzo Mail");
+		lblIndirizzoMail.setBounds(582, 128, 96, 13);
+		contentPane.add(lblIndirizzoMail);
+
+		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
+		lblIndirizzoFisico.setBounds(62, 128, 111, 13);
+		contentPane.add(lblIndirizzoFisico);
+
+		
+		/**
+		 * Indirizzi fisici secondari
+		 */
+		JPanel panelMain = new JPanel();
+		panelMain.setBounds(38, 270, 249, 119);
+		contentPane.add(panelMain);
+		panelMain.setLayout(new BorderLayout(0, 0));
+		
+		
+		JPanel pannelloElemScrollPane_1 = new JPanel();
+		pannelloElemScrollPane_1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		pannelloElemScrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pannelloElemScrollPane_1.setBackground(Color.GREEN);
+		
+		JScrollPane scrollPane = new JScrollPane(pannelloElemScrollPane_1);
+		pannelloElemScrollPane_1.setLayout(new BoxLayout(pannelloElemScrollPane_1, BoxLayout.PAGE_AXIS));
+		scrollPane.setPreferredSize(pannelloElemScrollPane_1.getSize());
+		panelMain.add(scrollPane, BorderLayout.CENTER);
+		
+		/**
+		 * Crea button "+" per aggiungere indirizzo secondario
+		 */
+		JButton btnAggiungiIndirizzo = new JButton("+");
+		btnAggiungiIndirizzo.setBounds(38, 392, 45, 23);
+		contentPane.add(btnAggiungiIndirizzo);
+		
+		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Debug: cliccato '+'");
+				JPanel elemento     = creaElemScrollBar();
+				JButton btnCancella = new JButton();
+				int lastElemIndex;
+				
+				pannelloElemScrollPane_1.add(btnCancella);
+				pannelloElemScrollPane_1.add(elemento);
+				
+				btnCancella.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						pannelloElemScrollPane_1.remove(btnCancella);
+						pannelloElemScrollPane_1.remove(elemento);
+						revalidate();
+						repaint();
+					}
+				});
+				
+				lastElemIndex  = pannelloElemScrollPane_1.getComponentCount() - 1;
+				System.out.println("L'ultimo elemento è: " + lastElemIndex);
+				revalidate();
+				repaint();
+			}
+		});
+		
+		/**
+		 * Indirizzo principale
+		 */
+		pannelloIndPrincipale = new JPanel();
+		pannelloIndPrincipale.setBounds(38, 144, 234, 90);
+		contentPane.add(pannelloIndPrincipale);
+		
+		JPanel panel = new JPanel();
+		pannelloIndPrincipale.add(panel);
+		panel.setLayout(new GridLayout(4,2));
+
+		lblVia = new JLabel("Via");
+		panel.add(lblVia);
+
+		textFieldVia = new JTextField();
+		panel.add(textFieldVia);
+		textFieldVia.setColumns(10);
+									
+		JLabel lblCittà = new JLabel("Citt\u00E0");
+		panel.add(lblCittà);
+		
 		textFieldCittà = new JTextField();
-		textFieldCittà.setBounds(272, 203, 96, 19);
-		contentPane.add(textFieldCittà);
+		panel.add(textFieldCittà);
 		textFieldCittà.setColumns(10);
 
-		textFieldNazione = new JTextField();
-		textFieldNazione.setBounds(272, 232, 96, 19);
-		contentPane.add(textFieldNazione);
-		textFieldNazione.setColumns(10);
-
-		textFieldCap = new JTextField();
-		textFieldCap.setBounds(272, 261, 96, 19);
-		contentPane.add(textFieldCap);
-		textFieldCap.setColumns(10);
-
-		JLabel lblCittà = new JLabel("Citt\u00E0");
-		lblCittà.setBounds(217, 206, 45, 13);
-		contentPane.add(lblCittà);
-
 		JLabel lblNazione = new JLabel("Nazione");
-		lblNazione.setBounds(217, 235, 45, 13);
-		contentPane.add(lblNazione);
+		panel.add(lblNazione);
 
+		textFieldNazione = new JTextField();
+		panel.add(textFieldNazione);
+		textFieldNazione.setColumns(10);
+		
 		JLabel lblCap = new JLabel("CAP");
-		lblCap.setBounds(217, 264, 45, 13);
-		contentPane.add(lblCap);
+		panel.add(lblCap);
+		
+		textFieldCap = new JTextField();
+		panel.add(textFieldCap, BorderLayout.WEST);
+		textFieldCap.setColumns(10);
+		
+		/**
+		 * 
+		 */
+		
+		JPanel pannelloCredUtente = new JPanel();
+		pannelloCredUtente.setBounds(38, 57, 471, 58);
+		contentPane.add(pannelloCredUtente);
+		pannelloCredUtente.setLayout(null);
 
-		JLabel lblDescrizioneFisico = new JLabel("La descrizione puo essere solo principale\r\n");
-		lblDescrizioneFisico.setFont(new Font("Tahoma", Font.PLAIN, 8));
-		lblDescrizioneFisico.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDescrizioneFisico.setBounds(217, 296, 151, 13);
-		contentPane.add(lblDescrizioneFisico);
+		textFieldCognome = new JTextField();
+		textFieldCognome.setBounds(318, 27, 86, 20);
+		pannelloCredUtente.add(textFieldCognome);
+		textFieldCognome.setColumns(10);
+		
+		lblCognome = new JLabel("Cognome ");
+		lblCognome.setBounds(308, 11, 96, 13);
+		pannelloCredUtente.add(lblCognome);
+		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
+				
+		textFieldSecondoNome = new JTextField();
+		textFieldSecondoNome.setBounds(172, 27, 96, 19);
+		pannelloCredUtente.add(textFieldSecondoNome);
+		textFieldSecondoNome.setColumns(10);
+						
+		lblSecondoNome = new JLabel("Secondo Nome");
+		lblSecondoNome.setBounds(172, 11, 96, 13);
+		pannelloCredUtente.add(lblSecondoNome);
+		lblSecondoNome.setHorizontalAlignment(SwingConstants.CENTER);
+								
+		textFieldNome = new JTextField();
+		textFieldNome.setBounds(45, 27, 90, 19);
+		pannelloCredUtente.add(textFieldNome);
+		textFieldNome.setColumns(10);
+										
+		lblLabelNome = new JLabel("Nome ");
+		lblLabelNome.setBounds(35, 11, 96, 13);
+		pannelloCredUtente.add(lblLabelNome);
+		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
+		/**
+		 * Indirizzi Secondari
+		 */
+		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
+		lblNewLabel.setBounds(62, 245, 112, 14);
+		contentPane.add(lblNewLabel);
+												
+		pannelloNumTel = new JPanel();
+		pannelloNumTel.setBounds(322, 152, 187, 66);
+		contentPane.add(pannelloNumTel);
+		pannelloNumTel.setLayout(null);
+												
+		/**
+		 * numeri di telefono												
+		 */
+		lblNumMobile = new JLabel("Mobile ");
+		lblNumMobile.setBounds(10, 15, 45, 13);
+		pannelloNumTel.add(lblNumMobile);
+																
+		lblNumFisso = new JLabel("Fisso ");
+		lblNumFisso.setBounds(10, 39, 45, 13);
+		pannelloNumTel.add(lblNumFisso);
+		
+		textFieldNumMobile = new JTextField();
+		textFieldNumMobile.setBounds(65, 11, 98, 20);
+		pannelloNumTel.add(textFieldNumMobile);
+		textFieldNumMobile.setColumns(10);
+																		
+		textFieldNumFisso = new JTextField();
+		textFieldNumFisso.setBounds(65, 36, 98, 19);
+		pannelloNumTel.add(textFieldNumFisso);
+		textFieldNumFisso.setColumns(10);
+		
+		/**
+		 * pannello mail secondaria
+		 */
+		
+		pannelloIndMail = new JPanel();
+		pannelloIndMail.setBounds(532, 152, 205, 66);
+		contentPane.add(pannelloIndMail);
+		pannelloIndMail.setLayout(null);
 
 		JLabel lblEmail = new JLabel("Email");
+		lblEmail.setBounds(10, 11, 42, 14);
+		pannelloIndMail.add(lblEmail);
 		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEmail.setBounds(10, 265, 45, 13);
-		contentPane.add(lblEmail);
-
-		textFieldDescrizioneEmail = new JTextField();
-		textFieldDescrizioneEmail.setBounds(65, 293, 96, 19);
-		contentPane.add(textFieldDescrizioneEmail);
-		textFieldDescrizioneEmail.setColumns(10);
-
+		
 		JLabel lblDescrizioneEmail = new JLabel("Descrizione");
+		lblDescrizioneEmail.setBounds(10, 36, 68, 13);
+		pannelloIndMail.add(lblDescrizioneEmail);
 		lblDescrizioneEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		lblDescrizioneEmail.setBounds(10, 296, 52, 13);
-		contentPane.add(lblDescrizioneEmail);
+				
+		textFieldEmail = new JTextField();
+		textFieldEmail.setBounds(99, 8, 96, 19);
+		pannelloIndMail.add(textFieldEmail);
+		textFieldEmail.setColumns(10);
+																										
+		textFieldDescrizioneEmail = new JTextField();
+		textFieldDescrizioneEmail.setBounds(99, 32, 96, 19);
+		pannelloIndMail.add(textFieldDescrizioneEmail);
+		textFieldDescrizioneEmail.setColumns(10);
+		
+		/**
+		 * pannello numeri secondari
+		 */
+		
+		lblNumSecondari = new JLabel("Numeri Secondari\r\n");
+		lblNumSecondari.setBounds(366, 245, 112, 14);
+		contentPane.add(lblNumSecondari);
+		
+		pannelloNumTelSec = new JPanel();
+		pannelloNumTelSec.setBackground(Color.GREEN);
+		pannelloNumTelSec.setBounds(322, 270, 187, 58);
+		contentPane.add(pannelloNumTelSec);
+		pannelloNumTelSec.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPaneNumTel = new JScrollPane();
+		scrollPaneNumTel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneNumTel.setForeground(Color.GREEN);
+		scrollPaneNumTel.setBackground(Color.GREEN);
+		pannelloNumTelSec.add(scrollPaneNumTel, BorderLayout.CENTER);
+		
+		pannelloScrolNumTel = new JPanel();
+		scrollPaneNumTel.setViewportView(pannelloScrolNumTel);
+		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
+		
+		/**
+		 * Button "+" aggiungi numero secondario
+		 */
+		JButton btnAddSecNum = new JButton("+");
+		btnAddSecNum.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Debug: cliccato '+'");
+				JButton btnCancellaNumSec = new JButton();
+				JPanel numero    = creaSecNumb();
+				int lastNumIndex;
+				
+				pannelloScrolNumTel.add(btnCancellaNumSec);
+				pannelloScrolNumTel.add(numero);
+				lastNumIndex  = pannelloScrolNumTel.getComponentCount() - 1;
+				System.out.println("L'ultimo numero è: " + lastNumIndex);
+				
+				btnCancellaNumSec.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						pannelloScrolNumTel.remove(btnCancellaNumSec);
+						pannelloScrolNumTel.remove(numero);
+						revalidate();
+						repaint();
+					}
+				});
+				
+				revalidate();
+				repaint();
+			}
+		});
+		btnAddSecNum.setBounds(322, 333, 47, 23);
+		contentPane.add(btnAddSecNum);
+		
+		/**
+		 *  Aggiungi mail secondarie
+		 */
+		
+		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
+		lblEmailSecondarie.setBounds(565, 245, 134, 14);
+		contentPane.add(lblEmailSecondarie);
+		
+		pannelloEmailAddSec = new JPanel();
+		pannelloEmailAddSec.setBackground(Color.GREEN);
+		pannelloEmailAddSec.setBounds(532, 270, 205, 58);
+		contentPane.add(pannelloEmailAddSec);
+		pannelloEmailAddSec.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPaneEmail = new JScrollPane();
+		pannelloEmailAddSec.add(scrollPaneEmail, BorderLayout.CENTER);
+		
+		panelloScrollMail = new JPanel();
+		scrollPaneEmail.setViewportView(panelloScrollMail);
+		panelloScrollMail.setLayout(new BoxLayout(panelloScrollMail, BoxLayout.PAGE_AXIS));
+		
+		/**
+		 * Button "+" aggiungi mail secondaria
+		 */
+		JButton btnAddSecMail = new JButton("+");
+		btnAddSecMail.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				System.out.println("Debug: cliccato '+'");
+				JButton btnCancellaMailSec = new JButton();
+				JPanel mail                = creaSecMail();
+				int lastMailIndex;
+				
+				panelloScrollMail.add(btnCancellaMailSec);
+				panelloScrollMail.add(mail);
+				lastMailIndex  = panelloScrollMail.getComponentCount() - 1;
+				System.out.println("L'ultima mail è: " + lastMailIndex);
+				
+				btnCancellaMailSec.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						panelloScrollMail.remove(btnCancellaMailSec);
+						panelloScrollMail.remove(mail);
+						revalidate();
+						repaint();
+					}
+				});
+				
+				revalidate();
+				repaint();
+			}
+		});
+		btnAddSecMail.setBounds(532, 333, 45, 23);
+		contentPane.add(btnAddSecMail);
+	}
+	
+	private JPanel creaElemScrollBar()
+	{
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(4,2));
+		panel.setSize(new Dimension(300,300));
+
+		lblVia = new JLabel("Via");
+		panel.add(lblVia);
+
+		textFieldVia = new JTextField();
+		panel.add(textFieldVia);
+		textFieldVia.setColumns(10);
+									
+		JLabel lblCittà = new JLabel("Citt\u00E0");
+		panel.add(lblCittà);
+		
+		textFieldCittà = new JTextField();
+		panel.add(textFieldCittà);
+		textFieldCittà.setColumns(10);
+
+		JLabel lblNazione = new JLabel("Nazione");
+		panel.add(lblNazione);
+
+		textFieldNazione = new JTextField();
+		panel.add(textFieldNazione);
+		textFieldNazione.setColumns(10);
+		
+		JLabel lblCap = new JLabel("CAP");
+		panel.add(lblCap);
+		
+		textFieldCap = new JTextField();
+		panel.add(textFieldCap, BorderLayout.WEST);
+		textFieldCap.setColumns(10);
+		
+		return panel;
+	}
+	
+	private JPanel creaSecNumb()
+	{
+		JTextField textFieldDescFun;
+		JTextField textFieldNumFun;
+		JPanel panel;
+		
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(1, 2));
+		
+		textFieldDescFun = new JTextField();
+		panel.add(textFieldDescFun);
+		textFieldDescFun.setColumns(5);
+																		
+		textFieldNumFun = new JTextField();
+		panel.add(textFieldNumFun);
+		textFieldNumFun.setColumns(5);
+		
+		return  panel;
+	}
+	
+	private JPanel creaSecMail()
+	{
+		JTextField textFieldDescFun;
+		JTextField textFieldMailFun;
+		JPanel panel;
+		
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(1, 2));
+		
+		textFieldDescFun = new JTextField();
+		textFieldDescFun.setColumns(5);
+		panel.add(textFieldDescFun);
+																		
+		textFieldMailFun = new JTextField();
+		textFieldMailFun.setColumns(5);
+		panel.add(textFieldMailFun);
+		
+		return  panel;
 	}
 }
