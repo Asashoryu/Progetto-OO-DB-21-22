@@ -349,25 +349,31 @@ CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
 
 --Funzione che garantisce il corretto inserimento di un contatto con un numero 
 --fisso e uno mobile e un indirizzo fisico
-CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE, nome_par Contatto.nome%TYPE, 
-												cognome_par Contatto.cognome%TYPE, numero_mobile_par Telefono.numero%TYPE, 
-												numero_fisso_par Telefono.numero%TYPE, indirizzo_principale_par Indirizzo.via%TYPE,
-											    citta_par Indirizzo.città%TYPE, cap_par Indirizzo.cap%TYPE, nazione_par Indirizzo.nazione%TYPE)
+--coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto, num_mobile, num_fisso, via, citta, nazione, cap)
+CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE,     nome_par Contatto.nome%TYPE,
+												sec_no_par Contatto.secondonome%TYPE,   cognome_par Contatto.cognome%TYPE,
+												numero_mobile_par Telefono.numero%TYPE, numero_fisso_par Telefono.numero%TYPE,
+												via_par Indirizzo.via%TYPE,             citta_par Indirizzo.città%TYPE,
+												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE)
 	RETURNS INTEGER
 	LANGUAGE PLPGSQL
 	AS $$
 	DECLARE
+		--Seleziono e conservo un nuovo identificativo per il conttato
 		codice_contatto INTEGER := (SELECT max(contatto_id) FROM Contatto)+1;
 	BEGIN
 		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
 		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
-		INSERT INTO Contatto (contatto_id,nome, cognome, rubrica_fk) VALUES (codice_contatto, nome_par, cognome_par, rubrica_par);
-		INSERT INTO Telefono (numero, descrizione, contatto_fk) VALUES (numero_mobile_par, 'Mobile', codice_contatto);
-		INSERT INTO Telefono (numero, descrizione, contatto_fk) VALUES (numero_fisso_par, 'Fisso', codice_contatto);
-		INSERT INTO Indirizzo (via, descrizione, città, cap, nazione, contatto_fk) 
-							   VALUES (indirizzo_principale_par, 'Principale', citta_par, cap_par, nazione_par, codice_contatto);
+		INSERT INTO Contatto (contatto_id, nome, secondonome, cognome, rubrica_fk)
+		              VALUES (codice_contatto, nome_par, sec_no_par, cognome_par, rubrica_par);
+		INSERT INTO Telefono (numero, descrizione, contatto_fk) 
+		              VALUES (numero_mobile_par, 'Mobile', codice_contatto);
+		INSERT INTO Telefono (numero, descrizione, contatto_fk) 
+		              VALUES (numero_fisso_par, 'Fisso', codice_contatto);
+		INSERT INTO Indirizzo (via, descrizione, città, nazione, cap, contatto_fk)
+		  			  VALUES (via_par, 'Principale', citta_par, nazione_par, cap_par, codice_contatto);
 		--Riattivo il trigger
 		ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
 		--Viene ritornato il codice del contatto creato
 		RETURN codice_contatto;
-		END; $$;
+	END; $$;
