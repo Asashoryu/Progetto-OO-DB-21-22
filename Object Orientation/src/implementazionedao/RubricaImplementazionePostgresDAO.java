@@ -17,6 +17,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
 	private Connection connection;
 	
+	/** La costruzione di un oggetto comporta la creazione di una connessione col DB */
 	public RubricaImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
@@ -47,15 +48,26 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		return contatti;
 	}
 	
-	public void addContatti(String nome, String secondonome, String cognome, String nomerubrica) {
-		System.out.println("INSERT INTO Contatto (nome, secondonome, cognome) VALUES "+"(\'"+nomeRubrica+"\')");
-		try {
-			PreparedStatement aggiungiContatto = connection.prepareStatement(
-					"INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
-			aggiungiRubrica.executeUpdate();
+	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+			                String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException {
+		System.out.println("SELECT coherent_insertion_f('" + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
+									                 +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
+									                 +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
+									                 +" '" + cap +         "')");
+		try 
+		{
+			PreparedStatement aggiungiContatto = connection.prepareStatement
+					(
+					"SELECT coherent_insertion_f('" + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
+							                  +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
+							                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
+							                  +" '" + cap +         "')"
+					);
+			aggiungiContatto.executeQuery();
 			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} 
+		catch (SQLException e) 
+		{
 			throw e;
 		}
 	}

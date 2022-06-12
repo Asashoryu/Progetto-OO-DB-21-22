@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 
 import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -32,6 +33,7 @@ import java.awt.Color;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -48,7 +50,6 @@ import java.awt.TextField;
 
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.EtchedBorder;
-import gui.AddSecondaryInfo;
 import javax.swing.JScrollBar;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -60,6 +61,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.ComponentOrientation;
+import java.awt.Dialog;
 import java.awt.Rectangle;
 import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
@@ -127,35 +129,9 @@ public class AddContatto extends JFrame {
 		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + Utente);
 		lblTitolo.setBounds(10, 10, 362, 19);
 		contentPane.add(lblTitolo);
-
-		/**
-		 * Button "annulla"
-		 */
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(492, 393, 85, 21);
-		contentPane.add(btnAnnulla);
-		btnAnnulla.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
-			}
-		});
 		
 		/**
-		 * Button "vai"
-		 */
-		JButton btnAzione = new JButton("Vai");
-		btnAzione.setBounds(593, 393, 85, 21);
-		contentPane.add(btnAzione);
-		btnAzione.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
-				// passato come parametro
-				// Creazione frame per informazioni secondarie
-			}
-		});
-		
-		/**
-		 * Inserimentoi 
+		 * Inserimento
 		 */
 
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
@@ -200,26 +176,40 @@ public class AddContatto extends JFrame {
 		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println("Debug: cliccato '+'");
-				JPanel elemento     = creaElemScrollBar();
-				JButton btnCancella = new JButton();
+				JPanel elemento;
 				int lastElemIndex;
-				
-				pannelloElemScrollPane_1.add(btnCancella);
-				pannelloElemScrollPane_1.add(elemento);
-				
-				btnCancella.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pannelloElemScrollPane_1.remove(btnCancella);
-						pannelloElemScrollPane_1.remove(elemento);
-						revalidate();
-						repaint();
-					}
-				});
-				
-				lastElemIndex  = pannelloElemScrollPane_1.getComponentCount() - 1;
-				System.out.println("L'ultimo elemento è: " + lastElemIndex);
-				revalidate();
-				repaint();
+				JButton btnCancella     = new JButton();
+				JTextField fieldVia     = new JTextField();
+				JTextField fieldCittà   = new JTextField();
+				JTextField fieldNazione = new JTextField();
+				JTextField fieldCap     = new JTextField();
+				Object[] message = {
+				    "Inserisci la via     :", fieldVia,
+				    "Inserisci la città   :", fieldCittà,
+				    "Inserisci la nazione :", fieldNazione,
+				    "Inserisci il Cap     :", fieldCap,
+				};
+				int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION)
+				{
+					//TODO : controlli sulla validità dell'inserimento
+					elemento = creaElemScrollBar(fieldVia.getText(), fieldCittà.getText(), fieldNazione.getText(), fieldCap.getText());
+					pannelloElemScrollPane_1.add(btnCancella);
+					pannelloElemScrollPane_1.add(elemento);
+					
+					btnCancella.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							pannelloElemScrollPane_1.remove(btnCancella);
+							pannelloElemScrollPane_1.remove(elemento);
+							revalidate();
+							repaint();
+						}
+					});
+					lastElemIndex  = pannelloElemScrollPane_1.getComponentCount() - 1;
+					System.out.println("L'ultimo elemento è: " + lastElemIndex);
+					revalidate();
+					repaint();
+				}
 			}
 		});
 		
@@ -396,26 +386,36 @@ public class AddContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Debug: cliccato '+'");
-				JButton btnCancellaNumSec = new JButton();
-				JPanel numero    = creaSecNumb();
-				int lastNumIndex;
-				
-				pannelloScrolNumTel.add(btnCancellaNumSec);
-				pannelloScrolNumTel.add(numero);
-				lastNumIndex  = pannelloScrolNumTel.getComponentCount() - 1;
-				System.out.println("L'ultimo numero è: " + lastNumIndex);
-				
-				btnCancellaNumSec.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						pannelloScrolNumTel.remove(btnCancellaNumSec);
-						pannelloScrolNumTel.remove(numero);
-						revalidate();
-						repaint();
-					}
-				});
-				
-				revalidate();
-				repaint();
+				JPanel numero;
+				int lastElemIndex;
+				JButton btnCancellaNumSec  = new JButton();
+				JTextField fieldTipo       = new JTextField();
+				JTextField fieldEmail      = new JTextField();
+				Object[] message = {
+				    "Inserisci il tipo     :", fieldTipo,
+				    "Inserisci l'email     :", fieldEmail,
+				};
+				int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION)
+				{
+					//TODO : controlli sulla validità dell'inserimento
+					numero = creaSecNumb(fieldTipo.getText(), fieldEmail.getText());
+					pannelloScrolNumTel.add(btnCancellaNumSec);
+					pannelloScrolNumTel.add(numero);
+					
+					btnCancellaNumSec.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							pannelloScrolNumTel.remove(btnCancellaNumSec);
+							pannelloScrolNumTel.remove(numero);
+							revalidate();
+							repaint();
+						}
+					});
+					lastElemIndex  = pannelloScrolNumTel.getComponentCount() - 1;
+					System.out.println("L'ultimo elemento è: " + lastElemIndex);
+					revalidate();
+					repaint();
+				}
 			}
 		});
 		btnAddSecNum.setBounds(322, 333, 47, 23);
@@ -450,33 +450,179 @@ public class AddContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Debug: cliccato '+'");
+				JPanel mail;
+				int lastMailIndex;;
 				JButton btnCancellaMailSec = new JButton();
-				JPanel mail                = creaSecMail();
-				int lastMailIndex;
-				
-				panelloScrollMail.add(btnCancellaMailSec);
-				panelloScrollMail.add(mail);
-				lastMailIndex  = panelloScrollMail.getComponentCount() - 1;
-				System.out.println("L'ultima mail è: " + lastMailIndex);
-				
-				btnCancellaMailSec.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						panelloScrollMail.remove(btnCancellaMailSec);
-						panelloScrollMail.remove(mail);
-						revalidate();
-						repaint();
-					}
-				});
-				
-				revalidate();
-				repaint();
+				JTextField fieldTipo     = new JTextField();
+				JTextField fieldNum      = new JTextField();
+				Object[] message = {
+				    "Inserisci il tipo     :", fieldTipo,
+				    "Inserisci il numero   :", fieldNum,
+				};
+				int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION)
+				{
+					//TODO : controlli sulla validità dell'inserimento
+					mail = creaSecMail(fieldTipo.getText(), fieldNum.getText());
+					panelloScrollMail.add(btnCancellaMailSec);
+					panelloScrollMail.add(mail);
+					
+					btnCancellaMailSec.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							panelloScrollMail.remove(btnCancellaMailSec);
+							panelloScrollMail.remove(mail);
+							revalidate();
+							repaint();
+						}
+					});
+					lastMailIndex  = panelloScrollMail.getComponentCount() - 1;
+					System.out.println("L'ultima mail è: " + lastMailIndex);
+					revalidate();
+					repaint();
+				}
 			}
 		});
 		btnAddSecMail.setBounds(532, 333, 45, 23);
 		contentPane.add(btnAddSecMail);
+		
+		/**
+		 * Button "annulla"
+		 */
+		JButton btnAnnulla = new JButton("Annulla");
+		btnAnnulla.setBounds(492, 393, 85, 21);
+		contentPane.add(btnAnnulla);
+		btnAnnulla.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+			}
+		});
+		
+		/**
+		 * Button "vai"
+		 */
+		JButton btnAzione = new JButton("Vai");
+		btnAzione.setBounds(593, 393, 85, 21);
+		contentPane.add(btnAzione);
+		btnAzione.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
+				// passato come parametro
+				// Creazione frame per informazioni secondarie
+				
+				int valido = 1;
+				
+				if (textFieldNome.getText().isBlank())
+				{
+					textFieldNome.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldNome.setBackground(Color.WHITE);
+				}
+				if (textFieldCognome.getText().isBlank())
+				{
+					textFieldCognome.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldCognome.setBackground(Color.WHITE);
+				}
+				if (textFieldVia.getText().isBlank())
+				{
+					textFieldVia.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldVia.setBackground(Color.WHITE);
+				}
+				if (textFieldCittà.getText().isBlank())
+				{
+					textFieldCittà.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldCittà.setBackground(Color.WHITE);
+				}
+				if (textFieldNazione.getText().isBlank())
+				{
+					textFieldNazione.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldNazione.setBackground(Color.WHITE);
+				}
+				if (textFieldCap.getText().isBlank())
+				{
+					textFieldCap.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldCap.setBackground(Color.WHITE);
+				}
+				if (textFieldNumMobile.getText().isBlank())
+				{
+					textFieldNumMobile.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldNumMobile.setBackground(Color.WHITE);
+				}
+				if (textFieldNumFisso.getText().isBlank())
+				{
+					textFieldNumFisso.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldNumFisso.setBackground(Color.WHITE);
+				}
+				if (textFieldEmail.getText().isBlank())
+				{
+					textFieldEmail.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldEmail.setBackground(Color.WHITE);
+				}
+				if (textFieldDescrizioneEmail.getText().isBlank())
+				{
+					textFieldDescrizioneEmail.setBackground(Color.RED);
+					valido = 0;
+				}
+				else {
+					textFieldDescrizioneEmail.setBackground(Color.WHITE);
+				}
+				if (valido == 1) {
+					System.out.println("Puoi inserire i tuoi dati con successo ora!");
+					// TODO: inserimento in memoria e nel DB
+					// inserimenti principali
+					try {
+						// inserimento in database
+						controller.addContatto(Utente, textFieldNome.getText(), textFieldSecondoNome.getText(), textFieldCognome.getText(),
+								               textFieldNumMobile.getText(),    textFieldNumFisso.getText(),    textFieldVia.getText(),
+								               textFieldCittà.getText(),        textFieldNazione.getText(),     textFieldCap.getText());
+						// inserimento in memoria
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						System.out.println("Non è stato possibile inserire il contatto in memoria");
+					}
+					// inserimenti secondari
+				}
+				else {
+					System.out.println("I dati non sono stati inseriti correttamente");
+				}
+//				JDialog dialog = new JDialog();
+//				dialog.setVisible(true);
+//				dialog.setModalityType(Dialog.ModalityType.MODELESS);
+//				dialog.setBounds(100, 100, 296, 175);
+				
+				
+			}
+		});
 	}
 	
-	private JPanel creaElemScrollBar()
+	private JPanel creaElemScrollBar(String fieldVia, String fieldCittà, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,2));
@@ -486,6 +632,7 @@ public class AddContatto extends JFrame {
 		panel.add(lblVia);
 
 		textFieldVia = new JTextField();
+		textFieldVia.setText(fieldVia);
 		panel.add(textFieldVia);
 		textFieldVia.setColumns(10);
 									
@@ -493,6 +640,7 @@ public class AddContatto extends JFrame {
 		panel.add(lblCittà);
 		
 		textFieldCittà = new JTextField();
+		textFieldCittà.setText(fieldCittà);
 		panel.add(textFieldCittà);
 		textFieldCittà.setColumns(10);
 
@@ -500,6 +648,7 @@ public class AddContatto extends JFrame {
 		panel.add(lblNazione);
 
 		textFieldNazione = new JTextField();
+		textFieldNazione.setText(fieldNazione);
 		panel.add(textFieldNazione);
 		textFieldNazione.setColumns(10);
 		
@@ -507,13 +656,14 @@ public class AddContatto extends JFrame {
 		panel.add(lblCap);
 		
 		textFieldCap = new JTextField();
+		textFieldCap.setText(fieldCap);
 		panel.add(textFieldCap, BorderLayout.WEST);
 		textFieldCap.setColumns(10);
 		
 		return panel;
 	}
 	
-	private JPanel creaSecNumb()
+	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
 		JTextField textFieldDescFun;
 		JTextField textFieldNumFun;
@@ -523,17 +673,19 @@ public class AddContatto extends JFrame {
 		panel.setLayout(new GridLayout(1, 2));
 		
 		textFieldDescFun = new JTextField();
+		textFieldDescFun.setText(fieldTipo);
 		panel.add(textFieldDescFun);
 		textFieldDescFun.setColumns(5);
 																		
 		textFieldNumFun = new JTextField();
+		textFieldNumFun.setText(fieldNum);
 		panel.add(textFieldNumFun);
 		textFieldNumFun.setColumns(5);
 		
 		return  panel;
 	}
 	
-	private JPanel creaSecMail()
+	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
 		JTextField textFieldDescFun;
 		JTextField textFieldMailFun;
@@ -543,10 +695,12 @@ public class AddContatto extends JFrame {
 		panel.setLayout(new GridLayout(1, 2));
 		
 		textFieldDescFun = new JTextField();
+		textFieldDescFun.setText(fieldTipo);
 		textFieldDescFun.setColumns(5);
 		panel.add(textFieldDescFun);
 																		
 		textFieldMailFun = new JTextField();
+		textFieldMailFun.setText(fieldEmail);
 		textFieldMailFun.setColumns(5);
 		panel.add(textFieldMailFun);
 		

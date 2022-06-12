@@ -179,13 +179,19 @@ public class Controller {
 		return nomiContattiRubriche;
 	}
 	
-	/*public void addContatto(String nome, String secondonome, String cognome) 
-	 * {
+	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+                            String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
+	 {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-		try {
-			rubricaPosgr.addContatto(nome, secondonome, cognome, getRubricaSelezionata().getNome());
-		} catch (Exception e) {
+		try 
+		{
+			rubricaPosgr.addContatto(nomeRubrica, nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
+			
+		} 
+		catch (SQLException e) 
+		{
 			// TODO: handle exception
+			throw e;
 		}
-	}*/
+	}
 }
