@@ -34,28 +34,18 @@ public class Rubrica {
 		this.contatti = contatti;
 	}
 	
-	public void addContatto(String primonome, String secondonome, String cognome,
-						    ArrayList<Telefono> telefoni, ArrayList<Email> email,
-						    ArrayList<Indirizzo> indirizzi) 
+	public void aggiungiContatto(String primonome,      String secondonome, String cognome,
+                                 String numMobile, String numFisso, String via, String citta, String nazione, String cap) 
 	{
-		Contatto contatto = new Contatto(primonome, secondonome,cognome);
-		try {
-			for(Telefono t : telefoni) 
-			{
-				contatto.addNumero(t.getNumero(), t.getTipo());
-			}
-			
-			for(Email em : email) 
-			{
-				contatto.addEmail(em.getStringaEmail(),em.getTipo());
-			}
-			
-			for(Indirizzo i : indirizzi) 
-			{
-				contatto.addIndirizzo(i.getVia(), i.getCitta(), i.getNazione(), i.getCap(), i.getTipo());
-			}
-		} catch (NullPointerException e) {
-			// TODO: handle exception
+		try 
+		{
+			/** creo il contatto */
+			Contatto contatto = new Contatto(primonome, secondonome,cognome, numMobile, numFisso, via, citta, nazione, cap);
+			/** aggiungo il contatto alla rubrica */
+			contatti.add(contatto);
+		} 
+		catch (NullPointerException e) 
+		{
 			throw e;
 		}
 	}

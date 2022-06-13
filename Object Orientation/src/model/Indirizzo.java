@@ -1,6 +1,8 @@
 package model;
 
-public class Indirizzo {
+public class Indirizzo 
+{
+	public enum tipoIndirizzo{Principale, Secondario};
 	
 	private String via;
 	
@@ -10,11 +12,9 @@ public class Indirizzo {
 	
 	private String cap;
 	
-	private enum tipoIndirizzo{Mobile,Fisso};
-	
 	private tipoIndirizzo tipo;
 	
-	public Indirizzo(String via, String citta, String nazione, String cap, String tipo) {
+	public Indirizzo(String via, String citta, String nazione, String cap, tipoIndirizzo tipo) {
 		setVia(via);
 		setCitta(citta);
 		setNazione(nazione);
@@ -23,24 +23,23 @@ public class Indirizzo {
 	}
 	
 	public void setVia(String via) {
-		this.via=via;
+		this.via = via;
 	}
 	
 	public void setCitta(String citta) {
-		this.citta=citta;
+		this.citta = citta;
 	}
 	
 	public void setNazione(String nazione) {
-		this.nazione=nazione;
+		this.nazione = nazione;
 	}
 	
 	public void setCap(String cap) {
-		this.cap=cap;
+		this.cap = cap;
 	}
 
-	public void setTipo(String tipo) {
-		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
-		this.tipo=tipoIndirizzo.valueOf(tipo);
+	public void setTipo(tipoIndirizzo tipo) {
+		this.tipo = tipo;
 	}
 	
 	public String getVia() {
@@ -59,7 +58,7 @@ public class Indirizzo {
 		return cap;
 	}
 	
-	public String getTipo() {
-		return tipo.toString();
+	public tipoIndirizzo getTipo() {
+		return tipo;
 	}
 }

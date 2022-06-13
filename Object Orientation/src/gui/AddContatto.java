@@ -103,7 +103,7 @@ public class AddContatto extends JFrame {
 	private JPanel pannelloScrolNumTel;
 	private JPanel panelloScrollMail;
 
-	public AddContatto(Controller c, String Utente) {
+	public AddContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		setResizable(false);
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -126,7 +126,7 @@ public class AddContatto extends JFrame {
 		getContentPane().setBackground(new Color(224, 255, 255));
 		contentPane.setLayout(null);
 
-		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + Utente);
+		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + controller.getRubricaSelezionata().getNome());
 		lblTitolo.setBounds(10, 10, 362, 19);
 		contentPane.add(lblTitolo);
 		
@@ -493,7 +493,8 @@ public class AddContatto extends JFrame {
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+				frameChiamante.setVisible(true);
+				frame.dispose();
 			}
 		});
 		
@@ -597,11 +598,14 @@ public class AddContatto extends JFrame {
 					// inserimenti principali
 					try {
 						// inserimento in database
-						controller.addContatto(Utente, textFieldNome.getText(), textFieldSecondoNome.getText(), textFieldCognome.getText(),
-								               textFieldNumMobile.getText(),    textFieldNumFisso.getText(),    textFieldVia.getText(),
-								               textFieldCittà.getText(),        textFieldNazione.getText(),     textFieldCap.getText());
-						// inserimento in memoria
-						
+						controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+											   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
+									           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
+						// aggiornamento della combobox di listaContatti
+						lista.removeAll();
+						lista.setListData(controller.getNomiContattiRubrica());
+						lista.revalidate();
+						lista.repaint();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

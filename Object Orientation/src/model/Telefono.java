@@ -4,9 +4,7 @@ public class Telefono {
 	
 	private String numero;
 	
-	private enum tipoTelefono{Mobile,Fisso};
-	
-	private tipoTelefono tipo;
+	private String tipo;
 	
 	public Telefono(String numero,String tipo) {
 		setNumero(numero);
@@ -14,12 +12,11 @@ public class Telefono {
 	}
 	
 	public void setNumero(String numero) {
-		this.numero=numero;
+		this.numero = numero;
 	}
 
 	public void setTipo(String tipo) {
-		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
-		this.tipo=tipoTelefono.valueOf(tipo);
+		this.tipo = tipo;
 	}
 	
 	public String getNumero() {
@@ -27,6 +24,6 @@ public class Telefono {
 	}
 	
 	public String getTipo() {
-		return tipo.toString();
+		return tipo;
 	}
 }

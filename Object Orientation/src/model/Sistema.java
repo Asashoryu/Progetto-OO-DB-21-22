@@ -14,7 +14,7 @@ public class Sistema {
 	}
 	
 	public void setRubriche(ArrayList<Rubrica> rubriche) {
-		this.rubriche=rubriche;
+		this.rubriche = rubriche;
 	}
 	
 }

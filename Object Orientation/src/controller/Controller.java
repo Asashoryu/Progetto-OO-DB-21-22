@@ -179,19 +179,25 @@ public class Controller {
 		return nomiContattiRubriche;
 	}
 	
-	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+	public void addContatto(String nome, String secondonome, String cognome,
                             String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
 	 {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
 		{
-			rubricaPosgr.addContatto(nomeRubrica, nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
-			
+			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
+			rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
 		} 
 		catch (SQLException e) 
 		{
 			// TODO: handle exception
 			throw e;
 		}
+	}
+	
+	public void deleteContatto(int indiceContatto)
+	{
+		Contatto contattoEliminato = rubricaSelezionata.getContatti().get(indiceContatto);
+		
 	}
 }

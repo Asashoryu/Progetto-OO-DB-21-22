@@ -117,6 +117,7 @@ public class ListaContatti extends JFrame {
 		scrollPane.setViewportBorder(new EmptyBorder(1, 1, 1, 1));
 		getContentPane().add(scrollPane);
 		
+		/** carica la Jlist con i nomi dei contatti */
 		JList<Object> list = new JList<Object>(controller.getNomiContattiRubrica());
 		list.setVisibleRowCount(-1);
 		scrollPane.setViewportView(list);
@@ -143,6 +144,7 @@ public class ListaContatti extends JFrame {
 		JButton btnAggiungi = new JButton("Aggiungi ");
 		btnAggiungi.setBounds(139, 362, 94, 21);
 		btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 11));
+		getContentPane().add(btnAggiungi);
 		
 		/**
 		 * Quando è premuto il button "Indietro"
@@ -155,28 +157,31 @@ public class ListaContatti extends JFrame {
 		});
 		
 		/**
-		 * Quando è premuto il button "Aggiungi"
+		 * TODO: Quando è premuto il button "Aggiungi"
 		 */
-		getContentPane().add(btnAggiungi);
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String utenteRubrica = controller.getRubricaSelezionata().getNome();
-				JFrame Contatto      = new AddContatto(controller, utenteRubrica);
+				JFrame AddContatto = new AddContatto(controller, frame, list);
 				frame.setVisible(false);
-				Contatto.setVisible(true);
+				AddContatto.setVisible(true);
 			}
 		});
-		
 		/**
-		 * Quando è premuto il button "Modifica"
+		 * TODO: Quando è premuto il button "Modifica"
 		 */
 		
 		/**
-		 * Quando è premuto il button "Elimina"
+		 * TODO: Quando è premuto il button "Elimina"
 		 */
-		
+		btnElimina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int indiceSelezionato = list.getSelectedIndex();
+				//TODO: Elimina dalla memoria e dal DB
+				//TODO: Cancella dalla lista;
+			}
+		});
 		/**
-		 * Quando è premuto il button "GRUPPI"
+		 * TODO: Quando è premuto il button "GRUPPI"
 		 */
 		
 		/**
