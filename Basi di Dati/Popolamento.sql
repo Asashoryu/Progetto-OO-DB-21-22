@@ -2,6 +2,8 @@ INSERT INTO Rubrica VALUES
 ('Utente_1'),
 ('Utente_2');
 
+ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
+
 INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES 
 ('Alfredo',NULL,'Esposito',NULL,'Utente_1'),
 ('Maria',NULL,'Rossi',NULL,'Utente_1'),
@@ -23,6 +25,8 @@ INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES
 ('Antonella',NULL,'Falcone',NULL,'Utente_2'),
 ('Lucio',NULL,'Domo',NULL,'Utente_2'),
 ('Federico','Antonio','Piuma',NULL,'Utente_2');
+
+ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
 
 INSERT INTO Gruppo(Nome,Rubrica_FK) VALUES
 ('Gruppo1','Utente_1'),

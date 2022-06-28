@@ -187,7 +187,7 @@ public class Controller {
 		{
 			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
 			rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
-		} 
+		}
 		catch (SQLException e) 
 		{
 			// TODO: handle exception

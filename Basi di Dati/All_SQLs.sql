@@ -21,25 +21,25 @@ CREATE DOMAIN NUMType AS VARCHAR(10)
 CREATE TABLE Rubrica(
 Utente_ID VARCHAR(30)
 );
+ 
 
 ALTER TABLE Rubrica
  ADD CONSTRAINT rubrica_pk PRIMARY KEY(Utente_ID); 
 
 --Crea la tabella Gruppo
 CREATE TABLE Gruppo(
-Gruppo_ID SERIAL ,
 Nome VARCHAR(20) NOT NULL,
 Rubrica_FK VARCHAR(30) NOT NULL
 );
 
 ALTER TABLE Gruppo
- ADD CONSTRAINT gruppo_pk PRIMARY KEY(Gruppo_ID),
+ ADD CONSTRAINT gruppo_pk PRIMARY KEY(Nome, Rubrica_FK),
  ADD CONSTRAINT gruppo_rubrica_fk FOREIGN KEY(Rubrica_FK) REFERENCES Rubrica(Utente_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
  
 --Crea la tabella Contatto
 CREATE TABLE Contatto(
-Contatto_ID SERIAL ,
+Contatto_ID SERIAL,
 Nome VARCHAR(20) NOT NULL,
 SecondoNome VARCHAR(20),
 Cognome VARCHAR(20) NOT NULL,
@@ -51,7 +51,6 @@ Rubrica_FK VARCHAR(20) NOT NULL
  ADD CONSTRAINT contatto_pk PRIMARY KEY(Contatto_ID),
  ADD CONSTRAINT contatto_rubica_fk FOREIGN KEY(Rubrica_FK) REFERENCES Rubrica(Utente_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
-
 
 
 --Crea la tabella Account
@@ -67,7 +66,6 @@ ALTER TABLE Account
  ADD CONSTRAINT account_pk PRIMARY KEY(Account_ID),
  ADD CONSTRAINT unique_provider_email UNIQUE (Fornitore,IndirizzoEmail);
  
- 
 
 --Crea la tabella Email
 CREATE TABLE Email(
@@ -82,10 +80,8 @@ ALTER TABLE Email
  ADD CONSTRAINT email_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT not_redundant_email UNIQUE (Contatto_FK,indirizzoEmail);
- 
- 
 
- 
+
 --Crea la tabella Indirizzo
 CREATE TABLE Indirizzo(
 Indirizzo_ID SERIAL ,
@@ -133,12 +129,14 @@ ALTER TABLE Associa
 --Crea la tabella Composizione
 CREATE TABLE Composizione(
 Contatto_FK SERIAL,
-Gruppo_FK SERIAL
+Nome_Gruppo VARCHAR(20) NOT NULL,
+Rubrica_Gruppo VARCHAR(30) NOT NULL
 );
+
 ALTER TABLE Composizione
  ADD CONSTRAINT composizione_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON UPDATE CASCADE ON DELETE CASCADE,
- ADD CONSTRAINT composizione_gruppo_fk FOREIGN KEY(Gruppo_FK) REFERENCES Gruppo(Gruppo_ID)
+ ADD CONSTRAINT composizione_gruppo_fk FOREIGN KEY(Nome_Gruppo, Rubrica_Gruppo) REFERENCES Gruppo(Nome, Rubrica_FK)
  ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -150,19 +148,14 @@ CREATE OR REPLACE FUNCTION group_coherency_membership_f()
 	AS $$
 	DECLARE
 		r_contatto Rubrica.Utente_ID%TYPE;
-		r_gruppo Rubrica.Utente_ID%TYPE;
 	BEGIN
 		SELECT Rubrica_FK INTO r_contatto
 		FROM Contatto
-		WHERE Contatto_ID=NEW.Contatto_FK;
+		WHERE Contatto_ID = NEW.Contatto_FK;
 		
-		SELECT Rubrica_FK INTO r_gruppo
-		FROM Gruppo
-		WHERE Gruppo_ID=NEW.Gruppo_FK;
-		
-		IF (r_contatto<>r_gruppo) THEN
+		IF (r_contatto <> NEW.Rubrica_Gruppo) THEN
 			RAISE NOTICE 'Il contatto di ID % non appartiene alla stessa rubrica
-			              del gruppo di ID %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Gruppo_FK;
+			              del gruppo %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Nome_Gruppo;
 			RETURN OLD;
 		ELSE
 			RETURN NEW;
@@ -182,9 +175,9 @@ CREATE OR REPLACE FUNCTION unique_email_f()
 		cur_seaker CURSOR FOR(
 			SELECT *
 			FROM Contatto AS CNEW, Contatto as C1
-			WHERE CNEW.Contatto_ID=NEW.Contatto_FK AND
-				  CNEW.Contatto_ID<>C1.Contatto_ID AND
-				  CNEW.Rubrica_FK=C1.Rubrica_FK AND
+			WHERE CNEW.Contatto_ID = NEW.Contatto_FK AND
+				  CNEW.Contatto_ID <> C1.Contatto_ID AND
+				  CNEW.Rubrica_FK  = C1.Rubrica_FK AND
 				  C1.Contatto_ID IN
 				  (SELECT Em.Contatto_FK
 				   FROM Email AS Em
@@ -360,9 +353,18 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 	AS $$
 	DECLARE
 		--Seleziono e conservo un nuovo identificativo per il conttato
-		codice_contatto INTEGER := (SELECT max(contatto_id) FROM Contatto)+1;
+		codice_contatto     INTEGER; 
+		nuovo_codice_valido INTEGER := (SELECT max(contatto_id) FROM Contatto) + 1;
 	BEGIN
 		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
+		if (nuovo_codice_valido <> -1) then
+			codice_contatto := nuovo_codice_valido;
+			raise notice 'Si inserisce il nuovo max id';
+		else
+			codice_contatto := 1;
+			raise notice 'Si inserisce 1';
+		END if;
+		
 		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
 		INSERT INTO Contatto (contatto_id, nome, secondonome, cognome, rubrica_fk)
 		              VALUES (codice_contatto, nome_par, sec_no_par, cognome_par, rubrica_par);
@@ -377,3 +379,4 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 		--Viene ritornato il codice del contatto creato
 		RETURN codice_contatto;
 	END; $$;
+

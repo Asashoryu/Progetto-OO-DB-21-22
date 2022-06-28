@@ -86,8 +86,8 @@ public class Contatto{
 	}
 	/** metodo per aggiungere un indirizzo al contatto */
 	public void addIndirizzo(String via, String citta, String nazione, String cap, tipoIndirizzo tipo) {
-		Indirizzo muovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
-		indirizzi.add(muovoIndirizzo);
+		Indirizzo nuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
+		indirizzi.add(nuovoIndirizzo);
 	}
 	
 }

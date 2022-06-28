@@ -34,7 +34,7 @@ public class Rubrica {
 		this.contatti = contatti;
 	}
 	
-	public void aggiungiContatto(String primonome,      String secondonome, String cognome,
+	public void aggiungiContatto(String primonome, String secondonome, String cognome,
                                  String numMobile, String numFisso, String via, String citta, String nazione, String cap) 
 	{
 		try 

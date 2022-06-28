@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 
 import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -156,14 +157,14 @@ public class AddContatto extends JFrame {
 		panelMain.setLayout(new BorderLayout(0, 0));
 		
 		
-		JPanel pannelloElemScrollPane_1 = new JPanel();
-		pannelloElemScrollPane_1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		pannelloElemScrollPane_1.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pannelloElemScrollPane_1.setBackground(Color.GREEN);
+		JPanel pannelloScrollIndirizziSec = new JPanel();
+		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		pannelloScrollIndirizziSec.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pannelloScrollIndirizziSec.setBackground(Color.GREEN);
 		
-		JScrollPane scrollPane = new JScrollPane(pannelloElemScrollPane_1);
-		pannelloElemScrollPane_1.setLayout(new BoxLayout(pannelloElemScrollPane_1, BoxLayout.PAGE_AXIS));
-		scrollPane.setPreferredSize(pannelloElemScrollPane_1.getSize());
+		JScrollPane scrollPane = new JScrollPane(pannelloScrollIndirizziSec);
+		pannelloScrollIndirizziSec.setLayout(new BoxLayout(pannelloScrollIndirizziSec, BoxLayout.PAGE_AXIS));
+		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
 		
 		/**
@@ -194,18 +195,18 @@ public class AddContatto extends JFrame {
 				{
 					//TODO : controlli sulla validit‡ dell'inserimento
 					elemento = creaElemScrollBar(fieldVia.getText(), fieldCitt‡.getText(), fieldNazione.getText(), fieldCap.getText());
-					pannelloElemScrollPane_1.add(btnCancella);
-					pannelloElemScrollPane_1.add(elemento);
-					
+					pannelloScrollIndirizziSec.add(btnCancella);
+					pannelloScrollIndirizziSec.add(elemento);
+					/* button per cancellare un indirizzo secondario */
 					btnCancella.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							pannelloElemScrollPane_1.remove(btnCancella);
-							pannelloElemScrollPane_1.remove(elemento);
+							pannelloScrollIndirizziSec.remove(btnCancella);
+							pannelloScrollIndirizziSec.remove(elemento);
 							revalidate();
 							repaint();
 						}
 					});
-					lastElemIndex  = pannelloElemScrollPane_1.getComponentCount() - 1;
+					lastElemIndex  = pannelloScrollIndirizziSec.getComponentCount() - 1;
 					System.out.println("L'ultimo elemento Ë: " + lastElemIndex);
 					revalidate();
 					repaint();
@@ -601,21 +602,41 @@ public class AddContatto extends JFrame {
 						controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
 											   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 									           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
+						// inserimenti secondari
+						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
+						{
+							System.out.println("Primo ciclo for");
+							// se non Ë un button allora Ë il pannello con gli indirizzi
+							if(compIndirizzoSec instanceof JPanel)
+							{
+								// estraggo le informazioni dal panel trovato
+								System.out.println("\tEntrato nell'if del for");
+								String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
+								String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
+								String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
+								String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
+								controller.addIndirizzoSec()
+							}
+						}
 						// aggiornamento della combobox di listaContatti
 						lista.removeAll();
 						lista.setListData(controller.getNomiContattiRubrica());
+						JOptionPane.showConfirmDialog(null, 
+				                "Contatto inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 						lista.revalidate();
 						lista.repaint();
-					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					} catch (SQLException es) {
+						es.printStackTrace();
+						JOptionPane.showMessageDialog(null, es.getMessage(),
+							      "Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
 						System.out.println("Non Ë stato possibile inserire il contatto in memoria");
 					}
-					// inserimenti secondari
 				}
 				else {
 					System.out.println("I dati non sono stati inseriti correttamente");
 				}
+				
+				
 //				JDialog dialog = new JDialog();
 //				dialog.setVisible(true);
 //				dialog.setModalityType(Dialog.ModalityType.MODELESS);
@@ -631,82 +652,87 @@ public class AddContatto extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,2));
 		panel.setSize(new Dimension(300,300));
+		
+		JTextField textFieldViaSB;
+		JTextField textFieldCitt‡SB;
+		JTextField textFieldNazioneSB;
+		JTextField textFieldCapSB;
 
-		lblVia = new JLabel("Via");
-		panel.add(lblVia);
+		JLabel lblViaSB = new JLabel("Via");
+		panel.add(lblViaSB);
 
-		textFieldVia = new JTextField();
-		textFieldVia.setText(fieldVia);
-		panel.add(textFieldVia);
-		textFieldVia.setColumns(10);
+		textFieldViaSB = new JTextField();
+		textFieldViaSB.setText(fieldVia);
+		panel.add(textFieldViaSB);
+		textFieldViaSB.setColumns(10);
 									
-		JLabel lblCitt‡ = new JLabel("Citt\u00E0");
-		panel.add(lblCitt‡);
+		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
+		panel.add(lblCitt‡SB);
 		
-		textFieldCitt‡ = new JTextField();
-		textFieldCitt‡.setText(fieldCitt‡);
-		panel.add(textFieldCitt‡);
-		textFieldCitt‡.setColumns(10);
+		textFieldCitt‡SB = new JTextField();
+		textFieldCitt‡SB.setText(fieldCitt‡);
+		panel.add(textFieldCitt‡SB);
+		textFieldCitt‡SB.setColumns(10);
 
-		JLabel lblNazione = new JLabel("Nazione");
-		panel.add(lblNazione);
+		JLabel lblNazioneSB = new JLabel("Nazione");
+		panel.add(lblNazioneSB);
 
-		textFieldNazione = new JTextField();
-		textFieldNazione.setText(fieldNazione);
-		panel.add(textFieldNazione);
-		textFieldNazione.setColumns(10);
+		textFieldNazioneSB = new JTextField();
+		textFieldNazioneSB.setText(fieldNazione);
+		panel.add(textFieldNazioneSB);
+		textFieldNazioneSB.setColumns(10);
 		
-		JLabel lblCap = new JLabel("CAP");
-		panel.add(lblCap);
+		JLabel lblCapSB = new JLabel("CAP");
+		panel.add(lblCapSB);
 		
-		textFieldCap = new JTextField();
-		textFieldCap.setText(fieldCap);
-		panel.add(textFieldCap, BorderLayout.WEST);
-		textFieldCap.setColumns(10);
+		textFieldCapSB = new JTextField();
+		textFieldCapSB.setText(fieldCap);
+		panel.add(textFieldCapSB, BorderLayout.WEST);
+		textFieldCapSB.setColumns(10);
 		
 		return panel;
 	}
 	
 	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
-		JTextField textFieldDescFun;
-		JTextField textFieldNumFun;
+		JTextField textFieldDescSB;
+		JTextField textFieldNumSB;
 		JPanel panel;
 		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		
-		textFieldDescFun = new JTextField();
-		textFieldDescFun.setText(fieldTipo);
-		panel.add(textFieldDescFun);
-		textFieldDescFun.setColumns(5);
+		textFieldDescSB = new JTextField();
+		textFieldDescSB.setText(fieldTipo);
+		panel.add(textFieldDescSB);
+		textFieldDescSB.setColumns(5);
 																		
-		textFieldNumFun = new JTextField();
-		textFieldNumFun.setText(fieldNum);
-		panel.add(textFieldNumFun);
-		textFieldNumFun.setColumns(5);
+		textFieldNumSB = new JTextField();
+		textFieldNumSB.setText(fieldNum);
+		panel.add(textFieldNumSB);
+		textFieldNumSB.setColumns(5);
 		
 		return  panel;
 	}
 	
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
-		JTextField textFieldDescFun;
-		JTextField textFieldMailFun;
+		JTextField textFieldDescMailSB;
+		JTextField textFieldMailSB;
 		JPanel panel;
 		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
 		
-		textFieldDescFun = new JTextField();
-		textFieldDescFun.setText(fieldTipo);
-		textFieldDescFun.setColumns(5);
-		panel.add(textFieldDescFun);
+		textFieldDescMailSB = new JTextField();
+		textFieldDescMailSB.setText(fieldTipo);
+		textFieldDescMailSB.setColumns(5);
+		panel.add(textFieldDescMailSB);
 																		
-		textFieldMailFun = new JTextField();
-		textFieldMailFun.setText(fieldEmail);
-		textFieldMailFun.setColumns(5);
-		panel.add(textFieldMailFun);
+		textFieldMailSB = new JTextField();
+		textFieldMailSB.setText(fieldEmail);
+		textFieldMailSB.setColumns(5);
+		panel.add(textFieldMailSB);
 		
 		return  panel;
 	}

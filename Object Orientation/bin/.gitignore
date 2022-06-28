@@ -1,6 +1,3 @@
 /gui/
-/controller/
-/implementazionedao/
-/dao/
 /model/
-/maintest/
+/controller/
