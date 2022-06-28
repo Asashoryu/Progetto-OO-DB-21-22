@@ -34,13 +34,14 @@ public class Rubrica {
 		this.contatti = contatti;
 	}
 	
-	public void aggiungiContatto(String primonome, String secondonome, String cognome,
-                                 String numMobile, String numFisso, String via, String citta, String nazione, String cap) 
+	public Contatto aggiungiContatto(String primonome, String secondonome, String cognome,
+                                 String numMobile, String numFisso, String via, String citta, String nazione, String cap, int id) 
 	{
+		Contatto contatto;
 		try 
 		{
 			/** creo il contatto */
-			Contatto contatto = new Contatto(primonome, secondonome,cognome, numMobile, numFisso, via, citta, nazione, cap);
+			contatto = new Contatto(primonome, secondonome,cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 			/** aggiungo il contatto alla rubrica */
 			contatti.add(contatto);
 		} 
@@ -48,5 +49,7 @@ public class Rubrica {
 		{
 			throw e;
 		}
+		
+		return contatto;
 	}
 }	

@@ -117,7 +117,7 @@ public class ListaContatti extends JFrame {
 		scrollPane.setViewportBorder(new EmptyBorder(1, 1, 1, 1));
 		getContentPane().add(scrollPane);
 		
-		/** carica la Jlist con i nomi dei contatti */
+		/** carica la Jlist con i nomi dei contatti dal DB */
 		JList<Object> list = new JList<Object>(controller.getNomiContattiRubrica());
 		list.setVisibleRowCount(-1);
 		scrollPane.setViewportView(list);

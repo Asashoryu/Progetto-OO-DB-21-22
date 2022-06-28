@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
 
 import controller.Controller;
+import model.Contatto;
 import model.Rubrica;
 
 import javax.swing.JTabbedPane;
@@ -598,10 +599,12 @@ public class AddContatto extends JFrame {
 					// TODO: inserimento in memoria e nel DB
 					// inserimenti principali
 					try {
+						// contatto creato
+						Contatto nuovoContatto;
 						// inserimento in database
-						controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
-											   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
-									           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
+						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
+											   		           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
 						// inserimenti secondari
 						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 						{
@@ -615,7 +618,8 @@ public class AddContatto extends JFrame {
 								String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
 								String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
 								String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
-								controller.addIndirizzoSec()
+								// TODO : aggiungere queste informazioni come indirizzo secondario
+								controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
 							}
 						}
 						// aggiornamento della combobox di listaContatti

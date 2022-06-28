@@ -17,30 +17,35 @@ public class Contatto{
 	private ArrayList<Email> email;
 	/** ArrayList degli indiririzzi del contatto */
 	private ArrayList<Indirizzo> indirizzi;
+	/** Identificativo del contatto */
+	private int id;
+	
 	/** costruttore del contatto con set di nome, secondo nome e cognome per la visualizzazione in listaContatto */
-	public Contatto(String primonome, String secondonome, String cognome) {
+	public Contatto(String primonome, String secondonome, String cognome, int id) {
 		setNome(primonome);
 		setSecondoNome(secondonome);
 		setCognome(cognome);
+		setId(id);
 		telefoni  = new ArrayList<Telefono>();
 		email     = new ArrayList<Email>();
 		indirizzi = new ArrayList<Indirizzo>();
 	}
 	/** costruttore di Contatto, con le informazioni essenziali indicate nella traccia */
 	public Contatto(String primonome, String secondonome, String cognome,
-                    String numMobile, String numFisso, String via, String citta, String nazione, String cap)
+                    String numMobile, String numFisso, String via, String citta, String nazione, String cap, int id)
 	{
 		setNome(primonome);
 		setSecondoNome(secondonome);
 		setCognome(cognome);
+		setId(id);
 		/** allocazione delle informazioni */
 		telefoni  = new ArrayList<Telefono>();
 		email     = new ArrayList<Email>();
 		indirizzi = new ArrayList<Indirizzo>();
 		/** aggiungo il numero mobile */
-		addNumero(numMobile, "Mobile");
+		addTelefono(numMobile, "Mobile");
 		/** aggiungo il numero fisso */
-		addNumero(numFisso, "Fisso");
+		addTelefono(numFisso, "Fisso");
 		/** aggiungo l'indirizzo principale */
 		addIndirizzo(via, citta, nazione, cap, Indirizzo.tipoIndirizzo.Principale);
 	}
@@ -73,9 +78,16 @@ public class Contatto{
 	{
 		return cognome;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	/** metodo per aggiungere un numero di telefono al contatto */
-	public void addNumero(String numero, String tipotelefono) {
+	public void addTelefono(String numero, String tipotelefono) {
 		Telefono nuovoTelefono = new Telefono(numero, tipotelefono);
 		telefoni.add(nuovoTelefono);
 	}

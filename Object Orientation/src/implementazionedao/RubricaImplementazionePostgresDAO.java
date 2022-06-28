@@ -27,6 +27,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	@Override
 	public ArrayList<Contatto> loadContatti(String nomeRubrica) {
 		System.out.println("SELECT * FROM Contatto WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'");
 		PreparedStatement recuperaContatti;
@@ -36,7 +37,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			ResultSet rs = recuperaContatti.executeQuery();
 			contatti = new ArrayList<Contatto>();
 			while (rs.next()) {
-				Contatto nuovoContatto = new Contatto(rs.getString("nome"), rs.getString("secondonome"), rs.getString("cognome"));
+				Contatto nuovoContatto = new Contatto(rs.getString("nome"), rs.getString("secondonome"), rs.getString("cognome"), rs.getInt("contatto_id"));
 				contatti.add(nuovoContatto);
 			}
 			connection.close();
@@ -47,9 +48,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 		return contatti;
 	}
-	
-	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+	/* @returns id del contatto creato*/
+	@Override
+	public int addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 			                String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException {
+		int id;
 		System.out.println("SELECT coherent_insertion_f('" + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
 									                 +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
 									                 +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
@@ -63,13 +66,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 							                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
 							                  +" '" + cap +         "')"
 					);
-			aggiungiContatto.executeQuery();
+			ResultSet rs = aggiungiContatto.executeQuery();
+			id = rs.getInt("coherent_insertion_f");
 			connection.close();
-		} 
+		}
 		catch (SQLException e) 
 		{
 			throw e;
 		}
+		return id;
 	}
 		
 }

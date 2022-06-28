@@ -3,13 +3,16 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dao.ContattoDAO;
 import dao.RubricaDAO;
 import dao.SistemaDAO;
+import implementazionedao.ContattoImplementazionePostgresDAO;
 import implementazionedao.RubricaImplementazionePostgresDAO;
 import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
 import model.Contatto;
+import model.Indirizzo.tipoIndirizzo;
 
 /** Gestisce l'interazione dell'interfaccia col model e col DB. */
 public class Controller {
@@ -159,7 +162,7 @@ public class Controller {
 	 * Necessario per visualizare i nomi nell'interfaccia UI.
 	 * @return	Array di nomi in forma di strighe
 	 */
-	public String[] getNomiContattiRubrica() 
+	public String[] getNomiContattiRubrica()
 	{
 		String[] nomiContattiRubriche = new String[rubricaSelezionata.getContatti().size()];
 		for(Contatto c : rubricaSelezionata.getContatti()) 
@@ -174,23 +177,67 @@ public class Controller {
 			{
 				nomeCompleto = c.getNome() +" "+ c.getCognome();
 			}
-			nomiContattiRubriche[rubricaSelezionata.getContatti().indexOf(c)]=nomeCompleto;
+			nomiContattiRubriche[rubricaSelezionata.getContatti().indexOf(c)] = nomeCompleto;
 		}
 		return nomiContattiRubriche;
 	}
 	
-	public void addContatto(String nome, String secondonome, String cognome,
+	public Contatto addContatto(String nome, String secondonome, String cognome,
                             String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
 	 {
+		Contatto contatto;
+		int id;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
 		{
-			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
-			rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
+			id = rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
+			contatto = rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 		}
 		catch (SQLException e) 
 		{
-			// TODO: handle exception
+			throw e;
+		}
+		return contatto;
+	}
+	
+	public void addIndirizzoSec(Contatto contatto, String via, String città, String nazione, String cap) throws SQLException
+	{
+		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		try 
+		{
+			contattoPosgr.addIndirizzo(via, città, nazione, cap, "Secondario", contatto.getId());
+			contatto.addIndirizzo(via, città, nazione, cap, tipoIndirizzo.Secondario);
+		}
+		catch (SQLException e)
+		{
+			throw e;
+		}
+	}
+	
+	public void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
+	{
+		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		try 
+		{
+			contattoPosgr.addTelefono(numero, descrizione, contatto.getId());
+			contatto.addTelefono(numero, descrizione);
+		}
+		catch (SQLException e)
+		{
+			throw e;
+		}
+	}
+	
+	public void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
+	{
+		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		try 
+		{
+			contattoPosgr.addEmail(indirizzoEmail, descrizione, contatto.getId());
+			contatto.addEmail(via, città, nazione, cap, tipoIndirizzo.Secondario);
+		}
+		catch (SQLException e)
+		{
 			throw e;
 		}
 	}
