@@ -10,32 +10,35 @@ CREATE DOMAIN EmailType AS VARCHAR(256)
 CHECK (VALUE LIKE '_%@_%.__%');
 
 --Crea il datatype per il CAP
- CREATE DOMAIN CAPType AS CHAR(5) 
- CHECK (VALUE NOT LIKE '%[^0-9]%');
+ CREATE DOMAIN CAPType AS CHAR(5)
+ CHECK (VALUE ~ '^[0-9]*$');
  
 --Creazione dominio per numero telefonico
 CREATE DOMAIN NUMType AS VARCHAR(10) 
- CHECK (VALUE NOT LIKE '%[^0-9]%');
+ CHECK (VALUE ~ '^[0-9]*$');
  
+
 --Crea la tabella Rubrica
 CREATE TABLE Rubrica(
 Utente_ID VARCHAR(30)
 );
  
-
 ALTER TABLE Rubrica
  ADD CONSTRAINT rubrica_pk PRIMARY KEY(Utente_ID); 
 
+
 --Crea la tabella Gruppo
 CREATE TABLE Gruppo(
+Gruppo_ID SERIAL,
 Nome VARCHAR(20) NOT NULL,
 Rubrica_FK VARCHAR(30) NOT NULL
 );
 
 ALTER TABLE Gruppo
- ADD CONSTRAINT gruppo_pk PRIMARY KEY(Nome, Rubrica_FK),
+ ADD CONSTRAINT gruppo_pk PRIMARY KEY(Gruppo_ID),
  ADD CONSTRAINT gruppo_rubrica_fk FOREIGN KEY(Rubrica_FK) REFERENCES Rubrica(Utente_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
+ 
  
 --Crea la tabella Contatto
 CREATE TABLE Contatto(
@@ -70,8 +73,8 @@ ALTER TABLE Account
 --Crea la tabella Email
 CREATE TABLE Email(
 Email_ID SERIAL,
-IndirizzoEmail EmailType,
-Descrizione VARCHAR(30),
+IndirizzoEmail EmailType NOT NULL,
+Descrizione VARCHAR(30) NOT NULL,
 Contatto_FK SERIAL
 );
 
@@ -86,7 +89,7 @@ ALTER TABLE Email
 CREATE TABLE Indirizzo(
 Indirizzo_ID SERIAL ,
 Via VARCHAR(20) NOT NULL,
-Città VARCHAR(30),
+Città VARCHAR(30) NOT NULL,
 Nazione VARCHAR(30) NOT NULL,
 CAP CAPType NOT NULL,
 Descrizione VARCHAR(20) NOT NULL,
@@ -97,14 +100,13 @@ ALTER TABLE Indirizzo
  ADD CONSTRAINT indirizzo_pk PRIMARY KEY(Indirizzo_ID),
  ADD CONSTRAINT indirizzo_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
-
-
+ 
  
 --Crea la tabella Telefono
 CREATE TABLE Telefono (
 Telefono_ID SERIAL,
 Numero NUMType NOT NULL,
-Descrizione VARCHAR(20),
+Descrizione VARCHAR(20) NOT NULL,
 Contatto_FK SERIAL
 );
 
@@ -113,6 +115,7 @@ ALTER TABLE Telefono
  ADD CONSTRAINT telefono_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT not_redundant_telephone_number UNIQUE(Contatto_FK,Numero);
+
 
 --Crea la tabella Associa 
 CREATE TABLE Associa (
@@ -126,17 +129,17 @@ ALTER TABLE Associa
  ADD CONSTRAINT associa_account_fk FOREIGN KEY(Account_FK) REFERENCES Account(Account_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
 
+
 --Crea la tabella Composizione
 CREATE TABLE Composizione(
 Contatto_FK SERIAL,
-Nome_Gruppo VARCHAR(20) NOT NULL,
-Rubrica_Gruppo VARCHAR(30) NOT NULL
+Gruppo_FK   SERIAL
 );
 
 ALTER TABLE Composizione
  ADD CONSTRAINT composizione_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
  ON UPDATE CASCADE ON DELETE CASCADE,
- ADD CONSTRAINT composizione_gruppo_fk FOREIGN KEY(Nome_Gruppo, Rubrica_Gruppo) REFERENCES Gruppo(Nome, Rubrica_FK)
+ ADD CONSTRAINT composizione_gruppo_fk   FOREIGN KEY(Gruppo_FK)   REFERENCES Gruppo(Gruppo_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
 
 
@@ -148,14 +151,19 @@ CREATE OR REPLACE FUNCTION group_coherency_membership_f()
 	AS $$
 	DECLARE
 		r_contatto Rubrica.Utente_ID%TYPE;
+		r_gruppo   Rubrica.Utente_ID%TYPE;
 	BEGIN
 		SELECT Rubrica_FK INTO r_contatto
 		FROM Contatto
 		WHERE Contatto_ID = NEW.Contatto_FK;
 		
-		IF (r_contatto <> NEW.Rubrica_Gruppo) THEN
+		SELECT Rubrica_FK into r_gruppo
+		FROM   Gruppo
+		WHERE  Gruppo_ID = NEW.Gruppo_FK;
+		
+		IF (r_contatto <> r_gruppo) THEN
 			RAISE NOTICE 'Il contatto di ID % non appartiene alla stessa rubrica
-			              del gruppo %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Nome_Gruppo;
+			              del gruppo di ID %, pertanto l''inserimento è annullato ', NEW.Contatto_FK, NEW.Gruppo_FK;
 			RETURN OLD;
 		ELSE
 			RETURN NEW;
@@ -342,12 +350,14 @@ CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
 
 --Funzione che garantisce il corretto inserimento di un contatto con un numero 
 --fisso e uno mobile e un indirizzo fisico
---coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto, num_mobile, num_fisso, via, citta, nazione, cap)
+--coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto,
+--                     num_mobile, num_fisso, via, citta, nazione, cap, indirizzo_email, descrizione_email)
 CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE,     nome_par Contatto.nome%TYPE,
 												sec_no_par Contatto.secondonome%TYPE,   cognome_par Contatto.cognome%TYPE,
 												numero_mobile_par Telefono.numero%TYPE, numero_fisso_par Telefono.numero%TYPE,
 												via_par Indirizzo.via%TYPE,             citta_par Indirizzo.città%TYPE,
-												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE)
+												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE,
+											    email_par Email.indirizzoemail%TYPE,    descr_email_par Email.descrizione%TYPE)
 	RETURNS INTEGER
 	LANGUAGE PLPGSQL
 	AS $$
@@ -356,7 +366,6 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 		codice_contatto     INTEGER; 
 		nuovo_codice_valido INTEGER := (SELECT max(contatto_id) FROM Contatto) + 1;
 	BEGIN
-		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
 		if (nuovo_codice_valido <> -1) then
 			codice_contatto := nuovo_codice_valido;
 			raise notice 'Si inserisce il nuovo max id';
@@ -365,6 +374,7 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 			raise notice 'Si inserisce 1';
 		END if;
 		
+		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
 		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
 		INSERT INTO Contatto (contatto_id, nome, secondonome, cognome, rubrica_fk)
 		              VALUES (codice_contatto, nome_par, sec_no_par, cognome_par, rubrica_par);
@@ -374,9 +384,11 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 		              VALUES (numero_fisso_par, 'Fisso', codice_contatto);
 		INSERT INTO Indirizzo (via, descrizione, città, nazione, cap, contatto_fk)
 		  			  VALUES (via_par, 'Principale', citta_par, nazione_par, cap_par, codice_contatto);
+        INSERT INTO Email (indirizzoemail, descrizione, contatto_fk)
+			 		  VALUES (email_par, descr_email_par, codice_contatto);
 		--Riattivo il trigger
 		ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
 		--Viene ritornato il codice del contatto creato
 		RETURN codice_contatto;
 	END; $$;
-
+	

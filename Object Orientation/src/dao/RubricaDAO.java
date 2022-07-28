@@ -10,5 +10,6 @@ public interface RubricaDAO {
 	
 	public ArrayList<Contatto> loadContatti(String nomeRubrica);
 	public int addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
-            String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException;
+            String numMobile, String numFisso, String via, String citta, String nazione, String cap,
+            String indirizzoEmail, String descrEmail) throws SQLException;
 }

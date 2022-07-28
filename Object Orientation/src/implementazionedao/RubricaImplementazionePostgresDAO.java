@@ -51,12 +51,13 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	/* @returns id del contatto creato*/
 	@Override
 	public int addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
-			                String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException {
-		int id;
-		System.out.println("SELECT coherent_insertion_f('" + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
-									                 +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
-									                 +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
-									                 +" '" + cap +         "')");
+			                String numMobile, String numFisso, String via, String citta, String nazione, String cap,
+			                String indirizzoEmail, String descrEmail) throws SQLException {
+		int id = 100;
+		System.out.println("SELECT coherent_insertion_f('" + nomeRubrica + "', '" + nome +          "', '" + secondonome + "',"
+									                 +" '" + cognome +     "', '" + numMobile +     "', '" + numFisso   + "',"
+									                 +" '" + via +         "', '" + citta +         "', '" + nazione  +   "',"
+									                 +" '" + cap +         "', '" + indirizzoEmail +"', '" +descrEmail+"')");
 		try 
 		{
 			PreparedStatement aggiungiContatto = connection.prepareStatement
@@ -64,10 +65,16 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 					"SELECT coherent_insertion_f('" + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
 							                  +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
 							                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
-							                  +" '" + cap +         "')"
+							                  +" '" + cap +         "', '" + indirizzoEmail +"', '" +descrEmail+"')"
 					);
 			ResultSet rs = aggiungiContatto.executeQuery();
-			id = rs.getInt("coherent_insertion_f");
+			System.out.println("Si supera la parte che genera un errore di inserimento");
+			//Si sposta il cursore in avanti poiché inizialmente punta a prima della row iniziale
+			if(rs.next() == true)
+			{
+				id = rs.getInt("coherent_insertion_f");				
+			}
+			
 			connection.close();
 		}
 		catch (SQLException e) 

@@ -183,14 +183,16 @@ public class Controller {
 	}
 	
 	public Contatto addContatto(String nome, String secondonome, String cognome,
-                            String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
+                            String numMobile, String numFisso, String via, String citta, String nazione, String cap,
+                            String indirizzoEmail, String descrEmail) throws SQLException
 	 {
 		Contatto contatto;
 		int id;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
 		{
-			id = rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap);
+			id = rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
+					                      nazione, cap, indirizzoEmail, descrEmail);
 			contatto = rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 		}
 		catch (SQLException e) 
@@ -231,10 +233,10 @@ public class Controller {
 	public void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
 	{
 		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
-		try 
+		try
 		{
 			contattoPosgr.addEmail(indirizzoEmail, descrizione, contatto.getId());
-			contatto.addEmail(via, città, nazione, cap, tipoIndirizzo.Secondario);
+			contatto.addEmail(indirizzoEmail, descrizione);
 		}
 		catch (SQLException e)
 		{
@@ -245,6 +247,5 @@ public class Controller {
 	public void deleteContatto(int indiceContatto)
 	{
 		Contatto contattoEliminato = rubricaSelezionata.getContatti().get(indiceContatto);
-		
 	}
 }

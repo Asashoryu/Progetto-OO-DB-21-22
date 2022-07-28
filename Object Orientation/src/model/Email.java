@@ -4,10 +4,7 @@ public class Email
 {
 	private String stringaEmail;
 	
-	private enum tipoEmail{Principale,Secondario};
-	
-	private tipoEmail tipo;
-	
+	private String tipo;
 	
 	public Email(String stringaEmail,String tipo) 
 	{
@@ -23,7 +20,7 @@ public class Email
 	public void setTipo(String tipo) 
 	{
 		//la stringa s è convertita in un intero enum, e quindi assegnata a tipo
-		this.tipo = tipoEmail.valueOf(tipo);
+		this.tipo = tipo;
 	}
 	
 	public String getStringaEmail() 
