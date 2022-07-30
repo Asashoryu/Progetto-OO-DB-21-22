@@ -373,16 +373,7 @@ CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
 	FOR EACH ROW
 	EXECUTE PROCEDURE check_mobile_landline_numbers_existence_f();
 
---Funzione che garantisce il corretto inserimento di un contatto con un numero 
---fisso e uno mobile e un indirizzo fisico
---coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto,
---                     num_mobile, num_fisso, via, citta, nazione, cap, indirizzo_email, descrizione_email)
-CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE,     nome_par Contatto.nome%TYPE,
-												sec_no_par Contatto.secondonome%TYPE,   cognome_par Contatto.cognome%TYPE,
-												numero_mobile_par Telefono.numero%TYPE, numero_fisso_par Telefono.numero%TYPE,
-												via_par Indirizzo.via%TYPE,             citta_par Indirizzo.città%TYPE,
-												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE,
-											    email_par Email.indirizzoemail%TYPE,    descr_email_par Email.descrizione%TYPE)
+CREATE OR REPLACE FUNCTION generate_new_contatto_id()
 	RETURNS INTEGER
 	LANGUAGE PLPGSQL
 	AS $$
@@ -391,15 +382,35 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 		codice_contatto     INTEGER; 
 		nuovo_codice_valido INTEGER := (SELECT max(contatto_id) FROM Contatto) + 1;
 	BEGIN
-		if (nuovo_codice_valido <> -1) then
+		SET CONSTRAINTS ALL DEFERRED;
+		IF (nuovo_codice_valido <> -1) THEN
 			codice_contatto := nuovo_codice_valido;
 			raise notice 'Si inserisce il nuovo max id';
-		else
+		ELSE
 			codice_contatto := 1;
 			raise notice 'Si inserisce 1';
-		END if;
-		
+		END IF;
+		RETURN codice_contatto;
+	END; $$;
+	
+--Funzione che garantisce il corretto inserimento di un contatto con un numero 
+--fisso e uno mobile e un indirizzo fisico
+--coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto,
+--                     num_mobile, num_fisso, via, citta, nazione, cap, indirizzo_email, descrizione_email, contatto_id)
+CREATE OR REPLACE PROCEDURE coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE,     nome_par Contatto.nome%TYPE,
+												sec_no_par Contatto.secondonome%TYPE,   cognome_par Contatto.cognome%TYPE,
+												numero_mobile_par Telefono.numero%TYPE, numero_fisso_par Telefono.numero%TYPE,
+												via_par Indirizzo.via%TYPE,             citta_par Indirizzo.città%TYPE,
+												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE,
+											    email_par Email.indirizzoemail%TYPE,    descr_email_par Email.descrizione%TYPE,
+												codice_contatto INTEGER)
+	--RETURNS INTEGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		SET CONSTRAINTS ALL DEFERRED;
 		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
+		--ALTER TABLE Contatto DISABLE TRIGGER blocca_contatti_senza_numero;
 		INSERT INTO Contatto (contatto_id, nome, secondonome, cognome, rubrica_fk)
 		              VALUES (codice_contatto, nome_par, sec_no_par, cognome_par, rubrica_par);
 		INSERT INTO Telefono (numero, descrizione, contatto_fk) 
@@ -411,7 +422,8 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
         INSERT INTO Email (indirizzoemail, descrizione, contatto_fk)
 			 		  VALUES (email_par, descr_email_par, codice_contatto);
 		--Riattivo il trigger
+		--ALTER TABLE Contatto ENABLE TRIGGER blocca_contatti_senza_numero;
 		--Viene ritornato il codice del contatto creato
-		RETURN codice_contatto;
+		--RETURN codice_contatto;
 	END; $$;
 	

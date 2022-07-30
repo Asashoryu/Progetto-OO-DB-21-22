@@ -3,10 +3,9 @@ BEGIN;
 --questo comando indica di differire tutti
 SET CONSTRAINTS ALL DEFERRED;
 
-INSERT INTO Rubrica VALUES 
+INSERT INTO Rubrica VALUES
 ('Utente_1'),
 ('Utente_2');
-
 
 INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES 
 ('Alfredo',NULL,'Esposito',NULL,'Utente_1'),
