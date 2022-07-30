@@ -1,8 +1,12 @@
+--Inizio transazione
+BEGIN;
+--questo comando indica di differire tutti
+SET CONSTRAINTS ALL DEFERRED;
+
 INSERT INTO Rubrica VALUES 
 ('Utente_1'),
 ('Utente_2');
 
-ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
 
 INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES 
 ('Alfredo',NULL,'Esposito',NULL,'Utente_1'),
@@ -26,7 +30,6 @@ INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES
 ('Lucio',NULL,'Domo',NULL,'Utente_2'),
 ('Federico','Antonio','Piuma',NULL,'Utente_2');
 
-ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
 
 INSERT INTO Gruppo(Nome,Rubrica_FK) VALUES
 ('Gruppo1','Utente_1'),
@@ -124,9 +127,6 @@ INSERT INTO Telefono(Numero,Descrizione,Contatto_FK) VALUES
 ('3320012090','Mobile',19),
 ('0815887060','Fisso',19);
 
-
-
-
 INSERT INTO Email(IndirizzoEmail,Descrizione,Contatto_FK) VALUES 
 ('Alfredo.Esposito@gmail.com','Primaria',1),
 ('AlfredoEspo33@gmail.com','Secondaria',1),
@@ -140,3 +140,5 @@ INSERT INTO Email(IndirizzoEmail,Descrizione,Contatto_FK) VALUES
 ('PasquiAma@gmail.com','Ausiliaria',13),
 ('PAmabile@libero.it','Secondaria',13),
 ('Pasquale.Amabile@studenti.unina.it','Universitaria',13);
+
+commit;

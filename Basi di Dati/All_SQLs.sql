@@ -309,19 +309,44 @@ CREATE OR REPLACE TRIGGER unchangeable_address_description
 	EXECUTE PROCEDURE unchangeable_address_description_f();
 	
 --blocca l'inserimento in Contatto
-CREATE OR REPLACE FUNCTION block_direct_insertion_f()
+--CREATE OR REPLACE FUNCTION block_direct_insertion_f()
+--	RETURNS TRIGGER
+--	LANGUAGE PLPGSQL
+--	AS $$
+--	BEGIN
+--		RAISE NOTICE 'Inserimento diretto in contatto bloccato';
+--		RETURN OLD;
+--	END; $$;
+--	
+--CREATE OR REPLACE TRIGGER block_direct_insertion
+--	BEFORE INSERT ON Contatto
+--	FOR EACH ROW
+--	EXECUTE PROCEDURE block_direct_insertion_f();	
+	
+--funzione di test per verificare la funzionalità dei trigger AFTER con le transazioni
+CREATE OR REPLACE FUNCTION blocca_contatti_senza_numero_f()
 	RETURNS TRIGGER
 	LANGUAGE PLPGSQL
 	AS $$
 	BEGIN
-		RAISE NOTICE 'Inserimento diretto in contatto bloccato';
-		RETURN OLD;
+		if  (Select count(*) From telefono where Contatto_FK = NEW.Contatto_ID AND descrizione = 'Fisso') < 1
+	    OR (Select count(*) From telefono where Contatto_FK = NEW.Contatto_ID AND descrizione = 'Mobile') < 1
+		THEN
+			RAISE NOTICE 'Test errore per contatto e telefono';
+			--Al primo errore, viene fatto un rollback della transazione in uso, togliendo ogni cambiamento
+			ROLLBACK;
+			return NULL;
+		ELSE
+			return NEW;
+		END IF;
 	END; $$;
-	
-CREATE OR REPLACE TRIGGER block_direct_insertion
-	BEFORE INSERT ON Contatto
+
+CREATE constraint TRIGGER blocca_contatti_senza_numero
+	after INSERT ON Contatto
+	deferrable
 	FOR EACH ROW
-	EXECUTE PROCEDURE block_direct_insertion_f();
+	
+	EXECUTE PROCEDURE blocca_contatti_senza_numero_f();
 
 --Trigger che assicura che per ogni contatto esistano sempre 
 --un numero fisso e uno mobile
@@ -375,7 +400,6 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
 		END if;
 		
 		--Disattivo il trigger che impedisce l'inserimento diretto in Contatto
-		ALTER TABLE Contatto DISABLE TRIGGER block_direct_insertion;
 		INSERT INTO Contatto (contatto_id, nome, secondonome, cognome, rubrica_fk)
 		              VALUES (codice_contatto, nome_par, sec_no_par, cognome_par, rubrica_par);
 		INSERT INTO Telefono (numero, descrizione, contatto_fk) 
@@ -387,7 +411,6 @@ CREATE OR REPLACE FUNCTION coherent_insertion_f(rubrica_par Rubrica.utente_id%TY
         INSERT INTO Email (indirizzoemail, descrizione, contatto_fk)
 			 		  VALUES (email_par, descr_email_par, codice_contatto);
 		--Riattivo il trigger
-		ALTER TABLE Contatto ENABLE TRIGGER block_direct_insertion;
 		--Viene ritornato il codice del contatto creato
 		RETURN codice_contatto;
 	END; $$;

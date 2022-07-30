@@ -106,6 +106,8 @@ public class AddContatto extends JFrame {
 	private JPanel pannelloScrollMail;
 
 	public AddContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
+		
+		
 		setResizable(false);
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -287,12 +289,12 @@ public class AddContatto extends JFrame {
 		textFieldNome.setBounds(45, 27, 90, 19);
 		pannelloCredUtente.add(textFieldNome);
 		textFieldNome.setColumns(10);
+		
 										
 		lblLabelNome = new JLabel("Nome ");
 		lblLabelNome.setBounds(35, 11, 96, 13);
 		pannelloCredUtente.add(lblLabelNome);
 		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
-		
 		
 		/**
 		 * Indirizzi Secondari
@@ -599,80 +601,66 @@ public class AddContatto extends JFrame {
 				}
 				if (valido == 1) {
 					System.out.println("Puoi inserire i tuoi dati con successo ora!");
+					int id = -1;
 					// TODO: inserimento in memoria e nel DB
 					// inserimenti principali
 					try {
 						// contatto creato
 						Contatto nuovoContatto;
 						// inserimento in database
+						id = controller.inizializzaInserimento();
 						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
 											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 											   		           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
-											   		           textFieldEmail.getText(),     textFieldDescrizioneEmail.getText());
+											   		           textFieldEmail.getText(),     textFieldDescrizioneEmail.getText(), id);
 						// INSERIMENTI SECONDARI
 						// Inserimento indirizzi secondari
 						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 						{
-							try {
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compIndirizzoSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
-									String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
-									String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
-									String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
-									controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
-								}
-							} 
-							catch (SQLException e1) {
-								//TODO :migliorare la risposta al catch
-								System.out.println("Un valore secondario non Ë stato inserito per qualche errore");
+							System.out.println("Primo ciclo for");
+							// se non Ë un button allora Ë il pannello con gli indirizzi
+							if(compIndirizzoSec instanceof JPanel)
+							{
+								// estraggo le informazioni dal panel trovato
+								System.out.println("\tEntrato nell'if del for");
+								String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
+								String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
+								String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
+								String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
+								controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
 							}
 						}
 						// Inserimento numeri secondari
 						for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
 						{
-							try {
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compNumeroSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
-									String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
-									controller.addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
-								}
-							}
-							catch (SQLException e1)
+							System.out.println("Primo ciclo for");
+							// se non Ë un button allora Ë il pannello con gli indirizzi
+							if(compNumeroSec instanceof JPanel)
 							{
-								//TODO :migliorare la risposta al catch
-								System.out.println("Un valore secondario non Ë stato inserito per qualche errore");
+								// estraggo le informazioni dal panel trovato
+								System.out.println("\tEntrato nell'if del for");
+								String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
+								String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
+								controller.addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
 							}
 						}
 						// Inserimento email secondarie
 						for (Component compEmailSec : pannelloScrollMail.getComponents())
 						{
-							try {
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compEmailSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
-									String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
-									controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
-								}
-							}
-							catch (SQLException e1) {
-								//TODO :migliorare la risposta al catch
-								System.out.println("Un valore secondario non Ë stato inserito per qualche errore");
+							System.out.println("Primo ciclo for");
+							// se non Ë un button allora Ë il pannello con gli indirizzi
+							if(compEmailSec instanceof JPanel)
+							{
+								// estraggo le informazioni dal panel trovato
+								System.out.println("\tEntrato nell'if del for");
+								String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
+								String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
+								controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
 							}
 						}
+						//commit delle informazioni in DB e inserimento del contatto i memoria
+						controller.finalizzaInserimento(nuovoContatto);
+						
 						// aggiornamento della combobox di listaContatti
 						lista.removeAll();
 						lista.setListData(controller.getNomiContattiRubrica());

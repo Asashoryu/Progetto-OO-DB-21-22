@@ -85,6 +85,21 @@ public class Contatto{
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public ArrayList<Indirizzo> getIndirizzi()
+	{
+		return indirizzi;
+	}
+	
+	public ArrayList<Telefono> getTelefoni()
+	{
+		return telefoni;
+	}
+	
+	public ArrayList<Email> getEmail()
+	{
+		return email;
+	}
 
 	/** metodo per aggiungere un numero di telefono al contatto */
 	public void addTelefono(String numero, String tipotelefono) {
@@ -101,5 +116,6 @@ public class Contatto{
 		Indirizzo nuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
 		indirizzi.add(nuovoIndirizzo);
 	}
+	
 	
 }

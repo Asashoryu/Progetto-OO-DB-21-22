@@ -169,7 +169,14 @@ public class ListaContatti extends JFrame {
 		/**
 		 * TODO: Quando è premuto il button "Modifica"
 		 */
-		
+		btnModifica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setContattoSelezionato(list.getSelectedIndex());
+				JFrame ChangeContatto = new ChangeContatto(controller, frame, list);
+				frame.setVisible(false);
+				ChangeContatto.setVisible(true);
+			}
+		});
 		/**
 		 * TODO: Quando è premuto il button "Elimina"
 		 */

@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -19,8 +20,15 @@ public class Controller {
 	
 	/** Oggetto contenitore delle rubriche. */
 	private Sistema sistema;
+	
 	/** Rubrica soggetta a operazioni di modifica, cancellazione o selezione. */
 	private Rubrica rubricaSelezionata;
+	
+	/** Contatto soggetto alle operazioni di modifica, cancellazione o selezione. */
+	private Contatto contattoSelezionato;
+	
+	/** Stringa di tutte le operazione che querry da eseguire atomicamente, in una transazione*/
+	private Connection connTransazione;
 	
 	/**Costruttore del Controller. Carica le rubriche dal DB in memoria */
 	public Controller() 
@@ -143,17 +151,41 @@ public class Controller {
 	}
 	
 	/**
-	 * Carica i contatti dal DB in memoria.
+	 * Imposta la rubrica selezionata dalla combobox attraverso il suo nome, univoco per ogni rubrica
+	 * @param indice
 	 */
-	public void loadContatti() 
+	public void setContattoSelezionato(int indice) 
 	{
+		// TODO : impostare come viene selezionato il contatto selezionato
+		contattoSelezionato = rubricaSelezionata.getContatti().get(indice);
+	}
+	
+	/**
+	 * Restituisce la rubrica selezionata.
+	 * @return
+	 */
+	public Contatto getContattoSelezionato() 
+	{
+		return contattoSelezionato;
+	}
+	
+	/**
+	 * Carica i contatti dal DB in memoria.
+	 * @throws Exception 
+	 */
+	public void loadContatti() throws Exception 
+	{
+		ArrayList<Contatto> contatti;
 		// Se la rubrica non è inizializzata
 		// allora i contatti sono caricati dal DB
 		if(rubricaSelezionata.getContatti() == null) 
 		{
-			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 			System.out.println("Rubrica selezionata è: " + rubricaSelezionata.getNome());
-			rubricaSelezionata.setContatti(rubricaPosgr.loadContatti(rubricaSelezionata.getNome()));
+			contatti = new ArrayList<>();
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			rubricaPosgr.apriConnessione();
+			rubricaPosgr.loadContatti(rubricaSelezionata.getNome(), contatti);
+			rubricaSelezionata.setContatti(contatti);
 		}
 	}
 	
@@ -181,69 +213,126 @@ public class Controller {
 		}
 		return nomiContattiRubriche;
 	}
+	/**
+	 * 
+	 * @param nome
+	 * @param secondonome
+	 * @param cognome
+	 * @param numMobile
+	 * @param numFisso
+	 * @param via
+	 * @param citta
+	 * @param nazione
+	 * @param cap
+	 * @param indirizzoEmail
+	 * @param descrEmail
+	 * @return
+	 * @throws SQLException
+	 */
 	
+	public int inizializzaInserimento() throws SQLException
+	{
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		connTransazione = rubricaPosgr.apriConnessione();
+		connTransazione.setAutoCommit(false);
+		return rubricaPosgr.startTransazione(connTransazione);
+	}
+	
+	public void finalizzaInserimento(Contatto contatto) throws SQLException
+	{
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		connTransazione.commit();
+		System.out.println("Commit riuscito");
+		rubricaSelezionata.getContatti().add(contatto);
+		connTransazione = null;
+	}
 	public Contatto addContatto(String nome, String secondonome, String cognome,
                             String numMobile, String numFisso, String via, String citta, String nazione, String cap,
-                            String indirizzoEmail, String descrEmail) throws SQLException
+                            String indirizzoEmail, String descrEmail, int id) throws SQLException
 	 {
 		Contatto contatto;
-		int id;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-		try 
+		try
 		{
-			id = rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
-					                      nazione, cap, indirizzoEmail, descrEmail);
-			contatto = rubricaSelezionata.aggiungiContatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
+			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
+					                      nazione, cap, indirizzoEmail, descrEmail, id, connTransazione);
+			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 		}
 		catch (SQLException e) 
 		{
+			contatto = null;
 			throw e;
 		}
 		return contatto;
 	}
-	
+	/**
+	 * 
+	 * @param contatto
+	 * @param via
+	 * @param città
+	 * @param nazione
+	 * @param cap
+	 * @throws SQLException
+	 */
 	public void addIndirizzoSec(Contatto contatto, String via, String città, String nazione, String cap) throws SQLException
 	{
-		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
 		{
-			contattoPosgr.addIndirizzo(via, città, nazione, cap, "Secondario", contatto.getId());
+			rubricaPosgr.addIndirizzo(via, città, nazione, cap, "Secondario", contatto.getId(), connTransazione);
 			contatto.addIndirizzo(via, città, nazione, cap, tipoIndirizzo.Secondario);
 		}
 		catch (SQLException e)
 		{
+			contatto = null;
 			throw e;
 		}
 	}
-	
+	/**
+	 * 
+	 * @param contatto
+	 * @param numero
+	 * @param descrizione
+	 * @throws SQLException
+	 */
 	public void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
 	{
-		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
 		{
-			contattoPosgr.addTelefono(numero, descrizione, contatto.getId());
+			rubricaPosgr.addTelefono(numero, descrizione, contatto.getId(), connTransazione);
 			contatto.addTelefono(numero, descrizione);
 		}
 		catch (SQLException e)
 		{
+			contatto = null;
 			throw e;
 		}
 	}
-	
+	/**
+	 * 
+	 * @param contatto
+	 * @param indirizzoEmail
+	 * @param descrizione
+	 * @throws SQLException
+	 */
 	public void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
 	{
-		ContattoDAO contattoPosgr =  new ContattoImplementazionePostgresDAO();
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
 		{
-			contattoPosgr.addEmail(indirizzoEmail, descrizione, contatto.getId());
+			rubricaPosgr.addEmail(indirizzoEmail, descrizione, contatto.getId(), connTransazione);
 			contatto.addEmail(indirizzoEmail, descrizione);
 		}
 		catch (SQLException e)
 		{
+			contatto = null;
 			throw e;
 		}
-	}
+	}	
 	
+	
+	// TODO : implementare la cancellazione di un contatto
 	public void deleteContatto(int indiceContatto)
 	{
 		Contatto contattoEliminato = rubricaSelezionata.getContatti().get(indiceContatto);

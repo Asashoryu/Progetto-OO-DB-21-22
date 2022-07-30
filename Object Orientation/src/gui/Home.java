@@ -171,7 +171,12 @@ public class Home extends JFrame {
 				if (txtUtenteSelezionato.getText().isBlank() == false) 
 				{
 					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
-					controller.loadContatti();
+					try {
+						controller.loadContatti();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					JFrame contattiFrame = new ListaContatti(controller, frame);
 					System.out.println("Frame Contatti caricato");
 					frame.setVisible(false);
