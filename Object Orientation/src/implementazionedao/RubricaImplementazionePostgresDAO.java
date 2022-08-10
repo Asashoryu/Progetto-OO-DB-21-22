@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import dao.RubricaDAO;
 import database.ConnessioneDatabase;
 import model.Contatto;
+import model.Gruppo;
 import model.Rubrica;
 import model.Indirizzo.tipoIndirizzo;
 
@@ -109,6 +110,30 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	public void loadGruppi(String nomeRubrica, ArrayList<Gruppo> gruppi) {
+		System.out.println("SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'");
+		PreparedStatement recuperaGruppi;
+		try {
+			// aggiunge le informazioni sul contatto
+			recuperaGruppi = connection.prepareStatement(
+				"SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'"
+				);
+			ResultSet rs = recuperaGruppi.executeQuery();
+			while(rs.next())
+			{
+				Gruppo nuovoGruppo = new Gruppo(rs.getString("nome"), rs.getInt("gruppo_id"));
+				System.out.println("Gruppo : " + rs.getString("nome") + " e " + rs.getInt("gruppo_id"));
+				gruppi.add(nuovoGruppo);
+			}
+			rs.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public int startTransazione(Connection connessione) throws SQLException
 	{
 		int id = -1;
@@ -143,11 +168,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	@Override
 	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 			                String numMobile, String numFisso, String via, String citta, String nazione, String cap,
-			                String indirizzoEmail, String descrEmail, int id, Connection connessione) throws SQLException {
+			                int id, Connection connessione) throws SQLException {
 		System.out.println("CALL coherent_insertion_f('"   + nomeRubrica + "', '" + nome +          "', '" + secondonome + "',"
 									                 +" '" + cognome +     "', '" + numMobile +     "', '" + numFisso   + "',"
 									                 +" '" + via +         "', '" + citta +         "', '" + nazione  +   "',"
-									                 +" '" + cap +         "', '" + indirizzoEmail +"', '" +descrEmail+"', "+id+"); ");
+									                 +" '" + cap +         "',  " + id+"); ");
 		try 
 		{
 			PreparedStatement aggiungiContatto = connessione.prepareStatement
@@ -155,7 +180,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 					"CALL coherent_insertion_f('"   + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
 							                  +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
 							                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
-							                  +" '" + cap +         "', '" + indirizzoEmail +"', '" +descrEmail+"', "+id+"); "
+							                  +" '" + cap +         "',  " + id+"); "
 					);
 			aggiungiContatto.execute();
 			System.out.println("Si supera la parte che genera un errore di inserimento");
@@ -211,19 +236,31 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	public void addEmail(String indirizzoEmail, String descrizione, int id_contatto, Connection connessione) throws SQLException
 	{
 		System.out.println(" INSERT INTO Email(indirizzoemail, descrizione, contatto_fk)"
-                                 + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
-	try {
-			PreparedStatement aggiungiEmail = connessione.prepareStatement(
-					" INSERT INTO Email(indirizzoemail, descrizione, contatto_fk)"
-                             + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
-			aggiungiEmail.executeUpdate();
-	} catch (SQLException e) {
-			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
-			e.printStackTrace();
-			throw e;
+	                     + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+		try {
+				PreparedStatement aggiungiEmail = connessione.prepareStatement(
+						" INSERT INTO Email(indirizzoemail, descrizione, contatto_fk)"
+	                             + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+				aggiungiEmail.executeUpdate();
+		} catch (SQLException e) {
+				connessione.rollback();
+				System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
+				e.printStackTrace();
+				throw e;
+		}
 	}
-		
+	
+	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException
+	{
+		System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
+		try {
+				PreparedStatement cancellaContatto = connessione.prepareStatement(
+						" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
+				cancellaContatto.executeUpdate();
+		} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+		}
 	}
 		
 }

@@ -34,6 +34,14 @@ public class Rubrica {
 		this.contatti = contatti;
 	}
 	
+	public ArrayList<Gruppo> getGruppi() {
+		return gruppi;
+	}
+
+	public void setGruppi(ArrayList<Gruppo> gruppi) {
+		this.gruppi = gruppi;
+	}
+	
 	public Contatto aggiungiContatto(String primonome, String secondonome, String cognome,
                                  String numMobile, String numFisso, String via, String citta, String nazione, String cap, int id) 
 	{

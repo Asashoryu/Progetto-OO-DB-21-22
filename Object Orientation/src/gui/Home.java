@@ -173,8 +173,10 @@ public class Home extends JFrame {
 					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
 					try {
 						controller.loadContatti();
+						controller.loadGruppi();
+						System.out.println("Debug: superato loadGruppi");
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
+						// TODO aggiungere un JOptionPane corrispondente
 						e1.printStackTrace();
 					}
 					JFrame contattiFrame = new ListaContatti(controller, frame);

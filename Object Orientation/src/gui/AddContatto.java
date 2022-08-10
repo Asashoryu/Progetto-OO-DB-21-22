@@ -84,7 +84,6 @@ public class AddContatto extends JFrame {
 	private JButton btnNewButton_1;
 	private JTextField textFieldNumFisso;
 	private JTextField textFieldNumMobile;
-	private JTextField textFieldEmail;
 	private JTextField textFieldVia;
 	private JLabel lblNumMobile;
 	private JLabel lblNumFisso;
@@ -92,12 +91,10 @@ public class AddContatto extends JFrame {
 	private JTextField textFieldCittà;
 	private JTextField textFieldNazione;
 	private JTextField textFieldCap;
-	private JTextField textFieldDescrizioneEmail;
 	private JPanel panelMain;
 	private JPanel pannelloElemScrollPane;
 	private JPanel pannelloIndPrincipale;
 	private JPanel pannelloNumTel;
-	private JPanel pannelloIndMail;
 	private JPanel pannelloNumTelSec;
 	private JPanel pannelloEmailAddSec;
 	private JLabel lblNumSecondari;
@@ -123,8 +120,9 @@ public class AddContatto extends JFrame {
 		getContentPane().setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 793, 464);
+		setBounds(100, 100, 833, 503);
 		contentPane = new JPanel();
+		contentPane.setFocusTraversalPolicyProvider(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		getContentPane().setBackground(new Color(224, 255, 255));
@@ -141,10 +139,6 @@ public class AddContatto extends JFrame {
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
 		lblNumeriTelefono.setBounds(366, 128, 112, 13);
 		contentPane.add(lblNumeriTelefono);
-
-		JLabel lblIndirizzoMail = new JLabel("Indirizzo Mail");
-		lblIndirizzoMail.setBounds(582, 128, 96, 13);
-		contentPane.add(lblIndirizzoMail);
 
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
 		lblIndirizzoFisico.setBounds(62, 128, 111, 13);
@@ -304,7 +298,7 @@ public class AddContatto extends JFrame {
 		contentPane.add(lblNewLabel);
 												
 		pannelloNumTel = new JPanel();
-		pannelloNumTel.setBounds(322, 152, 187, 66);
+		pannelloNumTel.setBounds(322, 144, 187, 67);
 		contentPane.add(pannelloNumTel);
 		pannelloNumTel.setLayout(null);
 												
@@ -330,35 +324,6 @@ public class AddContatto extends JFrame {
 		textFieldNumFisso.setColumns(10);
 		
 		/**
-		 * pannello mail secondaria
-		 */
-		
-		pannelloIndMail = new JPanel();
-		pannelloIndMail.setBounds(532, 152, 205, 66);
-		contentPane.add(pannelloIndMail);
-		pannelloIndMail.setLayout(null);
-
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(10, 11, 42, 14);
-		pannelloIndMail.add(lblEmail);
-		lblEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		
-		JLabel lblDescrizioneEmail = new JLabel("Descrizione");
-		lblDescrizioneEmail.setBounds(10, 36, 68, 13);
-		pannelloIndMail.add(lblDescrizioneEmail);
-		lblDescrizioneEmail.setHorizontalAlignment(SwingConstants.LEFT);
-				
-		textFieldEmail = new JTextField();
-		textFieldEmail.setBounds(99, 8, 96, 19);
-		pannelloIndMail.add(textFieldEmail);
-		textFieldEmail.setColumns(10);
-																										
-		textFieldDescrizioneEmail = new JTextField();
-		textFieldDescrizioneEmail.setBounds(99, 32, 96, 19);
-		pannelloIndMail.add(textFieldDescrizioneEmail);
-		textFieldDescrizioneEmail.setColumns(10);
-		
-		/**
 		 * pannello numeri secondari
 		 */
 		
@@ -368,17 +333,18 @@ public class AddContatto extends JFrame {
 		
 		pannelloNumTelSec = new JPanel();
 		pannelloNumTelSec.setBackground(Color.GREEN);
-		pannelloNumTelSec.setBounds(322, 270, 187, 58);
+		pannelloNumTelSec.setBounds(322, 270, 187, 119);
 		contentPane.add(pannelloNumTelSec);
 		pannelloNumTelSec.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPaneNumTel = new JScrollPane();
+		pannelloNumTelSec.add(scrollPaneNumTel, BorderLayout.CENTER);
 		scrollPaneNumTel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneNumTel.setForeground(Color.GREEN);
 		scrollPaneNumTel.setBackground(Color.GREEN);
-		pannelloNumTelSec.add(scrollPaneNumTel, BorderLayout.CENTER);
 		
 		pannelloScrolNumTel = new JPanel();
+		pannelloScrolNumTel.setBackground(Color.GREEN);
 		scrollPaneNumTel.setViewportView(pannelloScrolNumTel);
 		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
 		
@@ -424,7 +390,7 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecNum.setBounds(322, 333, 47, 23);
+		btnAddSecNum.setBounds(322, 392, 47, 23);
 		contentPane.add(btnAddSecNum);
 		
 		/**
@@ -432,12 +398,12 @@ public class AddContatto extends JFrame {
 		 */
 		
 		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
-		lblEmailSecondarie.setBounds(565, 245, 134, 14);
+		lblEmailSecondarie.setBounds(591, 127, 134, 14);
 		contentPane.add(lblEmailSecondarie);
 		
 		pannelloEmailAddSec = new JPanel();
-		pannelloEmailAddSec.setBackground(Color.GREEN);
-		pannelloEmailAddSec.setBounds(532, 270, 205, 58);
+		pannelloEmailAddSec.setBackground(Color.LIGHT_GRAY);
+		pannelloEmailAddSec.setBounds(547, 144, 205, 90);
 		contentPane.add(pannelloEmailAddSec);
 		pannelloEmailAddSec.setLayout(new BorderLayout(0, 0));
 		
@@ -445,6 +411,7 @@ public class AddContatto extends JFrame {
 		pannelloEmailAddSec.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
+		pannelloScrollMail.setBackground(Color.GREEN);
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
 		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
 		
@@ -471,6 +438,7 @@ public class AddContatto extends JFrame {
 				{
 					//TODO : controlli sulla validità dell'inserimento
 					mail = creaSecMail(fieldTipo.getText(), fieldEmail.getText());
+					mail.setMaximumSize(new Dimension( 500, 20));
 					pannelloScrollMail.add(btnCancellaMailSec);
 					pannelloScrollMail.add(mail);
 					
@@ -489,14 +457,14 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecMail.setBounds(532, 333, 45, 23);
+		btnAddSecMail.setBounds(547, 241, 45, 23);
 		contentPane.add(btnAddSecMail);
 		
 		/**
 		 * Button "annulla"
 		 */
 		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(492, 393, 85, 21);
+		btnAnnulla.setBounds(587, 432, 85, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -509,7 +477,7 @@ public class AddContatto extends JFrame {
 		 * Button "vai"
 		 */
 		JButton btnAzione = new JButton("Vai");
-		btnAzione.setBounds(593, 393, 85, 21);
+		btnAzione.setBounds(682, 432, 85, 21);
 		contentPane.add(btnAzione);
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -583,22 +551,6 @@ public class AddContatto extends JFrame {
 				else {
 					textFieldNumFisso.setBackground(Color.WHITE);
 				}
-				if (textFieldEmail.getText().isBlank())
-				{
-					textFieldEmail.setBackground(Color.RED);
-					valido = 0;
-				}
-				else {
-					textFieldEmail.setBackground(Color.WHITE);
-				}
-				if (textFieldDescrizioneEmail.getText().isBlank())
-				{
-					textFieldDescrizioneEmail.setBackground(Color.RED);
-					valido = 0;
-				}
-				else {
-					textFieldDescrizioneEmail.setBackground(Color.WHITE);
-				}
 				if (valido == 1) {
 					System.out.println("Puoi inserire i tuoi dati con successo ora!");
 					int id = -1;
@@ -612,7 +564,7 @@ public class AddContatto extends JFrame {
 						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
 											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 											   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
-											   		           textFieldEmail.getText(),     textFieldDescrizioneEmail.getText(), id);
+											   		           id);
 						// INSERIMENTI SECONDARI
 						// Inserimento indirizzi secondari
 						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
@@ -678,13 +630,6 @@ public class AddContatto extends JFrame {
 				else {
 					System.out.println("I dati non sono stati inseriti correttamente");
 				}
-				
-				
-//				JDialog dialog = new JDialog();
-//				dialog.setVisible(true);
-//				dialog.setModalityType(Dialog.ModalityType.MODELESS);
-//				dialog.setBounds(100, 100, 296, 175);
-				
 				
 			}
 		});

@@ -13,6 +13,7 @@ import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
 import model.Contatto;
+import model.Gruppo;
 import model.Indirizzo.tipoIndirizzo;
 
 /** Gestisce l'interazione dell'interfaccia col model e col DB. */
@@ -137,13 +138,13 @@ public class Controller {
 	public void deleteRubrica() throws SQLException 
 	{
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
-		try 
+		try
 		{
 			//remove dal DB, per nome
 			sistemaPosgr.deleteRubrica(rubricaSelezionata.getNome());
 			//remove dalla memoria, per rubrica selezionata nella UI
 			getRubriche().remove(rubricaSelezionata);
-		} 
+		}
 		catch (SQLException e) 
 		{
 			throw e;
@@ -189,6 +190,23 @@ public class Controller {
 		}
 	}
 	
+	public void loadGruppi()
+	{
+		ArrayList<Gruppo> gruppi;
+		// Se la rubrica non è inizializzata
+		// allora i contatti sono caricati dal DB
+		if(rubricaSelezionata.getGruppi() == null) 
+		{
+			gruppi = new ArrayList<>();
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			rubricaPosgr.apriConnessione();
+			rubricaPosgr.loadGruppi(rubricaSelezionata.getNome(), gruppi);
+			// associazione dei contatti ai rispettivi gruppi
+			for (ea)
+			rubricaSelezionata.setGruppi(gruppi);
+		}
+	}
+	
 	/**
 	 * Restituisce i nomi di tutti i contatti della rubrica selezionata.
 	 * Necessario per visualizare i nomi nell'interfaccia UI.
@@ -213,22 +231,19 @@ public class Controller {
 		}
 		return nomiContattiRubriche;
 	}
-	/**
-	 * 
-	 * @param nome
-	 * @param secondonome
-	 * @param cognome
-	 * @param numMobile
-	 * @param numFisso
-	 * @param via
-	 * @param citta
-	 * @param nazione
-	 * @param cap
-	 * @param indirizzoEmail
-	 * @param descrEmail
-	 * @return
-	 * @throws SQLException
-	 */
+	
+	public String[] getNomiGruppiRubrica()
+	{
+		String[] nomiGruppiRubrica = new String[rubricaSelezionata.getGruppi().size()];
+		int indice;
+		for(Gruppo g : rubricaSelezionata.getGruppi())
+		{
+			// sono riunite tutte le parti di un nome di un contatto in una stringa
+			indice = rubricaSelezionata.getGruppi().indexOf(g);
+			nomiGruppiRubrica[indice] = rubricaSelezionata.getGruppi().get(indice).getNome();
+		}
+		return nomiGruppiRubrica;
+	}
 	
 	public int inizializzaInserimento() throws SQLException
 	{
@@ -248,14 +263,14 @@ public class Controller {
 	}
 	public Contatto addContatto(String nome, String secondonome, String cognome,
                             String numMobile, String numFisso, String via, String citta, String nazione, String cap,
-                            String indirizzoEmail, String descrEmail, int id) throws SQLException
+                            int id) throws SQLException
 	 {
 		Contatto contatto;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
 		{
 			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
-					                      nazione, cap, indirizzoEmail, descrEmail, id, connTransazione);
+					                      nazione, cap, id, connTransazione);
 			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 		}
 		catch (SQLException e) 
@@ -331,10 +346,33 @@ public class Controller {
 		}
 	}	
 	
-	
-	// TODO : implementare la cancellazione di un contatto
-	public void deleteContatto(int indiceContatto)
-	{
-		Contatto contattoEliminato = rubricaSelezionata.getContatti().get(indiceContatto);
+	public void deleteContattoSelezionato() throws SQLException {
+		// TODO Auto-generated method stub
+		Connection conn;
+		try {
+			// cancellazione dal DB
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			conn = rubricaPosgr.apriConnessione();
+			rubricaPosgr.deleteContatto(contattoSelezionato.getId(), conn);
+			conn = null;
+			// cancellazione dalla memoria
+			rubricaSelezionata.getContatti().remove(contattoSelezionato);
+		} catch (SQLException e) {
+			throw e;
+		}
 	}
+	
+	public void deleteContattoSelezionatoTransazione(int indiceContatto) throws SQLException
+	{
+		try {
+			// cancellazione dal DB
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			rubricaPosgr.deleteContatto(contattoSelezionato.getId(), connTransazione);
+			// cancellazione dalla memoria
+			rubricaSelezionata.getContatti().remove(contattoSelezionato);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
 }
