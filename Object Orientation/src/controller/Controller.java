@@ -202,7 +202,7 @@ public class Controller {
 			rubricaPosgr.apriConnessione();
 			rubricaPosgr.loadGruppi(rubricaSelezionata.getNome(), gruppi);
 			// associazione dei contatti ai rispettivi gruppi
-			for (ea)
+			
 			rubricaSelezionata.setGruppi(gruppi);
 		}
 	}

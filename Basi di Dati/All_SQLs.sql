@@ -6,7 +6,7 @@ GRANT ALL ON SCHEMA public TO public;
 
 --Creazione datatype EmailType per indirizzi email
 --L'indirizzo email deve essere strutturato in quest'ordine: testo,"@",testo,".",testo.
-CREATE DOMAIN EmailType AS VARCHAR(256) 
+CREATE DOMAIN EmailType AS VARCHAR(256)
 CHECK (VALUE LIKE '_%@_%.__%');
 
 --Crea il datatype per il CAP
@@ -272,7 +272,8 @@ CREATE OR REPLACE FUNCTION undeletable_main_address_f()
 	LANGUAGE PLPGSQL
 	AS $$
 	BEGIN
-		IF (OLD.Descrizione = 'Principale') THEN
+		-- Se l'indirizzo è principale e corrisponde a un contatto esistente allora blocca la cancellazione dell'indirizzo
+		IF (OLD.Descrizione = 'Principale') AND ((Select count(*) From Contatto where Contatto_ID = OLD.Contatto_FK ) <> 0) THEN
 			RAISE NOTICE 'Questo indirizzo è principale e non può essere eliminato';
 			RETURN NULL;
 		ELSE 
@@ -355,8 +356,10 @@ CREATE OR REPLACE FUNCTION check_mobile_landline_numbers_existence_f()
 	LANGUAGE PLPGSQL
 	AS $$
 	BEGIN
-		--tg_op è una metavariabile che indica l'operazione che innesca il trigger
-		IF (SELECT count(*) FROM Telefono WHERE Contatto_fk=OLD.Contatto_fk AND Descrizione=OLD.Descrizione)<=1 THEN
+		-- Se il telefono da eliminare è l'ultimo rimasto, fisso o mobile, del contatto e il contatto esiste allora la cancellazione è bloccata
+		IF ((SELECT count(*) FROM Telefono WHERE Contatto_fk = OLD.Contatto_fk AND Descrizione = OLD.Descrizione)<=1)
+		    AND ((Select count(*) From Contatto where Contatto_ID = OLD.Contatto_FK ) <> 0) THEN
+			--tg_op è una metavariabile che indica l'operazione che innesca il trigger
 			RAISE NOTICE 'operazione di % del numero % del contatto % non consentita',tg_op, OLD.Numero, OLD.Contatto_fk;
 			RETURN NULL;
 		ELSE 
@@ -402,7 +405,6 @@ CREATE OR REPLACE PROCEDURE coherent_insertion_f(rubrica_par Rubrica.utente_id%T
 												numero_mobile_par Telefono.numero%TYPE, numero_fisso_par Telefono.numero%TYPE,
 												via_par Indirizzo.via%TYPE,             citta_par Indirizzo.città%TYPE,
 												nazione_par Indirizzo.nazione%TYPE,     cap_par Indirizzo.cap%TYPE,
-											    email_par Email.indirizzoemail%TYPE,    descr_email_par Email.descrizione%TYPE,
 												codice_contatto INTEGER)
 	--RETURNS INTEGER
 	LANGUAGE PLPGSQL
@@ -419,8 +421,6 @@ CREATE OR REPLACE PROCEDURE coherent_insertion_f(rubrica_par Rubrica.utente_id%T
 		              VALUES (numero_fisso_par, 'Fisso', codice_contatto);
 		INSERT INTO Indirizzo (via, descrizione, città, nazione, cap, contatto_fk)
 		  			  VALUES (via_par, 'Principale', citta_par, nazione_par, cap_par, codice_contatto);
-        INSERT INTO Email (indirizzoemail, descrizione, contatto_fk)
-			 		  VALUES (email_par, descr_email_par, codice_contatto);
 		--Riattivo il trigger
 		--ALTER TABLE Contatto ENABLE TRIGGER blocca_contatti_senza_numero;
 		--Viene ritornato il codice del contatto creato
