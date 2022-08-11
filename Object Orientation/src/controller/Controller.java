@@ -28,6 +28,9 @@ public class Controller {
 	/** Contatto soggetto alle operazioni di modifica, cancellazione o selezione. */
 	private Contatto contattoSelezionato;
 	
+	/** Contatto soggetto alle operazioni di modifica, cancellazione o selezione. */
+	private Gruppo gruppoSelezionato;
+	
 	/** Stringa di tutte le operazione che querry da eseguire atomicamente, in una transazione*/
 	private Connection connTransazione;
 	
@@ -170,6 +173,16 @@ public class Controller {
 		return contattoSelezionato;
 	}
 	
+	public void setGruppoSelezionato(int indice) 
+	{
+		gruppoSelezionato = rubricaSelezionata.getGruppi().get(indice);
+	}
+	
+	public Gruppo getGruppoSelezionato() 
+	{
+		return gruppoSelezionato;
+	}
+	
 	/**
 	 * Carica i contatti dal DB in memoria.
 	 * @throws Exception 
@@ -195,13 +208,13 @@ public class Controller {
 		ArrayList<Gruppo> gruppi;
 		// Se la rubrica non è inizializzata
 		// allora i contatti sono caricati dal DB
-		if(rubricaSelezionata.getGruppi() == null) 
+		if(rubricaSelezionata.getGruppi() == null)
 		{
 			gruppi = new ArrayList<>();
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 			rubricaPosgr.apriConnessione();
-			rubricaPosgr.loadGruppi(rubricaSelezionata.getNome(), gruppi);
-			// associazione dei contatti ai rispettivi gruppi
+			rubricaPosgr.loadGruppi(rubricaSelezionata.getNome(), rubricaSelezionata.getContatti(), gruppi);
+			// TODO : associazione dei contatti ai rispettivi gruppi
 			
 			rubricaSelezionata.setGruppi(gruppi);
 		}
@@ -243,6 +256,26 @@ public class Controller {
 			nomiGruppiRubrica[indice] = rubricaSelezionata.getGruppi().get(indice).getNome();
 		}
 		return nomiGruppiRubrica;
+	}
+	
+	public String[] getNomiContattiGruppoSelezionato()
+	{
+		String[] nomiContattiGruppo = new String[rubricaSelezionata.getContatti().size()];
+		for(Contatto c : gruppoSelezionato.getContatti()) 
+		{
+			// sono riunite tutte le parti di un nome di un contatto in una stringa
+			String nomeCompleto;
+			if(c.getSecondoNome()!=null) 
+			{
+				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
+			} 
+			else 
+			{
+				nomeCompleto = c.getNome() +" "+ c.getCognome();
+			}
+			nomiContattiGruppo[rubricaSelezionata.getContatti().indexOf(c)] = nomeCompleto;
+		}
+		return nomiContattiGruppo;
 	}
 	
 	public int inizializzaInserimento() throws SQLException

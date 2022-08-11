@@ -13,6 +13,7 @@ public class Gruppo{
 	public Gruppo (String nome, int id) {
 		setNome(nome);
 		setId(id);
+		contatti = new ArrayList<Contatto>();
 	}
 	
 	public String getNome() {

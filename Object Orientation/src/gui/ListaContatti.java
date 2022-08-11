@@ -164,13 +164,17 @@ public class ListaContatti extends JFrame {
 		btnModificaGruppo.setBounds(610, 361, 109, 23);
 		getContentPane().add(btnModificaGruppo);
 		
+		JButton btnVisualizzaGruppo = new JButton("Visualizza gruppo");
+		btnVisualizzaGruppo.setBounds(610, 327, 109, 23);
+		getContentPane().add(btnVisualizzaGruppo);
+		
 		JButton btnEliminaGruppo = new JButton("-");
-		btnEliminaGruppo.setBounds(729, 361, 37, 23);
-		btnEliminaGruppo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnEliminaGruppo.setBounds(729, 361, 48, 23);
 		getContentPane().add(btnEliminaGruppo);
+		
+		JButton btnVisualizzaTuttiGruppi = new JButton("Tutti");
+		btnVisualizzaTuttiGruppi.setBounds(712, 68, 74, 23);
+		getContentPane().add(btnVisualizzaTuttiGruppi);
 		
 		/**
 		 * Quando è premuto il button "Indietro"
@@ -237,6 +241,33 @@ public class ListaContatti extends JFrame {
 		/**
 		 * TODO: Quando è premuto il button "GRUPPI"
 		 */
+		
+		btnVisualizzaGruppo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+				listaContatti.removeAll();
+				listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+				listaContatti.revalidate();
+				listaContatti.repaint();
+			}
+		});
+		
+		btnVisualizzaTuttiGruppi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listaContatti.removeAll();
+				listaContatti.setListData(controller.getNomiContattiRubrica());
+				listaContatti.revalidate();
+				listaContatti.repaint();
+			}
+		});
+		
+		btnAggiungiGruppo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame AddGruppo = new AddGruppo(controller, frame, listaContatti);
+				frame.setVisible(false);
+				AddGruppo.setVisible(true);
+			}
+		});
 		
 		/**
 		 * Quando è premuto il button "ricerca"

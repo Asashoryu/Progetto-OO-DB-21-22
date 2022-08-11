@@ -11,7 +11,7 @@ import model.Rubrica;
 public interface RubricaDAO {
 	
 	void loadContatti(String nomeRubrica, ArrayList<Contatto> contatti);
-	public void loadGruppi(String nomeRubrica, ArrayList<Gruppo> gruppi);
+	public void loadGruppi(String nomeRubrica, ArrayList<Contatto> contatti, ArrayList<Gruppo> gruppi);
 	public Connection apriConnessione();
 	public Connection getConnessione();
 	public int startTransazione(Connection connTransazione) throws SQLException;

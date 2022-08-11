@@ -110,7 +110,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
-	public void loadGruppi(String nomeRubrica, ArrayList<Gruppo> gruppi) {
+	public void loadGruppi(String nomeRubrica, ArrayList<Contatto> contatti, ArrayList<Gruppo> gruppi) {
 		System.out.println("SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'");
 		PreparedStatement recuperaGruppi;
 		try {
@@ -118,14 +118,36 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			recuperaGruppi = connection.prepareStatement(
 				"SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\'"
 				);
-			ResultSet rs = recuperaGruppi.executeQuery();
-			while(rs.next())
+			ResultSet rsg = recuperaGruppi.executeQuery();
+			while(rsg.next())
 			{
-				Gruppo nuovoGruppo = new Gruppo(rs.getString("nome"), rs.getInt("gruppo_id"));
-				System.out.println("Gruppo : " + rs.getString("nome") + " e " + rs.getInt("gruppo_id"));
+				Gruppo nuovoGruppo = new Gruppo(rsg.getString("nome"), rsg.getInt("gruppo_id"));
+				PreparedStatement recuperaContattiGruppo;
+				System.out.println(" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + ";");
+				recuperaContattiGruppo = connection.prepareStatement(
+						" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + "; "
+						);
+				ResultSet rsc = recuperaContattiGruppo.executeQuery();
+				// per ogni risultato si cerca il contatto con l'id trovato e lo si aggiunge al nuovo gruppo
+				while (rsc.next())
+				{
+					for(Contatto contatto : contatti)
+					{
+						if (contatto.getId() == rsc.getInt("contatto_fk"))
+						{
+							nuovoGruppo.getContatti().add(contatto);
+							break;
+						}
+					}
+				}
+				System.out.println("Debug : contatti del nuovo gruppo");
+				for (Contatto contatto : nuovoGruppo.getContatti())
+				{
+					System.out.println("Debug : " + contatto.getNome());
+				}
 				gruppi.add(nuovoGruppo);
 			}
-			rs.close();
+			rsg.close();
 			connection.close();
 			
 		} catch (SQLException e) {
