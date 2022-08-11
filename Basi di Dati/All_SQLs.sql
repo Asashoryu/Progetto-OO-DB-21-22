@@ -376,6 +376,7 @@ CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
 	FOR EACH ROW
 	EXECUTE PROCEDURE check_mobile_landline_numbers_existence_f();
 
+
 CREATE OR REPLACE FUNCTION generate_new_contatto_id()
 	RETURNS INTEGER
 	LANGUAGE PLPGSQL
@@ -394,6 +395,26 @@ CREATE OR REPLACE FUNCTION generate_new_contatto_id()
 			raise notice 'Si inserisce 1';
 		END IF;
 		RETURN codice_contatto;
+	END; $$;
+	
+CREATE OR REPLACE FUNCTION generate_new_gruppo_id()
+	RETURNS INTEGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		--Seleziono e conservo un nuovo identificativo per il conttato
+		codice_gruppo     INTEGER; 
+		nuovo_codice_valido INTEGER := (SELECT max(gruppo_id) FROM Gruppo) + 1;
+	BEGIN
+		SET CONSTRAINTS ALL DEFERRED;
+		IF (nuovo_codice_valido <> -1) THEN
+			codice_gruppo := nuovo_codice_valido;
+			raise notice 'Si inserisce il nuovo max id';
+		ELSE
+			codice_gruppo := 1;
+			raise notice 'Si inserisce 1';
+		END IF;
+		RETURN codice_gruppo;
 	END; $$;
 	
 --Funzione che garantisce il corretto inserimento di un contatto con un numero 

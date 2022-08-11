@@ -1,4 +1,4 @@
---Inizio transazione
+--Inizio transazione begin commit
 BEGIN;
 --questo comando indica di differire tutti
 SET CONSTRAINTS ALL DEFERRED;
@@ -32,15 +32,13 @@ INSERT INTO Contatto(Nome,SecondoNome,Cognome,Foto,Rubrica_FK) VALUES
 
 INSERT INTO Gruppo(Nome,Rubrica_FK) VALUES
 ('Gruppo1','Utente_1'),
-('Friends','Utente_1'),
 ('Gruppo2','Utente_2');
 
 INSERT INTO Composizione VALUES 
 (1,1),
 (2,1),
 (3,1),
-(13,3),
-(14,3);
+(13,2);
 
 INSERT INTO Account(Fornitore,Indirizzoemail,FraseStato,Nickname) VALUES 
 ('Whatsapp','Alfredo.Esposito@gmail.com','Hey there I am using whatsapp','Alfredo'),
