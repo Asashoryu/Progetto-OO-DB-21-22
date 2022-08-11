@@ -408,4 +408,18 @@ public class Controller {
 		}
 	}
 
+	public void addGruppo(Gruppo nuovoGruppo) throws Exception {
+		Connection conn;
+		try {
+			// cancellazione dal DB
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			conn = rubricaPosgr.apriConnessione();
+			rubricaPosgr.addGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
+			conn = null;
+			rubricaSelezionata.getGruppi().add(nuovoGruppo);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
 }

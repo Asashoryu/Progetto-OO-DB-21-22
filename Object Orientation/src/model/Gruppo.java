@@ -16,6 +16,11 @@ public class Gruppo{
 		contatti = new ArrayList<Contatto>();
 	}
 	
+	public Gruppo (String nome, ArrayList<Contatto> contatti) {
+		setNome(nome);
+		this.contatti = contatti;
+	}
+	
 	public String getNome() {
 		return nome;
 	}

@@ -23,4 +23,5 @@ public interface RubricaDAO {
 	void addEmail(String indirizzoEmail, String descrizione, int id_contatto, Connection connessione)
 			throws SQLException;
 	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException;
+	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception;
 }

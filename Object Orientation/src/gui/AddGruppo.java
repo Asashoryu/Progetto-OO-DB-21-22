@@ -8,11 +8,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,6 +33,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import model.Contatto;
+import model.Gruppo;
 
 public class AddGruppo extends JFrame{
 	
@@ -41,7 +47,7 @@ public class AddGruppo extends JFrame{
 	private JPanel panelMain;
 	private JPanel pannelloElemScrollPane;
 	private ListSelectionModel listSelectionModel;
-
+	
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		
 		setResizable(false);
@@ -71,22 +77,22 @@ public class AddGruppo extends JFrame{
 		 * 
 		 */
 		
+		JPanel pannelloContattiMain = new JPanel();
+		pannelloContattiMain.setBounds(46, 121, 249, 243);
+		contentPane.add(pannelloContattiMain);
+		pannelloContattiMain.setLayout(new BorderLayout(0, 0));
+		
 		JPanel pannelloContatti = new JPanel();
-		pannelloContatti.setBounds(46, 121, 249, 243);
-		contentPane.add(pannelloContatti);
-		pannelloContatti.setLayout(new BorderLayout(0, 0));
+		pannelloContatti.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		pannelloContatti.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pannelloContatti.setBackground(Color.ORANGE);
 		
-		JPanel pannelloContatti_1 = new JPanel();
-		pannelloContatti_1.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		pannelloContatti_1.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pannelloContatti_1.setBackground(Color.ORANGE);
+		JScrollPane scrollPaneContatti = new JScrollPane(pannelloContatti);
+		pannelloContatti.setLayout(new BoxLayout(pannelloContatti, BoxLayout.PAGE_AXIS));
+		scrollPaneContatti.setPreferredSize(pannelloContatti.getSize());
+		pannelloContattiMain.add(scrollPaneContatti, BorderLayout.CENTER);
 		
-		JScrollPane scrollPaneContatti = new JScrollPane(pannelloContatti_1);
-		pannelloContatti_1.setLayout(new BoxLayout(pannelloContatti_1, BoxLayout.PAGE_AXIS));
-		scrollPaneContatti.setPreferredSize(pannelloContatti_1.getSize());
-		pannelloContatti.add(scrollPaneContatti, BorderLayout.CENTER);
-		
-		initPannelloContatti(pannelloContatti_1);
+		initPannelloContatti(pannelloContatti);
 		
 		JPanel pannelloNomeGruppo = new JPanel();
 		pannelloNomeGruppo.setBounds(84, 28, 169, 58);
@@ -124,16 +130,84 @@ public class AddGruppo extends JFrame{
 		btnAzione.setBounds(178, 375, 75, 21);
 		contentPane.add(btnAzione);
 		
+		btnAzione.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ArrayList<Contatto> contatti = new ArrayList<>();
+				int indice = 0;
+				
+				for (Component scrollComponent : pannelloContatti.getComponents())
+				{
+					// se non è un button allora è il pannello con gli indirizzi
+					if(scrollComponent instanceof JPanel)
+					{
+						// estraggo le informazioni dal panel trovato
+						JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
+//						controller.addIndirizzoSec(nuovoContatto, viaSec, cittàSec, nazioneSec, capSec);
+						if (checkbox.isSelected())
+						{
+							contatti.add(controller.getRubricaSelezionata().getContatti().get(indice));
+							System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + controller.getRubricaSelezionata().getContatti().get(indice).getNome());
+						}
+					}
+					
+					indice++;
+				}
+				if (!textFieldNome.getText().isBlank())
+				{
+					textFieldNome.setBackground(Color.WHITE);
+					if (contatti.size() > 0)
+					{
+						Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
+						try 
+						{
+							controller.addGruppo(nuovoGruppo);
+							lista.removeAll();
+							lista.setListData(controller.getNomiGruppiRubrica());
+							JOptionPane.showConfirmDialog(null, 
+					                "Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
+							lista.revalidate();
+							lista.repaint();
+						} catch (Exception e1) {
+							JOptionPane.showMessageDialog(null, e1.getMessage(),
+									"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Un Gruppo deve contenere almeno un contatto",
+								"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					textFieldNome.setBackground(Color.RED);
+					JOptionPane.showMessageDialog(null, "Inserire un nome valido",
+							"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		
 	}
 	
 	private void initPannelloContatti(JPanel pannelloContatti)
 	{
 		JPanel panel;
-		Checkbox checkbox;
+		JCheckBox checkbox;
 		for (String nomeContatto : controller.getNomiContattiRubrica())
 		{
 			panel = new JPanel();
-			checkbox = new Checkbox(nomeContatto);
+			checkbox = new JCheckBox(nomeContatto);
+			
+			// ItemListener
+//			ItemListener itemListener = new ItemListener() {
+//				@Override
+//				public void itemStateChanged(ItemEvent itemEvent) {
+//					int state = itemEvent.getStateChange();
+//			        if (state == ItemEvent.SELECTED) {
+//			        	nuovoGruppo;
+//			        }
+//			    }
+//			};
+				  
 			panel.add(checkbox);
 			pannelloContatti.add(panel);
 		}

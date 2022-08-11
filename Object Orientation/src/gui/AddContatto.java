@@ -569,12 +569,12 @@ public class AddContatto extends JFrame {
 						// Inserimento indirizzi secondari
 						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 						{
-							System.out.println("Primo ciclo for");
+							System.out.println("Debug: Primo ciclo for");
 							// se non Ë un button allora Ë il pannello con gli indirizzi
 							if(compIndirizzoSec instanceof JPanel)
 							{
 								// estraggo le informazioni dal panel trovato
-								System.out.println("\tEntrato nell'if del for");
+								System.out.println("\t Debug: Entrato nell'if del for");
 								String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
 								String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
 								String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();

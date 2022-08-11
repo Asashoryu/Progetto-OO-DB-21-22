@@ -263,7 +263,7 @@ public class ListaContatti extends JFrame {
 		
 		btnAggiungiGruppo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame AddGruppo = new AddGruppo(controller, frame, listaContatti);
+				JFrame AddGruppo = new AddGruppo(controller, frame, listaGruppi);
 				frame.setVisible(false);
 				AddGruppo.setVisible(true);
 			}

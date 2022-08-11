@@ -284,5 +284,37 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				throw e;
 		}
 	}
+	
+	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception
+	{
+		System.out.println(" INSERT INTO Gruppo (nome, rubrica_fk) VALUES ('" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); ");
+		
+		try {
+			connessione.setAutoCommit(false);
+			System.out.println(" SELECT generate_new_gruppo_id(); ");
+			PreparedStatement generaId = connessione.prepareStatement(
+					" SELECT generate_new_gruppo_id(); "
+					);
+			rs = generaId.executeQuery();
+			rs.next();
+			nuovoGruppo.setId(rs.getInt("generate_new_gruppo_id"));
+			PreparedStatement inserisciGruppo = connessione.prepareStatement(
+					" INSERT INTO Gruppo (nome, rubrica_fk) VALUES ('" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); "
+					);
+			inserisciGruppo.executeUpdate();
+			for (Contatto contatto : nuovoGruppo.getContatti())
+			{
+				System.out.println(" INSERT INTO Composizione VALUES (" +contatto.getId()+", "+ nuovoGruppo.getId() +"); ");
+				PreparedStatement aggiungiContatto = connessione.prepareStatement(
+						" INSERT INTO Composizione VALUES (" +contatto.getId()+", "+ nuovoGruppo.getId() +"); ");
+				aggiungiContatto.executeUpdate();
+			}
+			connessione.commit();
+			connessione.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			throw e;
+		}
+	}
 		
 }
