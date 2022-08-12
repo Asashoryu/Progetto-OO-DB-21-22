@@ -316,5 +316,18 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			throw e;
 		}
 	}
+	
+	public void deleteGruppo(int codiceGruppo, Connection connessione) throws SQLException
+	{
+		System.out.println(" DELETE FROM Gruppo WHERE Gruppo_ID = " + codiceGruppo + "; ");
+		try {
+				PreparedStatement cancellaGruppo = connessione.prepareStatement(
+						" DELETE FROM Gruppo WHERE Gruppo_ID = " + codiceGruppo + "; ");
+				cancellaGruppo.executeUpdate();
+		} catch (SQLException e) {
+				e.printStackTrace();
+				throw e;
+		}
+	}
 		
 }

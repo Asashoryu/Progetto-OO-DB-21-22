@@ -27,6 +27,7 @@ import java.awt.Color;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
@@ -212,7 +213,6 @@ public class ListaContatti extends JFrame {
 		 */
 		btnElimina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int indiceSelezionato = listaContatti.getSelectedIndex();
 				try {
 					// Elimina dalla memoria e dal DB
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
@@ -266,6 +266,34 @@ public class ListaContatti extends JFrame {
 				JFrame AddGruppo = new AddGruppo(controller, frame, listaGruppi);
 				frame.setVisible(false);
 				AddGruppo.setVisible(true);
+			}
+		});
+		
+		btnEliminaGruppo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+					controller.deleteGruppoSelezionato();
+					// Cancella dalla lista;
+					listaGruppi.removeAll();
+					listaGruppi.setListData(controller.getNomiGruppiRubrica());
+					JOptionPane.showConfirmDialog(null, 
+							"Gruppo cancellato con successo!", "Cancellazione riuscita", JOptionPane.DEFAULT_OPTION);
+					listaGruppi.revalidate();
+					listaGruppi.repaint();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		btnModificaGruppo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+				JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
+				frame.setVisible(false);
+				changeGruppo.setVisible(true);
 			}
 		});
 		

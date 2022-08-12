@@ -574,7 +574,7 @@ public class ChangeContatto extends JFrame {
 					textFieldNumFisso.setBackground(Color.WHITE);
 				}
 				if (valido == 1) {
-					// TODO : verifico se sono stati inseriti dei dati nuovi
+					// verifico se sono stati inseriti dei dati nuovi
 					if (modificato)
 					{
 					

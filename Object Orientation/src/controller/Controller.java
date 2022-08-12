@@ -260,20 +260,20 @@ public class Controller {
 	
 	public String[] getNomiContattiGruppoSelezionato()
 	{
-		String[] nomiContattiGruppo = new String[rubricaSelezionata.getContatti().size()];
-		for(Contatto c : gruppoSelezionato.getContatti()) 
+		String[] nomiContattiGruppo = new String[gruppoSelezionato.getContatti().size()];
+		for(Contatto c : gruppoSelezionato.getContatti())
 		{
 			// sono riunite tutte le parti di un nome di un contatto in una stringa
 			String nomeCompleto;
-			if(c.getSecondoNome()!=null) 
+			if(c.getSecondoNome()!=null)
 			{
 				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
-			} 
+			}
 			else 
 			{
 				nomeCompleto = c.getNome() +" "+ c.getCognome();
 			}
-			nomiContattiGruppo[rubricaSelezionata.getContatti().indexOf(c)] = nomeCompleto;
+			nomiContattiGruppo[gruppoSelezionato.getContatti().indexOf(c)] = nomeCompleto;
 		}
 		return nomiContattiGruppo;
 	}
@@ -346,7 +346,7 @@ public class Controller {
 	public void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-		try 
+		try
 		{
 			rubricaPosgr.addTelefono(numero, descrizione, contatto.getId(), connTransazione);
 			contatto.addTelefono(numero, descrizione);
@@ -417,6 +417,22 @@ public class Controller {
 			rubricaPosgr.addGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
 			conn = null;
 			rubricaSelezionata.getGruppi().add(nuovoGruppo);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+	
+	public void deleteGruppoSelezionato() throws SQLException
+	{
+		Connection conn;
+		try {
+			// cancellazione dal DB
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			conn = rubricaPosgr.apriConnessione();
+			rubricaPosgr.deleteGruppo(gruppoSelezionato.getId(), conn);
+			conn = null;
+			// cancellazione dalla memoria
+			rubricaSelezionata.getGruppi().remove(gruppoSelezionato);
 		} catch (SQLException e) {
 			throw e;
 		}
