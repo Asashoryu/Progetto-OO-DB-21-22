@@ -733,6 +733,7 @@ public class ChangeContatto extends JFrame {
 				modificato = true;
 			}
 		});
+	
 		
 		JLabel lblImmagine = new JLabel("");
 		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
