@@ -9,10 +9,12 @@ import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
 import model.Contatto;
@@ -27,6 +29,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.CardLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SpringLayout;
@@ -56,6 +59,7 @@ import javax.swing.JScrollBar;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -398,12 +402,12 @@ public class AddContatto extends JFrame {
 		 */
 		
 		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
-		lblEmailSecondarie.setBounds(591, 127, 134, 14);
+		lblEmailSecondarie.setBounds(587, 245, 134, 14);
 		contentPane.add(lblEmailSecondarie);
 		
 		pannelloEmailAddSec = new JPanel();
 		pannelloEmailAddSec.setBackground(Color.LIGHT_GRAY);
-		pannelloEmailAddSec.setBounds(547, 144, 205, 90);
+		pannelloEmailAddSec.setBounds(547, 270, 205, 119);
 		contentPane.add(pannelloEmailAddSec);
 		pannelloEmailAddSec.setLayout(new BorderLayout(0, 0));
 		
@@ -411,8 +415,8 @@ public class AddContatto extends JFrame {
 		pannelloEmailAddSec.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
-		pannelloScrollMail.setBackground(Color.GREEN);
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
+		pannelloScrollMail.setBackground(Color.GREEN);
 		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
 		
 		/**
@@ -457,7 +461,7 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecMail.setBounds(547, 241, 45, 23);
+		btnAddSecMail.setBounds(547, 392, 45, 23);
 		contentPane.add(btnAddSecMail);
 		
 		/**
@@ -631,6 +635,35 @@ public class AddContatto extends JFrame {
 					System.out.println("I dati non sono stati inseriti correttamente");
 				}
 				
+			}
+		});
+		// Per l'immagine
+		JLabel lblImmagine = new JLabel("");
+		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+		lblImmagine.setBackground(Color.LIGHT_GRAY);
+		lblImmagine.setBounds(573, 57, 150, 127);
+		lblImmagine.setIcon(new ImageIcon(imgResized));
+		contentPane.add(lblImmagine);
+		
+		JButton btnScegliImmagine = new JButton("Scegli");
+		btnScegliImmagine.setBounds(573, 195, 85, 23);
+		contentPane.add(btnScegliImmagine);
+		
+		// Quando cliccato button "scegli"
+		btnScegliImmagine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+				        "JPG & PNG Images", "jpg", "png");
+						fileChooser.setFileFilter(filter);
+				int risposta = fileChooser.showOpenDialog(null);
+				if (risposta == JFileChooser.APPROVE_OPTION)
+				{
+					Image imgNew        = new ImageIcon(fileChooser.getSelectedFile().getAbsolutePath()).getImage();
+					Image imgNewResized = imgNew.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+					lblImmagine.setIcon(new ImageIcon(imgNewResized));
+				}
 			}
 		});
 	}

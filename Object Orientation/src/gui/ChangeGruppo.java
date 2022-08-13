@@ -233,6 +233,7 @@ public class ChangeGruppo extends JFrame{
 	private boolean checkModificato(JPanel pannelloContatti)
 	{
 		Boolean modificato = false;
+		Boolean trovato    = false;
 		
 		int i = 0;
 		// Verifico se il nome del gruppo è stato modificato
@@ -243,15 +244,18 @@ public class ChangeGruppo extends JFrame{
 		// Verifico se i contatti del gruppo sono stati modificati
 		for (Component component : pannelloContatti.getComponents())
 		{
+			trovato = false;
 			for (Contatto contatto : controller.getGruppoSelezionato().getContatti())
 			{
 				if (contatto == controller.getRubricaSelezionata().getContatti().get(i))
 				{
-					if (!((JCheckBox)((JPanel) component).getComponents()[0]).isSelected())
-					{
-						modificato = true;
-					}
+					trovato = true;
 				}
+			}
+			if ( (((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() && !trovato) ||
+				!(((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() &&  trovato))
+			{
+				modificato = true;
 			}
 			i++;
 		}
