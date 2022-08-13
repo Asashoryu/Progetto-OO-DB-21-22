@@ -287,7 +287,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
 	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception
 	{
-		System.out.println(" INSERT INTO Gruppo (nome, rubrica_fk) VALUES ('" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); ");
 		
 		try {
 			connessione.setAutoCommit(false);
@@ -297,6 +296,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 					);
 			rs = generaId.executeQuery();
 			rs.next();
+			System.out.println(" INSERT INTO Gruppo VALUES ("+ rs.getInt("generate_new_gruppo_id")+", '" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); ");
 			nuovoGruppo.setId(rs.getInt("generate_new_gruppo_id"));
 			PreparedStatement inserisciGruppo = connessione.prepareStatement(
 					" INSERT INTO Gruppo (nome, rubrica_fk) VALUES ('" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); "
@@ -310,10 +310,13 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				aggiungiContatto.executeUpdate();
 			}
 			connessione.commit();
-			connessione.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			connessione.rollback();
 			throw e;
+		}
+		finally {
+			connessione.close();
 		}
 	}
 	

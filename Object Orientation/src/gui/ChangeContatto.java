@@ -31,6 +31,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.CardLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SpringLayout;
@@ -71,6 +72,8 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+
 import java.awt.ComponentOrientation;
 import java.awt.Dialog;
 import java.awt.Rectangle;
@@ -417,12 +420,12 @@ public class ChangeContatto extends JFrame {
 		 */
 		
 		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
-		lblEmailSecondarie.setBounds(591, 127, 134, 14);
+		lblEmailSecondarie.setBounds(587, 245, 134, 14);
 		contentPane.add(lblEmailSecondarie);
 		
 		pannelloEmailAddSec = new JPanel();
 		pannelloEmailAddSec.setBackground(Color.LIGHT_GRAY);
-		pannelloEmailAddSec.setBounds(547, 144, 205, 90);
+		pannelloEmailAddSec.setBounds(545, 270, 205, 119);
 		contentPane.add(pannelloEmailAddSec);
 		pannelloEmailAddSec.setLayout(new BorderLayout(0, 0));
 		
@@ -430,9 +433,12 @@ public class ChangeContatto extends JFrame {
 		pannelloEmailAddSec.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
-		pannelloScrollMail.setBackground(Color.GREEN);
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
+		pannelloScrollMail.setBackground(Color.GREEN);
 		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
+		
+		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCittà, textFieldNazione, textFieldCap,
+	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
 		
 		/**
 		 * Button "+" aggiungi email secondaria
@@ -479,7 +485,7 @@ public class ChangeContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecMail.setBounds(547, 241, 45, 23);
+		btnAddSecMail.setBounds(547, 392, 45, 23);
 		contentPane.add(btnAddSecMail);
 		
 		/**
@@ -501,6 +507,9 @@ public class ChangeContatto extends JFrame {
 		JButton btnAzione = new JButton("Vai");
 		btnAzione.setBounds(682, 432, 85, 21);
 		contentPane.add(btnAzione);
+		
+		
+		
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
@@ -725,10 +734,14 @@ public class ChangeContatto extends JFrame {
 			}
 		});
 		
-		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCittà, textFieldNazione, textFieldCap,
-	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
-		
-		
+		JLabel lblImmagine = new JLabel("");
+		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+		lblImmagine.setBackground(Color.LIGHT_GRAY);
+		lblImmagine.setBounds(573, 57, 148, 154);
+		lblImmagine.setIcon(new ImageIcon(imgResized));
+		contentPane.add(lblImmagine);
+
 	}
 
 	private void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,

@@ -48,9 +48,6 @@ public class ChangeGruppo extends JFrame{
 	private JPanel pannelloElemScrollPane;
 	private ListSelectionModel listSelectionModel;
 	
-	Boolean[] contattiSelezionatiInizio;
-	Boolean[] contattiSelezionatiFine;
-	
 	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
 		
 		setResizable(false);
@@ -137,58 +134,67 @@ public class ChangeGruppo extends JFrame{
 		
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				ArrayList<Contatto> contatti = new ArrayList<>();
-				int indice = 0;
-				// aggiunta dei contatti selezionati all'ArrayList 'contatti'
-				for (Component scrollComponent : pannelloContatti.getComponents())
+				// Verifica preventiva se sono state rilevate delle modifiche
+				if (checkModificato(pannelloContatti))
 				{
-					// se non è un button allora è il pannello con gli indirizzi
-					if(scrollComponent instanceof JPanel)
-					{
-						// estraggo le informazioni dal panel trovato
-						JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
-//						controller.addIndirizzoSec(nuovoContatto, viaSec, cittàSec, nazioneSec, capSec);
-						if (checkbox.isSelected())
-						{
-							contatti.add(controller.getRubricaSelezionata().getContatti().get(indice));
-							System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + controller.getRubricaSelezionata().getContatti().get(indice).getNome());
-						}
-					}
 					
-					indice++;
-				}
-				// controlli e inserimento
-				if (!textFieldNome.getText().isBlank())
-				{
-					textFieldNome.setBackground(Color.WHITE);
-					if (contatti.size() > 0)
+					ArrayList<Contatto> contatti = new ArrayList<>();
+					int indice = 0;
+					// aggiunta dei contatti selezionati all'ArrayList 'contatti'
+					for (Component scrollComponent : pannelloContatti.getComponents())
 					{
-						Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
-						try 
+						// se non è un button allora è il pannello con gli indirizzi
+						if(scrollComponent instanceof JPanel)
 						{
-							controller.deleteGruppoSelezionato();
-							controller.addGruppo(nuovoGruppo);
-							listaGruppiChiamante.removeAll();
-							listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
-							JOptionPane.showConfirmDialog(null, 
-					                "Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
-							listaGruppiChiamante.revalidate();
-							listaGruppiChiamante.repaint();
-						} catch (Exception e1) {
-							JOptionPane.showMessageDialog(null, e1.getMessage(),
+							// estraggo le informazioni dal panel trovato
+							JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
+//						controller.addIndirizzoSec(nuovoContatto, viaSec, cittàSec, nazioneSec, capSec);
+							if (checkbox.isSelected())
+							{
+								contatti.add(controller.getRubricaSelezionata().getContatti().get(indice));
+								System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + controller.getRubricaSelezionata().getContatti().get(indice).getNome());
+							}
+						}
+						
+						indice++;
+					}
+					// controlli e inserimento
+					if (!textFieldNome.getText().isBlank())
+					{
+						textFieldNome.setBackground(Color.WHITE);
+						if (contatti.size() > 0)
+						{
+							Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
+							try 
+							{
+								controller.deleteGruppoSelezionato();
+								controller.addGruppo(nuovoGruppo);
+								listaGruppiChiamante.removeAll();
+								listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
+								JOptionPane.showConfirmDialog(null, 
+										"Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
+								listaGruppiChiamante.revalidate();
+								listaGruppiChiamante.repaint();
+							} catch (Exception e1) {
+								JOptionPane.showMessageDialog(null, e1.getMessage(),
+										"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Un Gruppo deve contenere almeno un contatto",
 									"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Un Gruppo deve contenere almeno un contatto",
+						textFieldNome.setBackground(Color.RED);
+						JOptionPane.showMessageDialog(null, "Inserire un nome valido",
 								"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				else {
-					textFieldNome.setBackground(Color.RED);
-					JOptionPane.showMessageDialog(null, "Inserire un nome valido",
-							"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Non sono state rinvenute modifiche dei campi",
+						      "Attenzione", JOptionPane.WARNING_MESSAGE);
+					System.out.println("Non sono state rinvenute modifiche dei campi");
 				}
 			}
 		});
@@ -203,13 +209,8 @@ public class ChangeGruppo extends JFrame{
 		
 		textFieldNome.setText(controller.getGruppoSelezionato().getNome());
 		
-		contattiSelezionatiInizio = new Boolean[controller.getRubricaSelezionata().getContatti().size()];
-		contattiSelezionatiFine   = new Boolean[controller.getRubricaSelezionata().getContatti().size()];
-		
 		for (String nomeContatto : controller.getNomiContattiRubrica())
 		{
-			contattiSelezionatiInizio[i] = false;
-			contattiSelezionatiFine[i]   = false;
 			panel = new JPanel();
 			checkbox = new JCheckBox(nomeContatto);
 			for (Contatto contatto : controller.getGruppoSelezionato().getContatti())
@@ -217,27 +218,10 @@ public class ChangeGruppo extends JFrame{
 				if (contatto == controller.getRubricaSelezionata().getContatti().get(i))
 				{
 					checkbox.setSelected(true);
-					contattiSelezionatiInizio[i] = true;
-					contattiSelezionatiFine[i]   = true;
 				}
 			}
 			
 //			 ItemListener
-			checkbox.addItemListener(new ItemListener()
-		    {
-		        public void itemStateChanged(ItemEvent event)
-		        {
-		        	final int indice = i;
-		            if (event.getStateChange() == ItemEvent.SELECTED)
-		            {
-		            	contattiSelezionatiFine[i] = true;
-		            }
-		            if (event.getStateChange() == ItemEvent.DESELECTED)
-		            {
-		            	contattiSelezionatiFine[i] = false;
-		            }
-		        }
-		    });
 			panel.add(checkbox);
 			pannelloContatti.add(panel);
 			i++;
@@ -248,28 +232,31 @@ public class ChangeGruppo extends JFrame{
 	
 	private boolean checkModificato(JPanel pannelloContatti)
 	{
-		int modificato = 0;
+		Boolean modificato = false;
 		
-		JPanel panel;
-		JCheckBox checkbox;
 		int i = 0;
-		
-		textFieldNome.setText(controller.getGruppoSelezionato().getNome());
-		
-		for (String nomeContatto : controller.getNomiContattiRubrica())
+		// Verifico se il nome del gruppo è stato modificato
+		if (!textFieldNome.getText().equals(controller.getGruppoSelezionato().getNome()))
 		{
-			panel = new JPanel();
-			checkbox = new JCheckBox(nomeContatto);
+			modificato = true;
+		}
+		// Verifico se i contatti del gruppo sono stati modificati
+		for (Component component : pannelloContatti.getComponents())
+		{
 			for (Contatto contatto : controller.getGruppoSelezionato().getContatti())
 			{
 				if (contatto == controller.getRubricaSelezionata().getContatti().get(i))
 				{
-					checkbox.setSelected(true);
+					if (!((JCheckBox)((JPanel) component).getComponents()[0]).isSelected())
+					{
+						modificato = true;
+					}
 				}
 			}
-			panel.add(checkbox);
-			pannelloContatti.add(panel);
 			i++;
 		}
+		
+		return modificato;
+		
 	}
 }

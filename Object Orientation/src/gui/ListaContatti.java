@@ -188,7 +188,7 @@ public class ListaContatti extends JFrame {
 		});
 		
 		/**
-		 * TODO: Quando è premuto il button "Aggiungi"
+		 * Quando è premuto il button "Aggiungi"
 		 */
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -254,6 +254,7 @@ public class ListaContatti extends JFrame {
 		
 		btnVisualizzaTuttiGruppi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.setNullGruppoSelezionato();
 				listaContatti.removeAll();
 				listaContatti.setListData(controller.getNomiContattiRubrica());
 				listaContatti.revalidate();

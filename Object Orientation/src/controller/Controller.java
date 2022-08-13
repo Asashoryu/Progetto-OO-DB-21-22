@@ -161,7 +161,15 @@ public class Controller {
 	public void setContattoSelezionato(int indice) 
 	{
 		// TODO : impostare come viene selezionato il contatto selezionato
-		contattoSelezionato = rubricaSelezionata.getContatti().get(indice);
+		// Se non è selezionato un gruppo allora il contatto viene selezionato secondo l'indicizzazione della rubrica
+		// Altrimenti è selezionato secondo l'ordine dei contatti 
+		if (gruppoSelezionato == null)
+		{
+			contattoSelezionato = rubricaSelezionata.getContatti().get(indice);
+		}
+		else {
+			contattoSelezionato = gruppoSelezionato.getContatti().get(indice);
+		}
 	}
 	
 	/**
@@ -176,6 +184,11 @@ public class Controller {
 	public void setGruppoSelezionato(int indice) 
 	{
 		gruppoSelezionato = rubricaSelezionata.getGruppi().get(indice);
+	}
+	
+	public void setNullGruppoSelezionato() 
+	{
+		gruppoSelezionato = null;
 	}
 	
 	public Gruppo getGruppoSelezionato() 
