@@ -105,9 +105,12 @@ public class AddContatto extends JFrame {
 	private JLabel lblEmailSecondarie;
 	private JPanel pannelloScrolNumTel;
 	private JPanel pannelloScrollMail;
+	private JLabel lblImmagine;
+	
+	private String percorsoImmagine = null;
+	
 
 	public AddContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
-		
 		
 		setResizable(false);
 		setForeground(Color.WHITE);
@@ -565,11 +568,17 @@ public class AddContatto extends JFrame {
 						Contatto nuovoContatto;
 						// inserimento in database
 						id = controller.inizializzaInserimento();
-						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(), 
 											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 											   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
 											   		           id);
 						// INSERIMENTI SECONDARI
+						// inserimento immagine
+						if (percorsoImmagine != null)
+						{
+							// TODO: gestire inserimento immagine
+							controller.addImmagine(nuovoContatto, percorsoImmagine);
+						}
 						// Inserimento indirizzi secondari
 						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 						{
@@ -638,7 +647,7 @@ public class AddContatto extends JFrame {
 			}
 		});
 		// Per l'immagine
-		JLabel lblImmagine = new JLabel("");
+		lblImmagine      = new JLabel("");
 		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
 		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 		lblImmagine.setBackground(Color.LIGHT_GRAY);
@@ -646,10 +655,21 @@ public class AddContatto extends JFrame {
 		lblImmagine.setIcon(new ImageIcon(imgResized));
 		contentPane.add(lblImmagine);
 		
-		JButton btnScegliImmagine = new JButton("Scegli");
-		btnScegliImmagine.setBounds(573, 195, 85, 23);
-		contentPane.add(btnScegliImmagine);
+		JButton btnRimuoviImmagine = new JButton("Rimuovi");
+		btnRimuoviImmagine.setBounds(649, 195, 85, 23);
+		contentPane.add(btnRimuoviImmagine);
+		btnRimuoviImmagine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+				Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+				lblImmagine.setIcon(new ImageIcon(imgResized));
+				percorsoImmagine = null;
+			}
+		});
 		
+		JButton btnScegliImmagine = new JButton("Scegli");
+		btnScegliImmagine.setBounds(573, 195, 73, 23);
+		contentPane.add(btnScegliImmagine);
 		// Quando cliccato button "scegli"
 		btnScegliImmagine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -660,7 +680,8 @@ public class AddContatto extends JFrame {
 				int risposta = fileChooser.showOpenDialog(null);
 				if (risposta == JFileChooser.APPROVE_OPTION)
 				{
-					Image imgNew        = new ImageIcon(fileChooser.getSelectedFile().getAbsolutePath()).getImage();
+					percorsoImmagine    = fileChooser.getSelectedFile().getAbsolutePath();
+					Image imgNew        = new ImageIcon(percorsoImmagine).getImage();
 					Image imgNewResized = imgNew.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 					lblImmagine.setIcon(new ImageIcon(imgNewResized));
 				}

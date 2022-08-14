@@ -46,7 +46,7 @@ Contatto_ID SERIAL,
 Nome VARCHAR(20) NOT NULL,
 SecondoNome VARCHAR(20),
 Cognome VARCHAR(20) NOT NULL,
-Foto VARCHAR(20),
+Foto VARCHAR(1000),
 Rubrica_FK VARCHAR(20) NOT NULL
 );
 

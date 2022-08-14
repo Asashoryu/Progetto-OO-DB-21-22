@@ -9,10 +9,12 @@ import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.Controller;
 import model.Contatto;
@@ -116,8 +118,11 @@ public class ChangeContatto extends JFrame {
 	private JLabel lblEmailSecondarie;
 	private JPanel pannelloScrolNumTel;
 	private JPanel pannelloScrollMail;
+	private JLabel lblImmagine;
 	
 	private boolean modificato = false;
+	private String percorsoImmagine = null;
+
 
 	public ChangeContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		
@@ -595,14 +600,11 @@ public class ChangeContatto extends JFrame {
 							// contatto creato
 							Contatto nuovoContatto;
 							// inserimento in database
-							id = controller.inizializzaInserimento();
-							// cancello il vecchio contatto con tutte le sue informazioni
-							controller.deleteContattoSelezionatoTransazione(controller.getContattoSelezionato().getId());
+							controller.inizializzaModifica();
 							// ricreo il contatto con le nuove informazioni
-							nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+							nuovoContatto = controller.changeContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
 												   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
-												   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
-												   		           id);
+												   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
 							// INSERIMENTI SECONDARI
 							// Inserimento indirizzi secondari
 							for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
@@ -649,7 +651,7 @@ public class ChangeContatto extends JFrame {
 								}
 							}
 							//commit delle informazioni in DB e inserimento del contatto i memoria
-							controller.finalizzaInserimento(nuovoContatto);
+							controller.finalizzaModifica(nuovoContatto);
 							
 							// aggiornamento della combobox di listaContatti
 							lista.removeAll();
@@ -733,15 +735,48 @@ public class ChangeContatto extends JFrame {
 				modificato = true;
 			}
 		});
-	
 		
-		JLabel lblImmagine = new JLabel("");
-		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
-		lblImmagine.setBackground(Color.LIGHT_GRAY);
-		lblImmagine.setBounds(573, 57, 148, 154);
-		lblImmagine.setIcon(new ImageIcon(imgResized));
-		contentPane.add(lblImmagine);
+		JButton btnRimuoviImmagine = new JButton("Rimuovi");
+		btnRimuoviImmagine.setBounds(649, 195, 85, 23);
+		contentPane.add(btnRimuoviImmagine);
+		btnRimuoviImmagine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+				Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+				lblImmagine.setIcon(new ImageIcon(imgResized));
+				percorsoImmagine = null;
+				if (controller.getContattoSelezionato().getPathImmagine() != null)
+				{
+					modificato = true;
+				}
+			}
+		});
+		
+		JButton btnScegliImmagine = new JButton("Scegli");
+		btnScegliImmagine.setBounds(573, 195, 73, 23);
+		contentPane.add(btnScegliImmagine);
+		// Quando cliccato button "scegli"
+		btnScegliImmagine.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter(
+				        "JPG & PNG Images", "jpg", "png");
+						fileChooser.setFileFilter(filter);
+				int risposta = fileChooser.showOpenDialog(null);
+				if (risposta == JFileChooser.APPROVE_OPTION)
+				{
+					percorsoImmagine    = fileChooser.getSelectedFile().getAbsolutePath();
+					Image imgNew        = new ImageIcon(percorsoImmagine).getImage();
+					Image imgNewResized = imgNew.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+					lblImmagine.setIcon(new ImageIcon(imgNewResized));
+					// se l'immagine selezionata è diversa da quella di partenza, allora si registra la modifica
+					if (percorsoImmagine != controller.getContattoSelezionato().getPathImmagine())
+					{
+						modificato = true;
+					}
+				}
+			}
+		});
 
 	}
 
@@ -750,9 +785,32 @@ public class ChangeContatto extends JFrame {
 						     JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail)
 	{
 		Contatto contatto = controller.getContattoSelezionato();
+		// inserimento nome contatto
 		textFieldNome.setText(contatto.getNome());
 		textFieldSecondoNome.setText(contatto.getSecondoNome());
 		textFieldCognome.setText(contatto.getCognome());
+		
+		// inserimento dati contatto
+		lblImmagine = new JLabel("");
+		if (contatto.getPathImmagine() == null)
+		{
+			// immagine di default
+			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			lblImmagine.setBackground(Color.LIGHT_GRAY);
+			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setIcon(new ImageIcon(imgResized));
+			contentPane.add(lblImmagine);
+		}
+		else {
+			// immagine caricata
+			Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
+			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			lblImmagine.setBackground(Color.LIGHT_GRAY);
+			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setIcon(new ImageIcon(imgResized));
+			contentPane.add(lblImmagine);
+		}
 		
 		// inserimento indirizzi contatto
 		for (Indirizzo indirizzo : contatto.getIndirizzi())

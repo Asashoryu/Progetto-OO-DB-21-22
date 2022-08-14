@@ -296,15 +296,32 @@ public class Controller {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		connTransazione = rubricaPosgr.apriConnessione();
 		connTransazione.setAutoCommit(false);
-		return rubricaPosgr.startTransazione(connTransazione);
+		return rubricaPosgr.generaContattoID(connTransazione);
 	}
 	
 	public void finalizzaInserimento(Contatto contatto) throws SQLException
 	{
-		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		connTransazione.commit();
 		System.out.println("Commit riuscito");
 		rubricaSelezionata.getContatti().add(contatto);
+		connTransazione = null;
+	}
+	
+	public void inizializzaModifica() throws SQLException
+	{
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		connTransazione = rubricaPosgr.apriConnessione();
+		connTransazione.setAutoCommit(false);
+	}
+	
+	public void finalizzaModifica(Contatto contatto) throws SQLException
+	{
+		int indiceVecchio;
+		connTransazione.commit();
+		System.out.println("Commit riuscito");
+		indiceVecchio = rubricaSelezionata.getContatti().indexOf(contattoSelezionato);
+		rubricaSelezionata.getContatti().remove(contattoSelezionato);
+		rubricaSelezionata.getContatti().add(indiceVecchio, contatto);
 		connTransazione = null;
 	}
 	public Contatto addContatto(String nome, String secondonome, String cognome,
@@ -326,6 +343,41 @@ public class Controller {
 		}
 		return contatto;
 	}
+	
+	public Contatto changeContatto(String nome, String secondonome, String cognome,
+            					   String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
+	{
+		Contatto contatto;
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		try
+		{
+			rubricaPosgr.changeContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
+				                        nazione, cap, contattoSelezionato.getId(), connTransazione);
+			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, contattoSelezionato.getId());
+		}
+		catch (SQLException e) 
+		{
+			contatto = null;
+			throw e;
+		}
+		return contatto;
+	}
+	
+	public void addImmagine(Contatto contatto, String pathImmagine) throws SQLException {
+		// TODO Auto-generated method stub
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		try 
+		{
+			rubricaPosgr.addImmagine(pathImmagine, contatto.getId(), connTransazione);
+			contatto.setPathImmagine(pathImmagine);
+		}
+		catch (SQLException e)
+		{
+			contatto = null;
+			throw e;
+		}
+	}
+	
 	/**
 	 * 
 	 * @param contatto
@@ -446,6 +498,25 @@ public class Controller {
 			conn = null;
 			// cancellazione dalla memoria
 			rubricaSelezionata.getGruppi().remove(gruppoSelezionato);
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+	
+	public void changeGruppo(Gruppo nuovoGruppo) throws Exception {
+		Connection conn;
+		int indiceVecchio;
+		try {
+			// cancellazione dal DB
+			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+			conn = rubricaPosgr.apriConnessione();
+			nuovoGruppo.setId(gruppoSelezionato.getId());
+			rubricaPosgr.changeGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
+			conn = null;
+			// TODO : modifica in memoria
+			indiceVecchio = rubricaSelezionata.getGruppi().indexOf(gruppoSelezionato);
+			rubricaSelezionata.getGruppi().remove(gruppoSelezionato);
+			rubricaSelezionata.getGruppi().add(indiceVecchio, nuovoGruppo);
 		} catch (SQLException e) {
 			throw e;
 		}

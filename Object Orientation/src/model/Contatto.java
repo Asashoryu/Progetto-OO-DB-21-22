@@ -11,6 +11,8 @@ public class Contatto{
 	private String secondonome;
 	/** cognome del contatto */
 	private String cognome;
+	/** percorso assoluto dell'immagine del contatto */
+	private String pathImmagine;
 	/** ArrayList dei numeri di telefono del contatto */
 	private ArrayList<Telefono> telefoni;
 	/** ArrayList delle email del contatto */
@@ -21,10 +23,11 @@ public class Contatto{
 	private int id;
 	
 	/** costruttore del contatto con set di nome, secondo nome e cognome per la visualizzazione in listaContatto */
-	public Contatto(String primonome, String secondonome, String cognome, int id) {
+	public Contatto(String primonome, String secondonome, String cognome, String pathImmagine, int id) {
 		setNome(primonome);
 		setSecondoNome(secondonome);
 		setCognome(cognome);
+		setPathImmagine(pathImmagine);
 		setId(id);
 		telefoni  = new ArrayList<Telefono>();
 		email     = new ArrayList<Email>();
@@ -78,29 +81,37 @@ public class Contatto{
 	{
 		return cognome;
 	}
-	
-	public int getId() {
-		return id;
+	/** set del path dell'immagine profilo */
+	public void setPathImmagine(String pathImmagine) {
+		this.pathImmagine = pathImmagine;
 	}
+	/** return del path dell'immagine profilo */
+	public String getPathImmagine() {
+		return pathImmagine;
+	}
+	/** set dell'id del contatto */
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+	/** return dell'id del contatto */
+	public int getId() {
+		return id;
+	}
+	/** return degli indirizzi del contatto */
 	public ArrayList<Indirizzo> getIndirizzi()
 	{
 		return indirizzi;
 	}
-	
+	/** return dei telefoni del contatto */
 	public ArrayList<Telefono> getTelefoni()
 	{
 		return telefoni;
 	}
-	
+	/** return delle email del cotnatto */
 	public ArrayList<Email> getEmail()
 	{
 		return email;
 	}
-
 	/** metodo per aggiungere un numero di telefono al contatto */
 	public void addTelefono(String numero, String tipotelefono) {
 		Telefono nuovoTelefono = new Telefono(numero, tipotelefono);
@@ -116,6 +127,4 @@ public class Contatto{
 		Indirizzo nuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
 		indirizzi.add(nuovoIndirizzo);
 	}
-	
-	
 }

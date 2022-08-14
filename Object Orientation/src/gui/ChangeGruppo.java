@@ -116,7 +116,7 @@ public class ChangeGruppo extends JFrame{
 		 * Button "annulla"
 		 */
 		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(84, 375, 75, 21);
+		btnAnnulla.setBounds(84, 375, 84, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -167,8 +167,7 @@ public class ChangeGruppo extends JFrame{
 							Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
 							try 
 							{
-								controller.deleteGruppoSelezionato();
-								controller.addGruppo(nuovoGruppo);
+								controller.changeGruppo(nuovoGruppo);
 								listaGruppiChiamante.removeAll();
 								listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
 								JOptionPane.showConfirmDialog(null, 
@@ -252,8 +251,8 @@ public class ChangeGruppo extends JFrame{
 					trovato = true;
 				}
 			}
-			if ( (((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() && !trovato) ||
-				!(((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() &&  trovato))
+			if ( (((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() == true  &&  trovato == false) ||
+				 (((JCheckBox)((JPanel) component).getComponents()[0]).isSelected() == false &&  trovato == true ))
 			{
 				modificato = true;
 			}

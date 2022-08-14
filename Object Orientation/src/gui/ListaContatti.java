@@ -160,19 +160,19 @@ public class ListaContatti extends JFrame {
 		scrollPaneGruppi.setViewportView(listaGruppi);
 		
 		JButton btnAggiungiGruppo = new JButton("+");
-		btnAggiungiGruppo.setBounds(552, 407, 48, 23);
+		btnAggiungiGruppo.setBounds(531, 407, 47, 23);
 		getContentPane().add(btnAggiungiGruppo);
 		
 		JButton btnModificaGruppo = new JButton("Modifica Gruppo");
-		btnModificaGruppo.setBounds(610, 407, 109, 23);
+		btnModificaGruppo.setBounds(588, 407, 135, 23);
 		getContentPane().add(btnModificaGruppo);
 		
 		JButton btnVisualizzaGruppo = new JButton("Visualizza gruppo");
-		btnVisualizzaGruppo.setBounds(610, 379, 109, 23);
+		btnVisualizzaGruppo.setBounds(588, 379, 135, 23);
 		getContentPane().add(btnVisualizzaGruppo);
 		
 		JButton btnEliminaGruppo = new JButton("-");
-		btnEliminaGruppo.setBounds(729, 407, 48, 23);
+		btnEliminaGruppo.setBounds(733, 407, 44, 23);
 		getContentPane().add(btnEliminaGruppo);
 		
 		JButton btnVisualizzaTuttiGruppi = new JButton("Tutti");
@@ -332,6 +332,15 @@ public class ListaContatti extends JFrame {
 		 * TODO : implementare le varie forme di ricerca di un contatto, secondo
 		 * 		  diversi criteri
 		 */
+		
+		btnInvioRicerca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+				JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
+				frame.setVisible(false);
+				changeGruppo.setVisible(true);
+			}
+		});
 	}
 }
 
