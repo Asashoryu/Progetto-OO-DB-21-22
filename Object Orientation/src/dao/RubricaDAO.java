@@ -29,4 +29,5 @@ public interface RubricaDAO {
 	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception;
 	public void deleteGruppo(int codiceGruppo, Connection connessione) throws SQLException;
 	public void changeGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException;
+	
 }
