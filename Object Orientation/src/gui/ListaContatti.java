@@ -125,12 +125,12 @@ public class ListaContatti extends JFrame {
 		/** carica la Jlist con i nomi dei contatti dal DB */
 		
 		JButton btnModifica = new JButton("Modifica");
-		btnModifica.setBounds(221, 408, 94, 21);
+		btnModifica.setBounds(220, 434, 94, 21);
 		btnModifica.setFont(new Font("Arial", Font.PLAIN, 11));
 		getContentPane().add(btnModifica);
 		
 		JButton btnElimina = new JButton("Elimina");
-		btnElimina.setBounds(343, 408, 94, 21);
+		btnElimina.setBounds(342, 434, 94, 21);
 		btnElimina.setFont(new Font("Arial", Font.PLAIN, 11));
 		getContentPane().add(btnElimina);
 				
@@ -140,7 +140,7 @@ public class ListaContatti extends JFrame {
 		getContentPane().add(lblContatti);
 		
 		JButton btnAggiungi = new JButton("Aggiungi ");
-		btnAggiungi.setBounds(98, 408, 94, 21);
+		btnAggiungi.setBounds(97, 434, 94, 21);
 		btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 11));
 		getContentPane().add(btnAggiungi);
 		
@@ -179,6 +179,19 @@ public class ListaContatti extends JFrame {
 		btnVisualizzaTuttiGruppi.setBounds(703, 234, 74, 23);
 		getContentPane().add(btnVisualizzaTuttiGruppi);
 		
+		//Bottone per visualizzare un contatto
+				JButton btnInfo = new JButton("Visualizza Contatto");
+				btnInfo.setFont(new Font("Arial", Font.PLAIN, 11));
+				btnInfo.setBounds(190, 401, 151, 21);
+				getContentPane().add(btnInfo);
+				btnInfo.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.setContattoSelezionato(listaContatti.getSelectedIndex());
+						 JFrame InfoContatto = new InfoContatto(controller, frame, listaContatti);
+						 frame.dispose();
+						 InfoContatto.setVisible(true);
+					}
+				});
 		
 		/**
 		 * Per il pannello di ricerca
