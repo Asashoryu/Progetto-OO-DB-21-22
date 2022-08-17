@@ -20,6 +20,7 @@ import javax.swing.event.*;
 import javax.swing.Timer;
 
 import controller.Controller;
+import model.Account;
 import model.Contatto;
 import model.Email;
 import model.Indirizzo;
@@ -242,6 +243,7 @@ public class InfoContatto extends JFrame {
 		textFieldSecondoNome.setText(contatto.getSecondoNome());
 		textFieldCognome.setText(contatto.getCognome());
 		
+		// TODO : punto di riferimento
 		JPanel pannelloScrollIndirizziSec = new JPanel();
 		pannelloScrollIndirizziSec.setBorder(null);
 		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -261,7 +263,6 @@ public class InfoContatto extends JFrame {
 		pannelloScrollIndirizziSec.setLayout(new BoxLayout(pannelloScrollIndirizziSec, BoxLayout.PAGE_AXIS));
 		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
-		
 		
 		
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
@@ -299,6 +300,7 @@ public class InfoContatto extends JFrame {
 		pannelloEmail.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pannelloEmail.setBackground(new Color(255, 240, 245));
 		pannelloEmail.setBounds(308, 223, 329, 119);
+		
 		contentPane.add(pannelloEmail);
 		pannelloEmail.setLayout(new BorderLayout(0, 0));
 		
@@ -308,8 +310,6 @@ public class InfoContatto extends JFrame {
 		pannelloScrollMail = new JPanel();
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
 		pannelloScrollMail.setBackground(new Color(255, 240, 245));
-		
-		
 		
 		JButton btnChiudi = new JButton("Chiudi");
 		btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
@@ -367,7 +367,7 @@ public class InfoContatto extends JFrame {
 		JLabel lblAccount = new JLabel("Account collegati al contatto");
 		lblAccount.setBounds(332, 353, 200, 13);
 		contentPane.add(lblAccount);
-				
+		// TODO : qui
 		JPanel pannelloAccount = new JPanel();
 		pannelloAccount.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pannelloAccount.setBackground(new Color(255, 240, 245));
@@ -380,20 +380,13 @@ public class InfoContatto extends JFrame {
 						
 		JPanel pannelloScrollAccount = new JPanel();
 		scrollPaneAccount.setViewportView(pannelloScrollAccount);
+		pannelloScrollAccount.setLayout(new BoxLayout(pannelloScrollAccount, BoxLayout.PAGE_AXIS));
 		pannelloScrollAccount.setBackground(new Color(255, 240, 245));
+		pannelloScrollAccount.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		pannelloScrollAccount.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		
-		
-		/**Immagine 
-		JLabel lblImmagine = new JLabel("");
-		lblImmagine.setBounds(595, 97, 168, 105);
-		contentPane.add(lblImmagine);
-		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
-		lblImmagine.setIcon(new ImageIcon(imgResized));*/
-
 		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione, textFieldCap,
-	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
+	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail, pannelloScrollAccount);
 		pannelloScrollMail.setLayout(new GridLayout(2, 2, 0, 5));
 		
 		
@@ -432,38 +425,38 @@ public class InfoContatto extends JFrame {
 	}
 
 	private void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
-		     JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
-		     JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail)
-{
-Contatto contatto = controller.getContattoSelezionato();
-// inserimento nome contatto
-textFieldNome.setText(contatto.getNome());
-textFieldSecondoNome.setText(contatto.getSecondoNome());
-textFieldCognome.setText(contatto.getCognome());
-
-// inserimento dati contatto
-JLabel lblImmagine = new JLabel("");
-if (contatto.getPathImmagine() == null)
-{
-// immagine di default
-Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
-lblImmagine.setBackground(Color.LIGHT_GRAY);
-lblImmagine.setBounds(673, 57, 150, 127);
-lblImmagine.setIcon(new ImageIcon(imgResized));
-contentPane.add(lblImmagine);
-}
-else {
-// immagine caricata
-Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
-Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
-lblImmagine.setBackground(Color.LIGHT_GRAY);
-lblImmagine.setBounds(573, 57, 150, 127);
-lblImmagine.setIcon(new ImageIcon(imgResized));
-contentPane.add(lblImmagine);
-}
-
-//inserimento indirizzi contatto
+								     JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
+								     JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail,
+								     JPanel pannelloScrollAccount)
+	{
+		Contatto contatto = controller.getContattoSelezionato();
+		// inserimento nome contatto
+		textFieldNome.setText(contatto.getNome());
+		textFieldSecondoNome.setText(contatto.getSecondoNome());
+		textFieldCognome.setText(contatto.getCognome());
+		
+		// inserimento dati contatto
+		JLabel lblImmagine = new JLabel("");
+		if (contatto.getPathImmagine() == null)
+		{
+			// immagine di default
+			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			lblImmagine.setBackground(Color.LIGHT_GRAY);
+			lblImmagine.setBounds(673, 57, 150, 127);
+			lblImmagine.setIcon(new ImageIcon(imgResized));
+			contentPane.add(lblImmagine);
+		}
+		else {
+			// immagine caricata
+			Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
+			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			lblImmagine.setBackground(Color.LIGHT_GRAY);
+			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setIcon(new ImageIcon(imgResized));
+			contentPane.add(lblImmagine);
+		}
+		//inserimento indirizzi contatto
 		for (Indirizzo indirizzo : contatto.getIndirizzi())
 		{
 			if (indirizzo.getTipo() == tipoIndirizzo.Principale)
@@ -483,53 +476,52 @@ contentPane.add(lblImmagine);
 				pannelloScrollIndirizziSec.add(lblSpace);
 			}
 		}
-
-
 		// inserimento numeri di telefono del contatto
-				boolean flagMobile = false;
-				boolean flagFisso  = false;
+		boolean flagMobile = false;
+		boolean flagFisso  = false;
+		
+		for (Telefono telefono : contatto.getTelefoni())
+		{
+			if      (flagMobile == false && telefono.getTipo().equals("Mobile") )
+			{
+				textFieldNumMobile.setText(telefono.getNumero());
+				flagMobile = true;
+			}
+			else if (flagFisso == false && telefono.getTipo().equals("Fisso") )
+			{
+				textFieldNumFisso.setText(telefono.getNumero());
+				flagFisso = true;
+			}
+			else 
+			{
+				JPanel numero;
 				
-				for (Telefono telefono : contatto.getTelefoni())
-				{
-					if      (flagMobile == false && telefono.getTipo().equals("Mobile") )
-					{
-						textFieldNumMobile.setText(telefono.getNumero());
-						flagMobile = true;
-					}
-					else if (flagFisso == false && telefono.getTipo().equals("Fisso") )
-					{
-						textFieldNumFisso.setText(telefono.getNumero());
-						flagFisso = true;
-					}
-					else 
-					{
-						JPanel numero;
-						
-						
-						numero = creaSecNumb(telefono.getTipo(), telefono.getNumero());
-						pannelloScrolNumTel.add(numero);
-					
-						
-						
-					}
-				}
-
-
-
-// inserimento email del contatto
-for (Email email : contatto.getEmail())
-{
-JPanel mail;
-int lastMailIndex;
-
-mail = creaSecMail(email.getTipo(), email.getStringaEmail());
-pannelloScrollMail.add(mail);
-
-
-}
-revalidate();
-repaint();
-}
+				numero = creaSecNumb(telefono.getTipo(), telefono.getNumero());
+				pannelloScrolNumTel.add(numero);
+			}
+		}
+		// inserimento email del contatto
+		for (Email email : contatto.getEmail())
+		{
+			JPanel mail;
+			
+			mail = creaSecMail(email.getTipo(), email.getStringaEmail());
+			pannelloScrollMail.add(mail);
+			for (Account account : email.getAccount())
+			{
+				JPanel accountJP;
+				
+				accountJP = creaAccountScrollBar(account.getFornitore(), account.getFraseStato(), account.getNickname());
+				pannelloScrollAccount.add(accountJP);
+				
+				JLabel lblSpace     = new JLabel(" ");
+				pannelloScrollAccount.add(lblSpace);
+			}
+		}
+		
+		revalidate();
+		repaint();
+	}
 		
 	private JPanel creaElemScrollBar(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)
 	{
@@ -573,8 +565,6 @@ repaint();
 		textFieldCapSB.setText(fieldCap);
 		panel.add(textFieldCapSB, BorderLayout.WEST);
 		textFieldCapSB.setColumns(10);
-		
-
 		
 		return panel;
 	}
@@ -622,5 +612,42 @@ repaint();
 		
 		return  panel;
 	}
+	
+	private JPanel creaAccountScrollBar(String fornitore, String fraseStato, String nickname)
+	{
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(3,2));
+		panel.setSize(new Dimension(300,300));
+		
+		JTextField textFieldFornitore;
+		JTextField textFieldFraseStato;
+		JTextField textFieldNickname;
+		
+		JLabel lblViaSB = new JLabel("Fornitore");
+		panel.add(lblViaSB);
+
+		textFieldFornitore = new JTextField();
+		textFieldFornitore.setText(fornitore);
+		panel.add(textFieldFornitore);
+		textFieldFornitore.setColumns(10);
+									
+		JLabel lblCitt‡SB = new JLabel("Frase Stato");
+		panel.add(lblCitt‡SB);
+		
+		textFieldFraseStato = new JTextField();
+		textFieldFraseStato.setText(fraseStato);
+		panel.add(textFieldFraseStato);
+		textFieldFraseStato.setColumns(10);
+
+		JLabel lblNazioneSB = new JLabel("Nickname");
+		panel.add(lblNazioneSB);
+
+		textFieldNickname = new JTextField();
+		textFieldNickname.setText(nickname);
+		panel.add(textFieldNickname);
+		textFieldNickname.setColumns(10);
+		
+		return panel;
 	}
+}
 	

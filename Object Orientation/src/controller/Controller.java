@@ -13,6 +13,7 @@ import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
 import model.Contatto;
+import model.Email;
 import model.Gruppo;
 import model.Indirizzo.tipoIndirizzo;
 
@@ -278,7 +279,7 @@ public class Controller {
 		{
 			// sono riunite tutte le parti di un nome di un contatto in una stringa
 			String nomeCompleto;
-			if(c.getSecondoNome()!=null)
+			if (c.getSecondoNome() != null)
 			{
 				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
 			}
@@ -314,14 +315,36 @@ public class Controller {
 		connTransazione.setAutoCommit(false);
 	}
 	
-	public void finalizzaModifica(Contatto contatto) throws SQLException
+	public void finalizzaModifica(Contatto nuovoContatto) throws SQLException
 	{
-		int indiceVecchio;
+		int indiceVecchioRubrica;
+		int indiceVecchioGruppo;
+		Boolean modifica;
 		connTransazione.commit();
 		System.out.println("Commit riuscito");
-		indiceVecchio = rubricaSelezionata.getContatti().indexOf(contattoSelezionato);
+		// sostituisco il nuovo contatto col vecchio in rubrica
+		indiceVecchioRubrica = rubricaSelezionata.getContatti().indexOf(contattoSelezionato);
 		rubricaSelezionata.getContatti().remove(contattoSelezionato);
-		rubricaSelezionata.getContatti().add(indiceVecchio, contatto);
+		rubricaSelezionata.getContatti().add(indiceVecchioRubrica, nuovoContatto);
+		// sostituisco il nuovo contatto col vecchio nei rispettivi gruppi
+		for (Gruppo gruppo : rubricaSelezionata.getGruppi())
+		{
+			modifica = false;
+			for (Contatto contatto : gruppo.getContatti())
+			{
+				if (contatto == contattoSelezionato)
+				{
+					modifica = true;
+				}
+			}
+			if (modifica == true)
+			{
+				indiceVecchioGruppo = gruppo.getContatti().indexOf(contattoSelezionato);
+				gruppo.getContatti().remove(contattoSelezionato);
+				gruppo.getContatti().add(indiceVecchioGruppo, nuovoContatto);
+			}
+		}
+
 		connTransazione = null;
 	}
 	public Contatto addContatto(String nome, String secondonome, String cognome,
@@ -354,6 +377,7 @@ public class Controller {
 			rubricaPosgr.changeContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
 				                        nazione, cap, contattoSelezionato.getId(), connTransazione);
 			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, contattoSelezionato.getId());
+			
 		}
 		catch (SQLException e) 
 		{
@@ -515,7 +539,8 @@ public class Controller {
 		}
 	}
 	
-	public void changeGruppo(Gruppo nuovoGruppo) throws Exception {
+	public void changeGruppo(Gruppo nuovoGruppo) throws Exception 
+	{
 		Connection conn;
 		int indiceVecchio;
 		try {
@@ -531,6 +556,36 @@ public class Controller {
 			rubricaSelezionata.getGruppi().add(indiceVecchio, nuovoGruppo);
 		} catch (SQLException e) {
 			throw e;
+		}
+	}
+
+	public void cercaPerNome(String text) 
+	{
+		for (Contatto contatto : rubricaSelezionata.getContatti())
+		{
+			if (contatto.getNome().matches("(?i).*"+text+".*"))
+			{
+				System.out.println(contatto.getNome());
+			}
+		}
+	}
+	// TODO: da rivedere
+	public void cercaPerEmail(String text) {
+		Boolean match;
+		for (Contatto contatto : rubricaSelezionata.getContatti())
+		{
+			match = false;
+			for(Email email : contatto.getEmail())
+			{
+				match = true;
+			}
+			if (match = true)
+			{
+				if (contatto.getNome().matches("(?i).*"+text+".*"))
+				{
+					System.out.println(contatto.getNome());
+				}
+			}
 		}
 	}
 

@@ -139,9 +139,9 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			{
 				Gruppo nuovoGruppo = new Gruppo(rsg.getString("nome"), rsg.getInt("gruppo_id"));
 				PreparedStatement recuperaContattiGruppo;
-				System.out.println(" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + ";");
+				System.out.println(" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + " ORDER BY contatto_fk;");
 				recuperaContattiGruppo = connection.prepareStatement(
-						" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + "; "
+						" SELECT * FROM Composizione WHERE gruppo_fk = " + rsg.getInt("gruppo_id") + " ORDER BY contatto_fk;"
 						);
 				ResultSet rsc = recuperaContattiGruppo.executeQuery();
 				// per ogni risultato si cerca il contatto con l'id trovato e lo si aggiunge al nuovo gruppo
@@ -184,7 +184,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 						" SELECT generate_new_contatto_id(); "
 					);
 			rs = initEGeneraContattoID.executeQuery();
-			System.out.println("Si supera la parte che esegue la query");
 			//Si sposta il cursore in avanti poiché inizialmente punta a prima della row iniziale
 			if(rs.next() == true)
 			{
@@ -221,7 +220,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 							                  +" '" + cap +         "',  " + id+"); "
 					);
 			aggiungiContatto.execute();
-			System.out.println("Si supera la parte che genera un errore di inserimento");
 		}
 		catch (SQLException e) 
 		{
@@ -235,37 +233,44 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				               String numMobile, String numFisso, String via, String citta, String nazione, String cap,
 				               int vecchioContattoId, Connection connessione) throws SQLException {
 		
-		System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + vecchioContattoId + "; ");
 		try {
+				// Memorizzo i gruppi in cui il contatto è presente
+				System.out.println(" SELECT * FROM Composizione WHERE Contatto_FK = " + vecchioContattoId + "; ");
+				PreparedStatement selezionaGruppi = connessione.prepareStatement(
+						" SELECT * FROM Composizione WHERE Contatto_FK = " + vecchioContattoId + "; ");
+				ResultSet rsg = selezionaGruppi.executeQuery();
+			
+				System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + vecchioContattoId + "; ");
 				PreparedStatement cancellaContatto = connessione.prepareStatement(
 						" DELETE FROM Contatto WHERE Contatto_ID = " + vecchioContattoId + "; ");
 				cancellaContatto.executeUpdate();
-		} catch (SQLException e) {
-				e.printStackTrace();
-				throw e;
-		}
 		
-		System.out.println("CALL coherent_insertion_f('"   + nomeRubrica + "', '" + nome +          "', '" + secondonome + "',"
-						                 +" '" + cognome +     "', '" + numMobile +     "', '" + numFisso   + "',"
-						                 +" '" + via +         "', '" + citta +         "', '" + nazione  +   "',"
-						                 +" '" + cap +         "',  " + vecchioContattoId+"); ");
-		try 
-		{
-			PreparedStatement aggiungiContatto = connessione.prepareStatement
-				(
-				"CALL coherent_insertion_f('"   + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
-						                  +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
-						                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
-						                  +" '" + cap +         "',  " + vecchioContattoId+"); "
-				);
-			aggiungiContatto.execute();
-			System.out.println("Debug: Si supera la parte che genera un errore di inserimento");
+				System.out.println("CALL coherent_insertion_f('"   + nomeRubrica + "', '" + nome +          "', '" + secondonome + "',"
+								                 +" '" + cognome +     "', '" + numMobile +     "', '" + numFisso   + "',"
+								                 +" '" + via +         "', '" + citta +         "', '" + nazione  +   "',"
+								                 +" '" + cap +         "',  " + vecchioContattoId+"); ");
+				PreparedStatement aggiungiContatto = connessione.prepareStatement
+					(
+					"CALL coherent_insertion_f('"   + nomeRubrica + "','" + nome +       "','" + secondonome + "',"
+							                  +" '" + cognome +     "', '" + numMobile + "', '" + numFisso   + "',"
+							                  +" '" + via +         "', '" + citta +     "', '" + nazione  +   "',"
+							                  +" '" + cap +         "',  " + vecchioContattoId+"); "
+					);
+				aggiungiContatto.execute();
+				// reinserisco il contatto nei gruppi a cui appartiene.
+				while (rsg.next())
+				{
+					System.out.println(" INSERT INTO Composizione VALUES (" + rsg.getInt("contatto_fk") + ", " + rsg.getInt("gruppo_fk") + "); ");
+					PreparedStatement reinserisciContattoGruppo = connessione.prepareStatement(
+							" INSERT INTO Composizione VALUES (" + rsg.getInt("contatto_fk") + ", " + rsg.getInt("gruppo_fk") + "); ");
+					reinserisciContattoGruppo.executeUpdate();
+				}
 		}
 		catch (SQLException e) 
 		{
-		connessione.rollback();
-		System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
-		throw e;
+			connessione.rollback();
+			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
+			throw e;
 		}
 	}
 	
@@ -348,11 +353,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			for (Email email : contatto.getEmail())
 			{
 				System.out.println(" SELECT * FROM Associa, Email, Account "
-						+ " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = " + email.getStringaEmail() + "; "
+						         + " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
 						);
-				PreparedStatement recuperaAccount = connection.prepareStatement(
+				PreparedStatement recuperaAccount = connessione.prepareStatement(
 						" SELECT * FROM Associa, Email, Account "
-								+ " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = " + email.getStringaEmail() + "; "
+					  + " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
 						);
 				ResultSet rsa = recuperaAccount.executeQuery();
 				while (rsa.next())

@@ -280,9 +280,6 @@ public class ListaContatti extends JFrame {
 				}
 			}
 		});
-		/**
-		 * TODO: Quando è premuto il button "GRUPPI"
-		 */
 		
 		btnVisualizzaGruppo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -348,10 +345,31 @@ public class ListaContatti extends JFrame {
 		
 		btnInvioRicerca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
-				JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
-				frame.setVisible(false);
-				changeGruppo.setVisible(true);
+				int modo = comboBoxFiltroRicerca.getSelectedIndex();
+				// TODO: se ricerca per nome
+				if (modo == 0)
+				{
+					controller.cercaPerNome(textFieldRicerca.getText());
+//					listaContatti.removeAll();
+//					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+//					listaContatti.revalidate();
+//					listaContatti.repaint();
+				}
+				// TODO: se ricerca per email
+				if (modo == 1)
+				{
+					controller.cercaPerEmail(textFieldRicerca.getText());
+				}
+				// TODO: se ricerca per account
+				if (modo == 2)
+				{
+					
+				}
+				// TODO: se ricerca per numero di telefono
+				if (modo == 3)
+				{
+					
+				}
 			}
 		});
 	}
