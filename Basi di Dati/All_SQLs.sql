@@ -119,12 +119,12 @@ ALTER TABLE Telefono
 
 --Crea la tabella Associa 
 CREATE TABLE Associa (
-Contatto_FK SERIAL,
+Email_FK SERIAL,
 Account_FK SERIAL
 );
 
 ALTER TABLE Associa
- ADD CONSTRAINT associa_contatto_fk FOREIGN KEY(Contatto_FK) REFERENCES Contatto(Contatto_ID)
+ ADD CONSTRAINT associa_email_fk FOREIGN KEY(Email_FK) REFERENCES Email(Email_ID)
  ON UPDATE CASCADE ON DELETE CASCADE,
  ADD CONSTRAINT associa_account_fk FOREIGN KEY(Account_FK) REFERENCES Account(Account_ID)
  ON UPDATE CASCADE ON DELETE CASCADE;
@@ -221,14 +221,14 @@ CREATE OR REPLACE FUNCTION automatic_email_association_f()
 		cur_account CURSOR FOR
 			SELECT *
 			FROM Account
-			WHERE IndirizzoEmail=NEW.IndirizzoEmail;
+			WHERE IndirizzoEmail = NEW.IndirizzoEmail;
 	BEGIN
 		FOR cur_var IN cur_account LOOP
 			--Si inserisce in associa il codice dell'account a cui appartiene
 			--la data email e l'account associato ai sistemi di messaging
 			--con la stessa email
 			INSERT INTO Associa VALUES
-			(NEW.Contatto_FK,cur_var.Account_ID);
+			(NEW.Email_ID, cur_var.Account_ID);
 		END LOOP;
 		RETURN NEW;
 	END; $$;
@@ -248,14 +248,14 @@ CREATE OR REPLACE FUNCTION automatic_account_association_f()
 		cur_account CURSOR FOR
 			SELECT *
 			FROM Email
-			WHERE IndirizzoEmail=NEW.IndirizzoEmail;
+			WHERE IndirizzoEmail = NEW.IndirizzoEmail;
 	BEGIN
 		FOR cur_var IN cur_account LOOP
 			--Si inserisce in associa il codice dell'account a cui appartiene
 			--la data email e l'account associato ai sistemi di messaging
 			--con la stessa email
 			INSERT INTO Associa VALUES
-			(cur_var.Contatto_FK,NEW.Account_ID);
+			(cur_var.Email_ID,NEW.Account_ID);
 		END LOOP;
 		RETURN NEW;
 	END; $$;
