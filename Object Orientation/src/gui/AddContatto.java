@@ -568,7 +568,7 @@ public class AddContatto extends JFrame {
 						Contatto nuovoContatto;
 						// inserimento in database
 						id = controller.inizializzaInserimento();
-						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(), 
+						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
 											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 											   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
 											   		           id);
@@ -623,6 +623,8 @@ public class AddContatto extends JFrame {
 								controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
 							}
 						}
+						// vengono associati gli account alle email
+						controller.loadAccountContatto(nuovoContatto);
 						//commit delle informazioni in DB e inserimento del contatto i memoria
 						controller.finalizzaInserimento(nuovoContatto);
 						

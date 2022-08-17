@@ -107,7 +107,7 @@ public class Contatto{
 	{
 		return telefoni;
 	}
-	/** return delle email del cotnatto */
+	/** return delle email del contatto */
 	public ArrayList<Email> getEmail()
 	{
 		return email;

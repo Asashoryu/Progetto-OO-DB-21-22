@@ -442,7 +442,19 @@ public class Controller {
 			contatto = null;
 			throw e;
 		}
-	}	
+	}
+	
+	public void loadAccountContatto(Contatto contatto) throws SQLException {
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		try
+		{
+			rubricaPosgr.loadAccountContatto(contatto, connTransazione);
+		}
+		catch (SQLException e)
+		{
+			throw e;
+		}
+	}
 	
 	public void deleteContattoSelezionato() throws SQLException {
 		// TODO Auto-generated method stub
@@ -521,5 +533,6 @@ public class Controller {
 			throw e;
 		}
 	}
+
 
 }

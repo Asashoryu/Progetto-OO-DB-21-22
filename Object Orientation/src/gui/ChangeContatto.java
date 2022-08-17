@@ -650,6 +650,9 @@ public class ChangeContatto extends JFrame {
 									controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
 								}
 							}
+							
+							// vengono associati gli account alle email
+							controller.loadAccountContatto(nuovoContatto);
 							//commit delle informazioni in DB e inserimento del contatto i memoria
 							controller.finalizzaModifica(nuovoContatto);
 							

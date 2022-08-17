@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import dao.RubricaDAO;
 import database.ConnessioneDatabase;
 import model.Contatto;
+import model.Email;
 import model.Gruppo;
 import model.Rubrica;
 import model.Indirizzo.tipoIndirizzo;
@@ -47,6 +48,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		PreparedStatement recuperaIndirizzi;
 		PreparedStatement recuperaNumTelefono;
 		PreparedStatement recuperaEmail;
+		PreparedStatement recuperaAccount;
 		try {
 			// aggiunge le informazioni sul contatto
 			recuperaContatti = connection.prepareStatement(
@@ -99,6 +101,19 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				while (rse.next())
 				{
 					nuovoContatto.addEmail(rse.getString("indirizzoemail"), rse.getString("descrizione"));
+					System.out.println(" SELECT * FROM Associa, Email, Account "
+							         + " WHERE email_id = email_fk AND account_id = account_fk AND email_id = "+rse.getInt("email_id")+ "; ");
+					recuperaAccount = connection.prepareStatement(
+							" SELECT * FROM Associa, Email, Account "
+					      + " WHERE email_id = email_fk AND account_id = account_fk AND email_id = "+rse.getInt("email_id")+ "; "
+							);
+					ResultSet rsea = recuperaAccount.executeQuery();
+					while (rsea.next())
+					{
+						int indice = nuovoContatto.getEmail().size() - 1;
+						nuovoContatto.getEmail().get(indice).addAccount(rsea.getString("fornitore"), rsea.getString("frasestato"), rsea.getString("nickname"));
+					}
+					rsea.close();
 				}
 				rse.close();
 			}
@@ -326,6 +341,35 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	@Override
+	public void loadAccountContatto(Contatto contatto, Connection connessione) throws SQLException
+	{
+		try {
+			for (Email email : contatto.getEmail())
+			{
+				System.out.println(" SELECT * FROM Associa, Email, Account "
+						+ " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = " + email.getStringaEmail() + "; "
+						);
+				PreparedStatement recuperaAccount = connection.prepareStatement(
+						" SELECT * FROM Associa, Email, Account "
+								+ " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = " + email.getStringaEmail() + "; "
+						);
+				ResultSet rsa = recuperaAccount.executeQuery();
+				while (rsa.next())
+				{
+					email.addAccount(rsa.getString("fornitore"), rsa.getString("frasestato"), rsa.getString("nickname"));
+				}
+				rsa.close();
+			}
+		} catch (SQLException e) {
+			connessione.rollback();
+			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
+	@Override
 	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException
 	{
 		System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
