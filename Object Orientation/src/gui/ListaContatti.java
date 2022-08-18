@@ -346,29 +346,45 @@ public class ListaContatti extends JFrame {
 		btnInvioRicerca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int modo = comboBoxFiltroRicerca.getSelectedIndex();
-				// TODO: se ricerca per nome
+				// se ricerca per nome
 				if (modo == 0)
 				{
 					controller.cercaPerNome(textFieldRicerca.getText());
-//					listaContatti.removeAll();
-//					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
-//					listaContatti.revalidate();
-//					listaContatti.repaint();
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+					controller.setNullGruppoSelezionato();
 				}
-				// TODO: se ricerca per email
+				// se ricerca per email
 				if (modo == 1)
 				{
 					controller.cercaPerEmail(textFieldRicerca.getText());
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+					controller.setNullGruppoSelezionato();
 				}
-				// TODO: se ricerca per account
+				// se ricerca per account
 				if (modo == 2)
 				{
-					
+					controller.cercaPerAccount(textFieldRicerca.getText());
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+					controller.setNullGruppoSelezionato();
 				}
-				// TODO: se ricerca per numero di telefono
+				// se ricerca per numero di telefono
 				if (modo == 3)
 				{
-					
+					controller.cercaPerNumero(textFieldRicerca.getText());
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+					controller.setNullGruppoSelezionato();
 				}
 			}
 		});

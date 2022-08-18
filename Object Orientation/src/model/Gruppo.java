@@ -10,6 +10,11 @@ public class Gruppo{
 	
 	private ArrayList<Contatto> contatti;
 	
+	public Gruppo ()
+	{
+		contatti = new ArrayList<Contatto>();
+	}
+	
 	public Gruppo (String nome, int id) {
 		setNome(nome);
 		setId(id);

@@ -514,7 +514,9 @@ public class ChangeContatto extends JFrame {
 		contentPane.add(btnAzione);
 		
 		
-		
+		/**
+		 * Quando viene cliccato il button "vai"
+		 */
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
@@ -606,6 +608,12 @@ public class ChangeContatto extends JFrame {
 												   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
 												   		           textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
 							// INSERIMENTI SECONDARI
+							// inserimento immagine
+							if (percorsoImmagine != null)
+							{
+								// TODO: gestire inserimento immagine
+								controller.addImmagine(nuovoContatto, percorsoImmagine);
+							}
 							// Inserimento indirizzi secondari
 							for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 							{
@@ -658,7 +666,13 @@ public class ChangeContatto extends JFrame {
 							
 							// aggiornamento della combobox di listaContatti
 							lista.removeAll();
-							lista.setListData(controller.getNomiContattiRubrica());
+							if (controller.getGruppoSelezionato() != null)
+							{
+								lista.setListData(controller.getNomiContattiGruppoSelezionato());
+							}
+							else {
+								lista.setListData(controller.getNomiContattiRubrica());
+							}
 							JOptionPane.showConfirmDialog(null, 
 					                "Informazioni aggiornate con successo!", "Modifica avvenuta", JOptionPane.DEFAULT_OPTION);
 							lista.revalidate();

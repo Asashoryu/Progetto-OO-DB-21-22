@@ -289,7 +289,7 @@ public class Home extends JFrame {
 					String stringa = JOptionPane.showInputDialog(visualizzata);
 					if(stringa!= null && stringa.isBlank()==false) 
 					{
-						try 
+						try
 						{
 							controller.updateRubrica(stringa);
 							//In caso di Exception non entra in questo punto

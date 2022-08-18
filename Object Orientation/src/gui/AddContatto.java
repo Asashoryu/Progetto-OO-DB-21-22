@@ -561,7 +561,6 @@ public class AddContatto extends JFrame {
 				if (valido == 1) {
 					System.out.println("Puoi inserire i tuoi dati con successo ora!");
 					int id = -1;
-					// TODO: inserimento in memoria e nel DB
 					// inserimenti principali
 					try {
 						// contatto creato
@@ -630,8 +629,13 @@ public class AddContatto extends JFrame {
 						
 						// aggiornamento della combobox di listaContatti
 						lista.removeAll();
-						lista.setListData(controller.getNomiContattiRubrica());
-						JOptionPane.showConfirmDialog(null, 
+						if (controller.getGruppoSelezionato() != null)
+						{
+							lista.setListData(controller.getNomiContattiGruppoSelezionato());
+						}
+						else {
+							lista.setListData(controller.getNomiContattiRubrica());
+						}						JOptionPane.showConfirmDialog(null, 
 				                "Contatto inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 						lista.revalidate();
 						lista.repaint();

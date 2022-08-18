@@ -12,6 +12,8 @@ import implementazionedao.RubricaImplementazionePostgresDAO;
 import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
 import model.Sistema;
+import model.Telefono;
+import model.Account;
 import model.Contatto;
 import model.Email;
 import model.Gruppo;
@@ -561,33 +563,85 @@ public class Controller {
 
 	public void cercaPerNome(String text) 
 	{
+		Gruppo gruppoRicerca = new Gruppo();
 		for (Contatto contatto : rubricaSelezionata.getContatti())
 		{
 			if (contatto.getNome().matches("(?i).*"+text+".*"))
 			{
 				System.out.println(contatto.getNome());
+				gruppoRicerca.getContatti().add(contatto);
 			}
 		}
+		gruppoSelezionato = gruppoRicerca;
 	}
 	// TODO: da rivedere
 	public void cercaPerEmail(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
 		Boolean match;
 		for (Contatto contatto : rubricaSelezionata.getContatti())
 		{
 			match = false;
 			for(Email email : contatto.getEmail())
 			{
-				match = true;
-			}
-			if (match = true)
-			{
-				if (contatto.getNome().matches("(?i).*"+text+".*"))
+				if (email.getStringaEmail().matches("(?i).*"+text+".*"))
 				{
-					System.out.println(contatto.getNome());
+					match = true;
+					System.out.println(contatto.getNome()+" : "+email.getStringaEmail());
 				}
 			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
 		}
+		gruppoSelezionato = gruppoRicerca;
 	}
 
+	public void cercaPerAccount(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
+		Boolean match;
+		for (Contatto contatto : rubricaSelezionata.getContatti())
+		{
+			match = false;
+			for (Email email : contatto.getEmail())
+			{
+				for (Account account : email.getAccount())
+				{
+					if (account.getNickname().matches("(?i).*"+text+".*"))
+					{
+						match = true;
+						System.out.println(contatto.getNome()+" : "+account.getNickname());
+					}
+				}
+			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		gruppoSelezionato = gruppoRicerca;
+	}
+
+	public void cercaPerNumero(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
+		Boolean match;
+		for (Contatto contatto : rubricaSelezionata.getContatti())
+		{
+			match = false;
+			for(Telefono telefono : contatto.getTelefoni())
+			{
+				if (telefono.getNumero().matches("(?i).*"+text+".*"))
+				{
+					match = true;
+					System.out.println(contatto.getNome()+" : "+telefono.getNumero());
+				}
+			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		gruppoSelezionato = gruppoRicerca;
+	}
 
 }
