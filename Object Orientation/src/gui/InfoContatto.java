@@ -148,24 +148,25 @@ public class InfoContatto extends JFrame {
 		getContentPane().setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 917, 604);
+		setBounds(100, 100, 882, 604);
 		contentPane = new JPanel();
+		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		getContentPane().setBackground(new Color(255, 240, 245));
+		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 		
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
-		lblNumeriTelefono.setBounds(352, 81, 112, 13);
+		lblNumeriTelefono.setBounds(352, 121, 112, 13);
 		contentPane.add(lblNumeriTelefono);
 		
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
-		lblIndirizzoFisico.setBounds(48, 81, 111, 13);
+		lblIndirizzoFisico.setBounds(48, 121, 111, 13);
 		contentPane.add(lblIndirizzoFisico);
 		
 		JPanel pannelloIndPrincipale_1 = new JPanel();
-		pannelloIndPrincipale_1.setBackground(new Color(255, 240, 245));
-		pannelloIndPrincipale_1.setBounds(24, 97, 249, 90);
+		pannelloIndPrincipale_1.setBackground(new Color(255, 255, 255));
+		pannelloIndPrincipale_1.setBounds(24, 137, 249, 90);
 		contentPane.add(pannelloIndPrincipale_1);
 		
 		
@@ -174,11 +175,12 @@ public class InfoContatto extends JFrame {
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setLayout(null);
 		pannelloCredUtente.setBorder(null);
-		pannelloCredUtente.setBackground(new Color(255, 240, 245));
-		pannelloCredUtente.setBounds(24, 13, 471, 58);
+		pannelloCredUtente.setBackground(new Color(255, 255, 255));
+		pannelloCredUtente.setBounds(24, 41, 471, 58);
 		contentPane.add(pannelloCredUtente);
 		
 		textFieldCognome = new JTextField();
+		textFieldCognome.setOpaque(false);
 		textFieldCognome.setEditable(false);
 		textFieldCognome.setText((String) null);
 		textFieldCognome.setColumns(10);
@@ -191,6 +193,8 @@ public class InfoContatto extends JFrame {
 		pannelloCredUtente.add(lblCognome_1);
 		
 		textFieldSecondoNome = new JTextField();
+		textFieldSecondoNome.setOpaque(false);
+		textFieldSecondoNome.setEditable(false);
 		textFieldSecondoNome.setText((String) null);
 		textFieldSecondoNome.setColumns(10);
 		textFieldSecondoNome.setBounds(172, 27, 96, 19);
@@ -202,6 +206,7 @@ public class InfoContatto extends JFrame {
 		pannelloCredUtente.add(lblSecondoNome_1);
 		
 		textFieldNome = new JTextField();
+		textFieldNome.setOpaque(false);
 		textFieldNome.setEditable(false);
 		textFieldNome.setText((String) null);
 		textFieldNome.setColumns(10);
@@ -215,8 +220,8 @@ public class InfoContatto extends JFrame {
 		
 		JPanel pannelloNumTel_1 = new JPanel();
 		pannelloNumTel_1.setLayout(null);
-		pannelloNumTel_1.setBackground(new Color(255, 240, 245));
-		pannelloNumTel_1.setBounds(308, 105, 189, 58);
+		pannelloNumTel_1.setBackground(new Color(255, 255, 255));
+		pannelloNumTel_1.setBounds(308, 137, 189, 58);
 		contentPane.add(pannelloNumTel_1);
 		
 		JLabel lblNumMobile_1 = new JLabel("Mobile ");
@@ -229,11 +234,15 @@ public class InfoContatto extends JFrame {
 		pannelloNumTel_1.add(lblNumFisso_1);
 		
 		textFieldNumMobile = new JTextField();
+		textFieldNumMobile.setOpaque(false);
+		textFieldNumMobile.setEditable(false);
 		textFieldNumMobile.setColumns(10);
 		textFieldNumMobile.setBounds(65, 11, 118, 20);
 		pannelloNumTel_1.add(textFieldNumMobile);
 		
 		textFieldNumFisso = new JTextField();
+		textFieldNumFisso.setOpaque(false);
+		textFieldNumFisso.setEditable(false);
 		textFieldNumFisso.setColumns(10);
 		textFieldNumFisso.setBounds(65, 36, 118, 20);
 		pannelloNumTel_1.add(textFieldNumFisso);
@@ -248,12 +257,12 @@ public class InfoContatto extends JFrame {
 		pannelloScrollIndirizziSec.setBorder(null);
 		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		pannelloScrollIndirizziSec.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pannelloScrollIndirizziSec.setBackground(new Color(255, 240, 245));
+		pannelloScrollIndirizziSec.setBackground(new Color(255, 255, 255));
 		
 		JPanel panelMain = new JPanel();
 		panelMain.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		panelMain.setBackground(new Color(255, 240, 245));
-		panelMain.setBounds(24, 222, 231, 119);
+		panelMain.setBounds(24, 282, 231, 119);
 		contentPane.add(panelMain);
 		panelMain.setLayout(new BorderLayout(0, 0));
 		
@@ -266,17 +275,17 @@ public class InfoContatto extends JFrame {
 		
 		
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
-		lblNewLabel.setBounds(48, 197, 112, 14);
+		lblNewLabel.setBounds(48, 257, 112, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNumSecondari_1 = new JLabel("Numeri Secondari\r\n");
-		lblNumSecondari_1.setBounds(68, 352, 112, 14);
+		lblNumSecondari_1.setBounds(68, 413, 112, 14);
 		contentPane.add(lblNumSecondari_1);
 		
 		pannelloNumTelSec = new JPanel();
 		pannelloNumTelSec.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pannelloNumTelSec.setBackground(new Color(255, 240, 245));
-		pannelloNumTelSec.setBounds(24, 377, 231, 119);
+		pannelloNumTelSec.setBounds(24, 438, 231, 119);
 		contentPane.add(pannelloNumTelSec);
 		pannelloNumTelSec.setLayout(new BorderLayout(0, 0));
 		
@@ -287,33 +296,37 @@ public class InfoContatto extends JFrame {
 		pannelloNumTelSec.add(scrollPaneNumTel, BorderLayout.CENTER);
 		
 		pannelloScrolNumTel = new JPanel();
-		pannelloScrolNumTel.setBackground(new Color(255, 240, 245));
+		pannelloScrolNumTel.setBackground(new Color(255, 255, 255));
 		scrollPaneNumTel.setViewportView(pannelloScrolNumTel);
 		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
 		
 		//Pannello per mail
 		JLabel lblEmail = new JLabel("Indirizzi Mail\r\n");
-		lblEmail.setBounds(332, 197, 134, 14);
+		lblEmail.setBounds(332, 257, 134, 14);
 		contentPane.add(lblEmail);
 		
 		JPanel pannelloEmail = new JPanel();
 		pannelloEmail.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		pannelloEmail.setBackground(new Color(255, 240, 245));
-		pannelloEmail.setBounds(308, 223, 329, 119);
+		pannelloEmail.setBackground(new Color(255, 255, 255));
+		pannelloEmail.setBounds(308, 283, 426, 119);
 		
 		contentPane.add(pannelloEmail);
 		pannelloEmail.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPaneEmail = new JScrollPane();
+		scrollPaneEmail.setBackground(new Color(255, 255, 255));
 		pannelloEmail.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
-		pannelloScrollMail.setBackground(new Color(255, 240, 245));
+		pannelloScrollMail.setBackground(new Color(255, 255, 255));
 		
 		JButton btnChiudi = new JButton("Chiudi");
+		btnChiudi.setFocusPainted(false);
+		btnChiudi.setBackground(new Color(102, 102, 153));
+		btnChiudi.setForeground(new Color(204, 255, 255));
 		btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiudi.setBounds(552, 525, 85, 21);
+		btnChiudi.setBounds(10, 10, 85, 21);
 		contentPane.add(btnChiudi);
 		btnChiudi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -323,55 +336,64 @@ public class InfoContatto extends JFrame {
 		});
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 240, 245));
+		panel.setBackground(new Color(255, 255, 255));
 		pannelloIndPrincipale_1.add(panel);
 		panel.setLayout(new GridLayout(4, 2));
 		
 		JLabel lblVia = new JLabel("Via");
-		lblVia.setBackground(new Color(255, 240, 245));
+		lblVia.setOpaque(true);
+		lblVia.setBackground(new Color(255, 255, 255));
 		panel.add(lblVia);
 		
 		textFieldVia = new JTextField();
+		textFieldVia.setSelectionColor(new Color(255, 255, 255));
+		textFieldVia.setOpaque(false);
 		textFieldVia.setEditable(false);
 		textFieldVia.setColumns(10);
 		panel.add(textFieldVia);
 		
 		JLabel lblCitt‡ = new JLabel("Citt\u00E0");
-		lblCitt‡.setBackground(new Color(255, 240, 245));
+		lblCitt‡.setOpaque(true);
+		lblCitt‡.setBackground(new Color(255, 255, 255));
 		panel.add(lblCitt‡);
 		
 		textFieldCitt‡ = new JTextField();
+		textFieldCitt‡.setOpaque(false);
 		textFieldCitt‡.setEditable(false);
 		textFieldCitt‡.setColumns(10);
 		panel.add(textFieldCitt‡);
 		
 		JLabel lblNazione = new JLabel("Nazione");
-		lblNazione.setBackground(new Color(255, 240, 245));
+		lblNazione.setOpaque(true);
+		lblNazione.setBackground(new Color(255, 255, 255));
 		panel.add(lblNazione);
 		
 		textFieldNazione = new JTextField();
+		textFieldNazione.setOpaque(false);
 		textFieldNazione.setEditable(false);
 		textFieldNazione.setColumns(10);
 		panel.add(textFieldNazione);
 		
 		JLabel lblCap = new JLabel("CAP");
-		lblCap.setBackground(new Color(255, 240, 245));
+		lblCap.setOpaque(true);
+		lblCap.setBackground(new Color(255, 255, 255));
 		panel.add(lblCap);
 		
 		textFieldCap = new JTextField();
+		textFieldCap.setOpaque(false);
 		textFieldCap.setEditable(false);
 		textFieldCap.setColumns(10);
 		panel.add(textFieldCap);
 		
 		//Pannello degli account
 		JLabel lblAccount = new JLabel("Account collegati al contatto");
-		lblAccount.setBounds(332, 353, 200, 13);
+		lblAccount.setBounds(332, 414, 200, 13);
 		contentPane.add(lblAccount);
 		// TODO : qui
 		JPanel pannelloAccount = new JPanel();
 		pannelloAccount.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pannelloAccount.setBackground(new Color(255, 240, 245));
-		pannelloAccount.setBounds(308, 377, 329, 119);
+		pannelloAccount.setBounds(308, 438, 426, 119);
 		contentPane.add(pannelloAccount);
 		pannelloAccount.setLayout(new BorderLayout(0, 0));
 						
@@ -381,7 +403,7 @@ public class InfoContatto extends JFrame {
 		JPanel pannelloScrollAccount = new JPanel();
 		scrollPaneAccount.setViewportView(pannelloScrollAccount);
 		pannelloScrollAccount.setLayout(new BoxLayout(pannelloScrollAccount, BoxLayout.PAGE_AXIS));
-		pannelloScrollAccount.setBackground(new Color(255, 240, 245));
+		pannelloScrollAccount.setBackground(new Color(255, 255, 255));
 		pannelloScrollAccount.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		pannelloScrollAccount.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
@@ -392,13 +414,19 @@ public class InfoContatto extends JFrame {
 		
 		//Bottoni di chiamata dei numeri
 		JButton btnChiama = new JButton("Chiama");
+		btnChiama.setForeground(new Color(102, 102, 153));
+		btnChiama.setBackground(new Color(255, 255, 255));
 		btnChiama.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiama.setBounds(498, 115, 85, 21);
+		btnChiama.setBounds(498, 147, 85, 21);
+		btnChiama.setFocusPainted(false);
 		contentPane.add(btnChiama);
 		
 		JButton btnChiama_1 = new JButton("Chiama");
+		btnChiama_1.setForeground(new Color(102, 102, 153));
+		btnChiama_1.setBackground(new Color(255, 255, 255));
 		btnChiama_1.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiama_1.setBounds(498, 142, 85, 21);
+		btnChiama_1.setBounds(498, 174, 85, 21);
+		btnChiama_1.setFocusPainted(false);
 		contentPane.add(btnChiama_1);
 
 		
@@ -441,18 +469,18 @@ public class InfoContatto extends JFrame {
 		{
 			// immagine di default
 			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			Image imgResized   = img.getScaledInstance(170, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
-			lblImmagine.setBounds(673, 57, 150, 127);
+			lblImmagine.setBounds(633, 57, 170, 150);
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}
 		else {
 			// immagine caricata
 			Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
-			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			Image imgResized   = img.getScaledInstance(170, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
-			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setBounds(633, 57, 170, 150);
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}
@@ -470,6 +498,7 @@ public class InfoContatto extends JFrame {
 			{
 				JPanel elemento;
 				JLabel lblSpace     = new JLabel(" ");
+				lblSpace.setBackground(new Color(255,255,255));
 				
 				elemento = creaElemScrollBar(indirizzo.getVia(), indirizzo.getCitta(), indirizzo.getNazione(), indirizzo.getCap());
 				pannelloScrollIndirizziSec.add(elemento);
@@ -535,34 +564,54 @@ public class InfoContatto extends JFrame {
 		JTextField textFieldCapSB;
 		
 		JLabel lblViaSB = new JLabel("Via");
+		lblViaSB.setOpaque(true);
+		lblViaSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblViaSB);
-
+		
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
+		textFieldViaSB.setEditable(false);
+		textFieldViaSB.setOpaque(true);
+		textFieldViaSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldViaSB);
 		textFieldViaSB.setColumns(10);
 									
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
+		lblCitt‡SB.setOpaque(true);
+		lblCitt‡SB.setBackground(new Color(255, 255, 255));
 		panel.add(lblCitt‡SB);
 		
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
+		textFieldCitt‡SB.setEditable(false);
+		textFieldCitt‡SB.setOpaque(true);
+		textFieldCitt‡SB.setBackground(new Color(255,255,255));
 		panel.add(textFieldCitt‡SB);
 		textFieldCitt‡SB.setColumns(10);
 
 		JLabel lblNazioneSB = new JLabel("Nazione");
+		lblNazioneSB.setOpaque(true);
+		lblNazioneSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblNazioneSB);
 
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
+		textFieldNazioneSB.setEditable(false);
+		textFieldNazioneSB.setOpaque(true);
+		textFieldNazioneSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldNazioneSB);
 		textFieldNazioneSB.setColumns(10);
 		
 		JLabel lblCapSB = new JLabel("CAP");
+		lblCapSB.setOpaque(true);
+		lblCapSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblCapSB);
 		
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
+		textFieldCapSB.setEditable(false);
+		textFieldCapSB.setOpaque(true);
+		textFieldCapSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldCapSB, BorderLayout.WEST);
 		textFieldCapSB.setColumns(10);
 		
@@ -580,10 +629,16 @@ public class InfoContatto extends JFrame {
 		
 		textFieldDescSB = new JTextField();
 		textFieldDescSB.setText(fieldTipo);
+		textFieldDescSB.setEditable(false);
+		textFieldDescSB.setOpaque(true);
+		textFieldDescSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldDescSB);
 		textFieldDescSB.setColumns(5);
 																		
 		textFieldNumSB = new JTextField();
+		textFieldNumSB.setEditable(false);
+		textFieldNumSB.setOpaque(true);
+		textFieldNumSB.setBackground(new Color(255,255,255));
 		textFieldNumSB.setText(fieldNum);
 		panel.add(textFieldNumSB);
 		textFieldNumSB.setColumns(5);
@@ -602,11 +657,17 @@ public class InfoContatto extends JFrame {
 		
 		textFieldDescMailSB = new JTextField();
 		textFieldDescMailSB.setText(fieldTipo);
+		textFieldDescMailSB.setEditable(false);
+		textFieldDescMailSB.setOpaque(true);
+		textFieldDescMailSB.setBackground(new Color(255,255,255));
 		textFieldDescMailSB.setColumns(5);
 		panel.add(textFieldDescMailSB);
 																		
 		textFieldMailSB = new JTextField();
 		textFieldMailSB.setText(fieldEmail);
+		textFieldMailSB.setEditable(false);
+		textFieldMailSB.setOpaque(true);
+		textFieldMailSB.setBackground(new Color(255,255,255));
 		textFieldMailSB.setColumns(5);
 		panel.add(textFieldMailSB);
 		
@@ -623,30 +684,45 @@ public class InfoContatto extends JFrame {
 		JTextField textFieldFraseStato;
 		JTextField textFieldNickname;
 		
-		JLabel lblViaSB = new JLabel("Fornitore");
-		panel.add(lblViaSB);
+		JLabel lblFornitoreSB = new JLabel("Fornitore");
+		lblFornitoreSB.setOpaque(true);
+		lblFornitoreSB.setBackground(new Color(255, 255, 255));
+		panel.add(lblFornitoreSB);
 
 		textFieldFornitore = new JTextField();
 		textFieldFornitore.setText(fornitore);
+		textFieldFornitore.setEditable(false);
+		textFieldFornitore.setOpaque(true);
+		textFieldFornitore.setBackground(new Color(255,255,255));
 		panel.add(textFieldFornitore);
 		textFieldFornitore.setColumns(10);
 									
-		JLabel lblCitt‡SB = new JLabel("Frase Stato");
-		panel.add(lblCitt‡SB);
+		JLabel lblFraseStatoSB = new JLabel("Frase Stato");
+		lblFraseStatoSB.setOpaque(true);
+		lblFraseStatoSB.setBackground(new Color(255, 255, 255));
+		panel.add(lblFraseStatoSB);
 		
 		textFieldFraseStato = new JTextField();
 		textFieldFraseStato.setText(fraseStato);
+		textFieldFraseStato.setEditable(false);
+		textFieldFraseStato.setOpaque(true);
+		textFieldFraseStato.setBackground(new Color(255,255,255));
 		panel.add(textFieldFraseStato);
 		textFieldFraseStato.setColumns(10);
 
-		JLabel lblNazioneSB = new JLabel("Nickname");
-		panel.add(lblNazioneSB);
+		JLabel lblNicknameSB = new JLabel("Nickname");
+		lblNicknameSB.setOpaque(true);
+		lblNicknameSB.setBackground(new Color(255, 255, 255));
+		panel.add(lblNicknameSB);
 
 		textFieldNickname = new JTextField();
 		textFieldNickname.setText(nickname);
+		textFieldNickname.setEditable(false);
+		textFieldNickname.setOpaque(true);
+		textFieldNickname.setBackground(new Color(255,255,255));
 		panel.add(textFieldNickname);
 		textFieldNickname.setColumns(10);
-		
+	
 		return panel;
 	}
 }

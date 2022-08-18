@@ -59,11 +59,11 @@ public class ListaContatti extends JFrame {
 	 * Crea frame.
 	 */
 	public ListaContatti(Controller c, JFrame frameChiamante) {
+		setMinimumSize(new Dimension(611, 464));
 		setResizable(false);
 		setForeground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setMinimumSize(new Dimension(850, 500));
-		getContentPane().setBackground(new Color(224, 255, 255));
+		getContentPane().setBackground(new Color(255, 255, 255));
 		
 		frame = this;
         controller = c;
@@ -73,13 +73,6 @@ public class ListaContatti extends JFrame {
         frame.setBounds(500, 200,660,460);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
-		
-		JLabel lblNewLabel_1 = new JLabel("RUBRICA AVANZATA");
-		lblNewLabel_1.setBounds(139, 10, 368, 54);
-		lblNewLabel_1.setBackground(new Color(255, 250, 250));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setFont(new Font("Ebrima", Font.BOLD, 20));
-		getContentPane().add(lblNewLabel_1);
 		
 		JLabel label_1 = new JLabel("");
 		label_1.setBounds(-10007, -10030, 718, 448);
@@ -102,87 +95,124 @@ public class ListaContatti extends JFrame {
 		getContentPane().add(label_5);
 		
 		JButton btnUscita = new JButton("Indietro");
+		btnUscita.setForeground(new Color(255, 255, 255));
 		btnUscita.setBounds(10, 10, 82, 23);
 		btnUscita.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnUscita.setBorder(UIManager.getBorder("Button.border"));
-		btnUscita.setBackground(new Color(176, 224, 230));
+		btnUscita.setBackground(new Color(102, 102, 153));
+		btnUscita.setFocusPainted(false);
 		getContentPane().add(btnUscita);
 		
 		JScrollPane scrollPaneContatti = new JScrollPane();
-		scrollPaneContatti.setBounds(88, 151, 368, 240);
-		scrollPaneContatti.setBorder(null);
-		scrollPaneContatti.setBackground(Color.CYAN);
-		scrollPaneContatti.setViewportBorder(new EmptyBorder(1, 1, 1, 1));
+		scrollPaneContatti.setBounds(10, 153, 258, 198);
+		scrollPaneContatti.setBorder(new EmptyBorder(1, 1, 1, 1));
+		scrollPaneContatti.setBackground(new Color(102, 102, 153));
+		scrollPaneContatti.setViewportBorder(null);
 		getContentPane().add(scrollPaneContatti);
 		JList<Object> listaContatti = new JList<Object>(controller.getNomiContattiRubrica());
 		scrollPaneContatti.setViewportView(listaContatti);
 		listaContatti.setVisibleRowCount(-1);
 		listaContatti.setSelectionForeground(new Color(0, 0, 0));
-		listaContatti.setFont(new Font("Arial", Font.PLAIN, 15));
+		listaContatti.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listaContatti.setBorder(null);
-		listaContatti.setBackground(new Color(240, 248, 255));
+		listaContatti.setBackground(new Color(255, 255, 255));
 		
 		/** carica la Jlist con i nomi dei contatti dal DB */
 		
 		JButton btnModifica = new JButton("Modifica");
-		btnModifica.setBounds(220, 434, 94, 21);
+		btnModifica.setForeground(new Color(102, 102, 153));
+		btnModifica.setBackground(new Color(204, 255, 255));
+		btnModifica.setBounds(92, 394, 94, 21);
 		btnModifica.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnModifica.setFocusPainted(false);
 		getContentPane().add(btnModifica);
 		
-		JButton btnElimina = new JButton("Elimina");
-		btnElimina.setBounds(342, 434, 94, 21);
+		JButton btnElimina = new JButton("-");
+		btnElimina.setForeground(new Color(102, 102, 153));
+		btnElimina.setBackground(new Color(204, 255, 255));
+		btnElimina.setBounds(196, 394, 45, 21);
 		btnElimina.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnElimina.setFocusPainted(false);
 		getContentPane().add(btnElimina);
 				
 		JLabel lblContatti = new JLabel("Contatti: ");
-		lblContatti.setBounds(88, 132, 143, 21);
+		lblContatti.setBounds(10, 122, 143, 21);
 		lblContatti.setFont(new Font("Arial", Font.PLAIN, 15));
 		getContentPane().add(lblContatti);
 		
-		JButton btnAggiungi = new JButton("Aggiungi ");
-		btnAggiungi.setBounds(97, 434, 94, 21);
+		JButton btnAggiungi = new JButton("+");
+		btnAggiungi.setForeground(new Color(102, 102, 153));
+		btnAggiungi.setBackground(new Color(204, 255, 255));
+		btnAggiungi.setBounds(37, 394, 45, 21);
 		btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnAggiungi.setFocusPainted(false);
 		getContentPane().add(btnAggiungi);
 		
 		JLabel lblGruppi = new JLabel("Gruppi: ");
-		lblGruppi.setBounds(531, 234, 143, 21);
+		lblGruppi.setBounds(336, 122, 143, 21);
 		lblGruppi.setFont(new Font("Arial", Font.PLAIN, 15));
 		getContentPane().add(lblGruppi);
 		
 		JScrollPane scrollPaneGruppi = new JScrollPane();
-		scrollPaneGruppi.setBounds(531, 258, 246, 110);
-		scrollPaneGruppi.setViewportBorder(new EmptyBorder(1, 1, 1, 1));
-		scrollPaneGruppi.setBorder(null);
-		scrollPaneGruppi.setBackground(Color.CYAN);
+		scrollPaneGruppi.setBounds(336, 153, 246, 198);
+		scrollPaneGruppi.setViewportBorder(null);
+		scrollPaneGruppi.setBorder(new EmptyBorder(1, 1, 1, 1));
+		scrollPaneGruppi.setBackground(new Color(102, 102, 153));
 		getContentPane().add(scrollPaneGruppi);
 		
 		JList<Object> listaGruppi = new JList<Object>(controller.getNomiGruppiRubrica());
+		listaGruppi.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		listaGruppi.setBorder(null);
 		scrollPaneGruppi.setViewportView(listaGruppi);
 		
 		JButton btnAggiungiGruppo = new JButton("+");
-		btnAggiungiGruppo.setBounds(531, 407, 47, 23);
+		btnAggiungiGruppo.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnAggiungiGruppo.setForeground(new Color(102, 102, 153));
+		btnAggiungiGruppo.setBackground(new Color(204, 255, 255));
+		btnAggiungiGruppo.setBounds(357, 390, 45, 23);
+		btnAggiungiGruppo.setFocusPainted(false);
 		getContentPane().add(btnAggiungiGruppo);
 		
-		JButton btnModificaGruppo = new JButton("Modifica Gruppo");
-		btnModificaGruppo.setBounds(588, 407, 135, 23);
+		JButton btnModificaGruppo = new JButton("Modifica");
+		btnModificaGruppo.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnModificaGruppo.setForeground(new Color(102, 102, 153));
+		btnModificaGruppo.setBackground(new Color(204, 255, 255));
+		btnModificaGruppo.setBounds(414, 390, 94, 23);
+		btnModificaGruppo.setFocusPainted(false);
 		getContentPane().add(btnModificaGruppo);
 		
 		JButton btnVisualizzaGruppo = new JButton("Visualizza gruppo");
-		btnVisualizzaGruppo.setBounds(588, 379, 135, 23);
+		btnVisualizzaGruppo.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnVisualizzaGruppo.setForeground(new Color(102, 102, 153));
+		btnVisualizzaGruppo.setBackground(new Color(204, 255, 255));
+		btnVisualizzaGruppo.setBounds(396, 361, 135, 21);
+		btnVisualizzaGruppo.setFocusPainted(false);
 		getContentPane().add(btnVisualizzaGruppo);
 		
 		JButton btnEliminaGruppo = new JButton("-");
-		btnEliminaGruppo.setBounds(733, 407, 44, 23);
+		btnEliminaGruppo.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnEliminaGruppo.setForeground(new Color(102, 102, 153));
+		btnEliminaGruppo.setBackground(new Color(204, 255, 255));
+		btnEliminaGruppo.setBounds(520, 390, 45, 23);
+		btnEliminaGruppo.setFocusPainted(false);
 		getContentPane().add(btnEliminaGruppo);
 		
+		
 		JButton btnVisualizzaTuttiGruppi = new JButton("Tutti");
-		btnVisualizzaTuttiGruppi.setBounds(703, 234, 74, 23);
+		btnVisualizzaTuttiGruppi.setForeground(new Color(102, 102, 153));
+		btnVisualizzaTuttiGruppi.setToolTipText("Premi per mostrare l'elenco di tutti i contatti della rubrica.");
+		btnVisualizzaTuttiGruppi.setBackground(new Color(204, 255, 255));
+		btnVisualizzaTuttiGruppi.setBounds(190, 119, 74, 20);
+		btnVisualizzaTuttiGruppi.setFocusPainted(false);
 		getContentPane().add(btnVisualizzaTuttiGruppi);
 		
 		//Bottone per visualizzare un contatto
 				JButton btnInfo = new JButton("Visualizza Contatto");
+				btnInfo.setForeground(new Color(102, 102, 153));
+				btnInfo.setBackground(new Color(204, 255, 255));
 				btnInfo.setFont(new Font("Arial", Font.PLAIN, 11));
-				btnInfo.setBounds(190, 401, 151, 21);
+				btnInfo.setBounds(65, 361, 151, 21);
+				btnInfo.setFocusPainted(false);
 				getContentPane().add(btnInfo);
 				btnInfo.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -198,7 +228,7 @@ public class ListaContatti extends JFrame {
 		 */
 		
 		JTextField textFieldRicerca = new JTextField();
-		textFieldRicerca.setBounds(260, 108, 158, 23);
+		textFieldRicerca.setBounds(65, 66, 158, 23);
 		getContentPane().add(textFieldRicerca);
 		textFieldRicerca.setColumns(10);
 		
@@ -206,18 +236,23 @@ public class ListaContatti extends JFrame {
 		String[] FiltroRicerca = {"Nome", "Email", "Account", "Numero di Telefono"};
 		
 		JComboBox comboBoxFiltroRicerca = new JComboBox(FiltroRicerca);
+		comboBoxFiltroRicerca.setForeground(new Color(102, 102, 153));
+		comboBoxFiltroRicerca.setBackground(new Color(255, 255, 255));
 		comboBoxFiltroRicerca.setToolTipText("");
-		comboBoxFiltroRicerca.setBounds(418, 108, 124, 23);
+		comboBoxFiltroRicerca.setBounds(223, 66, 124, 23);
 		getContentPane().add(comboBoxFiltroRicerca);
 		comboBoxFiltroRicerca.setSelectedIndex(0);
 		
 		JButton btnInvioRicerca = new JButton("Vai");
-		btnInvioRicerca.setBounds(542, 108, 58, 23);
+		btnInvioRicerca.setForeground(new Color(102, 102, 153));
+		btnInvioRicerca.setBackground(new Color(255, 255, 255));
+		btnInvioRicerca.setBounds(347, 66, 58, 23);
+		btnInvioRicerca.setFocusPainted(false);
 		getContentPane().add(btnInvioRicerca);
 		
 		JLabel lblNewLabel = new JLabel("Ricerca");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel.setBounds(205, 108, 45, 23);
+		lblNewLabel.setBounds(10, 66, 45, 23);
 		getContentPane().add(lblNewLabel);
 		/**
 		 * Quando è premuto il button "Indietro"
@@ -337,11 +372,6 @@ public class ListaContatti extends JFrame {
 			}
 		});
 		
-		/**
-		 * Quando è premuto il button "ricerca"
-		 * TODO : implementare le varie forme di ricerca di un contatto, secondo
-		 * 		  diversi criteri
-		 */
 		
 		btnInvioRicerca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

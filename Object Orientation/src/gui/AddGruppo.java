@@ -59,7 +59,7 @@ public class AddGruppo extends JFrame{
 		frame = this;
 		controller = c;
 
-		frame.setTitle("Aggiunta Nuovo Contatto");
+		frame.setTitle("Aggiunta nuovo gruppo");
 		frame.setBounds(500, 200, 660, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -70,7 +70,7 @@ public class AddGruppo extends JFrame{
 		contentPane.setFocusTraversalPolicyProvider(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		getContentPane().setBackground(new Color(224, 255, 255));
+		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 		
 		/**
@@ -85,7 +85,7 @@ public class AddGruppo extends JFrame{
 		JPanel pannelloContatti = new JPanel();
 		pannelloContatti.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		pannelloContatti.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pannelloContatti.setBackground(Color.ORANGE);
+		pannelloContatti.setBackground(new Color(255, 255, 255));
 		
 		JScrollPane scrollPaneContatti = new JScrollPane(pannelloContatti);
 		pannelloContatti.setLayout(new BoxLayout(pannelloContatti, BoxLayout.PAGE_AXIS));
@@ -95,6 +95,7 @@ public class AddGruppo extends JFrame{
 		initPannelloContatti(pannelloContatti);
 		
 		JPanel pannelloNomeGruppo = new JPanel();
+		pannelloNomeGruppo.setBackground(new Color(255, 255, 255));
 		pannelloNomeGruppo.setBounds(84, 28, 169, 58);
 		contentPane.add(pannelloNomeGruppo);
 		pannelloNomeGruppo.setLayout(null);
@@ -106,7 +107,7 @@ public class AddGruppo extends JFrame{
 		
 										
 		lblNome = new JLabel("Nome ");
-		lblNome.setBounds(35, 11, 96, 13);
+		lblNome.setBounds(35, 9, 96, 13);
 		pannelloNomeGruppo.add(lblNome);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -114,7 +115,9 @@ public class AddGruppo extends JFrame{
 		 * Button "annulla"
 		 */
 		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(84, 375, 75, 21);
+		btnAnnulla.setForeground(new Color(204, 255, 255));
+		btnAnnulla.setBackground(new Color(102, 102, 153));
+		btnAnnulla.setBounds(84, 375, 84, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -127,7 +130,9 @@ public class AddGruppo extends JFrame{
 		 * Button "vai"
 		 */
 		JButton btnAzione = new JButton("Vai");
-		btnAzione.setBounds(178, 375, 75, 21);
+		btnAzione.setForeground(new Color(102, 102, 153));
+		btnAzione.setBackground(new Color(204, 255, 255));
+		btnAzione.setBounds(178, 375, 84, 21);
 		contentPane.add(btnAzione);
 		
 		btnAzione.addActionListener(new ActionListener() {
@@ -196,6 +201,7 @@ public class AddGruppo extends JFrame{
 		{
 			panel = new JPanel();
 			checkbox = new JCheckBox(nomeContatto);
+			checkbox.setBackground(new Color(204, 255, 255));
 			
 			// ItemListener
 //			ItemListener itemListener = new ItemListener() {
@@ -209,6 +215,7 @@ public class AddGruppo extends JFrame{
 //			};
 				  
 			panel.add(checkbox);
+			panel.setBackground(new Color(204, 255, 255));
 			pannelloContatti.add(panel);
 		}
 	}

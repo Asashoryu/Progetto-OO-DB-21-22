@@ -22,12 +22,13 @@ public class FinestraChiamaRiserva extends JFrame {
 
 	
 	public FinestraChiamaRiserva( String NumeroDiRiserva) {
+		setResizable(false);
 		JFrame frame = this;
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 204);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 240, 245));
+		contentPane.setBackground(new Color(255, 255, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -48,8 +49,11 @@ public class FinestraChiamaRiserva extends JFrame {
 			ChiamataFinita.setHorizontalAlignment(SwingConstants.CENTER);
 			ChiamataFinita.setBounds(0, 10, 426, 42);
 			contentPane.add(ChiamataFinita);
+			
 			JButton btnChiudi = new JButton("Chiudi"); 
 			btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
+			btnChiudi.setBackground(new Color(255,255,255));
+			btnChiudi.setFocusPainted(false);
 			btnChiudi.setBounds(95, 72, 225, 39);
 			contentPane.add(btnChiudi);
 			btnChiudi.addActionListener(new ActionListener() {

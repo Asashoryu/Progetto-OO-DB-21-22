@@ -28,6 +28,7 @@ import javax.swing.Box;
 import javax.swing.JToolBar;
 import javax.swing.JSplitPane;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -79,56 +80,77 @@ public class Home extends JFrame {
 		 * Set dei Components
 		 */
 		frame = new JFrame("Home");
-		frame.getContentPane().setBackground(new Color(248, 248, 255));
-		frame.setBounds(500, 200, 646, 480);
+		frame.getContentPane().setBackground(new Color(255, 255, 255));
+		frame.setBounds(500, 200, 618, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Benvenuto nella Rubrica Avanzata");
+		lblNewLabel_1.setForeground(new Color(102, 102, 153));
 		lblNewLabel_1.setBackground(Color.CYAN);
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 30));
-		lblNewLabel_1.setBounds(-20, 0, 656, 86);
+		lblNewLabel_1.setBounds(10, 0, 584, 86);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		lblNewLabel = new JLabel("Utente");
-		lblNewLabel.setBounds(148, 98, 57, 15);
+		lblNewLabel.setForeground(new Color(102, 102, 153));
+		lblNewLabel.setBounds(142, 98, 57, 15);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		comboBoxModel = new DefaultComboBoxModel<Object>(controller.getNomiRubriche());
 		comboBox = new JComboBox<Object>(comboBoxModel);
-		comboBox.setBounds(200, 97, 90, 17);
+		comboBox.setForeground(new Color(102, 102, 153));
+		comboBox.setBounds(194, 97, 90, 17);
 		frame.getContentPane().add(comboBox);
-		comboBox.setBackground(new Color(248, 248, 255));
+		comboBox.setBackground(new Color(255, 255, 255));
 		
 		txtUtenteSelezionato = new JTextField("");
-		txtUtenteSelezionato.setBounds(300, 97, 90, 16);
+		txtUtenteSelezionato.setBounds(294, 97, 90, 16);
 		frame.getContentPane().add(txtUtenteSelezionato);
-		txtUtenteSelezionato.setBackground(new Color(211, 211, 211));
+		txtUtenteSelezionato.setBackground(new Color(102, 255, 255));
 		txtUtenteSelezionato.setEditable(false);
 		txtUtenteSelezionato.setColumns(10);
 		
 		btnEntra = new JButton("Entra");
-		btnEntra.setBounds(400, 96, 65, 18);
+		btnEntra.setFocusPainted(false);
+		btnEntra.setForeground(new Color(102, 102, 153));
+		btnEntra.setBounds(394, 96, 65, 18);
 		frame.getContentPane().add(btnEntra);
-		btnEntra.setBackground(new Color(248, 248, 255));
+		btnEntra.setBackground(new Color(255, 255, 255));
 		
 		btnAggiungi = new JButton("Aggiungi");
-		btnAggiungi.setBounds(253, 151, 89, 21);
+		btnAggiungi.setFocusPainted(false);
+		btnAggiungi.setForeground(new Color(102, 102, 153));
+		btnAggiungi.setBounds(247, 151, 89, 21);
 		frame.getContentPane().add(btnAggiungi);
-		btnAggiungi.setBackground(new Color(248, 248, 255));
+		btnAggiungi.setBackground(new Color(255, 255, 255));
 		
 		btnElimina = new JButton("Elimina");
-		btnElimina.setBounds(352, 151, 82, 21);
+		btnElimina.setFocusPainted(false);
+		btnElimina.setForeground(new Color(102, 102, 153));
+		btnElimina.setBounds(346, 151, 82, 21);
 		frame.getContentPane().add(btnElimina);
-		btnElimina.setBackground(new Color(248, 248, 255));
+		btnElimina.setBackground(new Color(255, 255, 255));
 		
 		btnModifica = new JButton("Modifica");
-		btnModifica.setBounds(161, 151, 82, 21);
+		btnModifica.setFocusPainted(false);
+		btnModifica.setBounds(155, 151, 82, 21);
 		frame.getContentPane().add(btnModifica);
-		btnModifica.setForeground(new Color(0, 0, 0));
-		btnModifica.setBackground(new Color(248, 248, 255));
+		btnModifica.setForeground(new Color(102, 102, 153));
+		btnModifica.setBackground(new Color(255, 255, 255));
+		
+		//Aggiunta dell'immagine
+		JLabel lblImmagine = new JLabel("");
+		lblImmagine.setHorizontalAlignment(SwingConstants.CENTER);
+		// immagine di default
+		Image img          = new ImageIcon(this.getClass().getResource("/IconaUNINA.jpg")).getImage();
+		Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_SMOOTH);
+		lblImmagine.setBackground(Color.LIGHT_GRAY);
+		lblImmagine.setBounds(194, 199, 205, 204);
+		lblImmagine.setIcon(new ImageIcon(imgResized));
+		frame.getContentPane().add(lblImmagine);
 		
 		/**
 		 * All'avvio la combobox e il label visualizzano il

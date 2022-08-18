@@ -132,7 +132,7 @@ public class AddContatto extends JFrame {
 		contentPane.setFocusTraversalPolicyProvider(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		getContentPane().setBackground(new Color(224, 255, 255));
+		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 
 		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + controller.getRubricaSelezionata().getNome());
@@ -222,10 +222,12 @@ public class AddContatto extends JFrame {
 		 * Indirizzo principale
 		 */
 		pannelloIndPrincipale = new JPanel();
+		pannelloIndPrincipale.setBackground(new Color(255, 255, 255));
 		pannelloIndPrincipale.setBounds(38, 144, 234, 90);
 		contentPane.add(pannelloIndPrincipale);
 		
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
 		pannelloIndPrincipale.add(panel);
 		panel.setLayout(new GridLayout(4,2));
 
@@ -262,6 +264,7 @@ public class AddContatto extends JFrame {
 		 */
 		
 		JPanel pannelloCredUtente = new JPanel();
+		pannelloCredUtente.setBackground(new Color(255, 255, 255));
 		pannelloCredUtente.setBounds(38, 57, 471, 58);
 		contentPane.add(pannelloCredUtente);
 		pannelloCredUtente.setLayout(null);
@@ -305,6 +308,7 @@ public class AddContatto extends JFrame {
 		contentPane.add(lblNewLabel);
 												
 		pannelloNumTel = new JPanel();
+		pannelloNumTel.setBackground(new Color(255, 255, 255));
 		pannelloNumTel.setBounds(322, 144, 187, 67);
 		contentPane.add(pannelloNumTel);
 		pannelloNumTel.setLayout(null);
