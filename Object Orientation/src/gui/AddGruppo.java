@@ -34,6 +34,7 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import model.Contatto;
 import model.Gruppo;
+import java.awt.Point;
 
 public class AddGruppo extends JFrame{
 	
@@ -49,6 +50,7 @@ public class AddGruppo extends JFrame{
 	private ListSelectionModel listSelectionModel;
 	
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
+		
 		
 		setResizable(false);
 		setForeground(Color.WHITE);
@@ -171,6 +173,8 @@ public class AddGruppo extends JFrame{
 							listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
 							JOptionPane.showConfirmDialog(null, 
 					                "Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
+							frame.dispose();
+							frameChiamante.setEnabled(false);
 							listaGruppiChiamante.revalidate();
 							listaGruppiChiamante.repaint();
 						} catch (Exception e1) {

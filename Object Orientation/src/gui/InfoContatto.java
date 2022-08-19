@@ -139,6 +139,7 @@ public class InfoContatto extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setMaximumSize(new Dimension(550, 580));
 		getContentPane().setBackground(new Color(224, 255, 255));
+		
 
 		frame = this;
 		controller = c;
@@ -407,6 +408,11 @@ public class InfoContatto extends JFrame {
 		pannelloScrollAccount.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		pannelloScrollAccount.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
+		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImg.setBounds(638, 22, 150, 13);
+		contentPane.add(lblImg);
+		
 		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCittà, textFieldNazione, textFieldCap,
 	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail, pannelloScrollAccount);
 		pannelloScrollMail.setLayout(new GridLayout(2, 2, 0, 5));
@@ -472,6 +478,7 @@ public class InfoContatto extends JFrame {
 			Image imgResized   = img.getScaledInstance(170, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBounds(633, 57, 170, 150);
+			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}
@@ -480,6 +487,7 @@ public class InfoContatto extends JFrame {
 			Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
 			Image imgResized   = img.getScaledInstance(170, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
+			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lblImmagine.setBounds(633, 57, 170, 150);
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);

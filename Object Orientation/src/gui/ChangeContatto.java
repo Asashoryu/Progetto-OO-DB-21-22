@@ -190,7 +190,6 @@ public class ChangeContatto extends JFrame {
 		 * Crea button "+" per aggiungere indirizzo secondario
 		 */
 		JButton btnAggiungiIndirizzo = new JButton("+");
-		btnAggiungiIndirizzo.setFont(new Font("Tahoma", Font.PLAIN, 10));
 		btnAggiungiIndirizzo.setForeground(new Color(102, 102, 153));
 		btnAggiungiIndirizzo.setBackground(new Color(204, 255, 255));
 		btnAggiungiIndirizzo.setBounds(38, 392, 45, 23);
@@ -399,6 +398,11 @@ public class ChangeContatto extends JFrame {
 		scrollPaneNumTel.setViewportView(pannelloScrolNumTel);
 		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
 		
+		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImg.setBounds(563, 16, 171, 13);
+		contentPane.add(lblImg);
+		
 		/**
 		 * Button "+" aggiungi numero secondario
 		 */
@@ -454,7 +458,7 @@ public class ChangeContatto extends JFrame {
 		 *  Aggiungi mail secondarie
 		 */
 		
-		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
+		lblEmailSecondarie = new JLabel("Indirizzi Mail \r\n");
 		lblEmailSecondarie.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailSecondarie.setBounds(524, 245, 205, 14);
 		contentPane.add(lblEmailSecondarie);
@@ -548,6 +552,7 @@ public class ChangeContatto extends JFrame {
 		 * Button "vai"
 		 */
 		JButton btnAzione = new JButton("Vai");
+		btnAzione.setToolTipText("Modifica il contatto esistente con le informazioni cambiate.\r\n");
 		btnAzione.setFocusPainted(false);
 		btnAzione.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnAzione.setForeground(new Color(102, 102, 153));
@@ -796,7 +801,8 @@ public class ChangeContatto extends JFrame {
 		});
 		
 		JButton btnRimuoviImmagine = new JButton("Rimuovi");
-		btnRimuoviImmagine.setBackground(new Color(255, 255, 255));
+		btnRimuoviImmagine.setToolTipText("Rimuove la precedente immagine del contatto e ne associa una di default");
+		btnRimuoviImmagine.setBackground(new Color(204, 255, 255));
 		btnRimuoviImmagine.setForeground(new Color(102, 102, 153));
 		btnRimuoviImmagine.setFocusPainted(false);
 		btnRimuoviImmagine.setBounds(649, 195, 85, 23);
@@ -815,7 +821,8 @@ public class ChangeContatto extends JFrame {
 		});
 		
 		JButton btnScegliImmagine = new JButton("Scegli");
-		btnScegliImmagine.setBackground(new Color(255, 255, 255));
+		btnScegliImmagine.setToolTipText("Permette di scegliere l'immagine da associare al contatto da qualsiasi directory");
+		btnScegliImmagine.setBackground(new Color(204, 255, 255));
 		btnScegliImmagine.setForeground(new Color(102, 102, 153));
 		btnScegliImmagine.setFocusPainted(false);
 		btnScegliImmagine.setBounds(563, 195, 85, 23);
@@ -864,6 +871,7 @@ public class ChangeContatto extends JFrame {
 			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}
@@ -873,6 +881,7 @@ public class ChangeContatto extends JFrame {
 			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBounds(573, 57, 150, 127);
+			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}

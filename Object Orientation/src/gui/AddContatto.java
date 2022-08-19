@@ -121,13 +121,13 @@ public class AddContatto extends JFrame {
 		frame = this;
 		controller = c;
 
-		frame.setTitle("Aggiunta Nuovo Contatto");
+		frame.setTitle("Aggiunta di un nuovo contatto");
 		frame.setBounds(500, 200, 660, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 833, 503);
+		setBounds(100, 100, 758, 488);
 		contentPane = new JPanel();
 		contentPane.setFocusTraversalPolicyProvider(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,8 +135,9 @@ public class AddContatto extends JFrame {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 
-		lblTitolo = new JLabel("Inserire informazioni del contatto della rubrica di " + controller.getRubricaSelezionata().getNome());
-		lblTitolo.setBounds(10, 10, 362, 19);
+		lblTitolo = new JLabel("Inserire le informazioni del contatto della rubrica di <dynamic> da aggiungere:");
+		lblTitolo.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTitolo.setBounds(10, 10, 519, 19);
 		contentPane.add(lblTitolo);
 		
 		/**
@@ -144,11 +145,11 @@ public class AddContatto extends JFrame {
 		 */
 
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
-		lblNumeriTelefono.setBounds(366, 128, 112, 13);
+		lblNumeriTelefono.setBounds(298, 107, 112, 13);
 		contentPane.add(lblNumeriTelefono);
 
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
-		lblIndirizzoFisico.setBounds(62, 128, 111, 13);
+		lblIndirizzoFisico.setBounds(34, 107, 111, 13);
 		contentPane.add(lblIndirizzoFisico);
 
 		
@@ -156,7 +157,8 @@ public class AddContatto extends JFrame {
 		 * Indirizzi fisici secondari
 		 */
 		JPanel panelMain = new JPanel();
-		panelMain.setBounds(38, 270, 249, 119);
+		panelMain.setBackground(new Color(255, 255, 255));
+		panelMain.setBounds(10, 253, 249, 119);
 		contentPane.add(panelMain);
 		panelMain.setLayout(new BorderLayout(0, 0));
 		
@@ -164,9 +166,10 @@ public class AddContatto extends JFrame {
 		JPanel pannelloScrollIndirizziSec = new JPanel();
 		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		pannelloScrollIndirizziSec.setAlignmentX(Component.LEFT_ALIGNMENT);
-		pannelloScrollIndirizziSec.setBackground(Color.GREEN);
+		pannelloScrollIndirizziSec.setBackground(new Color(255, 255, 255));
 		
 		JScrollPane scrollPane = new JScrollPane(pannelloScrollIndirizziSec);
+		scrollPane.setBackground(new Color(255, 255, 255));
 		pannelloScrollIndirizziSec.setLayout(new BoxLayout(pannelloScrollIndirizziSec, BoxLayout.PAGE_AXIS));
 		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
@@ -175,7 +178,10 @@ public class AddContatto extends JFrame {
 		 * Crea button "+" per aggiungere indirizzo secondario
 		 */
 		JButton btnAggiungiIndirizzo = new JButton("+");
-		btnAggiungiIndirizzo.setBounds(38, 392, 45, 23);
+		btnAggiungiIndirizzo.setFocusPainted(false);
+		btnAggiungiIndirizzo.setForeground(new Color(102, 102, 153));
+		btnAggiungiIndirizzo.setBackground(new Color(204, 255, 255));
+		btnAggiungiIndirizzo.setBounds(10, 375, 45, 23);
 		contentPane.add(btnAggiungiIndirizzo);
 		
 		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
@@ -223,7 +229,7 @@ public class AddContatto extends JFrame {
 		 */
 		pannelloIndPrincipale = new JPanel();
 		pannelloIndPrincipale.setBackground(new Color(255, 255, 255));
-		pannelloIndPrincipale.setBounds(38, 144, 234, 90);
+		pannelloIndPrincipale.setBounds(10, 123, 234, 90);
 		contentPane.add(pannelloIndPrincipale);
 		
 		JPanel panel = new JPanel();
@@ -265,7 +271,7 @@ public class AddContatto extends JFrame {
 		
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setBackground(new Color(255, 255, 255));
-		pannelloCredUtente.setBounds(38, 57, 471, 58);
+		pannelloCredUtente.setBounds(10, 39, 471, 58);
 		contentPane.add(pannelloCredUtente);
 		pannelloCredUtente.setLayout(null);
 
@@ -304,12 +310,12 @@ public class AddContatto extends JFrame {
 		 * Indirizzi Secondari
 		 */
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
-		lblNewLabel.setBounds(62, 245, 112, 14);
+		lblNewLabel.setBounds(34, 228, 112, 14);
 		contentPane.add(lblNewLabel);
 												
 		pannelloNumTel = new JPanel();
 		pannelloNumTel.setBackground(new Color(255, 255, 255));
-		pannelloNumTel.setBounds(322, 144, 187, 67);
+		pannelloNumTel.setBounds(254, 123, 187, 67);
 		contentPane.add(pannelloNumTel);
 		pannelloNumTel.setLayout(null);
 												
@@ -339,12 +345,12 @@ public class AddContatto extends JFrame {
 		 */
 		
 		lblNumSecondari = new JLabel("Numeri Secondari\r\n");
-		lblNumSecondari.setBounds(366, 245, 112, 14);
+		lblNumSecondari.setBounds(338, 228, 112, 14);
 		contentPane.add(lblNumSecondari);
 		
 		pannelloNumTelSec = new JPanel();
-		pannelloNumTelSec.setBackground(Color.GREEN);
-		pannelloNumTelSec.setBounds(322, 270, 187, 119);
+		pannelloNumTelSec.setBackground(new Color(255, 255, 255));
+		pannelloNumTelSec.setBounds(294, 253, 187, 119);
 		contentPane.add(pannelloNumTelSec);
 		pannelloNumTelSec.setLayout(new BorderLayout(0, 0));
 		
@@ -352,10 +358,10 @@ public class AddContatto extends JFrame {
 		pannelloNumTelSec.add(scrollPaneNumTel, BorderLayout.CENTER);
 		scrollPaneNumTel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPaneNumTel.setForeground(Color.GREEN);
-		scrollPaneNumTel.setBackground(Color.GREEN);
+		scrollPaneNumTel.setBackground(new Color(255, 255, 255));
 		
 		pannelloScrolNumTel = new JPanel();
-		pannelloScrolNumTel.setBackground(Color.GREEN);
+		pannelloScrolNumTel.setBackground(new Color(255, 255, 255));
 		scrollPaneNumTel.setViewportView(pannelloScrolNumTel);
 		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
 		
@@ -363,6 +369,9 @@ public class AddContatto extends JFrame {
 		 * Button "+" aggiungi numero secondario
 		 */
 		JButton btnAddSecNum = new JButton("+");
+		btnAddSecNum.setFocusPainted(false);
+		btnAddSecNum.setForeground(new Color(102, 102, 153));
+		btnAddSecNum.setBackground(new Color(204, 255, 255));
 		btnAddSecNum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -401,35 +410,40 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecNum.setBounds(322, 392, 47, 23);
+		btnAddSecNum.setBounds(294, 375, 47, 23);
 		contentPane.add(btnAddSecNum);
 		
 		/**
 		 *  Aggiungi mail secondarie
 		 */
 		
-		lblEmailSecondarie = new JLabel("Indirizzi Mail Secondari\r\n");
-		lblEmailSecondarie.setBounds(587, 245, 134, 14);
+		lblEmailSecondarie = new JLabel("Indirizzi Mail \r\n");
+		lblEmailSecondarie.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEmailSecondarie.setBounds(559, 228, 134, 14);
 		contentPane.add(lblEmailSecondarie);
 		
 		pannelloEmailAddSec = new JPanel();
-		pannelloEmailAddSec.setBackground(Color.LIGHT_GRAY);
-		pannelloEmailAddSec.setBounds(547, 270, 205, 119);
+		pannelloEmailAddSec.setBackground(new Color(255, 255, 255));
+		pannelloEmailAddSec.setBounds(519, 253, 205, 119);
 		contentPane.add(pannelloEmailAddSec);
 		pannelloEmailAddSec.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPaneEmail = new JScrollPane();
+		scrollPaneEmail.setBackground(new Color(255, 255, 255));
 		pannelloEmailAddSec.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
-		pannelloScrollMail.setBackground(Color.GREEN);
+		pannelloScrollMail.setBackground(new Color(255, 255, 255));
 		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
 		
 		/**
 		 * Button "+" aggiungi mail secondaria
 		 */
 		JButton btnAddSecMail = new JButton("+");
+		btnAddSecMail.setFocusPainted(false);
+		btnAddSecMail.setForeground(new Color(102, 102, 153));
+		btnAddSecMail.setBackground(new Color(204, 255, 255));
 		btnAddSecMail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -468,14 +482,17 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecMail.setBounds(547, 392, 45, 23);
+		btnAddSecMail.setBounds(519, 375, 45, 23);
 		contentPane.add(btnAddSecMail);
 		
 		/**
 		 * Button "annulla"
 		 */
 		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setBounds(587, 432, 85, 21);
+		btnAnnulla.setFocusPainted(false);
+		btnAnnulla.setForeground(new Color(204, 255, 255));
+		btnAnnulla.setBackground(new Color(102, 102, 153));
+		btnAnnulla.setBounds(10, 420, 85, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -488,7 +505,11 @@ public class AddContatto extends JFrame {
 		 * Button "vai"
 		 */
 		JButton btnAzione = new JButton("Vai");
-		btnAzione.setBounds(682, 432, 85, 21);
+		btnAzione.setToolTipText("Aggiunge il nuovo contatto con tutte le informazioni inserite nella rubrica.");
+		btnAzione.setFocusPainted(false);
+		btnAzione.setForeground(new Color(102, 102, 153));
+		btnAzione.setBackground(new Color(204, 255, 255));
+		btnAzione.setBounds(639, 420, 85, 21);
 		contentPane.add(btnAzione);
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -658,15 +679,20 @@ public class AddContatto extends JFrame {
 		});
 		// Per l'immagine
 		lblImmagine      = new JLabel("");
+		lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 		Image img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
 		Image imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 		lblImmagine.setBackground(Color.LIGHT_GRAY);
-		lblImmagine.setBounds(573, 57, 150, 127);
+		lblImmagine.setBounds(538, 50, 150, 127);
 		lblImmagine.setIcon(new ImageIcon(imgResized));
 		contentPane.add(lblImmagine);
 		
 		JButton btnRimuoviImmagine = new JButton("Rimuovi");
-		btnRimuoviImmagine.setBounds(649, 195, 85, 23);
+		btnRimuoviImmagine.setToolTipText("Rimuove la precedente immagine del contatto e ne associa una di default");
+		btnRimuoviImmagine.setForeground(new Color(102, 102, 153));
+		btnRimuoviImmagine.setBackground(new Color(204, 255, 255));
+		btnRimuoviImmagine.setFocusPainted(false);
+		btnRimuoviImmagine.setBounds(614, 188, 85, 23);
 		contentPane.add(btnRimuoviImmagine);
 		btnRimuoviImmagine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -678,8 +704,17 @@ public class AddContatto extends JFrame {
 		});
 		
 		JButton btnScegliImmagine = new JButton("Scegli");
-		btnScegliImmagine.setBounds(573, 195, 73, 23);
+		btnScegliImmagine.setToolTipText("Permette di scegliere l'immagine da associare al contatto da qualsiasi directory");
+		btnScegliImmagine.setForeground(new Color(102, 102, 153));
+		btnScegliImmagine.setBackground(new Color(204, 255, 255));
+		btnScegliImmagine.setFocusPainted(false);
+		btnScegliImmagine.setBounds(528, 188, 85, 23);
 		contentPane.add(btnScegliImmagine);
+		
+		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblImg.setBounds(539, 20, 150, 13);
+		contentPane.add(lblImg);
 		// Quando cliccato button "scegli"
 		btnScegliImmagine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -711,6 +746,8 @@ public class AddContatto extends JFrame {
 		JTextField textFieldCapSB;
 
 		JLabel lblViaSB = new JLabel("Via");
+		lblViaSB.setOpaque(true);
+		lblViaSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblViaSB);
 
 		textFieldViaSB = new JTextField();
@@ -719,6 +756,8 @@ public class AddContatto extends JFrame {
 		textFieldViaSB.setColumns(10);
 									
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
+		lblCitt‡SB.setOpaque(true);
+		lblCitt‡SB.setBackground(new Color(255, 255, 255));
 		panel.add(lblCitt‡SB);
 		
 		textFieldCitt‡SB = new JTextField();
@@ -727,6 +766,8 @@ public class AddContatto extends JFrame {
 		textFieldCitt‡SB.setColumns(10);
 
 		JLabel lblNazioneSB = new JLabel("Nazione");
+		lblNazioneSB.setOpaque(true);
+		lblNazioneSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblNazioneSB);
 
 		textFieldNazioneSB = new JTextField();
@@ -735,6 +776,8 @@ public class AddContatto extends JFrame {
 		textFieldNazioneSB.setColumns(10);
 		
 		JLabel lblCapSB = new JLabel("CAP");
+		lblCapSB.setOpaque(true);
+		lblCapSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblCapSB);
 		
 		textFieldCapSB = new JTextField();
