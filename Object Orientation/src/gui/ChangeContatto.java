@@ -148,6 +148,7 @@ public class ChangeContatto extends JFrame {
 		contentPane.setLayout(null);
 
 		lblTitolo = new JLabel("Inserire informazioni del contatto da cambiare:");
+		lblTitolo.setForeground(new Color(0, 0, 0));
 		lblTitolo.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblTitolo.setBounds(10, 10, 386, 19);
 		contentPane.add(lblTitolo);
@@ -157,11 +158,13 @@ public class ChangeContatto extends JFrame {
 		 */
 
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
+		lblNumeriTelefono.setForeground(new Color(102, 102, 153));
 		lblNumeriTelefono.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumeriTelefono.setBounds(297, 128, 187, 13);
 		contentPane.add(lblNumeriTelefono);
 
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
+		lblIndirizzoFisico.setForeground(new Color(102, 102, 153));
 		lblIndirizzoFisico.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIndirizzoFisico.setBounds(38, 128, 234, 13);
 		contentPane.add(lblIndirizzoFisico);
@@ -311,6 +314,7 @@ public class ChangeContatto extends JFrame {
 		textFieldCognome.setColumns(10);
 		
 		lblCognome = new JLabel("Cognome ");
+		lblCognome.setForeground(new Color(102, 102, 153));
 		lblCognome.setBounds(308, 11, 96, 13);
 		pannelloCredUtente.add(lblCognome);
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -321,6 +325,7 @@ public class ChangeContatto extends JFrame {
 		textFieldSecondoNome.setColumns(10);
 						
 		lblSecondoNome = new JLabel("Secondo Nome");
+		lblSecondoNome.setForeground(new Color(102, 102, 153));
 		lblSecondoNome.setBounds(172, 11, 96, 13);
 		pannelloCredUtente.add(lblSecondoNome);
 		lblSecondoNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -332,7 +337,8 @@ public class ChangeContatto extends JFrame {
 		
 										
 		lblLabelNome = new JLabel("Nome ");
-		lblLabelNome.setBackground(new Color(255, 255, 102));
+		lblLabelNome.setForeground(new Color(102, 102, 153));
+		lblLabelNome.setBackground(new Color(240, 240, 240));
 		lblLabelNome.setBounds(35, 11, 96, 13);
 		pannelloCredUtente.add(lblLabelNome);
 		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -341,6 +347,7 @@ public class ChangeContatto extends JFrame {
 		 * Indirizzi Secondari
 		 */
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
+		lblNewLabel.setForeground(new Color(102, 102, 153));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(38, 245, 249, 14);
 		contentPane.add(lblNewLabel);
@@ -377,6 +384,7 @@ public class ChangeContatto extends JFrame {
 		 */
 		
 		lblNumSecondari = new JLabel("Numeri Secondari\r\n");
+		lblNumSecondari.setForeground(new Color(102, 102, 153));
 		lblNumSecondari.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNumSecondari.setBounds(297, 245, 187, 14);
 		contentPane.add(lblNumSecondari);
@@ -399,6 +407,7 @@ public class ChangeContatto extends JFrame {
 		pannelloScrolNumTel.setLayout(new BoxLayout(pannelloScrolNumTel, BoxLayout.PAGE_AXIS));
 		
 		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setForeground(new Color(102, 102, 153));
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImg.setBounds(563, 16, 171, 13);
 		contentPane.add(lblImg);
@@ -461,6 +470,7 @@ public class ChangeContatto extends JFrame {
 		 */
 		
 		lblEmailSecondarie = new JLabel("Indirizzi Mail \r\n");
+		lblEmailSecondarie.setForeground(new Color(102, 102, 153));
 		lblEmailSecondarie.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailSecondarie.setBounds(524, 245, 205, 14);
 		contentPane.add(lblEmailSecondarie);
@@ -900,8 +910,8 @@ public class ChangeContatto extends JFrame {
 			else 
 			{
 				JPanel elemento;
-				JButton btnCancella     = new JButton("Elimina");
-				btnCancella.setFont(new Font("Tahoma", Font.PLAIN, 8));
+				JButton btnCancella     = new JButton();
+				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				btnCancella.setBackground(new Color(204,255,255));
 				
 				elemento = creaElemScrollBar(indirizzo.getVia(), indirizzo.getCitta(), indirizzo.getNazione(), indirizzo.getCap());
@@ -942,6 +952,7 @@ public class ChangeContatto extends JFrame {
 			{
 				JPanel numero;
 				JButton btnCancellaNumSec = new JButton();
+				btnCancellaNumSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				btnCancellaNumSec.setBackground(new Color(204,255,255));
 				
 				numero = creaSecNumb(telefono.getTipo(), telefono.getNumero());
@@ -968,6 +979,7 @@ public class ChangeContatto extends JFrame {
 			JPanel mail;
 			int lastMailIndex;;
 			JButton btnCancellaMailSec = new JButton();
+			btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 			btnCancellaMailSec.setBackground(new Color(204,255,255));
 			
 			mail = creaSecMail(email.getTipo(), email.getStringaEmail());

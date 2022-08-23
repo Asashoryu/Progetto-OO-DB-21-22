@@ -158,17 +158,23 @@ public class InfoContatto extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
+		lblNumeriTelefono.setForeground(new Color(102, 102, 153));
 		lblNumeriTelefono.setBounds(352, 121, 112, 13);
 		contentPane.add(lblNumeriTelefono);
 		
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
+		lblIndirizzoFisico.setForeground(new Color(102, 102, 153));
 		lblIndirizzoFisico.setBounds(48, 121, 111, 13);
 		contentPane.add(lblIndirizzoFisico);
 		
 		JPanel pannelloIndPrincipale_1 = new JPanel();
+		pannelloIndPrincipale_1.setForeground(new Color(0, 0, 0));
 		pannelloIndPrincipale_1.setBackground(new Color(255, 255, 255));
 		pannelloIndPrincipale_1.setBounds(24, 137, 249, 90);
 		contentPane.add(pannelloIndPrincipale_1);
+		
+		
+		
 		
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setLayout(null);
@@ -186,6 +192,7 @@ public class InfoContatto extends JFrame {
 		pannelloCredUtente.add(textFieldCognome);
 		
 		JLabel lblCognome_1 = new JLabel("Cognome ");
+		lblCognome_1.setForeground(new Color(102, 102, 153));
 		lblCognome_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCognome_1.setBounds(308, 11, 96, 13);
 		pannelloCredUtente.add(lblCognome_1);
@@ -199,6 +206,7 @@ public class InfoContatto extends JFrame {
 		pannelloCredUtente.add(textFieldSecondoNome);
 		
 		JLabel lblSecondoNome_1 = new JLabel("Secondo Nome");
+		lblSecondoNome_1.setForeground(new Color(102, 102, 153));
 		lblSecondoNome_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSecondoNome_1.setBounds(172, 11, 96, 13);
 		pannelloCredUtente.add(lblSecondoNome_1);
@@ -212,6 +220,7 @@ public class InfoContatto extends JFrame {
 		pannelloCredUtente.add(textFieldNome);
 		
 		JLabel lblLabelNome_1 = new JLabel("Nome ");
+		lblLabelNome_1.setForeground(new Color(102, 102, 153));
 		lblLabelNome_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLabelNome_1.setBounds(35, 11, 96, 13);
 		pannelloCredUtente.add(lblLabelNome_1);
@@ -271,11 +280,14 @@ public class InfoContatto extends JFrame {
 		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
 		
+		
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
+		lblNewLabel.setForeground(new Color(102, 102, 153));
 		lblNewLabel.setBounds(48, 257, 112, 14);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNumSecondari_1 = new JLabel("Numeri Secondari\r\n");
+		lblNumSecondari_1.setForeground(new Color(102, 102, 153));
 		lblNumSecondari_1.setBounds(68, 413, 112, 14);
 		contentPane.add(lblNumSecondari_1);
 		
@@ -299,6 +311,7 @@ public class InfoContatto extends JFrame {
 		
 		//Pannello per mail
 		JLabel lblEmail = new JLabel("Indirizzi Mail\r\n");
+		lblEmail.setForeground(new Color(102, 102, 153));
 		lblEmail.setBounds(332, 257, 134, 14);
 		contentPane.add(lblEmail);
 		
@@ -315,6 +328,7 @@ public class InfoContatto extends JFrame {
 		pannelloEmail.add(scrollPaneEmail, BorderLayout.CENTER);
 		
 		pannelloScrollMail = new JPanel();
+		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
 		pannelloScrollMail.setBackground(new Color(255, 255, 255));
 		
@@ -384,6 +398,7 @@ public class InfoContatto extends JFrame {
 		
 		//Pannello degli account
 		JLabel lblAccount = new JLabel("Account collegati al contatto");
+		lblAccount.setForeground(new Color(102, 102, 153));
 		lblAccount.setBounds(332, 414, 200, 13);
 		contentPane.add(lblAccount);
 		// TODO : qui
@@ -405,13 +420,15 @@ public class InfoContatto extends JFrame {
 		pannelloScrollAccount.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setForeground(new Color(102, 102, 153));
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImg.setBounds(638, 22, 150, 13);
 		contentPane.add(lblImg);
 		
 		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCittà, textFieldNazione, textFieldCap,
 	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail, pannelloScrollAccount);
-		pannelloScrollMail.setLayout(new GridLayout(2, 2, 0, 5));
+		
+		
 		
 		
 		//Bottoni di chiamata dei numeri
@@ -658,8 +675,12 @@ public class InfoContatto extends JFrame {
 		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
+		panel.setMaximumSize(new Dimension(450,70));
+		panel.setPreferredSize(new Dimension(300,50));
+		
 		
 		textFieldDescMailSB = new JTextField();
+		
 		textFieldDescMailSB.setText(fieldTipo);
 		textFieldDescMailSB.setEditable(false);
 		textFieldDescMailSB.setOpaque(true);

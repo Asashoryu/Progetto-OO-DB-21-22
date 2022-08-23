@@ -107,25 +107,25 @@ public class Home extends JFrame {
 		panel.setLayout(null);
 		
 		lblNewLabel = new JLabel("Utente");
-		lblNewLabel.setBounds(117, 22, 57, 15);
+		lblNewLabel.setBounds(117, 21, 57, 18);
 		panel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(102, 102, 153));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		comboBox = new JComboBox<Object>(comboBoxModel);
-		comboBox.setBounds(169, 21, 90, 17);
+		comboBox.setBounds(169, 21, 90, 18);
 		panel.add(comboBox);
 		comboBox.setForeground(new Color(102, 102, 153));
 		comboBox.setBackground(new Color(255, 255, 255));
 		
 		txtUtenteSelezionato = new JTextField("");
-		txtUtenteSelezionato.setBounds(269, 21, 90, 16);
+		txtUtenteSelezionato.setBounds(269, 21, 90, 18);
 		panel.add(txtUtenteSelezionato);
 		txtUtenteSelezionato.setBackground(new Color(102, 255, 255));
 		txtUtenteSelezionato.setEditable(false);
 		txtUtenteSelezionato.setColumns(10);
 		
 		btnEntra = new JButton("Entra");
-		btnEntra.setBounds(369, 20, 65, 18);
+		btnEntra.setBounds(369, 21, 65, 18);
 		panel.add(btnEntra);
 		btnEntra.setFocusPainted(false);
 		btnEntra.setForeground(new Color(102, 102, 153));

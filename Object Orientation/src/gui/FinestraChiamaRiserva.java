@@ -28,12 +28,13 @@ public class FinestraChiamaRiserva extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 204);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setBackground(new Color(102, 102, 153));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblChiamandoR = new JLabel("Chiamando il numero di riserva " + NumeroDiRiserva + "...");
+		lblChiamandoR.setForeground(new Color(204, 255, 255));
 		lblChiamandoR.setFont(new Font("Arial", Font.PLAIN, 16));
 		lblChiamandoR.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChiamandoR.setBounds(0, 10, 426, 42);
@@ -45,6 +46,7 @@ public class FinestraChiamaRiserva extends JFrame {
 			contentPane.repaint();
 			lblChiamandoR.setVisible(false);
 			JLabel ChiamataFinita = new JLabel("La chiamata non ha avuto risposta.");
+			ChiamataFinita.setForeground(new Color(204,255,255));
 			ChiamataFinita.setFont(new Font("Arial", Font.PLAIN, 16));
 			ChiamataFinita.setHorizontalAlignment(SwingConstants.CENTER);
 			ChiamataFinita.setBounds(0, 10, 426, 42);
@@ -52,7 +54,8 @@ public class FinestraChiamaRiserva extends JFrame {
 			
 			JButton btnChiudi = new JButton("Chiudi"); 
 			btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
-			btnChiudi.setBackground(new Color(255,255,255));
+			btnChiudi.setForeground(new Color(102,102,153));
+			btnChiudi.setBackground(new Color(204,255,255));
 			btnChiudi.setFocusPainted(false);
 			btnChiudi.setBounds(95, 72, 225, 39);
 			contentPane.add(btnChiudi);

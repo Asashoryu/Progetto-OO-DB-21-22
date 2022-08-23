@@ -66,7 +66,7 @@ public class ChangeGruppo extends JFrame{
 		getContentPane().setLayout(null);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 349, 472);
+		setBounds(100, 100, 349, 422);
 		contentPane = new JPanel();
 		contentPane.setFocusTraversalPolicyProvider(true);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -80,7 +80,7 @@ public class ChangeGruppo extends JFrame{
 		
 		JPanel pannelloContattiMain = new JPanel();
 		pannelloContattiMain.setBackground(new Color(255, 255, 255));
-		pannelloContattiMain.setBounds(46, 121, 249, 243);
+		pannelloContattiMain.setBounds(45, 90, 249, 243);
 		contentPane.add(pannelloContattiMain);
 		pannelloContattiMain.setLayout(new BorderLayout(0, 0));
 		
@@ -100,18 +100,18 @@ public class ChangeGruppo extends JFrame{
 		
 		JPanel pannelloNomeGruppo = new JPanel();
 		pannelloNomeGruppo.setBackground(new Color(255, 255, 255));
-		pannelloNomeGruppo.setBounds(84, 28, 169, 58);
+		pannelloNomeGruppo.setBounds(84, 10, 169, 58);
 		contentPane.add(pannelloNomeGruppo);
 		pannelloNomeGruppo.setLayout(null);
 								
 		textFieldNome = new JTextField();
-		textFieldNome.setBounds(35, 27, 100, 19);
+		textFieldNome.setBounds(23, 27, 120, 19);
 		pannelloNomeGruppo.add(textFieldNome);
 		textFieldNome.setColumns(10);
 		inizializzaFrame(pannelloContatti);
 										
 		lblNome = new JLabel("Nome ");
-		lblNome.setBounds(35, 9, 96, 13);
+		lblNome.setBounds(23, 9, 120, 13);
 		pannelloNomeGruppo.add(lblNome);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		
@@ -123,7 +123,7 @@ public class ChangeGruppo extends JFrame{
 		JButton btnAnnulla = new JButton("Annulla");
 		btnAnnulla.setForeground(new Color(204, 255, 255));
 		btnAnnulla.setBackground(new Color(102, 102, 153));
-		btnAnnulla.setBounds(10, 404, 84, 21);
+		btnAnnulla.setBounds(83, 353, 84, 21);
 		contentPane.add(btnAnnulla);
 		btnAnnulla.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -138,7 +138,7 @@ public class ChangeGruppo extends JFrame{
 		JButton btnAzione = new JButton("Vai");
 		btnAzione.setForeground(new Color(102, 102, 153));
 		btnAzione.setBackground(new Color(204, 255, 255));
-		btnAzione.setBounds(241, 404, 84, 21);
+		btnAzione.setBounds(177, 353, 84, 21);
 		contentPane.add(btnAzione);
 		
 		btnAzione.addActionListener(new ActionListener() {

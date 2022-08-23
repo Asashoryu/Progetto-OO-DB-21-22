@@ -107,6 +107,8 @@ public class ListaContatti extends JFrame {
 		scrollPaneContatti.setBounds(10, 106, 258, 198);
 		scrollPaneContatti.setBorder(new EmptyBorder(1, 1, 1, 1));
 		scrollPaneContatti.setBackground(new Color(102, 102, 153));
+		
+		
 		scrollPaneContatti.setViewportBorder(null);
 		getContentPane().add(scrollPaneContatti);
 		JList<Object> listaContatti = new JList<Object>(controller.getNomiContattiRubrica());

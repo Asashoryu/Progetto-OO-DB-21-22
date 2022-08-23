@@ -145,10 +145,12 @@ public class AddContatto extends JFrame {
 		 */
 
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
+		lblNumeriTelefono.setForeground(new Color(102, 102, 153));
 		lblNumeriTelefono.setBounds(298, 107, 112, 13);
 		contentPane.add(lblNumeriTelefono);
 
 		JLabel lblIndirizzoFisico = new JLabel("Indirizzo Principale\r\n");
+		lblIndirizzoFisico.setForeground(new Color(102, 102, 153));
 		lblIndirizzoFisico.setBounds(34, 107, 111, 13);
 		contentPane.add(lblIndirizzoFisico);
 
@@ -190,6 +192,7 @@ public class AddContatto extends JFrame {
 				JPanel elemento;
 				int lastElemIndex;
 				JButton btnCancella     = new JButton();
+				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldVia     = new JTextField();
 				JTextField fieldCittà   = new JTextField();
 				JTextField fieldNazione = new JTextField();
@@ -281,6 +284,7 @@ public class AddContatto extends JFrame {
 		textFieldCognome.setColumns(10);
 		
 		lblCognome = new JLabel("Cognome ");
+		lblCognome.setForeground(new Color(102, 102, 153));
 		lblCognome.setBounds(308, 11, 96, 13);
 		pannelloCredUtente.add(lblCognome);
 		lblCognome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -291,6 +295,7 @@ public class AddContatto extends JFrame {
 		textFieldSecondoNome.setColumns(10);
 						
 		lblSecondoNome = new JLabel("Secondo Nome");
+		lblSecondoNome.setForeground(new Color(102, 102, 153));
 		lblSecondoNome.setBounds(172, 11, 96, 13);
 		pannelloCredUtente.add(lblSecondoNome);
 		lblSecondoNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -302,6 +307,7 @@ public class AddContatto extends JFrame {
 		
 										
 		lblLabelNome = new JLabel("Nome ");
+		lblLabelNome.setForeground(new Color(102, 102, 153));
 		lblLabelNome.setBounds(35, 11, 96, 13);
 		pannelloCredUtente.add(lblLabelNome);
 		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -310,6 +316,7 @@ public class AddContatto extends JFrame {
 		 * Indirizzi Secondari
 		 */
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
+		lblNewLabel.setForeground(new Color(102, 102, 153));
 		lblNewLabel.setBounds(34, 228, 112, 14);
 		contentPane.add(lblNewLabel);
 												
@@ -345,6 +352,7 @@ public class AddContatto extends JFrame {
 		 */
 		
 		lblNumSecondari = new JLabel("Numeri Secondari\r\n");
+		lblNumSecondari.setForeground(new Color(102, 102, 153));
 		lblNumSecondari.setBounds(338, 228, 112, 14);
 		contentPane.add(lblNumSecondari);
 		
@@ -379,6 +387,7 @@ public class AddContatto extends JFrame {
 				JPanel numero;
 				int lastElemIndex;
 				JButton btnCancellaNumSec  = new JButton();
+				btnCancellaNumSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo       = new JTextField();
 				JTextField fieldNum      = new JTextField();
 				Object[] message = {
@@ -412,7 +421,7 @@ public class AddContatto extends JFrame {
 				}
 			}
 		});
-		btnAddSecNum.setBounds(294, 375, 47, 23);
+		btnAddSecNum.setBounds(294, 375, 45, 23);
 		contentPane.add(btnAddSecNum);
 		
 		/**
@@ -420,6 +429,7 @@ public class AddContatto extends JFrame {
 		 */
 		
 		lblEmailSecondarie = new JLabel("Indirizzi Mail \r\n");
+		lblEmailSecondarie.setForeground(new Color(102, 102, 153));
 		lblEmailSecondarie.setHorizontalAlignment(SwingConstants.CENTER);
 		lblEmailSecondarie.setBounds(559, 228, 134, 14);
 		contentPane.add(lblEmailSecondarie);
@@ -453,6 +463,7 @@ public class AddContatto extends JFrame {
 				JPanel mail;
 				int lastMailIndex;;
 				JButton btnCancellaMailSec = new JButton();
+				btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo     = new JTextField();
 				JTextField fieldEmail      = new JTextField();
 				Object[] message = {
@@ -714,6 +725,7 @@ public class AddContatto extends JFrame {
 		contentPane.add(btnScegliImmagine);
 		
 		JLabel lblImg = new JLabel("Immagine del contatto");
+		lblImg.setForeground(new Color(102, 102, 153));
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImg.setBounds(539, 20, 150, 13);
 		contentPane.add(lblImg);
