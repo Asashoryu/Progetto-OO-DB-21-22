@@ -28,8 +28,10 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	public ArrayList<Rubrica> loadRubriche() {
 		PreparedStatement recuperaRubriche;
 		try {
+			System.out.println("SELECT * FROM Rubrica ORDER BY utente_id");
 			recuperaRubriche = connection.prepareStatement(
-				"SELECT * FROM Rubrica");
+				"SELECT * FROM Rubrica ORDER BY utente_id"
+					);
 			ResultSet rs = recuperaRubriche.executeQuery();
 			rubriche= new ArrayList<Rubrica>();
 			while (rs.next()) {

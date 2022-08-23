@@ -170,9 +170,6 @@ public class InfoContatto extends JFrame {
 		pannelloIndPrincipale_1.setBounds(24, 137, 249, 90);
 		contentPane.add(pannelloIndPrincipale_1);
 		
-		
-		
-		
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setLayout(null);
 		pannelloCredUtente.setBorder(null);
@@ -273,7 +270,6 @@ public class InfoContatto extends JFrame {
 		pannelloScrollIndirizziSec.setLayout(new BoxLayout(pannelloScrollIndirizziSec, BoxLayout.PAGE_AXIS));
 		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
-		
 		
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
 		lblNewLabel.setBounds(48, 257, 112, 14);

@@ -16,12 +16,10 @@ public class ConnessioneDatabase {
 			//Estrae l'oggetto driver dalla stringa
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, nomeutente, password);
-
 		} catch (ClassNotFoundException ex) {
 			System.out.println("Database Connection Creation Failed : " + ex.getMessage());
 			ex.printStackTrace();
 		}
-
 	}
 
 	public Connection getConnection() {

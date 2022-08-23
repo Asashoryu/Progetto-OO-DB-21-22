@@ -342,6 +342,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				connessione.rollback();
 				System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 				e.printStackTrace();
+				e.get
 				throw e;
 		}
 	}
@@ -402,7 +403,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			System.out.println(" INSERT INTO Gruppo VALUES ("+ rs.getInt("generate_new_gruppo_id")+", '" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); ");
 			nuovoGruppo.setId(rs.getInt("generate_new_gruppo_id"));
 			PreparedStatement inserisciGruppo = connessione.prepareStatement(
-					" INSERT INTO Gruppo (nome, rubrica_fk) VALUES ('" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); "
+					" INSERT INTO Gruppo VALUES ("+ rs.getInt("generate_new_gruppo_id")+", '" +nuovoGruppo.getNome()+"', '"+ nomeRubrica +"'); "
 					);
 			inserisciGruppo.executeUpdate();
 			for (Contatto contatto : nuovoGruppo.getContatti())

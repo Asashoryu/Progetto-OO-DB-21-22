@@ -248,7 +248,7 @@ public class Controller {
 		{
 			// sono riunite tutte le parti di un nome di un contatto in una stringa
 			String nomeCompleto;
-			if(c.getSecondoNome()!=null) 
+			if(c.getSecondoNome() != null && c.getSecondoNome().isBlank() == false) 
 			{
 				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
 			} 
@@ -281,7 +281,7 @@ public class Controller {
 		{
 			// sono riunite tutte le parti di un nome di un contatto in una stringa
 			String nomeCompleto;
-			if (c.getSecondoNome() != null)
+			if (c.getSecondoNome() != null && c.getSecondoNome().isBlank() == false)
 			{
 				nomeCompleto = c.getNome()+" "+ c.getSecondoNome()+" "+ c.getCognome();
 			}

@@ -173,10 +173,10 @@ public class AddGruppo extends JFrame{
 							listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
 							JOptionPane.showConfirmDialog(null, 
 					                "Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
-							frame.dispose();
-							frameChiamante.setEnabled(false);
 							listaGruppiChiamante.revalidate();
 							listaGruppiChiamante.repaint();
+							frameChiamante.setVisible(true);
+							frame.dispose();
 						} catch (Exception e1) {
 							JOptionPane.showMessageDialog(null, e1.getMessage(),
 									"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);

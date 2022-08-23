@@ -390,8 +390,10 @@ public class AddContatto extends JFrame {
 				int option = JOptionPane.showConfirmDialog(null, message, "Riempire i campi", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION)
 				{
-					//TODO : controlli sulla validità dell'inserimento
+					// controlli sulla validità dell'inserimento
 					numero = creaSecNumb(fieldTipo.getText(), fieldNum.getText());
+					numero.setMaximumSize(new Dimension(500, 20));
+					
 					pannelloScrolNumTel.add(btnCancellaNumSec);
 					pannelloScrolNumTel.add(numero);
 					
@@ -715,7 +717,10 @@ public class AddContatto extends JFrame {
 		lblImg.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImg.setBounds(539, 20, 150, 13);
 		contentPane.add(lblImg);
-		// Quando cliccato button "scegli"
+		
+		/**
+		 *  Quando cliccato button "Scegli"
+		 */
 		btnScegliImmagine.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFileChooser fileChooser = new JFileChooser();

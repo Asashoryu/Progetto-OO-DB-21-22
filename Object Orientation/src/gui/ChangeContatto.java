@@ -431,8 +431,10 @@ public class ChangeContatto extends JFrame {
 					// Si registra l'aggiunta di un nuovo numero secondario
 					modificato = true;
 					
-					//TODO : controlli sulla validità dell'inserimento
+					// controlli sulla validità dell'inserimento
 					numero = creaSecNumb(fieldTipo.getText(), fieldNum.getText());
+					numero.setMaximumSize(new Dimension(500, 20));
+
 					pannelloScrolNumTel.add(btnCancellaNumSec);
 					pannelloScrolNumTel.add(numero);
 					
@@ -509,7 +511,7 @@ public class ChangeContatto extends JFrame {
 					
 					//TODO : controlli sulla validità dell'inserimento
 					mail = creaSecMail(fieldTipo.getText(), fieldEmail.getText());
-					mail.setMaximumSize(new Dimension( 500, 20));
+					mail.setMaximumSize(new Dimension(500, 20));
 					pannelloScrollMail.add(btnCancellaMailSec);
 					pannelloScrollMail.add(mail);
 					
@@ -741,7 +743,6 @@ public class ChangeContatto extends JFrame {
 				else {
 					System.out.println("I dati non sono stati inseriti correttamente");
 				}
-				
 			}
 		});
 		

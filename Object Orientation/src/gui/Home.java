@@ -185,11 +185,9 @@ public class Home extends JFrame {
 							System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
 						} catch (Exception e2) 
 						{
-							System.out.println("Entrato nel Catch..");
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
 	                                                			JOptionPane.ERROR_MESSAGE );
 						}
-						System.out.println("Superato il Catch.. In memoria: ");
 						for(Rubrica r:controller.getRubriche()) 
 						{
 							System.out.print(r.getNome()+"   ");
@@ -227,12 +225,10 @@ public class Home extends JFrame {
 						catch (Exception e2) 
 						{
 							e2.printStackTrace();
-							System.out.println("\nEntrato nel Catch.. valore non valido");
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
                                             		   	   JOptionPane.ERROR_MESSAGE );
 						}
 						//debug manuale
-						System.out.println("Superato il Catch.. In memoria sono presenti le seguenti rubriche: ");
 						for(Rubrica r:controller.getRubriche()) 
 						{
 							System.out.print(r.getNome()+"   ");
@@ -264,12 +260,10 @@ public class Home extends JFrame {
 					catch (Exception e2) 
 					{
 						e2.printStackTrace();
-						System.out.println("Entrato nel Catch.. valore aggiunto non valido\n");
-						JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
+						JOptionPane.showMessageDialog( null, e2.getMessage(), "Errore",
                                              		   JOptionPane.ERROR_MESSAGE );
 					}
 					//debug manuale
-					System.out.println("Superato il Catch.. In memoria: ");
 					for(Rubrica r:controller.getRubriche()) 
 					{
 						System.out.print(r.getNome()+"   ");
@@ -288,7 +282,6 @@ public class Home extends JFrame {
 					try {
 						controller.loadContatti();
 						controller.loadGruppi();
-						System.out.println("Debug: superato loadGruppi");
 					} catch (Exception e1) {
 						// TODO aggiungere un JOptionPane corrispondente
 						e1.printStackTrace();

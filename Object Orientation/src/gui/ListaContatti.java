@@ -207,21 +207,13 @@ public class ListaContatti extends JFrame {
 		getContentPane().add(btnVisualizzaTuttiGruppi);
 		
 		//Bottone per visualizzare un contatto
-				JButton btnInfo = new JButton("Visualizza Contatto");
-				btnInfo.setForeground(new Color(102, 102, 153));
-				btnInfo.setBackground(new Color(204, 255, 255));
-				btnInfo.setFont(new Font("Arial", Font.PLAIN, 11));
-				btnInfo.setBounds(65, 314, 151, 21);
-				btnInfo.setFocusPainted(false);
-				getContentPane().add(btnInfo);
-				btnInfo.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						controller.setContattoSelezionato(listaContatti.getSelectedIndex());
-						 JFrame InfoContatto = new InfoContatto(controller, frame, listaContatti);
-						 frame.dispose();
-						 InfoContatto.setVisible(true);
-					}
-				});
+		JButton btnInfo = new JButton("Visualizza Contatto");
+		btnInfo.setForeground(new Color(102, 102, 153));
+		btnInfo.setBackground(new Color(204, 255, 255));
+		btnInfo.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnInfo.setBounds(65, 314, 151, 21);
+		btnInfo.setFocusPainted(false);
+		getContentPane().add(btnInfo);
 		
 		/**
 		 * Per il pannello di ricerca
@@ -277,14 +269,33 @@ public class ListaContatti extends JFrame {
 			}
 		});
 		/**
-		 * TODO: Quando è premuto il button "Modifica"
+		 * Quando è premuto il button "Visualizza contatto"
+		 */
+		btnInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
+					JFrame InfoContatto = new InfoContatto(controller, frame, listaContatti);
+					frame.dispose();
+					InfoContatto.setVisible(true);
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun contatto selezionato");
+				}
+			}
+		});
+		/**
+		 * Quando è premuto il button "Modifica"
 		 */
 		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setContattoSelezionato(listaContatti.getSelectedIndex());
-				JFrame ChangeContatto = new ChangeContatto(controller, frame, listaContatti);
-				frame.setVisible(false);
-				ChangeContatto.setVisible(true);
+				try {
+					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
+					JFrame ChangeContatto = new ChangeContatto(controller, frame, listaContatti);
+					frame.setVisible(false);
+					ChangeContatto.setVisible(true);
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun contatto selezionato");
+				}
 			}
 		});
 		/**
@@ -320,21 +331,29 @@ public class ListaContatti extends JFrame {
 		
 		btnVisualizzaGruppo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
-				listaContatti.removeAll();
-				listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
-				listaContatti.revalidate();
-				listaContatti.repaint();
+				try {
+					controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun gruppo selezionato");
+				}
 			}
 		});
 		
 		btnVisualizzaTuttiGruppi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setNullGruppoSelezionato();
-				listaContatti.removeAll();
-				listaContatti.setListData(controller.getNomiContattiRubrica());
-				listaContatti.revalidate();
-				listaContatti.repaint();
+				try {
+					controller.setNullGruppoSelezionato();
+					listaContatti.removeAll();
+					listaContatti.setListData(controller.getNomiContattiRubrica());
+					listaContatti.revalidate();
+					listaContatti.repaint();
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun gruppo selezionato");
+				}
 			}
 		});
 		
@@ -367,10 +386,14 @@ public class ListaContatti extends JFrame {
 		
 		btnModificaGruppo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
-				JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
-				frame.setVisible(false);
-				changeGruppo.setVisible(true);
+				try {
+					controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+					JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
+					frame.setVisible(false);
+					changeGruppo.setVisible(true);
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun gruppo selezionato");
+				}
 			}
 		});
 		

@@ -28,14 +28,14 @@ public class Email
 		this.tipo = tipo;
 	}
 	
-	public String getStringaEmail() 
+	public String getStringaEmail()
 	{
 		return stringaEmail;
 	}
 	
 	public String getTipo() 
 	{
-		return tipo.toString();
+		return tipo;
 	}
 
 	public ArrayList<Account> getAccount() 
