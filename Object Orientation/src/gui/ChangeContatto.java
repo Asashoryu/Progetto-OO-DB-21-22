@@ -1,89 +1,52 @@
 package gui;
 
-import controller.Controller;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.naming.event.ObjectChangeListener;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
-import controller.Controller;
 import model.Contatto;
 import model.Email;
 import model.Indirizzo;
 import model.Indirizzo.tipoIndirizzo;
-import model.Rubrica;
 import model.Telefono;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import controller.Controller;
+
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
 import javax.swing.JTextField;
-import javax.swing.Spring;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
+import javax.swing.ImageIcon;
+import javax.swing.ScrollPaneConstants;
 
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.CardLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Component;
+
 import java.sql.SQLException;
 
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.GridBagLayout;
 
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
-import java.awt.TextField;
 
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JScrollBar;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-
-import java.awt.ComponentOrientation;
-import java.awt.Dialog;
-import java.awt.Rectangle;
-import java.awt.Component;
-import javax.swing.ScrollPaneConstants;
-
+@SuppressWarnings("serial")
 public class ChangeContatto extends JFrame {
 
+	private Controller controller;
 	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textFieldNome;
@@ -93,12 +56,8 @@ public class ChangeContatto extends JFrame {
 	private JLabel lblLabelNome;
 	private JLabel lblSecondoNome;
 	private JLabel lblCognome;
-	private JButton btnNewButton;
-	private Controller controller;
-	private JButton btnNewButton_1;
 	private JTextField textFieldNumFisso;
 	private JTextField textFieldNumMobile;
-	private JTextField textFieldEmail;
 	private JTextField textFieldVia;
 	private JLabel lblNumMobile;
 	private JLabel lblNumFisso;
@@ -106,12 +65,7 @@ public class ChangeContatto extends JFrame {
 	private JTextField textFieldCittà;
 	private JTextField textFieldNazione;
 	private JTextField textFieldCap;
-	private JTextField textFieldDescrizioneEmail;
-	private JPanel panelMain;
-	private JPanel pannelloElemScrollPane;
-	private JPanel pannelloIndPrincipale;
 	private JPanel pannelloNumTel;
-	private JPanel pannelloIndMail;
 	private JPanel pannelloNumTelSec;
 	private JPanel pannelloEmailAddSec;
 	private JLabel lblNumSecondari;
@@ -654,7 +608,6 @@ public class ChangeContatto extends JFrame {
 					{
 					
 						System.out.println("Sono state trovate delle modifiche, i dati verranno aggiornati ora!");
-						int id = -1;
 						// TODO: inserimento in memoria e nel DB
 						// inserimenti principali
 						try {
@@ -736,6 +689,8 @@ public class ChangeContatto extends JFrame {
 					                "Informazioni aggiornate con successo!", "Modifica avvenuta", JOptionPane.DEFAULT_OPTION);
 							lista.revalidate();
 							lista.repaint();
+							frameChiamante.setVisible(true);
+							frame.dispose();
 						} catch (SQLException es) {
 							es.printStackTrace();
 							JOptionPane.showMessageDialog(null, es.getMessage(),
@@ -875,7 +830,7 @@ public class ChangeContatto extends JFrame {
 		
 		// inserimento dati contatto
 		lblImmagine = new JLabel("");
-		if (contatto.getPathImmagine() == null)
+		if (contatto.getPathImmagine() == null || !new File(contatto.getPathImmagine()).exists())
 		{
 			// immagine di default
 			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
@@ -956,6 +911,8 @@ public class ChangeContatto extends JFrame {
 				btnCancellaNumSec.setBackground(new Color(204,255,255));
 				
 				numero = creaSecNumb(telefono.getTipo(), telefono.getNumero());
+				numero.setMaximumSize(new Dimension(500, 20));
+				
 				pannelloScrolNumTel.add(btnCancellaNumSec);
 				pannelloScrolNumTel.add(numero);
 				
@@ -977,12 +934,13 @@ public class ChangeContatto extends JFrame {
 		for (Email email : contatto.getEmail())
 		{
 			JPanel mail;
-			int lastMailIndex;;
 			JButton btnCancellaMailSec = new JButton();
 			btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 			btnCancellaMailSec.setBackground(new Color(204,255,255));
 			
 			mail = creaSecMail(email.getTipo(), email.getStringaEmail());
+			mail.setMaximumSize(new Dimension(500, 20));
+			
 			pannelloScrollMail.add(btnCancellaMailSec);
 			pannelloScrollMail.add(mail);
 			

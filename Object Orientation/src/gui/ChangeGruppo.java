@@ -1,24 +1,20 @@
 package gui;
 
+import controller.Controller;
+import model.Contatto;
+import model.Gruppo;
+
 import java.awt.BorderLayout;
-import java.awt.Checkbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -26,28 +22,19 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import controller.Controller;
-import model.Contatto;
-import model.Gruppo;
 import java.awt.Font;
 
+@SuppressWarnings("serial")
 public class ChangeGruppo extends JFrame{
 	
 	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textFieldNome;
 	private JLabel lblNome;
-	private JButton btnNewButton;
 	private Controller controller;
-	private JButton btnNewButton_1;
-	private JPanel panelMain;
-	private JPanel pannelloElemScrollPane;
-	private ListSelectionModel listSelectionModel;
 	
 	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
 		
@@ -174,7 +161,7 @@ public class ChangeGruppo extends JFrame{
 						if (contatti.size() > 0)
 						{
 							Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
-							try 
+							try
 							{
 								controller.changeGruppo(nuovoGruppo);
 								listaGruppiChiamante.removeAll();
@@ -183,6 +170,8 @@ public class ChangeGruppo extends JFrame{
 										"Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 								listaGruppiChiamante.revalidate();
 								listaGruppiChiamante.repaint();
+								frameChiamante.setVisible(true);
+								frame.dispose();
 							} catch (Exception e1) {
 								JOptionPane.showMessageDialog(null, e1.getMessage(),
 										"Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);

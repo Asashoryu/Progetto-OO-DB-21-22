@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import model.Contatto;
 import model.Gruppo;
-import model.Rubrica;
 
 public interface RubricaDAO {
 	

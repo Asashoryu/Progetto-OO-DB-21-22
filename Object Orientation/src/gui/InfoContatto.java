@@ -1,136 +1,59 @@
 package gui;
 
-import controller.Controller;
-
-import java.io.*;
-
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.imageio.ImageIO;
-import javax.naming.event.ObjectChangeListener;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
-import javax.swing.Timer;
-
-import controller.Controller;
 import model.Account;
 import model.Contatto;
 import model.Email;
 import model.Indirizzo;
 import model.Indirizzo.tipoIndirizzo;
-import model.Rubrica;
 import model.Telefono;
 
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import controller.Controller;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.Spring;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
-
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.CardLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
-import java.awt.TextField;
-import java.awt.image.*;
-
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JScrollBar;
-import javax.swing.Box;
+import javax.swing.border.LineBorder;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
-
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.ComponentOrientation;
-import java.awt.Dialog;
-import java.awt.Rectangle;
-import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.MatteBorder;
 
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.awt.Font;
+import java.awt.Dimension;
+import java.awt.Component;
+import java.awt.BorderLayout;
+
+
+@SuppressWarnings("serial")
 public class InfoContatto extends JFrame {
 
+	private Controller controller;
 	private JFrame frame;
 	private JPanel contentPane;
+	private JPanel pannelloNumTelSec;
+	private JPanel pannelloScrolNumTel;
+	private JPanel pannelloScrollMail;
 	private JTextField textFieldNome;
 	private JTextField textFieldSecondoNome;
 	private JTextField textFieldCognome;
-	private JLabel lblTitolo;
-	private JLabel lblLabelNome;
-	private JLabel lblSecondoNome;
-	private JLabel lblCognome;
-	private JButton btnNewButton;
-	private Controller controller;
-	private JButton btnNewButton_1;
 	private JTextField textFieldNumFisso;
 	private JTextField textFieldNumMobile;
 	private JTextField textFieldVia;
-	private JLabel lblNumMobile;
-	private JLabel lblNumFisso;
-	private JLabel lblVia;
 	private JTextField textFieldCittà;
 	private JTextField textFieldNazione;
 	private JTextField textFieldCap;
-	private JPanel panelMain;
-	private JPanel pannelloElemScrollPane;
-	private JPanel pannelloIndPrincipale;
-	private JPanel pannelloNumTel;
-	private JPanel pannelloIndMail;
-	private JPanel pannelloNumTelSec;
-	private JPanel pannelloEmailAddSec;
-	private JLabel lblNumSecondari;
-	private JLabel lblEmailSecondarie;
-	private JPanel pannelloScrolNumTel;
-	private JPanel pannelloScrollMail;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
 
-	private boolean modificato = false;
-	private String percorsoImmagine = null;
-	
 	public InfoContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		
 		
@@ -484,7 +407,7 @@ public class InfoContatto extends JFrame {
 		
 		// inserimento dati contatto
 		JLabel lblImmagine = new JLabel("");
-		if (contatto.getPathImmagine() == null)
+		if (contatto.getPathImmagine() == null || !new File(contatto.getPathImmagine()).exists())
 		{
 			// immagine di default
 			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();

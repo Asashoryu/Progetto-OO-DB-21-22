@@ -2,9 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import dao.SistemaDAO;
-import implementazionedao.SistemaImplementazionePostgresDAO;
-
 public class Rubrica {
 	
 	private String nome;
@@ -59,5 +56,88 @@ public class Rubrica {
 		}
 		
 		return contatto;
+	}
+	
+	public Gruppo cercaPerNome(String text) 
+	{
+		Gruppo gruppoRicerca = new Gruppo();
+		for (Contatto contatto : contatti)
+		{
+			if (contatto.getNome().matches("(?i).*"+text+".*"))
+			{
+				System.out.println(contatto.getNome());
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		return gruppoRicerca;
+	}
+	
+	public Gruppo cercaPerEmail(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
+		Boolean match;
+		for (Contatto contatto : contatti)
+		{
+			match = false;
+			for(Email email : contatto.getEmail())
+			{
+				if (email.getStringaEmail().matches("(?i).*"+text+".*"))
+				{
+					match = true;
+					System.out.println(contatto.getNome()+" : "+email.getStringaEmail());
+				}
+			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		return gruppoRicerca;
+	}
+	
+	public Gruppo cercaPerAccount(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
+		Boolean match;
+		for (Contatto contatto : contatti)
+		{
+			match = false;
+			for (Email email : contatto.getEmail())
+			{
+				for (Account account : email.getAccount())
+				{
+					if (account.getNickname().matches("(?i).*"+text+".*"))
+					{
+						match = true;
+						System.out.println(contatto.getNome()+" : "+account.getNickname());
+					}
+				}
+			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		return gruppoRicerca;
+	}
+	
+	public Gruppo cercaPerNumero(String text) {
+		Gruppo gruppoRicerca = new Gruppo();
+		Boolean match;
+		for (Contatto contatto : contatti)
+		{
+			match = false;
+			for(Telefono telefono : contatto.getTelefoni())
+			{
+				if (telefono.getNumero().matches("(?i).*"+text+".*"))
+				{
+					match = true;
+					System.out.println(contatto.getNome()+" : "+telefono.getNumero());
+				}
+			}
+			if (match == true)
+			{
+				gruppoRicerca.getContatti().add(contatto);
+			}
+		}
+		return gruppoRicerca;
 	}
 }	

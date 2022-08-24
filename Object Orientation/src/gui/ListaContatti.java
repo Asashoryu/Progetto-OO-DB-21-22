@@ -1,59 +1,31 @@
 package gui;
 import controller.Controller;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
-import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import controller.Controller;
-import model.Rubrica;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.CardLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
-import java.awt.TextField;
 
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
-
+@SuppressWarnings("serial")
 public class ListaContatti extends JFrame {
 	
 	private JFrame     frame;
 	private Controller controller;
-	private String 	   Nome;
-	private String     SecondoNome;
-	private String     Cognome;
 	
 	/**
 	 * Crea frame.

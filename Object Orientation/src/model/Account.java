@@ -8,11 +8,14 @@ public class Account {
 
 	private String nickname;
 	
-	public Account(String fornitore, String fraseStato, String nickname)
+	private String stringaEmail;
+	
+	public Account(String fornitore, String fraseStato, String nickname, String stringaEmail)
 	{
 		setFornitore(fornitore);
 		setFraseStato(fraseStato);
 		setNickname(nickname);
+		setStringaEmail(stringaEmail);
 	}
 
 	public String getFornitore() {
@@ -38,4 +41,13 @@ public class Account {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+
+	public String getStringaEmail() {
+		return stringaEmail;
+	}
+
+	public void setStringaEmail(String stringaEmail) {
+		this.stringaEmail = stringaEmail;
+	}
+	
 }

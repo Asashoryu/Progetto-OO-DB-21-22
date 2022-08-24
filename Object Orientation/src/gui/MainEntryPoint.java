@@ -15,8 +15,8 @@ public class MainEntryPoint {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Controller c= new Controller();
-					Home window = new Home(c);
+					Controller c = new Controller();
+					Home window  = new Home(c);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

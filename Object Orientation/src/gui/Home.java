@@ -2,57 +2,33 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.management.RuntimeErrorException;
-import javax.sound.midi.ControllerEventListener;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-import javax.swing.text.StyledEditorKit.ForegroundAction;
 
 import controller.Controller;
-import dao.SistemaDAO;
 import model.Rubrica;
-import model.Sistema;
 
 import javax.swing.JComboBox;
-import javax.swing.Action;
-import javax.swing.Box;
-import javax.swing.JToolBar;
-import javax.swing.JSplitPane;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.SpringLayout;
-import javax.swing.BoxLayout;
-import javax.swing.ComboBoxEditor;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDesktopPane;
-import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
 
 /**
  * Classe che implementa il frame della home 
  *
  */
+@SuppressWarnings("serial")
 public class Home extends JFrame {
+	
 	private Controller controller;
-
-	JFrame frame;
+	private JFrame frame;
 	private JLabel lblNewLabel;
 	private DefaultComboBoxModel<Object> comboBoxModel;
 	private JComboBox<Object> comboBox;
@@ -171,7 +147,7 @@ public class Home extends JFrame {
 				//Fisso la rubrica selezionata dalla combobox attraverso il suo nome
 				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
 					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
-					String stringa = JOptionPane.showInputDialog(visualizzata);
+					String stringa = JOptionPane.showInputDialog(null, visualizzata, "Modifica rubrica", JOptionPane.QUESTION_MESSAGE);
 					if(stringa!= null && stringa.isBlank()==false) 
 					{
 						try
@@ -208,7 +184,7 @@ public class Home extends JFrame {
 					// 0=Procedi, 1=Annulla
 					Object[] opzioni = {"Procedi","Annulla"};
 					// finestra di conferma per la cancellazione
-					int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina", JOptionPane.YES_NO_OPTION,
+					int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina rubrica", JOptionPane.YES_NO_OPTION,
 													 		 JOptionPane.WARNING_MESSAGE, null, opzioni, null);
 					// Se scelta Yes
 					if(input == 0) 
@@ -243,7 +219,7 @@ public class Home extends JFrame {
 			public void actionPerformed(ActionEvent e) 
 			{
 				String visualizzata      = "Inserisci il nome della Rubrica da aggiungere";
-				String stringaDaInserire = JOptionPane.showInputDialog(visualizzata);
+				String stringaDaInserire = JOptionPane.showInputDialog(null, visualizzata, "Aggiungi rubrica", JOptionPane.QUESTION_MESSAGE);
 				if(stringaDaInserire!= null && stringaDaInserire.isBlank() == false) 
 				{
 					try 

@@ -1,5 +1,10 @@
 package implementazionedao;
 
+import model.Contatto;
+import model.Email;
+import model.Gruppo;
+import model.Indirizzo.tipoIndirizzo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,15 +13,8 @@ import java.util.ArrayList;
 
 import dao.RubricaDAO;
 import database.ConnessioneDatabase;
-import model.Contatto;
-import model.Email;
-import model.Gruppo;
-import model.Rubrica;
-import model.Indirizzo.tipoIndirizzo;
 
 public class RubricaImplementazionePostgresDAO implements RubricaDAO{
-	
-	private ArrayList<Contatto> contatti;
 	
 	private Connection connection;
 	
@@ -342,7 +340,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				connessione.rollback();
 				System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 				e.printStackTrace();
-				e.get
 				throw e;
 		}
 	}

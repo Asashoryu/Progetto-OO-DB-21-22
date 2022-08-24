@@ -50,7 +50,7 @@ public class Email
 	
 	public void addAccount(String fornitore, String fraseStato, String nickname)
 	{
-		Account nuovoAccount = new Account(fornitore, fraseStato, nickname);
+		Account nuovoAccount = new Account(fornitore, fraseStato, nickname, getStringaEmail());
 		account.add(nuovoAccount);
 	}
 	

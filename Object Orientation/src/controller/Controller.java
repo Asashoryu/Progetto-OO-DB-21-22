@@ -4,10 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dao.ContattoDAO;
 import dao.RubricaDAO;
 import dao.SistemaDAO;
-import implementazionedao.ContattoImplementazionePostgresDAO;
 import implementazionedao.RubricaImplementazionePostgresDAO;
 import implementazionedao.SistemaImplementazionePostgresDAO;
 import model.Rubrica;
@@ -563,84 +561,22 @@ public class Controller {
 
 	public void cercaPerNome(String text) 
 	{
-		Gruppo gruppoRicerca = new Gruppo();
-		for (Contatto contatto : rubricaSelezionata.getContatti())
-		{
-			if (contatto.getNome().matches("(?i).*"+text+".*"))
-			{
-				System.out.println(contatto.getNome());
-				gruppoRicerca.getContatti().add(contatto);
-			}
-		}
+		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNome(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
 	// TODO: da rivedere
 	public void cercaPerEmail(String text) {
-		Gruppo gruppoRicerca = new Gruppo();
-		Boolean match;
-		for (Contatto contatto : rubricaSelezionata.getContatti())
-		{
-			match = false;
-			for(Email email : contatto.getEmail())
-			{
-				if (email.getStringaEmail().matches("(?i).*"+text+".*"))
-				{
-					match = true;
-					System.out.println(contatto.getNome()+" : "+email.getStringaEmail());
-				}
-			}
-			if (match == true)
-			{
-				gruppoRicerca.getContatti().add(contatto);
-			}
-		}
+		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerEmail(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
 
 	public void cercaPerAccount(String text) {
-		Gruppo gruppoRicerca = new Gruppo();
-		Boolean match;
-		for (Contatto contatto : rubricaSelezionata.getContatti())
-		{
-			match = false;
-			for (Email email : contatto.getEmail())
-			{
-				for (Account account : email.getAccount())
-				{
-					if (account.getNickname().matches("(?i).*"+text+".*"))
-					{
-						match = true;
-						System.out.println(contatto.getNome()+" : "+account.getNickname());
-					}
-				}
-			}
-			if (match == true)
-			{
-				gruppoRicerca.getContatti().add(contatto);
-			}
-		}
+		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerAccount(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
 
 	public void cercaPerNumero(String text) {
-		Gruppo gruppoRicerca = new Gruppo();
-		Boolean match;
-		for (Contatto contatto : rubricaSelezionata.getContatti())
-		{
-			match = false;
-			for(Telefono telefono : contatto.getTelefoni())
-			{
-				if (telefono.getNumero().matches("(?i).*"+text+".*"))
-				{
-					match = true;
-					System.out.println(contatto.getNome()+" : "+telefono.getNumero());
-				}
-			}
-			if (match == true)
-			{
-				gruppoRicerca.getContatti().add(contatto);
-			}
-		}
+		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNumero(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
 

@@ -2,40 +2,23 @@ package gui;
 
 import controller.Controller;
 
+import model.Contatto;
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
-import javax.naming.event.ObjectChangeListener;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import controller.Controller;
-import model.Contatto;
-import model.Rubrica;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.Spring;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.CardLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -44,36 +27,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.GridBagLayout;
 
-import javax.swing.UIManager;
-import javax.swing.border.BevelBorder;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.SystemColor;
-import java.awt.TextField;
 
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JScrollBar;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.ComponentOrientation;
-import java.awt.Dialog;
-import java.awt.Rectangle;
 import java.awt.Component;
 import javax.swing.ScrollPaneConstants;
 
+@SuppressWarnings("serial")
 public class AddContatto extends JFrame {
 
+	private Controller controller;
 	private JFrame frame;
 	private JPanel contentPane;
 	private JTextField textFieldNome;
@@ -83,9 +49,6 @@ public class AddContatto extends JFrame {
 	private JLabel lblLabelNome;
 	private JLabel lblSecondoNome;
 	private JLabel lblCognome;
-	private JButton btnNewButton;
-	private Controller controller;
-	private JButton btnNewButton_1;
 	private JTextField textFieldNumFisso;
 	private JTextField textFieldNumMobile;
 	private JTextField textFieldVia;
@@ -95,8 +58,6 @@ public class AddContatto extends JFrame {
 	private JTextField textFieldCittà;
 	private JTextField textFieldNazione;
 	private JTextField textFieldCap;
-	private JPanel panelMain;
-	private JPanel pannelloElemScrollPane;
 	private JPanel pannelloIndPrincipale;
 	private JPanel pannelloNumTel;
 	private JPanel pannelloNumTelSec;
@@ -677,6 +638,8 @@ public class AddContatto extends JFrame {
 				                "Contatto inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 						lista.revalidate();
 						lista.repaint();
+						frameChiamante.setVisible(true);
+						frame.dispose();
 					} catch (SQLException es) {
 						es.printStackTrace();
 						JOptionPane.showMessageDialog(null, es.getMessage(),
