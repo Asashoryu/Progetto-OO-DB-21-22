@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+@SuppressWarnings("serial")
 public class FinestraChiamaRiserva extends JFrame {
 
 	private JPanel contentPane;
@@ -36,7 +37,6 @@ public class FinestraChiamaRiserva extends JFrame {
 		lblChiamandoR.setBounds(0, 10, 426, 42);
 		contentPane.add(lblChiamandoR);
 		
-		
 		//Medesimo timer di FinestraChiama
 		new Timer(3_000, (e) -> {
 			contentPane.repaint();
@@ -57,7 +57,6 @@ public class FinestraChiamaRiserva extends JFrame {
 			contentPane.add(btnChiudi);
 			btnChiudi.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				
 				frame.dispose();
 				}
 			});
