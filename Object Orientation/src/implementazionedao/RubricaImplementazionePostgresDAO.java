@@ -123,7 +123,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
 	public void loadGruppi(String nomeRubrica, ArrayList<Contatto> contatti, ArrayList<Gruppo> gruppi) {
 		System.out.println(" SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\' ORDER BY Gruppo_ID; ");
 		PreparedStatement recuperaGruppi;
@@ -169,7 +169,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			e.printStackTrace();
 		}
 	}
-	
+	@Override
 	public int generaContattoID(Connection connessione) throws SQLException
 	{
 		int id = -1;
@@ -201,7 +201,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
 	/* @returns id del contatto creato*/
 	@Override
-	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+	public void addInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 			                String numMobile, String numFisso, String via, String citta, String nazione, String cap,
 			                int id, Connection connessione) throws SQLException {
 		System.out.println("CALL coherent_insertion_f('"   + nomeRubrica + "', '" + nome +          "', '" + secondonome + "',"
@@ -226,8 +226,8 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			throw e;
 		}
 	}
-	
-	public void changeContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+	@Override
+	public void changeInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 				               String numMobile, String numFisso, String via, String citta, String nazione, String cap,
 				               int vecchioContattoId, Connection connessione) throws SQLException {
 		
@@ -274,10 +274,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
 	@Override
 	public void addImmagine(String pathImmagine, int id, Connection connessione) throws SQLException {
-		System.out.println(" UPDATE Contatto SET foto  = '" + pathImmagine + "' WHERE contatto_id = " + id + "; ");
+		System.out.println(" UPDATE Contatto SET foto  = NULLIF('" + pathImmagine + "','') WHERE contatto_id = " + id + "; ");
 		try {
 			PreparedStatement aggiungiImmagine = connessione.prepareStatement(
-					" UPDATE Contatto SET foto  = '" + pathImmagine + "' WHERE contatto_id = " + id + "; ");
+					" UPDATE Contatto SET foto  = NULLIF('" + pathImmagine + "','') WHERE contatto_id = " + id + "; "
+					);
+			
 			aggiungiImmagine.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
@@ -291,13 +293,14 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	public void addIndirizzo(String via, String città, String nazione, String cap, String descrizione, int id, Connection connessione) throws SQLException
 	{
 		System.out.println(" INSERT INTO Indirizzo(via, città, nazione, cap, descrizione, contatto_fk)"
-				                + " VALUES "+"(\'" + via + "\', \'" + città       + "\', \'"+ nazione + "\',"
-									        + "\'" + cap + "\', \'" + descrizione + "\',  " + id     + "); ");
+				                + " VALUES "+"(NULLIF('" + via + "',''), NULLIF('" + città + "', ''), NULLIF('" + nazione + "', ''),"
+									        + "NULLIF('" + cap + "', ''), NULLIF('" + descrizione + "', ''),  " + id     + ")); ");
 		try {
 			PreparedStatement aggiungiIndirizzo = connessione.prepareStatement(
 					" INSERT INTO Indirizzo(via, città, nazione, cap, descrizione, contatto_fk)"
-							 + " VALUES "+"(\'" + via + "\', \'" + città       + "\', \'"+ nazione + "\',"
-						                 + "\'" + cap + "\', \'" + descrizione + "\',  " + id     + "); ");
+			                + " VALUES "+"(NULLIF('" + via + "',''), NULLIF('" + città + "', ''), NULLIF('" + nazione + "', ''),"
+								        + "NULLIF('" + cap + "', ''), \'" + descrizione + "\',  " + id     + ")); "
+								        );
 			aggiungiIndirizzo.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
@@ -311,11 +314,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	public void addTelefono(String numero, String descrizione, int id_contatto, Connection connessione) throws SQLException
 	{
 		System.out.println(" INSERT INTO Telefono(numero, descrizione, contatto_fk)"
-                                 + " VALUES (\'" + numero + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+                                 + " VALUES (NULLIF('" + numero + "',''), NULLIF('" + descrizione + "',''), " + id_contatto + "); ");
 		try {
 			PreparedStatement aggiungiTelefono = connessione.prepareStatement(
 					" INSERT INTO Telefono(numero, descrizione, contatto_fk)"
-                           + " VALUES (\'" + numero + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+                            + " VALUES (NULLIF('" + numero + "',''), NULLIF('" + descrizione + "',''), " + id_contatto + "); "
+                            );
 			aggiungiTelefono.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
@@ -330,11 +334,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	public void addEmail(String indirizzoEmail, String descrizione, int id_contatto, Connection connessione) throws SQLException
 	{
 		System.out.println(" INSERT INTO Email(indirizzoemail, descrizione, contatto_fk)"
-	                     + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+	                     + " VALUES ((NULLIF('" + indirizzoEmail + "',''), NULLIF('" + descrizione + "',''), " + id_contatto + "); ");
 		try {
 				PreparedStatement aggiungiEmail = connessione.prepareStatement(
 						" INSERT INTO Email(indirizzoemail, descrizione, contatto_fk)"
-	                             + " VALUES (\'" + indirizzoEmail + "\', \'" + descrizione + "\', " + id_contatto + "); ");
+			                     + " VALUES (NULLIF('" + indirizzoEmail + "',''), NULLIF('" + descrizione + "',''), " + id_contatto + "); "
+			                     );
 				aggiungiEmail.executeUpdate();
 		} catch (SQLException e) {
 				connessione.rollback();
@@ -385,8 +390,8 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				throw e;
 		}
 	}
-	
-	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception
+	@Override
+	public void addInfoGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception
 	{
 		
 		try {
@@ -420,7 +425,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			connessione.close();
 		}
 	}
-	
+	@Override
 	public void deleteGruppo(int codiceGruppo, Connection connessione) throws SQLException
 	{
 		System.out.println(" DELETE FROM Gruppo WHERE Gruppo_ID = " + codiceGruppo + "; ");
@@ -433,8 +438,8 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				throw e;
 		}
 	}
-	
-	public void changeGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException
+	@Override
+	public void changeInfoGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException
 	{
 		try {
 			connessione.setAutoCommit(false);
@@ -458,7 +463,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			}
 			connessione.commit();
 		} catch (Exception e) {
-			// TODO: handle exception
 			connessione.rollback();
 			throw e;
 		}

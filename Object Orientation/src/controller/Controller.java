@@ -1,21 +1,28 @@
 package controller;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import model.Rubrica;
+import model.Sistema;
+import model.Contatto;
+import model.Gruppo;
+import model.Indirizzo.tipoIndirizzo;
 
 import dao.RubricaDAO;
 import dao.SistemaDAO;
+
 import implementazionedao.RubricaImplementazionePostgresDAO;
 import implementazionedao.SistemaImplementazionePostgresDAO;
-import model.Rubrica;
-import model.Sistema;
-import model.Telefono;
-import model.Account;
-import model.Contatto;
-import model.Email;
-import model.Gruppo;
-import model.Indirizzo.tipoIndirizzo;
+
+import javax.swing.JCheckBox;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import java.awt.Component;
+
+import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
 
 /** Gestisce l'interazione dell'interfaccia col model e col DB. */
 public class Controller {
@@ -347,7 +354,7 @@ public class Controller {
 
 		connTransazione = null;
 	}
-	public Contatto addContatto(String nome, String secondonome, String cognome,
+	private Contatto addInfoContatto(String nome, String secondonome, String cognome,
                             String numMobile, String numFisso, String via, String citta, String nazione, String cap,
                             int id) throws SQLException
 	 {
@@ -355,7 +362,7 @@ public class Controller {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
 		{
-			rubricaPosgr.addContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
+			rubricaPosgr.addInfoContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
 					                      nazione, cap, id, connTransazione);
 			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, id);
 		}
@@ -367,14 +374,14 @@ public class Controller {
 		return contatto;
 	}
 	
-	public Contatto changeContatto(String nome, String secondonome, String cognome,
+	private Contatto changeInfoContatto(String nome, String secondonome, String cognome,
             					   String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
 	{
 		Contatto contatto;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
 		{
-			rubricaPosgr.changeContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
+			rubricaPosgr.changeInfoContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
 				                        nazione, cap, contattoSelezionato.getId(), connTransazione);
 			contatto = new Contatto(nome, secondonome, cognome, numMobile, numFisso, via, citta, nazione, cap, contattoSelezionato.getId());
 			
@@ -508,14 +515,14 @@ public class Controller {
 			throw e;
 		}
 	}
-
-	public void addGruppo(Gruppo nuovoGruppo) throws Exception {
+	
+	public void addInfoGruppo(Gruppo nuovoGruppo) throws Exception {
 		Connection conn;
 		try {
 			// cancellazione dal DB
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 			conn = rubricaPosgr.apriConnessione();
-			rubricaPosgr.addGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
+			rubricaPosgr.addInfoGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
 			conn = null;
 			rubricaSelezionata.getGruppi().add(nuovoGruppo);
 		} catch (SQLException e) {
@@ -539,7 +546,7 @@ public class Controller {
 		}
 	}
 	
-	public void changeGruppo(Gruppo nuovoGruppo) throws Exception 
+	public void changeInfoGruppo(Gruppo nuovoGruppo) throws Exception 
 	{
 		Connection conn;
 		int indiceVecchio;
@@ -548,7 +555,7 @@ public class Controller {
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 			conn = rubricaPosgr.apriConnessione();
 			nuovoGruppo.setId(gruppoSelezionato.getId());
-			rubricaPosgr.changeGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
+			rubricaPosgr.changeInfoGruppo(rubricaSelezionata.getNome(), nuovoGruppo, conn);
 			conn = null;
 			// TODO : modifica in memoria
 			indiceVecchio = rubricaSelezionata.getGruppi().indexOf(gruppoSelezionato);
@@ -579,5 +586,204 @@ public class Controller {
 		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNumero(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
-
+	
+	public void addContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
+							JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
+							JTextField textFieldNumFisso, String percorsoImmagine,
+							JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail) throws Exception
+	{
+		int id = -1;
+		// INSERIMENTI PRINCIPALI
+		// contatto creato
+		Contatto nuovoContatto;
+		// inserimento in database
+		id = inizializzaInserimento();
+		nuovoContatto = addInfoContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+							   			textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
+							   		    textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
+							   		    id);
+		// INSERIMENTI SECONDARI
+		// inserimento immagine
+		if (percorsoImmagine != null)
+		{
+			// TODO: gestire inserimento immagine
+			addImmagine(nuovoContatto, percorsoImmagine);
+		}
+		// Inserimento indirizzi secondari
+		for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
+		{
+			System.out.println("Debug: Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compIndirizzoSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\t Debug: Entrato nell'if del for");
+				String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
+				String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
+				String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
+				String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
+				addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
+			}
+		}
+		// Inserimento numeri secondari
+		for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
+		{
+			System.out.println("Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compNumeroSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\tEntrato nell'if del for");
+				String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
+				String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
+				addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
+			}
+		}
+		// Inserimento email secondarie
+		for (Component compEmailSec : pannelloScrollMail.getComponents())
+		{
+			System.out.println("Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compEmailSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\tEntrato nell'if del for");
+				String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
+				String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
+				addEmailSec(nuovoContatto, emailSec, descrizioneSec);
+			}
+		}
+		// vengono associati gli account alle email
+		loadAccountContatto(nuovoContatto);
+		//commit delle informazioni in DB e inserimento del contatto i memoria
+		finalizzaInserimento(nuovoContatto);
+	}
+	
+	public void changeContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
+							   JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
+							   JTextField textFieldNumFisso, String percorsoImmagine,
+							   JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail) throws Exception
+	{
+		// INSERIMENTI PRINCIPALI
+		// contatto creato
+		Contatto nuovoContatto;
+		// inserimento in database
+		inizializzaModifica();
+		// ricreo il contatto con le nuove informazioni
+		nuovoContatto = changeInfoContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
+														textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
+														textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
+		// INSERIMENTI SECONDARI
+		// inserimento immagine
+		if (percorsoImmagine != null)
+		{
+			// gestisce inserimento immagine
+			addImmagine(nuovoContatto, percorsoImmagine);
+		}
+		// Inserimento indirizzi secondari
+		for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
+		{
+			System.out.println("Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compIndirizzoSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\tEntrato nell'if del for");
+				String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
+				String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
+				String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
+				String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
+				addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
+			}
+		}
+		// Inserimento numeri secondari
+		for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
+		{
+			System.out.println("Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compNumeroSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\tEntrato nell'if del for");
+				String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
+				String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
+				addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
+			}
+		}
+		// Inserimento email secondarie
+		for (Component compEmailSec : pannelloScrollMail.getComponents())
+		{
+			System.out.println("Primo ciclo for");
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(compEmailSec instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				System.out.println("\tEntrato nell'if del for");
+				String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
+				String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
+				addEmailSec(nuovoContatto, emailSec, descrizioneSec);
+			}
+		}
+		
+		// vengono associati gli account alle email
+		loadAccountContatto(nuovoContatto);
+		//commit delle informazioni in DB e inserimento del contatto i memoria
+		finalizzaModifica(nuovoContatto);
+	}
+	
+	public Boolean checkSeTipoIndirizzoPrincipale(tipoIndirizzo tipo)
+	{
+		return tipo == tipoIndirizzo.Principale;
+	}
+	
+	public void addGruppo(JTextField textFieldNome, JPanel pannelloContatti) throws Exception
+	{
+		ArrayList<Contatto> contatti = new ArrayList<>();
+		int indice = 0;
+		
+		for (Component scrollComponent : pannelloContatti.getComponents())
+		{
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(scrollComponent instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
+				// controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
+				if (checkbox.isSelected())
+				{
+					contatti.add(getRubricaSelezionata().getContatti().get(indice));
+					System.out.println(" Debug: "+checkbox.getText() + " e quello salvato Ë " + getRubricaSelezionata().getContatti().get(indice).getNome());
+				}
+			}
+			indice++;
+		}
+		Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
+		addInfoGruppo(nuovoGruppo);
+	}
+	
+	public void changeGruppo(JTextField textFieldNome, JPanel pannelloContatti) throws Exception
+	{
+		ArrayList<Contatto> contatti = new ArrayList<>();
+		int indice = 0;
+		
+		for (Component scrollComponent : pannelloContatti.getComponents())
+		{
+			// se non Ë un button allora Ë il pannello con gli indirizzi
+			if(scrollComponent instanceof JPanel)
+			{
+				// estraggo le informazioni dal panel trovato
+				JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
+				// controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
+				if (checkbox.isSelected())
+				{
+					contatti.add(getRubricaSelezionata().getContatti().get(indice));
+					System.out.println(" Debug: "+checkbox.getText() + " e quello salvato Ë " + getRubricaSelezionata().getContatti().get(indice).getNome());
+				}
+			}
+			indice++;
+		}
+		Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
+		changeInfoGruppo(nuovoGruppo);
+	}
 }
+	

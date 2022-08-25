@@ -1,16 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.Contatto;
-import model.Gruppo;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,6 +15,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 @SuppressWarnings("serial")
 public class AddGruppo extends JFrame{
 	
@@ -35,7 +32,6 @@ public class AddGruppo extends JFrame{
 	private Controller controller;
 	
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
-		
 		
 		setResizable(false);
 		setForeground(Color.WHITE);
@@ -126,35 +122,31 @@ public class AddGruppo extends JFrame{
 		btnAzione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				ArrayList<Contatto> contatti = new ArrayList<>();
-				int indice = 0;
-				
-				for (Component scrollComponent : pannelloContatti.getComponents())
-				{
-					// se non Ë un button allora Ë il pannello con gli indirizzi
-					if(scrollComponent instanceof JPanel)
-					{
-						// estraggo le informazioni dal panel trovato
-						JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
-//						controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
-						if (checkbox.isSelected())
-						{
-							contatti.add(controller.getRubricaSelezionata().getContatti().get(indice));
-							System.out.println(" Debug: "+checkbox.getText() + " e quello salvato Ë " + controller.getRubricaSelezionata().getContatti().get(indice).getNome());
-						}
-					}
-					
-					indice++;
-				}
 				if (!textFieldNome.getText().isBlank())
 				{
 					textFieldNome.setBackground(Color.WHITE);
-					if (contatti.size() > 0)
+					
+					Boolean selezionatoAlmenoUno = false;
+					for (Component scrollComponent : pannelloContatti.getComponents())
 					{
-						Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
+						// se non Ë un button allora Ë il pannello con gli indirizzi
+						if(scrollComponent instanceof JPanel)
+						{
+							// estraggo le informazioni dal panel trovato
+							JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
+							// controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
+							if (checkbox.isSelected())
+							{
+								selezionatoAlmenoUno = true;
+								break;
+							}
+						}
+					}
+					if (selezionatoAlmenoUno == true)
+					{
 						try 
 						{
-							controller.addGruppo(nuovoGruppo);
+							controller.addGruppo(textFieldNome, pannelloContatti);
 							listaGruppiChiamante.removeAll();
 							listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
 							JOptionPane.showConfirmDialog(null, 

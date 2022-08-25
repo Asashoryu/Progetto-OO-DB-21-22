@@ -1,11 +1,5 @@
 package gui;
 
-import model.Contatto;
-import model.Email;
-import model.Indirizzo;
-import model.Indirizzo.tipoIndirizzo;
-import model.Telefono;
-
 import controller.Controller;
 
 import javax.swing.JButton;
@@ -33,15 +27,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Component;
 
+import java.io.File;
+
 import java.sql.SQLException;
-
-
-
 
 @SuppressWarnings("serial")
 public class ChangeContatto extends JFrame {
@@ -444,7 +436,7 @@ public class ChangeContatto extends JFrame {
 		pannelloScrollMail.setLayout(new BoxLayout(pannelloScrollMail, BoxLayout.PAGE_AXIS));
 		
 		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione, textFieldCap,
-	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
+							textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
 		
 		/**
 		 * Button "+" aggiungi email secondaria
@@ -607,75 +599,12 @@ public class ChangeContatto extends JFrame {
 					if (modificato)
 					{
 					
-						System.out.println("Sono state trovate delle modifiche, i dati verranno aggiornati ora!");
-						// TODO: inserimento in memoria e nel DB
-						// inserimenti principali
+						System.out.println("DEBUG: Sono state trovate delle modifiche, i dati verranno aggiornati ora!");
 						try {
-							// contatto creato
-							Contatto nuovoContatto;
-							// inserimento in database
-							controller.inizializzaModifica();
-							// ricreo il contatto con le nuove informazioni
-							nuovoContatto = controller.changeContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
-												   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
-												   		           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
-							// INSERIMENTI SECONDARI
-							// inserimento immagine
-							if (percorsoImmagine != null)
-							{
-								// TODO: gestire inserimento immagine
-								controller.addImmagine(nuovoContatto, percorsoImmagine);
-							}
-							// Inserimento indirizzi secondari
-							for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
-							{
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compIndirizzoSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
-									String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
-									String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
-									String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
-									controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
-								}
-							}
-							// Inserimento numeri secondari
-							for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
-							{
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compNumeroSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
-									String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
-									controller.addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
-								}
-							}
-							// Inserimento email secondarie
-							for (Component compEmailSec : pannelloScrollMail.getComponents())
-							{
-								System.out.println("Primo ciclo for");
-								// se non Ë un button allora Ë il pannello con gli indirizzi
-								if(compEmailSec instanceof JPanel)
-								{
-									// estraggo le informazioni dal panel trovato
-									System.out.println("\tEntrato nell'if del for");
-									String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
-									String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
-									controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
-								}
-							}
-							
-							// vengono associati gli account alle email
-							controller.loadAccountContatto(nuovoContatto);
-							//commit delle informazioni in DB e inserimento del contatto i memoria
-							controller.finalizzaModifica(nuovoContatto);
-							
+							// modifica contatto
+							controller.changeContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione,
+													  textFieldCap, textFieldNumMobile, textFieldNumFisso, percorsoImmagine,
+													  pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
 							// aggiornamento della combobox di listaContatti
 							lista.removeAll();
 							if (controller.getGruppoSelezionato() != null)
@@ -695,6 +624,11 @@ public class ChangeContatto extends JFrame {
 							es.printStackTrace();
 							JOptionPane.showMessageDialog(null, es.getMessage(),
 								      "Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+							System.out.println("Non Ë stato possibile inserire il contatto in memoria");
+						} catch (Exception e1) {
+							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, e1.getMessage(),
+								      "Errore di inserimento", JOptionPane.ERROR_MESSAGE);
 							System.out.println("Non Ë stato possibile inserire il contatto in memoria");
 						}
 					}
@@ -818,23 +752,27 @@ public class ChangeContatto extends JFrame {
 
 	}
 
-	private void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
-						     JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
-						     JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail)
+	public void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
+									 JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
+									 JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail)
 	{
-		Contatto contatto = controller.getContattoSelezionato();
+		boolean flagMobile;
+		boolean flagFisso;
+		Image img;
+		Image imgResized;
+		
 		// inserimento nome contatto
-		textFieldNome.setText(contatto.getNome());
-		textFieldSecondoNome.setText(contatto.getSecondoNome());
-		textFieldCognome.setText(contatto.getCognome());
+		textFieldNome.setText(controller.getContattoSelezionato().getNome());
+		textFieldSecondoNome.setText(controller.getContattoSelezionato().getSecondoNome());
+		textFieldCognome.setText(controller.getContattoSelezionato().getCognome());
 		
 		// inserimento dati contatto
 		lblImmagine = new JLabel("");
-		if (contatto.getPathImmagine() == null || !new File(contatto.getPathImmagine()).exists())
+		if (controller.getContattoSelezionato().getPathImmagine() == null || !new File(controller.getContattoSelezionato().getPathImmagine()).exists())
 		{
 			// immagine di default
-			Image img          = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
+			imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBounds(573, 57, 150, 127);
 			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -843,8 +781,8 @@ public class ChangeContatto extends JFrame {
 		}
 		else {
 			// immagine caricata
-			Image img          = new ImageIcon(contatto.getPathImmagine()).getImage();
-			Image imgResized   = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			img        = new ImageIcon(controller.getContattoSelezionato().getPathImmagine()).getImage();
+			imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBounds(573, 57, 150, 127);
 			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -853,14 +791,14 @@ public class ChangeContatto extends JFrame {
 		}
 		
 		// inserimento indirizzi contatto
-		for (Indirizzo indirizzo : contatto.getIndirizzi())
+		for (int i = 0; i < controller.getContattoSelezionato().getIndirizzi().size(); i++)
 		{
-			if (indirizzo.getTipo() == tipoIndirizzo.Principale)
+			if (controller.checkSeTipoIndirizzoPrincipale(controller.getContattoSelezionato().getIndirizzi().get(i).getTipo()))
 			{
-				textFieldVia.setText(indirizzo.getVia());
-				textFieldCitt‡.setText(indirizzo.getCitta());
-				textFieldNazione.setText(indirizzo.getNazione());
-				textFieldCap.setText(indirizzo.getCap());
+				textFieldVia.setText(controller.getContattoSelezionato().getIndirizzi().get(i).getVia());
+				textFieldCitt‡.setText(controller.getContattoSelezionato().getIndirizzi().get(i).getCitta());
+				textFieldNazione.setText(controller.getContattoSelezionato().getIndirizzi().get(i).getNazione());
+				textFieldCap.setText(controller.getContattoSelezionato().getIndirizzi().get(i).getCap());
 			}
 			else 
 			{
@@ -869,7 +807,10 @@ public class ChangeContatto extends JFrame {
 				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				btnCancella.setBackground(new Color(204,255,255));
 				
-				elemento = creaElemScrollBar(indirizzo.getVia(), indirizzo.getCitta(), indirizzo.getNazione(), indirizzo.getCap());
+				elemento = creaElemScrollBar(controller.getContattoSelezionato().getIndirizzi().get(i).getVia(),
+											 controller.getContattoSelezionato().getIndirizzi().get(i).getCitta(),
+											 controller.getContattoSelezionato().getIndirizzi().get(i).getNazione(),
+											 controller.getContattoSelezionato().getIndirizzi().get(i).getCap());
 				pannelloScrollIndirizziSec.add(btnCancella);
 				pannelloScrollIndirizziSec.add(elemento);
 				/* button per cancellare un indirizzo secondario */
@@ -880,27 +821,25 @@ public class ChangeContatto extends JFrame {
 						
 						pannelloScrollIndirizziSec.remove(btnCancella);
 						pannelloScrollIndirizziSec.remove(elemento);
-						revalidate();
-						repaint();
 					}
 				});
 			}
 		}
 		
 		// inserimento numeri di telefono del contatto
-		boolean flagMobile = false;
-		boolean flagFisso  = false;
+		flagMobile = false;
+		flagFisso  = false;
 		
-		for (Telefono telefono : contatto.getTelefoni())
+		for (int i = 0; i < controller.getContattoSelezionato().getTelefoni().size(); i++)
 		{
-			if      (flagMobile == false && telefono.getTipo().equals("Mobile") )
+			if      (flagMobile == false && controller.getContattoSelezionato().getTelefoni().get(i).getTipo().equals("Mobile") )
 			{
-				textFieldNumMobile.setText(telefono.getNumero());
+				textFieldNumMobile.setText(controller.getContattoSelezionato().getTelefoni().get(i).getNumero());
 				flagMobile = true;
 			}
-			else if (flagFisso == false && telefono.getTipo().equals("Fisso") )
+			else if (flagFisso == false && controller.getContattoSelezionato().getTelefoni().get(i).getTipo().equals("Fisso") )
 			{
-				textFieldNumFisso.setText(telefono.getNumero());
+				textFieldNumFisso.setText(controller.getContattoSelezionato().getTelefoni().get(i).getNumero());
 				flagFisso = true;
 			}
 			else 
@@ -910,7 +849,8 @@ public class ChangeContatto extends JFrame {
 				btnCancellaNumSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				btnCancellaNumSec.setBackground(new Color(204,255,255));
 				
-				numero = creaSecNumb(telefono.getTipo(), telefono.getNumero());
+				numero = creaSecNumb(controller.getContattoSelezionato().getTelefoni().get(i).getTipo(),
+						             controller.getContattoSelezionato().getTelefoni().get(i).getNumero());
 				numero.setMaximumSize(new Dimension(500, 20));
 				
 				pannelloScrolNumTel.add(btnCancellaNumSec);
@@ -923,22 +863,21 @@ public class ChangeContatto extends JFrame {
 						
 						pannelloScrolNumTel.remove(btnCancellaNumSec);
 						pannelloScrolNumTel.remove(numero);
-						revalidate();
-						repaint();
 					}
 				});
 			}
 		}
 		
 		// inserimento email del contatto
-		for (Email email : contatto.getEmail())
+		for (int i = 0; i < controller.getContattoSelezionato().getEmail().size(); i++)
 		{
 			JPanel mail;
 			JButton btnCancellaMailSec = new JButton();
 			btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 			btnCancellaMailSec.setBackground(new Color(204,255,255));
 			
-			mail = creaSecMail(email.getTipo(), email.getStringaEmail());
+			mail = creaSecMail(controller.getContattoSelezionato().getEmail().get(i).getTipo(),
+							   controller.getContattoSelezionato().getEmail().get(i).getStringaEmail());
 			mail.setMaximumSize(new Dimension(500, 20));
 			
 			pannelloScrollMail.add(btnCancellaMailSec);
@@ -951,13 +890,9 @@ public class ChangeContatto extends JFrame {
 					
 					pannelloScrollMail.remove(btnCancellaMailSec);
 					pannelloScrollMail.remove(mail);
-					revalidate();
-					repaint();
 				}
 			});
 		}
-		revalidate();
-		repaint();
 	}
 	
 	private JPanel creaElemScrollBar(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)

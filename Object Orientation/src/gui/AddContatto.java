@@ -2,9 +2,6 @@ package gui;
 
 import controller.Controller;
 
-import model.Contatto;
-import java.awt.BorderLayout;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -15,26 +12,24 @@ import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.ScrollPaneConstants;
 
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import java.awt.Font;
-
 import java.awt.Dimension;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-
 import java.awt.Component;
-import javax.swing.ScrollPaneConstants;
+
+import java.sql.SQLException;
 
 @SuppressWarnings("serial")
 public class AddContatto extends JFrame {
@@ -558,73 +553,12 @@ public class AddContatto extends JFrame {
 					textFieldNumFisso.setBackground(Color.WHITE);
 				}
 				if (valido == 1) {
-					System.out.println("Puoi inserire i tuoi dati con successo ora!");
-					int id = -1;
-					// inserimenti principali
+					System.out.println("DEBUG: Puoi inserire i tuoi dati con successo ora!");
 					try {
-						// contatto creato
-						Contatto nuovoContatto;
-						// inserimento in database
-						id = controller.inizializzaInserimento();
-						nuovoContatto = controller.addContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
-											   				   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
-											   		           textFieldCitt‡.getText(),     textFieldNazione.getText(),     textFieldCap.getText(),
-											   		           id);
-						// INSERIMENTI SECONDARI
-						// inserimento immagine
-						if (percorsoImmagine != null)
-						{
-							// TODO: gestire inserimento immagine
-							controller.addImmagine(nuovoContatto, percorsoImmagine);
-						}
-						// Inserimento indirizzi secondari
-						for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
-						{
-							System.out.println("Debug: Primo ciclo for");
-							// se non Ë un button allora Ë il pannello con gli indirizzi
-							if(compIndirizzoSec instanceof JPanel)
-							{
-								// estraggo le informazioni dal panel trovato
-								System.out.println("\t Debug: Entrato nell'if del for");
-								String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
-								String citt‡Sec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
-								String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
-								String capSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[7]).getText();
-								controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
-							}
-						}
-						// Inserimento numeri secondari
-						for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
-						{
-							System.out.println("Primo ciclo for");
-							// se non Ë un button allora Ë il pannello con gli indirizzi
-							if(compNumeroSec instanceof JPanel)
-							{
-								// estraggo le informazioni dal panel trovato
-								System.out.println("\tEntrato nell'if del for");
-								String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
-								String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
-								controller.addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
-							}
-						}
-						// Inserimento email secondarie
-						for (Component compEmailSec : pannelloScrollMail.getComponents())
-						{
-							System.out.println("Primo ciclo for");
-							// se non Ë un button allora Ë il pannello con gli indirizzi
-							if(compEmailSec instanceof JPanel)
-							{
-								// estraggo le informazioni dal panel trovato
-								System.out.println("\tEntrato nell'if del for");
-								String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
-								String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
-								controller.addEmailSec(nuovoContatto, emailSec, descrizioneSec);
-							}
-						}
-						// vengono associati gli account alle email
-						controller.loadAccountContatto(nuovoContatto);
-						//commit delle informazioni in DB e inserimento del contatto i memoria
-						controller.finalizzaInserimento(nuovoContatto);
+						// inserimento contatto
+						controller.addContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione, textFieldCap,
+												textFieldNumMobile, textFieldNumFisso, percorsoImmagine,
+												pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail);
 						
 						// aggiornamento della combobox di listaContatti
 						lista.removeAll();
@@ -644,6 +578,12 @@ public class AddContatto extends JFrame {
 						es.printStackTrace();
 						JOptionPane.showMessageDialog(null, es.getMessage(),
 							      "Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
+						System.out.println("Non Ë stato possibile inserire il contatto in memoria");
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(null, e1.getMessage(),
+							      "Errore di inserimento", JOptionPane.ERROR_MESSAGE);
 						System.out.println("Non Ë stato possibile inserire il contatto in memoria");
 					}
 				}

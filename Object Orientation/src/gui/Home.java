@@ -1,24 +1,23 @@
 package gui;
 
+import controller.Controller;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-
-import controller.Controller;
-import model.Rubrica;
-
 import javax.swing.JComboBox;
-import java.awt.Image;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+
+import java.awt.Image;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Classe che implementa il frame della home 
@@ -164,9 +163,9 @@ public class Home extends JFrame {
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
 	                                                			JOptionPane.ERROR_MESSAGE );
 						}
-						for(Rubrica r:controller.getRubriche()) 
+						for(String s : controller.getNomiRubriche()) 
 						{
-							System.out.print(r.getNome()+"   ");
+							System.out.print(s +"   ");
 						}
 						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
@@ -187,7 +186,7 @@ public class Home extends JFrame {
 					int input = JOptionPane.showOptionDialog(rootPane, visualizzata, "Elimina rubrica", JOptionPane.YES_NO_OPTION,
 													 		 JOptionPane.WARNING_MESSAGE, null, opzioni, null);
 					// Se scelta Yes
-					if(input == 0) 
+					if(input == 0)
 					{
 						try 
 						{
@@ -205,9 +204,9 @@ public class Home extends JFrame {
                                             		   	   JOptionPane.ERROR_MESSAGE );
 						}
 						//debug manuale
-						for(Rubrica r:controller.getRubriche()) 
+						for(String s : controller.getNomiRubriche()) 
 						{
-							System.out.print(r.getNome()+"   ");
+							System.out.print(s +"   ");
 						}
 						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
@@ -240,9 +239,9 @@ public class Home extends JFrame {
                                              		   JOptionPane.ERROR_MESSAGE );
 					}
 					//debug manuale
-					for(Rubrica r:controller.getRubriche()) 
+					for(String s : controller.getNomiRubriche()) 
 					{
-						System.out.print(r.getNome()+"   ");
+						System.out.print(s +"   ");
 					}
 					//System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}

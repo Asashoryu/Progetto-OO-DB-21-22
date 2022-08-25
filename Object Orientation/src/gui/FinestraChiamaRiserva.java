@@ -1,27 +1,23 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import javax.swing.JButton;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
-import javax.swing.JButton;
 import java.awt.Color;
 
 public class FinestraChiamaRiserva extends JFrame {
 
 	private JPanel contentPane;
 
-	
-	public FinestraChiamaRiserva( String NumeroDiRiserva) {
+	public FinestraChiamaRiserva(String NumeroDiRiserva) {
 		setResizable(false);
 		JFrame frame = this;
 		
@@ -67,5 +63,4 @@ public class FinestraChiamaRiserva extends JFrame {
 			});
 		}).start();
 	}
-
 }

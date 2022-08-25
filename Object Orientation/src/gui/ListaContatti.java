@@ -1,25 +1,25 @@
 package gui;
+
 import controller.Controller;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-
-import javax.swing.JScrollPane;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.UIManager;
 import java.awt.Dimension;
+
+import java.sql.SQLException;
 
 @SuppressWarnings("serial")
 public class ListaContatti extends JFrame {
@@ -202,7 +202,7 @@ public class ListaContatti extends JFrame {
 		
 		String[] FiltroRicerca = {"Nome", "Email", "Account", "Numero di Telefono"};
 		
-		JComboBox comboBoxFiltroRicerca = new JComboBox(FiltroRicerca);
+		JComboBox<String> comboBoxFiltroRicerca = new JComboBox<String>(FiltroRicerca);
 		comboBoxFiltroRicerca.setForeground(new Color(102, 102, 153));
 		comboBoxFiltroRicerca.setBackground(new Color(255, 255, 255));
 		comboBoxFiltroRicerca.setToolTipText("Elenco dei filtri utilizzabili per la ricerca dei contatti");

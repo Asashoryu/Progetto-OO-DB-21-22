@@ -1,16 +1,6 @@
 package gui;
 
 import controller.Controller;
-import model.Contatto;
-import model.Gruppo;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,6 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Font;
 
 @SuppressWarnings("serial")
@@ -133,9 +129,7 @@ public class ChangeGruppo extends JFrame{
 				// Verifica preventiva se sono state rilevate delle modifiche
 				if (checkModificato(pannelloContatti))
 				{
-					
-					ArrayList<Contatto> contatti = new ArrayList<>();
-					int indice = 0;
+					Boolean selezionatoAlmenoUno = false;
 					// aggiunta dei contatti selezionati all'ArrayList 'contatti'
 					for (Component scrollComponent : pannelloContatti.getComponents())
 					{
@@ -147,23 +141,21 @@ public class ChangeGruppo extends JFrame{
 //						controller.addIndirizzoSec(nuovoContatto, viaSec, cittàSec, nazioneSec, capSec);
 							if (checkbox.isSelected())
 							{
-								contatti.add(controller.getRubricaSelezionata().getContatti().get(indice));
-								System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + controller.getRubricaSelezionata().getContatti().get(indice).getNome());
+								selezionatoAlmenoUno = true;
+								break;
 							}
 						}
 						
-						indice++;
 					}
 					// controlli e inserimento
 					if (!textFieldNome.getText().isBlank())
 					{
 						textFieldNome.setBackground(Color.WHITE);
-						if (contatti.size() > 0)
+						if (selezionatoAlmenoUno == true)
 						{
-							Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
 							try
 							{
-								controller.changeGruppo(nuovoGruppo);
+								controller.changeGruppo(textFieldNome, pannelloContatti);
 								listaGruppiChiamante.removeAll();
 								listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
 								JOptionPane.showConfirmDialog(null, 
@@ -211,9 +203,9 @@ public class ChangeGruppo extends JFrame{
 			panel = new JPanel();
 			checkbox = new JCheckBox(nomeContatto);
 			checkbox.setBackground(new Color(204, 255, 255));
-			for (Contatto contatto : controller.getGruppoSelezionato().getContatti())
+			for (int j = 0; j < controller.getGruppoSelezionato().getContatti().size(); j++)
 			{
-				if (contatto == controller.getRubricaSelezionata().getContatti().get(i))
+				if (controller.getGruppoSelezionato().getContatti().get(j) == controller.getRubricaSelezionata().getContatti().get(i))
 				{
 					checkbox.setSelected(true);
 				}
@@ -226,8 +218,6 @@ public class ChangeGruppo extends JFrame{
 			i++;
 		}
 	}
-	
-	
 	
 	private boolean checkModificato(JPanel pannelloContatti)
 	{
@@ -244,9 +234,9 @@ public class ChangeGruppo extends JFrame{
 		for (Component component : pannelloContatti.getComponents())
 		{
 			trovato = false;
-			for (Contatto contatto : controller.getGruppoSelezionato().getContatti())
+			for (int j = 0; j < controller.getGruppoSelezionato().getContatti().size(); j++)
 			{
-				if (contatto == controller.getRubricaSelezionata().getContatti().get(i))
+				if (controller.getGruppoSelezionato().getContatti().get(j) == controller.getRubricaSelezionata().getContatti().get(i))
 				{
 					trovato = true;
 				}
@@ -260,6 +250,5 @@ public class ChangeGruppo extends JFrame{
 		}
 		
 		return modificato;
-		
 	}
 }

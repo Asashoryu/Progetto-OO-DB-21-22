@@ -16,7 +16,7 @@ public class MainEntryPoint {
 			public void run() {
 				try {
 					Controller c = new Controller();
-					Home window  = new Home(c);
+					new Home(c);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

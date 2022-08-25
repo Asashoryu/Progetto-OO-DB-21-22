@@ -14,9 +14,9 @@ public interface RubricaDAO {
 	public Connection apriConnessione();
 	public Connection getConnessione();
 	public int generaContattoID(Connection connTransazione) throws SQLException;
-	public void addContatto(String nomeRubrica, String nome, String secondonome, String cognome, String numMobile,
+	public void addInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome, String numMobile,
 			String numFisso, String via, String citta, String nazione, String cap, int id, Connection connessione) throws SQLException;
-	public void changeContatto(String nomeRubrica, String nome, String secondonome, String cognome,
+	public void changeInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 			String numMobile, String numFisso, String via, String citta, String nazione, String cap,
 			int vecchioContattoId, Connection connessione) throws SQLException;
 	public void addImmagine(String pathImmagine, int id, Connection connTransazione) throws SQLException;
@@ -26,8 +26,8 @@ public interface RubricaDAO {
 			throws SQLException;
 	public void loadAccountContatto(Contatto contatto, Connection connTransazione) throws SQLException;
 	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException;
-	public void addGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception;
+	public void addInfoGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception;
 	public void deleteGruppo(int codiceGruppo, Connection connessione) throws SQLException;
-	public void changeGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException;
+	public void changeInfoGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException;
 	
 }
