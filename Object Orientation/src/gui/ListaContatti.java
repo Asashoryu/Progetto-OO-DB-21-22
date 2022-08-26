@@ -43,6 +43,7 @@ public class ListaContatti extends JFrame {
         // Display the window.
         frame.setTitle("Rubrica di "+controller.getRubricaSelezionata().getNome());
         frame.setBounds(500, 200,660,460);
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
@@ -202,7 +203,7 @@ public class ListaContatti extends JFrame {
 		
 		String[] FiltroRicerca = {"Nome", "Email", "Account", "Numero di Telefono"};
 		
-		JComboBox<String> comboBoxFiltroRicerca = new JComboBox<String>(FiltroRicerca);
+		JComboBox<Object> comboBoxFiltroRicerca = new JComboBox<Object>(FiltroRicerca);
 		comboBoxFiltroRicerca.setForeground(new Color(102, 102, 153));
 		comboBoxFiltroRicerca.setBackground(new Color(255, 255, 255));
 		comboBoxFiltroRicerca.setToolTipText("Elenco dei filtri utilizzabili per la ricerca dei contatti");

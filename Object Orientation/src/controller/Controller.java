@@ -299,7 +299,7 @@ public class Controller {
 		return nomiContattiGruppo;
 	}
 	
-	public int inizializzaInserimento() throws SQLException
+	private int inizializzaInserimento() throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		connTransazione = rubricaPosgr.apriConnessione();
@@ -307,15 +307,16 @@ public class Controller {
 		return rubricaPosgr.generaContattoID(connTransazione);
 	}
 	
-	public void finalizzaInserimento(Contatto contatto) throws SQLException
+	private void finalizzaInserimento(Contatto contatto) throws SQLException
 	{
 		connTransazione.commit();
+		connTransazione.close();
 		System.out.println("Commit riuscito");
 		rubricaSelezionata.getContatti().add(contatto);
 		connTransazione = null;
 	}
 	
-	public void inizializzaModifica() throws SQLException
+	private void inizializzaModifica() throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		connTransazione = rubricaPosgr.apriConnessione();
@@ -328,6 +329,7 @@ public class Controller {
 		int indiceVecchioGruppo;
 		Boolean modifica;
 		connTransazione.commit();
+		connTransazione.close();
 		System.out.println("Commit riuscito");
 		// sostituisco il nuovo contatto col vecchio in rubrica
 		indiceVecchioRubrica = rubricaSelezionata.getContatti().indexOf(contattoSelezionato);
@@ -418,7 +420,7 @@ public class Controller {
 	 * @param cap
 	 * @throws SQLException
 	 */
-	public void addIndirizzoSec(Contatto contatto, String via, String città, String nazione, String cap) throws SQLException
+	private void addIndirizzoSec(Contatto contatto, String via, String città, String nazione, String cap) throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
@@ -439,7 +441,7 @@ public class Controller {
 	 * @param descrizione
 	 * @throws SQLException
 	 */
-	public void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
+	private void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
@@ -460,7 +462,7 @@ public class Controller {
 	 * @param descrizione
 	 * @throws SQLException
 	 */
-	public void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
+	private void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
@@ -516,7 +518,7 @@ public class Controller {
 		}
 	}
 	
-	public void addInfoGruppo(Gruppo nuovoGruppo) throws Exception {
+	private void addInfoGruppo(Gruppo nuovoGruppo) throws Exception {
 		Connection conn;
 		try {
 			// cancellazione dal DB
@@ -571,7 +573,7 @@ public class Controller {
 		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNome(text);
 		gruppoSelezionato = gruppoRicerca;
 	}
-	// TODO: da rivedere
+	
 	public void cercaPerEmail(String text) {
 		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerEmail(text);
 		gruppoSelezionato = gruppoRicerca;

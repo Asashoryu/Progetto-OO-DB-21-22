@@ -28,7 +28,7 @@ public class Contatto{
 		setSecondoNome(secondonome);
 		setCognome(cognome);
 		setPathImmagine(pathImmagine);
-		setId(id);
+		setId(id); 
 		telefoni  = new ArrayList<Telefono>();
 		email     = new ArrayList<Email>();
 		indirizzi = new ArrayList<Indirizzo>();
@@ -126,5 +126,47 @@ public class Contatto{
 	public void addIndirizzo(String via, String citta, String nazione, String cap, tipoIndirizzo tipo) {
 		Indirizzo nuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
 		indirizzi.add(nuovoIndirizzo);
+	}
+	
+	public String reindirizza(String numeroDaReindirizzare) {
+		Telefono telefonoTrovato = null;
+		Telefono telefonoMobile  = null;
+		Telefono telefonoFisso   = null;
+		for (Telefono telefono : getTelefoni())
+		{
+			if (telefono.getNumero().equals(numeroDaReindirizzare))
+			{
+				telefonoTrovato = telefono;
+				System.out.println("\nDebug: Trovato il numero chiamato in model "+ telefono.getTipo());
+			}
+			else 
+			{
+				System.out.println("D:" + telefono.getNumero()+ " di tipo " +telefono.getTipo());
+				if (telefono.getTipo().equals("Mobile") && telefonoMobile == null)
+				{
+					System.out.println("Debug: Trovato mobile");
+					telefonoMobile = telefono;
+				}
+				if (telefono.getTipo().equals("Fisso") && telefonoFisso == null)
+				{
+					System.out.println("Debug: Trovato fisso");
+					telefonoFisso = telefono;
+				}
+			}
+		}
+		if (telefonoTrovato != null)
+		{
+			if (telefonoTrovato.getTipo().equals("Mobile") && telefonoFisso != null)
+			{
+				System.out.println("Debug: Ritorna num fisso");
+				return telefonoFisso.getNumero();
+			}
+			if (telefonoTrovato.getTipo().equals("Fisso") && telefonoMobile != null)
+			{
+				System.out.println("Debug: Ritorna num mobile");
+				return telefonoMobile.getNumero();
+			}
+		}
+		return null;
 	}
 }

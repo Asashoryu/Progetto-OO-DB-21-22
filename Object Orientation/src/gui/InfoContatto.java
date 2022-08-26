@@ -366,7 +366,7 @@ public class InfoContatto extends JFrame {
 		
 		btnChiama.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumMobile.getText().toString(), textFieldNumFisso.getText().toString());
+				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumMobile.getText().toString());
 				Chiama.setVisible(true);
 				//frame.dispose();
 				
@@ -375,7 +375,7 @@ public class InfoContatto extends JFrame {
 			
 		btnChiama_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumFisso.getText().toString(), textFieldNumMobile.getText().toString());
+				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumFisso.getText().toString());
 				Chiama.setVisible(true);
 				//frame.dispose();
 			}
@@ -478,7 +478,7 @@ public class InfoContatto extends JFrame {
 							   controller.getContattoSelezionato().getEmail().get(i).getStringaEmail());
 			pannelloScrollMail.add(mail);
 			for (int j = 0; j < controller.getContattoSelezionato().getEmail().get(i).getAccount().size(); j++)
-			{
+			{ 
 				JPanel accountJP;
 				
 				accountJP = creaAccountScrollBar(controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getFornitore(),
@@ -486,7 +486,7 @@ public class InfoContatto extends JFrame {
 												 controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getNickname());
 				pannelloScrollAccount.add(accountJP);
 				
-				JLabel lblSpace     = new JLabel(" ");
+				JLabel lblSpace = new JLabel(" ");
 				pannelloScrollAccount.add(lblSpace);
 			}
 		}

@@ -380,8 +380,8 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	@Override
 	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException
 	{
-		System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
 		try {
+				System.out.println(" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
 				PreparedStatement cancellaContatto = connessione.prepareStatement(
 						" DELETE FROM Contatto WHERE Contatto_ID = " + codiceContatto + "; ");
 				cancellaContatto.executeUpdate();
@@ -416,6 +416,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				aggiungiContatto.executeUpdate();
 			}
 			connessione.commit();
+			connessione.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 			connessione.rollback();
@@ -462,6 +463,7 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				aggiungiContatto.executeUpdate();
 			}
 			connessione.commit();
+			connessione.close();
 		} catch (Exception e) {
 			connessione.rollback();
 			throw e;

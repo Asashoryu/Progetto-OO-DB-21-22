@@ -19,8 +19,9 @@ import java.awt.Color;
 public class FinestraChiama extends JFrame {
 
 	private JPanel contentPane;
+	private String numeroRiserva;
 
-	public FinestraChiama(Controller c, String NumeroChiamato, String NumeroRiserva) {
+	public FinestraChiama(Controller c, String numeroChiamato) {
 		setResizable(false);
 		JFrame frame = this;
 
@@ -33,7 +34,7 @@ public class FinestraChiama extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblChiamando = new JLabel("Sto chiamando " + controller.getContattoSelezionato().getNome() + " al numero " + NumeroChiamato + "...");
+		JLabel lblChiamando = new JLabel("Sto chiamando " + controller.getContattoSelezionato().getNome() + " al numero " + numeroChiamato + "...");
 		lblChiamando.setForeground(new Color(204, 255, 255));
 		lblChiamando.setFont(new Font("Arial", Font.PLAIN, 16));
 		lblChiamando.setHorizontalAlignment(SwingConstants.CENTER);
@@ -60,11 +61,12 @@ public class FinestraChiama extends JFrame {
 			contentPane.add(btnChiama);
 			btnChiama.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				JLabel lblReindirizzato = new JLabel("Chiamando il numero di riserva " + NumeroRiserva + "...");
+				numeroRiserva = controller.getContattoSelezionato().reindirizza(numeroChiamato);
+				JLabel lblReindirizzato = new JLabel("Chiamando il numero di riserva " + numeroRiserva + "...");
 				lblReindirizzato.setHorizontalAlignment(SwingConstants.CENTER);
 				lblReindirizzato.setFont(new Font("Arial", Font.PLAIN, 16));
 				lblReindirizzato.setBounds(10, 10, 416, 27);
-				FinestraChiamaRiserva FinestraCR = new FinestraChiamaRiserva(NumeroRiserva);
+				FinestraChiamaRiserva FinestraCR = new FinestraChiamaRiserva(numeroRiserva);
 				FinestraCR.setVisible(true);
 				frame.dispose();
 				}
