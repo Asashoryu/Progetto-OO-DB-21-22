@@ -30,7 +30,7 @@ public class Home extends JFrame {
 	private JFrame frame;
 	private JLabel lblNewLabel;
 	private DefaultComboBoxModel<Object> comboBoxModel;
-	private JComboBox<Object> comboBox;
+	private JComboBox<Object> comboBoxRubriche;
 	private JButton btnModifica;
 	private JTextField txtUtenteSelezionato;
 	private JButton btnEntra;
@@ -42,7 +42,7 @@ public class Home extends JFrame {
 	 */
 	public Home(Controller c) {
 		controller=c;
-		initialize();
+		inizializza();
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}
@@ -50,7 +50,7 @@ public class Home extends JFrame {
 	/**
 	 * Inizializza i contenuti del frame
 	 */
-	private void initialize() {
+	private void inizializza() {
 		
 		/**
 		 * Set dei Components
@@ -86,11 +86,11 @@ public class Home extends JFrame {
 		panel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(102, 102, 153));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		comboBox = new JComboBox<Object>(comboBoxModel);
-		comboBox.setBounds(169, 21, 90, 18);
-		panel.add(comboBox);
-		comboBox.setForeground(new Color(102, 102, 153));
-		comboBox.setBackground(new Color(255, 255, 255));
+		comboBoxRubriche = new JComboBox<Object>(comboBoxModel);
+		comboBoxRubriche.setBounds(169, 21, 90, 18);
+		panel.add(comboBoxRubriche);
+		comboBoxRubriche.setForeground(new Color(102, 102, 153));
+		comboBoxRubriche.setBackground(new Color(255, 255, 255));
 		
 		txtUtenteSelezionato = new JTextField("");
 		txtUtenteSelezionato.setBounds(269, 21, 90, 18);
@@ -144,7 +144,7 @@ public class Home extends JFrame {
 				if(txtUtenteSelezionato.getText().isBlank()==false) 
 				{
 				//Fisso la rubrica selezionata dalla combobox attraverso il suo nome
-				controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+				controller.setRubricaSelezionata(comboBoxRubriche.getSelectedIndex());
 					String visualizzata = "Ridenomina ".concat(controller.getRubricaSelezionata().getNome());
 					String stringa = JOptionPane.showInputDialog(null, visualizzata, "Modifica rubrica", JOptionPane.QUESTION_MESSAGE);
 					if(stringa!= null && stringa.isBlank()==false) 
@@ -153,11 +153,11 @@ public class Home extends JFrame {
 						{
 							controller.updateRubrica(stringa);
 							//In caso di Exception non entra in questo punto
-							int indiceSelezionato = comboBox.getSelectedIndex();
+							int indiceSelezionato = comboBoxRubriche.getSelectedIndex();
 							comboBoxModel.removeElementAt(indiceSelezionato);
 							comboBoxModel.insertElementAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
-							comboBox.setSelectedIndex(indiceSelezionato);
-							System.out.println("Utente modificato in "+ comboBox.getSelectedItem().toString());
+							comboBoxRubriche.setSelectedIndex(indiceSelezionato);
+							System.out.println("Utente modificato in "+ comboBoxRubriche.getSelectedItem().toString());
 						} catch (Exception e2) 
 						{
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
@@ -190,10 +190,10 @@ public class Home extends JFrame {
 					{
 						try 
 						{
-							int indiceSelezionato = comboBox.getSelectedIndex();
+							int indiceSelezionato = comboBoxRubriche.getSelectedIndex();
 							//rimuove dalla rubrica nel DB e in memoria
 							controller.setRubricaSelezionata(indiceSelezionato);
-							controller.deleteRubrica();
+							controller.deleteRubricaSelezionata();
 							//Una volta effettuate le modifiche nel DB e in memoria, si aggiorna il frame
 							comboBoxModel.removeElementAt(indiceSelezionato);
 						} 
@@ -227,10 +227,10 @@ public class Home extends JFrame {
 						controller.addRubrica(stringaDaInserire);
 						//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
 						System.out.println("Valore aggiunto con successo!\n");
-						comboBox.addItem((Object) stringaDaInserire);
-						comboBox.setSelectedIndex(comboBoxModel.getIndexOf(stringaDaInserire));
+						comboBoxRubriche.addItem((Object) stringaDaInserire);
+						comboBoxRubriche.setSelectedIndex(comboBoxModel.getIndexOf(stringaDaInserire));
 						txtUtenteSelezionato.setText(stringaDaInserire);
-						System.out.println("Utente aggiunto è "+ comboBox.getSelectedItem().toString());
+						System.out.println("Utente aggiunto è "+ comboBoxRubriche.getSelectedItem().toString());
 					} 
 					catch (Exception e2) 
 					{
@@ -253,7 +253,7 @@ public class Home extends JFrame {
 			{
 				if (txtUtenteSelezionato.getText().isBlank() == false) 
 				{
-					controller.setRubricaSelezionata(comboBox.getSelectedIndex());
+					controller.setRubricaSelezionata(comboBoxRubriche.getSelectedIndex());
 					try {
 						controller.loadContatti();
 						controller.loadGruppi();
@@ -268,7 +268,7 @@ public class Home extends JFrame {
 				}
 			}
 		});
-		comboBox.addActionListener(new ActionListener() 
+		comboBoxRubriche.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -290,7 +290,7 @@ public class Home extends JFrame {
 		 */
 		if(controller.getRubriche().size()!=0) 
 		{
-			txtUtenteSelezionato.setText(comboBox.getItemAt(0).toString());
+			txtUtenteSelezionato.setText(comboBoxRubriche.getItemAt(0).toString());
 			controller.setRubricaSelezionata(0);
 		}
 		

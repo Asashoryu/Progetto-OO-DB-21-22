@@ -14,11 +14,12 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 
 @SuppressWarnings("serial")
-public class FinestraChiamaRiserva extends JFrame {
+public class FrameChiamaRiserva extends JFrame {
 
 	private JPanel contentPane;
+	private JButton btnChiudi;
 
-	public FinestraChiamaRiserva(String NumeroDiRiserva) {
+	public FrameChiamaRiserva(String NumeroDiRiserva) {
 		setResizable(false);
 		JFrame frame = this;
 		
@@ -48,7 +49,7 @@ public class FinestraChiamaRiserva extends JFrame {
 			ChiamataFinita.setBounds(0, 10, 426, 42);
 			contentPane.add(ChiamataFinita);
 			
-			JButton btnChiudi = new JButton("Chiudi"); 
+			btnChiudi = new JButton("Chiudi"); 
 			btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
 			btnChiudi.setForeground(new Color(102,102,153));
 			btnChiudi.setBackground(new Color(204,255,255));

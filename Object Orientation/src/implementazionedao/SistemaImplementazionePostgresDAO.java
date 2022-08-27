@@ -10,12 +10,21 @@ import dao.SistemaDAO;
 import database.ConnessioneDatabase;
 import model.Rubrica;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class SistemaImplementazionePostgresDAO.
+ */
 public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	
+	/** The rubriche. */
 	private ArrayList<Rubrica> rubriche;
 	
+	/** The connection. */
 	private Connection connection;
 	
+	/**
+	 * Instantiates a new sistema implementazione postgres DAO.
+	 */
 	public SistemaImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
@@ -25,6 +34,11 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 		}
 	}
 
+	/**
+	 * Load rubriche.
+	 *
+	 * @return the array list
+	 */
 	public ArrayList<Rubrica> loadRubriche() {
 		PreparedStatement recuperaRubriche;
 		try {
@@ -49,6 +63,13 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	return rubriche;		
 	}
 	
+	/**
+	 * Update rubrica.
+	 *
+	 * @param vecchiaRubrica the vecchia rubrica
+	 * @param nuovaRubrica the nuova rubrica
+	 * @throws SQLException the SQL exception
+	 */
 	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) throws SQLException {
 		System.out.println("UPDATE Rubrica "+
 				"SET utente_id = "+"\'"+nuovaRubrica+"\' " + 
@@ -67,6 +88,12 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 		}
 	}
 	
+	/**
+	 * Adds the rubrica.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @throws SQLException the SQL exception
+	 */
 	public void addRubrica(String nomeRubrica) throws SQLException {
 		System.out.println("INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
 		try {
@@ -80,6 +107,12 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 		}
 	}
 	
+	/**
+	 * Delete rubrica.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @throws SQLException the SQL exception
+	 */
 	public void deleteRubrica(String nomeRubrica) throws SQLException {
 		System.out.println("DELETE FROM Rubrica WHERE utente_id = "+"\'"+nomeRubrica+"\'");
 		try {

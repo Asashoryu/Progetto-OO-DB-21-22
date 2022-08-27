@@ -247,14 +247,14 @@ public class InfoContatto extends JFrame {
 		scrollPaneEmail.setViewportView(pannelloScrollMail);
 		pannelloScrollMail.setBackground(new Color(255, 255, 255));
 		
-		JButton btnChiudi = new JButton("Chiudi");
-		btnChiudi.setFocusPainted(false);
-		btnChiudi.setBackground(new Color(102, 102, 153));
-		btnChiudi.setForeground(new Color(204, 255, 255));
-		btnChiudi.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiudi.setBounds(10, 10, 85, 21);
-		contentPane.add(btnChiudi);
-		btnChiudi.addActionListener(new ActionListener() {
+		JButton btnIndietro = new JButton("Chiudi");
+		btnIndietro.setFocusPainted(false);
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setForeground(new Color(204, 255, 255));
+		btnIndietro.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnIndietro.setBounds(10, 10, 85, 21);
+		contentPane.add(btnIndietro);
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameChiamante.setVisible(true);
 				frame.dispose();
@@ -347,35 +347,34 @@ public class InfoContatto extends JFrame {
 		
 		
 		//Bottoni di chiamata dei numeri
-		JButton btnChiama = new JButton("Chiama");
-		btnChiama.setForeground(new Color(102, 102, 153));
-		btnChiama.setBackground(new Color(255, 255, 255));
-		btnChiama.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiama.setBounds(498, 147, 85, 21);
-		btnChiama.setFocusPainted(false);
-		contentPane.add(btnChiama);
+		JButton btnChiama1 = new JButton("Chiama");
+		btnChiama1.setForeground(new Color(102, 102, 153));
+		btnChiama1.setBackground(new Color(255, 255, 255));
+		btnChiama1.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnChiama1.setBounds(498, 147, 85, 21);
+		btnChiama1.setFocusPainted(false);
+		contentPane.add(btnChiama1);
 		
-		JButton btnChiama_1 = new JButton("Chiama");
-		btnChiama_1.setForeground(new Color(102, 102, 153));
-		btnChiama_1.setBackground(new Color(255, 255, 255));
-		btnChiama_1.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnChiama_1.setBounds(498, 174, 85, 21);
-		btnChiama_1.setFocusPainted(false);
-		contentPane.add(btnChiama_1);
+		JButton btnChiama2 = new JButton("Chiama");
+		btnChiama2.setForeground(new Color(102, 102, 153));
+		btnChiama2.setBackground(new Color(255, 255, 255));
+		btnChiama2.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnChiama2.setBounds(498, 174, 85, 21);
+		btnChiama2.setFocusPainted(false);
+		contentPane.add(btnChiama2);
 
 		
-		btnChiama.addActionListener(new ActionListener() {
+		btnChiama1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumMobile.getText().toString());
+				FrameChiama Chiama = new FrameChiama(c, textFieldNumMobile.getText().toString());
 				Chiama.setVisible(true);
 				//frame.dispose();
-				
 			}
 		});
 			
-		btnChiama_1.addActionListener(new ActionListener() {
+		btnChiama2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FinestraChiama Chiama = new FinestraChiama(c, textFieldNumFisso.getText().toString());
+				FrameChiama Chiama = new FrameChiama(c, textFieldNumFisso.getText().toString());
 				Chiama.setVisible(true);
 				//frame.dispose();
 			}
@@ -654,6 +653,7 @@ public class InfoContatto extends JFrame {
 		textFieldFraseStato.setEditable(false);
 		textFieldFraseStato.setOpaque(true);
 		textFieldFraseStato.setBackground(new Color(255,255,255));
+		textFieldFraseStato.setCaretPosition(0);
 		panel.add(textFieldFraseStato);
 		textFieldFraseStato.setColumns(10);
 

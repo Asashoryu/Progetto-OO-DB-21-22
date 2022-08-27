@@ -67,14 +67,14 @@ public class ListaContatti extends JFrame {
 		label_5.setBounds(-10007, -10030, 718, 448);
 		getContentPane().add(label_5);
 		
-		JButton btnUscita = new JButton("Indietro");
-		btnUscita.setForeground(new Color(255, 255, 255));
-		btnUscita.setBounds(10, 10, 82, 23);
-		btnUscita.setFont(new Font("Arial", Font.PLAIN, 12));
-		btnUscita.setBorder(UIManager.getBorder("Button.border"));
-		btnUscita.setBackground(new Color(102, 102, 153));
-		btnUscita.setFocusPainted(false);
-		getContentPane().add(btnUscita);
+		JButton btnIndietro = new JButton("Indietro");
+		btnIndietro.setForeground(new Color(255, 255, 255));
+		btnIndietro.setBounds(10, 10, 82, 23);
+		btnIndietro.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnIndietro.setBorder(UIManager.getBorder("Button.border"));
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setFocusPainted(false);
+		getContentPane().add(btnIndietro);
 		
 		JScrollPane scrollPaneContatti = new JScrollPane();
 		scrollPaneContatti.setBounds(10, 106, 258, 198);
@@ -94,34 +94,34 @@ public class ListaContatti extends JFrame {
 		
 		/** carica la Jlist con i nomi dei contatti dal DB */
 		
-		JButton btnModifica = new JButton("Modifica");
-		btnModifica.setForeground(new Color(102, 102, 153));
-		btnModifica.setBackground(new Color(204, 255, 255));
-		btnModifica.setBounds(92, 347, 94, 21);
-		btnModifica.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnModifica.setFocusPainted(false);
-		getContentPane().add(btnModifica);
+		JButton btnModificaContatto = new JButton("Modifica");
+		btnModificaContatto.setForeground(new Color(102, 102, 153));
+		btnModificaContatto.setBackground(new Color(204, 255, 255));
+		btnModificaContatto.setBounds(92, 347, 94, 21);
+		btnModificaContatto.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnModificaContatto.setFocusPainted(false);
+		getContentPane().add(btnModificaContatto);
 		
-		JButton btnElimina = new JButton("-");
-		btnElimina.setForeground(new Color(102, 102, 153));
-		btnElimina.setBackground(new Color(204, 255, 255));
-		btnElimina.setBounds(196, 347, 45, 21);
-		btnElimina.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnElimina.setFocusPainted(false);
-		getContentPane().add(btnElimina);
+		JButton btnEliminaContatto = new JButton("-");
+		btnEliminaContatto.setForeground(new Color(102, 102, 153));
+		btnEliminaContatto.setBackground(new Color(204, 255, 255));
+		btnEliminaContatto.setBounds(196, 347, 45, 21);
+		btnEliminaContatto.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnEliminaContatto.setFocusPainted(false);
+		getContentPane().add(btnEliminaContatto);
 				
 		JLabel lblContatti = new JLabel("Contatti: ");
 		lblContatti.setBounds(10, 75, 143, 21);
 		lblContatti.setFont(new Font("Arial", Font.PLAIN, 15));
 		getContentPane().add(lblContatti);
 		
-		JButton btnAggiungi = new JButton("+");
-		btnAggiungi.setForeground(new Color(102, 102, 153));
-		btnAggiungi.setBackground(new Color(204, 255, 255));
-		btnAggiungi.setBounds(37, 347, 45, 21);
-		btnAggiungi.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnAggiungi.setFocusPainted(false);
-		getContentPane().add(btnAggiungi);
+		JButton btnAggiungiContatto = new JButton("+");
+		btnAggiungiContatto.setForeground(new Color(102, 102, 153));
+		btnAggiungiContatto.setBackground(new Color(204, 255, 255));
+		btnAggiungiContatto.setBounds(37, 347, 45, 21);
+		btnAggiungiContatto.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnAggiungiContatto.setFocusPainted(false);
+		getContentPane().add(btnAggiungiContatto);
 		
 		JLabel lblGruppi = new JLabel("Gruppi: ");
 		lblGruppi.setBounds(336, 75, 143, 21);
@@ -173,22 +173,22 @@ public class ListaContatti extends JFrame {
 		getContentPane().add(btnEliminaGruppo);
 		
 		
-		JButton btnVisualizzaTuttiGruppi = new JButton("Tutti");
-		btnVisualizzaTuttiGruppi.setForeground(new Color(102, 102, 153));
-		btnVisualizzaTuttiGruppi.setToolTipText("Premi per mostrare l'elenco di tutti i contatti della rubrica");
-		btnVisualizzaTuttiGruppi.setBackground(new Color(204, 255, 255));
-		btnVisualizzaTuttiGruppi.setBounds(190, 72, 74, 20);
-		btnVisualizzaTuttiGruppi.setFocusPainted(false);
-		getContentPane().add(btnVisualizzaTuttiGruppi);
+		JButton btnVisualizzaTuttiContatti = new JButton("Tutti");
+		btnVisualizzaTuttiContatti.setForeground(new Color(102, 102, 153));
+		btnVisualizzaTuttiContatti.setToolTipText("Premi per mostrare l'elenco di tutti i contatti della rubrica");
+		btnVisualizzaTuttiContatti.setBackground(new Color(204, 255, 255));
+		btnVisualizzaTuttiContatti.setBounds(190, 72, 74, 20);
+		btnVisualizzaTuttiContatti.setFocusPainted(false);
+		getContentPane().add(btnVisualizzaTuttiContatti);
 		
 		//Bottone per visualizzare un contatto
-		JButton btnInfo = new JButton("Visualizza Contatto");
-		btnInfo.setForeground(new Color(102, 102, 153));
-		btnInfo.setBackground(new Color(204, 255, 255));
-		btnInfo.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnInfo.setBounds(65, 314, 151, 21);
-		btnInfo.setFocusPainted(false);
-		getContentPane().add(btnInfo);
+		JButton btnInfoContatto = new JButton("Visualizza Contatto");
+		btnInfoContatto.setForeground(new Color(102, 102, 153));
+		btnInfoContatto.setBackground(new Color(204, 255, 255));
+		btnInfoContatto.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnInfoContatto.setBounds(65, 314, 151, 21);
+		btnInfoContatto.setFocusPainted(false);
+		getContentPane().add(btnInfoContatto);
 		
 		/**
 		 * Per il pannello di ricerca
@@ -226,7 +226,7 @@ public class ListaContatti extends JFrame {
 		/**
 		 * Quando è premuto il button "Indietro"
 		 */
-		btnUscita.addActionListener(new ActionListener() {
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 frameChiamante.setVisible(true);
 				 frame.dispose();
@@ -236,7 +236,7 @@ public class ListaContatti extends JFrame {
 		/**
 		 * Quando è premuto il button "Aggiungi"
 		 */
-		btnAggiungi.addActionListener(new ActionListener() {
+		btnAggiungiContatto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame AddContatto = new AddContatto(controller, frame, listaContatti);
 				frame.setVisible(false);
@@ -246,7 +246,7 @@ public class ListaContatti extends JFrame {
 		/**
 		 * Quando è premuto il button "Visualizza contatto"
 		 */
-		btnInfo.addActionListener(new ActionListener() {
+		btnInfoContatto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
@@ -261,7 +261,7 @@ public class ListaContatti extends JFrame {
 		/**
 		 * Quando è premuto il button "Modifica"
 		 */
-		btnModifica.addActionListener(new ActionListener() {
+		btnModificaContatto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
@@ -276,7 +276,7 @@ public class ListaContatti extends JFrame {
 		/**
 		 * TODO: Quando è premuto il button "Elimina"
 		 */
-		btnElimina.addActionListener(new ActionListener() {
+		btnEliminaContatto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					// Elimina dalla memoria e dal DB
@@ -318,7 +318,7 @@ public class ListaContatti extends JFrame {
 			}
 		});
 		
-		btnVisualizzaTuttiGruppi.addActionListener(new ActionListener() {
+		btnVisualizzaTuttiContatti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setNullGruppoSelezionato();
@@ -363,7 +363,7 @@ public class ListaContatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
-					JFrame changeGruppo = new ChangeGruppo(controller, frame, listaGruppi);
+					JFrame changeGruppo = new ChangeGruppo(controller, frame, listaContatti, listaGruppi);
 					frame.setVisible(false);
 					changeGruppo.setVisible(true);
 				} catch (IndexOutOfBoundsException e2) {
@@ -384,7 +384,6 @@ public class ListaContatti extends JFrame {
 					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
 					listaContatti.revalidate();
 					listaContatti.repaint();
-					controller.setNullGruppoSelezionato();
 				}
 				// se ricerca per email
 				if (modo == 1)
@@ -394,7 +393,6 @@ public class ListaContatti extends JFrame {
 					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
 					listaContatti.revalidate();
 					listaContatti.repaint();
-					controller.setNullGruppoSelezionato();
 				}
 				// se ricerca per account
 				if (modo == 2)
@@ -404,7 +402,6 @@ public class ListaContatti extends JFrame {
 					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
 					listaContatti.revalidate();
 					listaContatti.repaint();
-					controller.setNullGruppoSelezionato();
 				}
 				// se ricerca per numero di telefono
 				if (modo == 3)
@@ -414,7 +411,6 @@ public class ListaContatti extends JFrame {
 					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
 					listaContatti.revalidate();
 					listaContatti.repaint();
-					controller.setNullGruppoSelezionato();
 				}
 			}
 		});

@@ -24,25 +24,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-/** Gestisce l'interazione dell'interfaccia col model e col DB. */
+/** Gestisce l'interazione dell'interfaccia gui col model e col DB. */
 public class Controller {
 	
 	/** Oggetto contenitore delle rubriche. */
 	private Sistema sistema;
 	
-	/** Rubrica soggetta a operazioni di modifica, cancellazione o selezione. */
+	/** Rubrica selezionata dalla gui e accedibile a tempo costante dal controller, soggetta a operazioni di modifica,
+	 *  cancellazione o selezione. */
 	private Rubrica rubricaSelezionata;
 	
-	/** Contatto soggetto alle operazioni di modifica, cancellazione o selezione. */
+	/** Contatto selezionato dalla gui e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
+	 *  cancellazione o selezione. */
 	private Contatto contattoSelezionato;
 	
-	/** Contatto soggetto alle operazioni di modifica, cancellazione o selezione. */
+	/** Gruppo selezionato dalla gui e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
+	 *  cancellazione o selezione. */
 	private Gruppo gruppoSelezionato;
 	
-	/** Stringa di tutte le operazione che querry da eseguire atomicamente, in una transazione*/
+	/** Oggetto connessione che consente di conservare il collegamento col DB in modo da gestire una transazione composta
+	 * da più query atomiche . */
 	private Connection connTransazione;
 	
-	/**Costruttore del Controller. Carica le rubriche dal DB in memoria */
+	/** Costruttore del Controller. Istanzia il {@link Sistema} e ne carica le rubriche all'avvio della gui */
 	public Controller() 
 	{
 		sistema = new Sistema();
@@ -50,7 +54,7 @@ public class Controller {
 	}
 	
 	/**
-	 * Questo metodo carica le rubriche dal database e le inserisce in memoria
+	 * Carica le rubriche dal database e le inserisce in memoria.
 	 */
 	public void loadRubriche() 
 	{
@@ -59,10 +63,9 @@ public class Controller {
 	}
 	
 	/**
-	 * Metodo usato dalla ComboBox del main. Ritorna un array di nomi delle
-	 * rubriche cui si riferiscono, enumerati nello stesso ordine degli oggetti,
-	 * quindi l'indice di un nome consente di recuperare l'oggetto rubrica
-	 * @return
+	 * Ritorna un array di nomi delle rubriche cui si riferiscono
+	 *
+	 * @return Array dei nomi delle rubriche
 	 */
 	public String[] getNomiRubriche()
 	{
@@ -75,7 +78,9 @@ public class Controller {
 	
 	/**
 	 * Ritorna le rubriche presenti in memoria.
-	 * @return arrayList delle rubriche caricate in memoria.
+	 * 
+	 * @return ArrayList delle rubriche caricate in memoria.
+	 * 
 	 */
 	public ArrayList<Rubrica> getRubriche()
 	{
@@ -83,8 +88,11 @@ public class Controller {
 	}
 	
 	/**
-	 * Imposta la rubrica selezionata dalla combobox attraverso il suo nome, univoco per ogni rubrica
-	 * @param indice
+	 * Fissa localmente la Rubrica selezionata.
+	 *
+	 * @param indice Indice della Rubrica nell'ArrayList delle Rubriche nel {@link Sistema}
+	 * 
+	 * @see rubricaSelezionata
 	 */
 	public void setRubricaSelezionata(int indice) 
 	{
@@ -93,7 +101,10 @@ public class Controller {
 	
 	/**
 	 * Restituisce la rubrica selezionata.
-	 * @return
+	 *
+	 * @return Rubrica selezionata
+	 * 
+	 * @see rubricaSelezionata
 	 */
 	public Rubrica getRubricaSelezionata() 
 	{
@@ -101,9 +112,11 @@ public class Controller {
 	}
 	
 	/**
-	 * Modifica il nome della rubrica selezionata
-	 * @param nuovoNome
-	 * @throws SQLException
+	 * Modifica il nome della rubrica selezionata.
+	 *
+	 * @param nuovoNome Nuovo nome della rubrica
+	 * 
+	 * @throws SQLException SQL exception
 	 */
 	public void updateRubrica(String nuovoNome) throws SQLException 
 	{
@@ -122,8 +135,10 @@ public class Controller {
 	
 	/**
 	 * Crea e aggiunge una rubrica nel DB e in memoria.
-	 * @param nomeRubrica
-	 * @throws SQLException
+	 *
+	 * @param nomeRubrica Nome della rubrica da aggiungere
+	 * 
+	 * @throws SQLException the SQL exception
 	 */
 	public void addRubrica(String nomeRubrica) throws SQLException 
 	{
@@ -143,10 +158,11 @@ public class Controller {
 	}
 	
 	/**
-	 * Cancella dal DB e dalla memoria la rubrica selezionata
-	 * @throws SQLException
+	 * Cancella la rubrica selezionata dal DB e dalla memoria.
+	 *
+	 * @throws SQLException the SQL exception
 	 */
-	public void deleteRubrica() throws SQLException 
+	public void deleteRubricaSelezionata() throws SQLException 
 	{
 		SistemaDAO sistemaPosgr = new SistemaImplementazionePostgresDAO();
 		try
@@ -163,14 +179,18 @@ public class Controller {
 	}
 	
 	/**
-	 * Imposta la rubrica selezionata dalla combobox attraverso il suo nome, univoco per ogni rubrica
-	 * @param indice
+	 * Fissa localmente il Contatto selezionato.
+	 *
+	 * @param indice Indice del Contatto nell'ArrayList della Rubrica selezionata o del Gruppo, se è stato selezionato
+	 * 
+	 * @see rubricaSelezionata
+	 * @see gruppoSelezionato
+	 * @see contattoSelezionato
 	 */
 	public void setContattoSelezionato(int indice) 
 	{
-		// TODO : impostare come viene selezionato il contatto selezionato
-		// Se non è selezionato un gruppo allora il contatto viene selezionato secondo l'indicizzazione della rubrica
-		// Altrimenti è selezionato secondo l'ordine dei contatti 
+		// Se non è selezionato un gruppo allora il contatto viene selezionato secondo l'indicizzazione dell'intera rubrica
+		// altrimenti è selezionato secondo l'ordine dei contatti nel gruppo selezionato
 		if (gruppoSelezionato == null)
 		{
 			contattoSelezionato = rubricaSelezionata.getContatti().get(indice);
@@ -181,32 +201,54 @@ public class Controller {
 	}
 	
 	/**
-	 * Restituisce la rubrica selezionata.
-	 * @return
+	 * Restituisce il contatto selezionato.
+	 *
+	 * @return Contatto selezionato
+	 * 
+	 * @see contattoSelezionato
 	 */
 	public Contatto getContattoSelezionato() 
 	{
 		return contattoSelezionato;
 	}
 	
+	/**
+	 * Fissa localmente il Gruppo selezionato.
+	 *
+	 * @param indice Indice del Gruppo nell'ArrayList della Rubrica selezionata
+	 * 
+	 * @see gruppoSelezionato
+	 * @see rubricaSelezionata
+	 */
 	public void setGruppoSelezionato(int indice) 
 	{
 		gruppoSelezionato = rubricaSelezionata.getGruppi().get(indice);
 	}
 	
+	/**
+	 * Mette a null il Gruppo selezionato
+	 */
 	public void setNullGruppoSelezionato() 
 	{
 		gruppoSelezionato = null;
 	}
 	
+	/**
+	 * Ritorna il Gruppo selezionato.
+	 *
+	 * @return Gruppo selezionato
+	 * 
+	 * @see gruppoSelezionato
+	 */
 	public Gruppo getGruppoSelezionato() 
 	{
 		return gruppoSelezionato;
 	}
 	
 	/**
-	 * Carica i contatti dal DB in memoria.
-	 * @throws Exception 
+	 * Carica i Contatti dal DB in memoria.
+	 *
+	 * @throws Exception the exception
 	 */
 	public void loadContatti() throws Exception 
 	{
@@ -224,6 +266,9 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Carica i Gruppi dal DB in memoria
+	 */
 	public void loadGruppi()
 	{
 		ArrayList<Gruppo> gruppi;
@@ -243,8 +288,8 @@ public class Controller {
 	
 	/**
 	 * Restituisce i nomi di tutti i contatti della rubrica selezionata.
-	 * Necessario per visualizare i nomi nell'interfaccia UI.
-	 * @return	Array di nomi in forma di strighe
+	 * 
+	 * @return	Array di nomi delle Rubriche
 	 */
 	public String[] getNomiContattiRubrica()
 	{
@@ -266,6 +311,11 @@ public class Controller {
 		return nomiContattiRubriche;
 	}
 	
+	/**
+	 * Restituisce i nomi di tutti i gruppi della rubrica selezionata.
+	 *
+	 * @return Array di nomi dei Gruppi
+	 */
 	public String[] getNomiGruppiRubrica()
 	{
 		String[] nomiGruppiRubrica = new String[rubricaSelezionata.getGruppi().size()];
@@ -279,6 +329,11 @@ public class Controller {
 		return nomiGruppiRubrica;
 	}
 	
+	/**
+	 * Ritorna i nomi di tutti i Contatti del Gruppo selezionato.
+	 *
+	 * @return Nomi Contatti Gruppo selezionato
+	 */
 	public String[] getNomiContattiGruppoSelezionato()
 	{
 		String[] nomiContattiGruppo = new String[gruppoSelezionato.getContatti().size()];
@@ -299,6 +354,16 @@ public class Controller {
 		return nomiContattiGruppo;
 	}
 	
+	/**
+	 * Inizializza e avvia la transazione che inserisce il Contatto con tutte le sue informazioni
+	 * (compresi numeri di telefono, indirizzi ed email) nel DB e in memoria.
+	 *
+	 * @return Id del contatto aggiunto nel DB
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 */
 	private int inizializzaInserimento() throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
@@ -307,6 +372,15 @@ public class Controller {
 		return rubricaPosgr.generaContattoID(connTransazione);
 	}
 	
+	/**
+	 * Finalizza e chiude la transazione che inserisce il Contatto con tutte le sue informazioni.
+	 *
+	 * @param contatto Contatto da aggiungere alla rubrica Selezionata
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 */
 	private void finalizzaInserimento(Contatto contatto) throws SQLException
 	{
 		connTransazione.commit();
@@ -316,6 +390,14 @@ public class Controller {
 		connTransazione = null;
 	}
 	
+	/**
+	  * Inizializza e avvia la transazione che modifica il Contatto con tutte le sue informazioni
+	 * (compresi numeri di telefono, indirizzi ed email) nel DB e in memoria.
+	 *
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 */
 	private void inizializzaModifica() throws SQLException
 	{
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
@@ -323,7 +405,16 @@ public class Controller {
 		connTransazione.setAutoCommit(false);
 	}
 	
-	public void finalizzaModifica(Contatto nuovoContatto) throws SQLException
+	/**
+	 * Finalizza e chiude la transazione che modifica il Contatto con tutte le sue informazioni.
+	 *
+	 * @param nuovoContatto Contatto modificato da sostituire nella Rubrica selezionata col precedente
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 */
+	private void finalizzaModifica(Contatto nuovoContatto) throws SQLException
 	{
 		int indiceVecchioRubrica;
 		int indiceVecchioGruppo;
@@ -356,9 +447,33 @@ public class Controller {
 
 		connTransazione = null;
 	}
+	
+	/**
+	 * Aggiunge le informazioni fondamentali del Contatto (informazioni sul nome, indirizzo principale e
+	 * un numero mobile e uno fisso).
+	 *
+	 * @param nome Nome
+	 * @param secondonome Secondo nome 
+	 * @param cognome Cognome
+	 * @param numMobile Numero mobile 
+	 * @param numFisso Numero fisso
+	 * @param via Via
+	 * @param citta Città
+	 * @param nazione Nazione
+	 * @param cap Cap
+	 * @param id Id del Contatto nel DB
+	 * 
+	 * @return Contatto aggiunto
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 * @see model.Indirizzo
+	 * @see model.Telefono
+	 */
 	private Contatto addInfoContatto(String nome, String secondonome, String cognome,
-                            String numMobile, String numFisso, String via, String citta, String nazione, String cap,
-                            int id) throws SQLException
+                            		 String numMobile, String numFisso, String via, String citta, String nazione, String cap,
+                            		 int id) throws SQLException
 	 {
 		Contatto contatto;
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
@@ -376,6 +491,28 @@ public class Controller {
 		return contatto;
 	}
 	
+	/**
+	 * Riaggiunge le informazioni fondamentali del Contatto (informazioni sul nome, indirizzo principale e
+	 * un numero mobile e uno fisso).
+	 *
+	 * @param nome Nome
+	 * @param secondonome Secondo nome 
+	 * @param cognome Cognome
+	 * @param numMobile Numero mobile 
+	 * @param numFisso Numero fisso
+	 * @param via Via
+	 * @param citta Città
+	 * @param nazione Nazione
+	 * @param cap Cap
+	 * 
+	 * @return Contatto aggiunto
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see Contatto
+	 * @see model.Indirizzo
+	 * @see model.Telefono
+	 */
 	private Contatto changeInfoContatto(String nome, String secondonome, String cognome,
             					   String numMobile, String numFisso, String via, String citta, String nazione, String cap) throws SQLException
 	{
@@ -396,7 +533,15 @@ public class Controller {
 		return contatto;
 	}
 	
-	public void addImmagine(Contatto contatto, String pathImmagine) throws SQLException {
+	/**
+	 * Aggiunge un'immagine nel DB e in memoria.
+	 *
+	 * @param contatto Contatto a cui aggiungere l'immagine
+	 * @param pathImmagine Percorso sul disco da cui riperire l'immagine
+	 * 
+	 * @throws SQLException the SQL exception
+	 */
+	private void addImmagine(Contatto contatto, String pathImmagine) throws SQLException {
 		// TODO Auto-generated method stub
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try 
@@ -412,13 +557,17 @@ public class Controller {
 	}
 	
 	/**
+	 * Aggiunge un Indirizzo secondario nel DB e in memoria.
+	 *
+	 * @param contatto Contatto a cui aggiungere l'indirizzo secondario
+	 * @param via Via
+	 * @param città Città
+	 * @param nazione Nazione
+	 * @param cap Cap
 	 * 
-	 * @param contatto
-	 * @param via
-	 * @param città
-	 * @param nazione
-	 * @param cap
-	 * @throws SQLException
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see model.Indirizzo
 	 */
 	private void addIndirizzoSec(Contatto contatto, String via, String città, String nazione, String cap) throws SQLException
 	{
@@ -434,12 +583,17 @@ public class Controller {
 			throw e;
 		}
 	}
+	
 	/**
+	 * Aggiunge un Telefono secondario nel DB e in memoria.
+	 *
+	 * @param contatto Contatto a cui aggiungere il telefono
+	 * @param numero Numero
+	 * @param descrizione Tipo di numero (es. Fisso, Mobile, ecc.)
 	 * 
-	 * @param contatto
-	 * @param numero
-	 * @param descrizione
-	 * @throws SQLException
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see model.Telefono
 	 */
 	private void addTelefonoSec(Contatto contatto, String numero, String descrizione) throws SQLException
 	{
@@ -455,12 +609,17 @@ public class Controller {
 			throw e;
 		}
 	}
+	
 	/**
+	 * Aggiunge una Email secondaria nel DB e in memoria.
+	 *
+	 * @param contatto Contatto a cui aggiungere l'Email
+	 * @param indirizzoEmail the indirizzo email
+	 * @param descrizione Tipo di Email (es. Personale, Ufficio, ecc.)
 	 * 
-	 * @param contatto
-	 * @param indirizzoEmail
-	 * @param descrizione
-	 * @throws SQLException
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see model.Email
 	 */
 	private void addEmailSec(Contatto contatto, String indirizzoEmail, String descrizione) throws SQLException
 	{
@@ -477,6 +636,15 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Carica dal DB in memoria tutti gli Account associati a un Contatto
+	 *
+	 * @param contatto Contatto di cui caricare gli account
+	 * 
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see model.Account
+	 */
 	public void loadAccountContatto(Contatto contatto) throws SQLException {
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 		try
@@ -489,6 +657,13 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Cancella dal DB e dalla memoria il contatto selezionato.
+	 *
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see contattoSelezionato
+	 */
 	public void deleteContattoSelezionato() throws SQLException {
 		// TODO Auto-generated method stub
 		Connection conn;
@@ -505,19 +680,15 @@ public class Controller {
 		}
 	}
 	
-	public void deleteContattoSelezionatoTransazione(int indiceContatto) throws SQLException
-	{
-		try {
-			// cancellazione dal DB
-			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-			rubricaPosgr.deleteContatto(contattoSelezionato.getId(), connTransazione);
-			// cancellazione dalla memoria
-			rubricaSelezionata.getContatti().remove(contattoSelezionato);
-		} catch (SQLException e) {
-			throw e;
-		}
-	}
-	
+	/**
+	 * Aggiunge il Gruppo con i Contatti nel DB e in memoria.
+	 *
+	 * @param nuovoGruppo Gruppo da aggiungere
+	 * 
+	 * @throws Exception the exception
+	 * 
+	 * @see Gruppo
+	 */
 	private void addInfoGruppo(Gruppo nuovoGruppo) throws Exception {
 		Connection conn;
 		try {
@@ -532,6 +703,13 @@ public class Controller {
 		}
 	}
 	
+	/**
+	 * Elimina il Gruppo selezionato dalla memoria e dal DB.
+	 *
+	 * @throws SQLException the SQL exception
+	 * 
+	 * @see gruppoSelezionato
+	 */
 	public void deleteGruppoSelezionato() throws SQLException
 	{
 		Connection conn;
@@ -548,7 +726,16 @@ public class Controller {
 		}
 	}
 	
-	public void changeInfoGruppo(Gruppo nuovoGruppo) throws Exception 
+	/**
+	 * Riaggiunge il Gruppo con i Contatti nel DB e in memoria.
+	 *
+	 * @param nuovoGruppo Gruppo da aggiungere
+	 * 
+	 * @throws Exception the exception
+	 * 
+	 * @see Gruppo
+	 */
+	private void changeInfoGruppo(Gruppo nuovoGruppo) throws Exception 
 	{
 		Connection conn;
 		int indiceVecchio;
@@ -563,32 +750,107 @@ public class Controller {
 			indiceVecchio = rubricaSelezionata.getGruppi().indexOf(gruppoSelezionato);
 			rubricaSelezionata.getGruppi().remove(gruppoSelezionato);
 			rubricaSelezionata.getGruppi().add(indiceVecchio, nuovoGruppo);
+			setGruppoSelezionato(indiceVecchio);
 		} catch (SQLException e) {
 			throw e;
 		}
 	}
 
+	/**
+	 * Svolge una ricerca per sottostringa confrontando i nomi dei Contatti della Rubrica selezionata, dopodiché crea un
+	 * Gruppo temporaneo costituito dai Contatti trovati e lo imposta come Gruppo selezionato
+	 *
+	 * @param text Stringa rispetto a cui avviene la ricerca
+	 * 
+	 * @see Gruppo
+	 * @see Contatto
+	 */
 	public void cercaPerNome(String text) 
 	{
-		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNome(text);
+		Gruppo gruppoRicerca = new Gruppo();
+		gruppoRicerca.setContatti(rubricaSelezionata.cercaPerNome(text));
 		gruppoSelezionato = gruppoRicerca;
 	}
 	
+	/**
+	 * Svolge una ricerca per sottostringa confrontando le Email dei Contatti della Rubrica selezionata, dopodiché crea un
+	 * Gruppo temporaneo costituito dai Contatti trovati e lo imposta come Gruppo selezionato
+	 *
+	 * @param text Stringa rispetto a cui avviene la ricerca
+	 * 
+	 * @see Gruppo
+	 * @see Contatto
+	 */
 	public void cercaPerEmail(String text) {
-		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerEmail(text);
+		Gruppo gruppoRicerca = new Gruppo();
+		gruppoRicerca.setContatti(rubricaSelezionata.cercaPerEmail(text));
 		gruppoSelezionato = gruppoRicerca;
 	}
 
+	/**
+	 * Svolge una ricerca per sottostringa confrontando i nickname degli Account dei Contatti della Rubrica selezionata,
+	 * dopodiché crea un Gruppo temporaneo costituito dai Contatti trovati e lo imposta come Gruppo selezionato
+	 *
+	 * @param text Stringa rispetto a cui avviene la ricerca
+	 * 
+	 * @see Gruppo
+	 * @see Contatto
+	 */
 	public void cercaPerAccount(String text) {
-		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerAccount(text);
+		Gruppo gruppoRicerca = new Gruppo();
+		gruppoRicerca.setContatti(rubricaSelezionata.cercaPerAccount(text));
 		gruppoSelezionato = gruppoRicerca;
 	}
 
+	/**
+	 * Svolge una ricerca per sottostringa confrontando i numeri dei Contatti della Rubrica selezionata, dopodiché crea un
+	 * Gruppo temporaneo costituito dai Contatti trovati e lo imposta come Gruppo selezionato
+	 *
+	 * @param text Stringa rispetto a cui avviene la ricerca
+	 * 
+	 * @see Gruppo
+	 * @see Contatto
+	 */
 	public void cercaPerNumero(String text) {
-		Gruppo gruppoRicerca = rubricaSelezionata.cercaPerNumero(text);
+		Gruppo gruppoRicerca = new Gruppo();
+		gruppoRicerca.setContatti(rubricaSelezionata.cercaPerNumero(text));
 		gruppoSelezionato = gruppoRicerca;
 	}
 	
+	/**
+	 * Controlla se la descrizione dell'Indirizzo indica che è principale.
+	 *
+	 * @param tipo True se l'indirizzo è principale
+	 * @return the boolean
+	 * 
+	 * @see model.Indirizzo
+	 */
+	public Boolean checkSeTipoIndirizzoPrincipale(tipoIndirizzo tipo)
+	{
+		return tipo == tipoIndirizzo.Principale;
+	}
+
+	/**
+	 * Svolge un parsing degli opportuni Component della GUI ed estrae le informazioni aggiunte dinamicamente.
+	 * Dopodiché aggiunge il Contatto con tutte sue informazioni principali e secondarie inserite
+	 * nel DB e in memoria
+	 *
+	 * @param textFieldNome Component da cui estrarre il nome
+	 * @param textFieldSecondoNome Component da cui estrarre il secondo nome
+	 * @param textFieldCognome Component da cui estrarre il cognome
+	 * @param textFieldVia Component da cui estrarre la via
+	 * @param textFieldCittà Component da cui estrarre la città
+	 * @param textFieldNazione Component da cui estrarre la nazione
+	 * @param textFieldCap Component da cui estrarre il CAP
+	 * @param textFieldNumMobile Component da cui estrarre il numero mobile
+	 * @param textFieldNumFisso Component da cui estrarre il numero fisso
+	 * @param percorsoImmagine Percorso sul disco da cui reperire l'immagine del Contatto
+	 * @param pannelloScrollIndirizziSec Component da cui estrarre gli indirizzi secondari
+	 * @param pannelloScrolNumTel Component da cui estrarre i telefoni secondari
+	 * @param pannelloScrollMail Component da cui estrarre le email
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void addContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
 							JTextField textFieldCittà, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
 							JTextField textFieldNumFisso, String percorsoImmagine,
@@ -661,6 +923,27 @@ public class Controller {
 		finalizzaInserimento(nuovoContatto);
 	}
 	
+	/**
+	 * Svolge un parsing degli opportuni Component della GUI ed estrae le informazioni aggiunte dinamicamente.
+	 * Dopodiché riaggiunge il Contatto con tutte le nuove informazioni principali e secondarie indicate
+	 * nel DB e in memoria
+	 *
+	 * @param textFieldNome Component da cui estrarre il nome
+	 * @param textFieldSecondoNome Component da cui estrarre il secondo nome
+	 * @param textFieldCognome Component da cui estrarre il cognome
+	 * @param textFieldVia Component da cui estrarre la via
+	 * @param textFieldCittà Component da cui estrarre la città
+	 * @param textFieldNazione Component da cui estrarre la nazione
+	 * @param textFieldCap Component da cui estrarre il CAP
+	 * @param textFieldNumMobile Component da cui estrarre il numero mobile
+	 * @param textFieldNumFisso Component da cui estrarre il numero fisso
+	 * @param percorsoImmagine Percorso sul disco da cui reperire l'immagine del Contatto
+	 * @param pannelloScrollIndirizziSec Component da cui estrarre gli indirizzi secondari
+	 * @param pannelloScrolNumTel Component da cui estrarre i telefoni secondari
+	 * @param pannelloScrollMail Component da cui estrarre le email
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void changeContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
 							   JTextField textFieldCittà, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
 							   JTextField textFieldNumFisso, String percorsoImmagine,
@@ -733,11 +1016,15 @@ public class Controller {
 		finalizzaModifica(nuovoContatto);
 	}
 	
-	public Boolean checkSeTipoIndirizzoPrincipale(tipoIndirizzo tipo)
-	{
-		return tipo == tipoIndirizzo.Principale;
-	}
-	
+	/**
+	 * Svolge un parsing degli opportuni Component della GUI ed estrae le informazioni aggiunte dinamicamente.
+	 * Dopodiché aggiunge il Gruppo con i Contatti indicati nel DB e in memoria
+	 * 
+	 * @param textFieldNome Component da cui estrarre il nome del Gruppo
+	 * @param pannelloContatti Component da cui estrarre i Contatti aggiunti al Gruppo
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void addGruppo(JTextField textFieldNome, JPanel pannelloContatti) throws Exception
 	{
 		ArrayList<Contatto> contatti = new ArrayList<>();
@@ -763,6 +1050,15 @@ public class Controller {
 		addInfoGruppo(nuovoGruppo);
 	}
 	
+	/**
+	 * Svolge un parsing degli opportuni Component della GUI ed estrae le informazioni aggiunte dinamicamente.
+	 * Dopodiché riaggiunge il Gruppo con i Contatti indicati nel DB e in memoria
+	 * 
+	 * @param textFieldNome Component da cui estrarre il nome del Gruppo
+	 * @param pannelloContatti Component da cui estrarre i Contatti aggiunti al Gruppo
+	 * 
+	 * @throws Exception the exception
+	 */
 	public void changeGruppo(JTextField textFieldNome, JPanel pannelloContatti) throws Exception
 	{
 		ArrayList<Contatto> contatti = new ArrayList<>();

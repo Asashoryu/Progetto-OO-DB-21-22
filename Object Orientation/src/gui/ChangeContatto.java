@@ -492,14 +492,14 @@ public class ChangeContatto extends JFrame {
 		/**
 		 * Button "annulla"
 		 */
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setFocusPainted(false);
-		btnAnnulla.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnAnnulla.setForeground(new Color(204, 255, 255));
-		btnAnnulla.setBackground(new Color(102, 102, 153));
-		btnAnnulla.setBounds(10, 432, 85, 21);
-		contentPane.add(btnAnnulla);
-		btnAnnulla.addActionListener(new ActionListener() {
+		JButton btnIndietro = new JButton("Annulla");
+		btnIndietro.setFocusPainted(false);
+		btnIndietro.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnIndietro.setForeground(new Color(204, 255, 255));
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setBounds(10, 432, 85, 21);
+		contentPane.add(btnIndietro);
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameChiamante.setVisible(true);
 				frame.dispose();
@@ -509,20 +509,20 @@ public class ChangeContatto extends JFrame {
 		/**
 		 * Button "vai"
 		 */
-		JButton btnAzione = new JButton("Vai");
-		btnAzione.setToolTipText("Modifica il contatto esistente con le informazioni cambiate.\r\n");
-		btnAzione.setFocusPainted(false);
-		btnAzione.setFont(new Font("Arial", Font.PLAIN, 11));
-		btnAzione.setForeground(new Color(102, 102, 153));
-		btnAzione.setBackground(new Color(204, 255, 255));
-		btnAzione.setBounds(682, 432, 85, 21);
-		contentPane.add(btnAzione);
+		JButton btnModifica = new JButton("Vai");
+		btnModifica.setToolTipText("Modifica il contatto esistente con le informazioni cambiate.\r\n");
+		btnModifica.setFocusPainted(false);
+		btnModifica.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnModifica.setForeground(new Color(102, 102, 153));
+		btnModifica.setBackground(new Color(204, 255, 255));
+		btnModifica.setBounds(682, 432, 85, 21);
+		contentPane.add(btnModifica);
 		
 		
 		/**
 		 * Quando viene cliccato il button "vai"
 		 */
-		btnAzione.addActionListener(new ActionListener() {
+		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
 				// passato come parametro

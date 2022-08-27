@@ -22,15 +22,35 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddGruppo.
+ */
 @SuppressWarnings("serial")
 public class AddGruppo extends JFrame{
 	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field nome. */
 	private JTextField textFieldNome;
+	
+	/** The lbl nome. */
 	private JLabel lblNome;
+	
+	/** The controller. */
 	private Controller controller;
 	
+	/**
+	 * Instantiates a new adds the gruppo.
+	 *
+	 * @param c the c
+	 * @param frameChiamante the frame chiamante
+	 * @param listaGruppiChiamante the lista gruppi chiamante
+	 */
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
 		
 		setResizable(false);
@@ -98,12 +118,12 @@ public class AddGruppo extends JFrame{
 		/**
 		 * Button "annulla"
 		 */
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setForeground(new Color(204, 255, 255));
-		btnAnnulla.setBackground(new Color(102, 102, 153));
-		btnAnnulla.setBounds(83, 353, 84, 21);
-		contentPane.add(btnAnnulla);
-		btnAnnulla.addActionListener(new ActionListener() {
+		JButton btnIndietro = new JButton("Annulla");
+		btnIndietro.setForeground(new Color(204, 255, 255));
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setBounds(83, 353, 84, 21);
+		contentPane.add(btnIndietro);
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameChiamante.setVisible(true);
 				frame.dispose();
@@ -113,13 +133,13 @@ public class AddGruppo extends JFrame{
 		/**
 		 * Button "vai"
 		 */
-		JButton btnAzione = new JButton("Vai");
-		btnAzione.setForeground(new Color(102, 102, 153));
-		btnAzione.setBackground(new Color(204, 255, 255));
-		btnAzione.setBounds(177, 353, 84, 21);
-		contentPane.add(btnAzione);
+		JButton btnInserisci = new JButton("Vai");
+		btnInserisci.setForeground(new Color(102, 102, 153));
+		btnInserisci.setBackground(new Color(204, 255, 255));
+		btnInserisci.setBounds(177, 353, 84, 21);
+		contentPane.add(btnInserisci);
 		
-		btnAzione.addActionListener(new ActionListener() {
+		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if (!textFieldNome.getText().isBlank())
@@ -175,6 +195,11 @@ public class AddGruppo extends JFrame{
 		
 	}
 	
+	/**
+	 * Inits the pannello contatti.
+	 *
+	 * @param pannelloContatti the pannello contatti
+	 */
 	private void initPannelloContatti(JPanel pannelloContatti)
 	{
 		JPanel panel;

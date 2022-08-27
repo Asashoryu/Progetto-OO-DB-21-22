@@ -32,7 +32,7 @@ public class ChangeGruppo extends JFrame{
 	private JLabel lblNome;
 	private Controller controller;
 	
-	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
+	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaContattiChiamante, JList<Object> listaGruppiChiamante) {
 		
 		setResizable(false);
 		setForeground(Color.WHITE);
@@ -103,12 +103,12 @@ public class ChangeGruppo extends JFrame{
 		/**
 		 * Button "annulla"
 		 */
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setForeground(new Color(204, 255, 255));
-		btnAnnulla.setBackground(new Color(102, 102, 153));
-		btnAnnulla.setBounds(83, 353, 84, 21);
-		contentPane.add(btnAnnulla);
-		btnAnnulla.addActionListener(new ActionListener() {
+		JButton btnIndietro = new JButton("Annulla");
+		btnIndietro.setForeground(new Color(204, 255, 255));
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setBounds(83, 353, 84, 21);
+		contentPane.add(btnIndietro);
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameChiamante.setVisible(true);
 				frame.dispose();
@@ -118,13 +118,13 @@ public class ChangeGruppo extends JFrame{
 		/**
 		 * Button "vai"
 		 */
-		JButton btnAzione = new JButton("Vai");
-		btnAzione.setForeground(new Color(102, 102, 153));
-		btnAzione.setBackground(new Color(204, 255, 255));
-		btnAzione.setBounds(177, 353, 84, 21);
-		contentPane.add(btnAzione);
+		JButton btnModifica = new JButton("Vai");
+		btnModifica.setForeground(new Color(102, 102, 153));
+		btnModifica.setBackground(new Color(204, 255, 255));
+		btnModifica.setBounds(177, 353, 84, 21);
+		contentPane.add(btnModifica);
 		
-		btnAzione.addActionListener(new ActionListener() {
+		btnModifica.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Verifica preventiva se sono state rilevate delle modifiche
 				if (checkModificato(pannelloContatti))
@@ -158,10 +158,14 @@ public class ChangeGruppo extends JFrame{
 								controller.changeGruppo(textFieldNome, pannelloContatti);
 								listaGruppiChiamante.removeAll();
 								listaGruppiChiamante.setListData(controller.getNomiGruppiRubrica());
+								listaContattiChiamante.removeAll();
+								listaContattiChiamante.setListData(controller.getNomiContattiGruppoSelezionato());
 								JOptionPane.showConfirmDialog(null, 
 										"Gruppo inserito con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 								listaGruppiChiamante.revalidate();
 								listaGruppiChiamante.repaint();
+								listaContattiChiamante.revalidate();
+								listaContattiChiamante.repaint();
 								frameChiamante.setVisible(true);
 								frame.dispose();
 							} catch (Exception e1) {

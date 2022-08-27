@@ -457,13 +457,13 @@ public class AddContatto extends JFrame {
 		/**
 		 * Button "annulla"
 		 */
-		JButton btnAnnulla = new JButton("Annulla");
-		btnAnnulla.setFocusPainted(false);
-		btnAnnulla.setForeground(new Color(204, 255, 255));
-		btnAnnulla.setBackground(new Color(102, 102, 153));
-		btnAnnulla.setBounds(10, 420, 85, 21);
-		contentPane.add(btnAnnulla);
-		btnAnnulla.addActionListener(new ActionListener() {
+		JButton btnIndietro = new JButton("Annulla");
+		btnIndietro.setFocusPainted(false);
+		btnIndietro.setForeground(new Color(204, 255, 255));
+		btnIndietro.setBackground(new Color(102, 102, 153));
+		btnIndietro.setBounds(10, 420, 85, 21);
+		contentPane.add(btnIndietro);
+		btnIndietro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameChiamante.setVisible(true);
 				frame.dispose();
@@ -473,14 +473,14 @@ public class AddContatto extends JFrame {
 		/**
 		 * Button "vai"
 		 */
-		JButton btnAzione = new JButton("Vai");
-		btnAzione.setToolTipText("Aggiunge il nuovo contatto con tutte le informazioni inserite nella rubrica.");
-		btnAzione.setFocusPainted(false);
-		btnAzione.setForeground(new Color(102, 102, 153));
-		btnAzione.setBackground(new Color(204, 255, 255));
-		btnAzione.setBounds(639, 420, 85, 21);
-		contentPane.add(btnAzione);
-		btnAzione.addActionListener(new ActionListener() {
+		JButton btnInserisci = new JButton("Vai");
+		btnInserisci.setToolTipText("Aggiunge il nuovo contatto con tutte le informazioni inserite nella rubrica.");
+		btnInserisci.setFocusPainted(false);
+		btnInserisci.setForeground(new Color(102, 102, 153));
+		btnInserisci.setBackground(new Color(204, 255, 255));
+		btnInserisci.setBounds(639, 420, 85, 21);
+		contentPane.add(btnInserisci);
+		btnInserisci.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// Inserimento dei dati obbligatori presi dai textfield in contatti di Utente
 				// passato come parametro

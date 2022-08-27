@@ -14,16 +14,29 @@ import java.util.ArrayList;
 import dao.RubricaDAO;
 import database.ConnessioneDatabase;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RubricaImplementazionePostgresDAO.
+ */
 public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
+	/** The connection. */
 	private Connection connection;
 	
+	/** The rs. */
 	private ResultSet rs;
 	
-	/** La costruzione di un oggetto comporta la creazione di una connessione col DB */
+	/**
+	 *  La costruzione di un oggetto comporta la creazione di una connessione col DB.
+	 */
 	public RubricaImplementazionePostgresDAO() {
 	}
 	
+	/**
+	 * Apri connessione.
+	 *
+	 * @return the connection
+	 */
 	public Connection apriConnessione()
 	{
 		try {
@@ -34,11 +47,22 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		return connection;
 	}
 	
+	/**
+	 * Gets the connessione.
+	 *
+	 * @return the connessione
+	 */
 	public Connection getConnessione()
 	{
 		return connection;
 	}
 	
+	/**
+	 * Load contatti.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param contatti the contatti
+	 */
 	@Override
 	public void loadContatti(String nomeRubrica, ArrayList<Contatto> contatti) {
 		System.out.println(" SELECT * FROM Contatto WHERE rubrica_fk = "+"\'"+nomeRubrica+"\' ORDER BY Contatto_ID; ");
@@ -123,6 +147,14 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Load gruppi.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param contatti the contatti
+	 * @param gruppi the gruppi
+	 */
 	@Override
 	public void loadGruppi(String nomeRubrica, ArrayList<Contatto> contatti, ArrayList<Gruppo> gruppi) {
 		System.out.println(" SELECT * FROM Gruppo WHERE rubrica_fk = "+"\'"+nomeRubrica+"\' ORDER BY Gruppo_ID; ");
@@ -169,6 +201,14 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Genera contatto ID.
+	 *
+	 * @param connessione the connessione
+	 * @return the int
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public int generaContattoID(Connection connessione) throws SQLException
 	{
@@ -199,6 +239,23 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		
 	}
 	
+	/**
+	 * Adds the info contatto.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param nome the nome
+	 * @param secondonome the secondonome
+	 * @param cognome the cognome
+	 * @param numMobile the num mobile
+	 * @param numFisso the num fisso
+	 * @param via the via
+	 * @param citta the citta
+	 * @param nazione the nazione
+	 * @param cap the cap
+	 * @param id the id
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	/* @returns id del contatto creato*/
 	@Override
 	public void addInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome,
@@ -226,6 +283,24 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			throw e;
 		}
 	}
+	
+	/**
+	 * Change info contatto.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param nome the nome
+	 * @param secondonome the secondonome
+	 * @param cognome the cognome
+	 * @param numMobile the num mobile
+	 * @param numFisso the num fisso
+	 * @param via the via
+	 * @param citta the citta
+	 * @param nazione the nazione
+	 * @param cap the cap
+	 * @param vecchioContattoId the vecchio contatto id
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void changeInfoContatto(String nomeRubrica, String nome, String secondonome, String cognome,
 				               String numMobile, String numFisso, String via, String citta, String nazione, String cap,
@@ -272,6 +347,14 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	/**
+	 * Adds the immagine.
+	 *
+	 * @param pathImmagine the path immagine
+	 * @param id the id
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void addImmagine(String pathImmagine, int id, Connection connessione) throws SQLException {
 		System.out.println(" UPDATE Contatto SET foto  = NULLIF('" + pathImmagine + "','') WHERE contatto_id = " + id + "; ");
@@ -289,17 +372,29 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	/**
+	 * Adds the indirizzo.
+	 *
+	 * @param via the via
+	 * @param città the città
+	 * @param nazione the nazione
+	 * @param cap the cap
+	 * @param descrizione the descrizione
+	 * @param id the id
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void addIndirizzo(String via, String città, String nazione, String cap, String descrizione, int id, Connection connessione) throws SQLException
 	{
 		System.out.println(" INSERT INTO Indirizzo(via, città, nazione, cap, descrizione, contatto_fk)"
 				                + " VALUES "+"(NULLIF('" + via + "',''), NULLIF('" + città + "', ''), NULLIF('" + nazione + "', ''),"
-									        + "NULLIF('" + cap + "', ''), NULLIF('" + descrizione + "', ''),  " + id     + ")); ");
+									        + "NULLIF('" + cap + "', ''), NULLIF('" + descrizione + "', ''),  " + id     + "); ");
 		try {
 			PreparedStatement aggiungiIndirizzo = connessione.prepareStatement(
 					" INSERT INTO Indirizzo(via, città, nazione, cap, descrizione, contatto_fk)"
 			                + " VALUES "+"(NULLIF('" + via + "',''), NULLIF('" + città + "', ''), NULLIF('" + nazione + "', ''),"
-								        + "NULLIF('" + cap + "', ''), \'" + descrizione + "\',  " + id     + ")); "
+								        + "NULLIF('" + cap + "', ''), \'" + descrizione + "\',  " + id     + "); "
 								        );
 			aggiungiIndirizzo.executeUpdate();
 		} catch (SQLException e) {
@@ -310,6 +405,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 
+	/**
+	 * Adds the telefono.
+	 *
+	 * @param numero the numero
+	 * @param descrizione the descrizione
+	 * @param id_contatto the id contatto
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void addTelefono(String numero, String descrizione, int id_contatto, Connection connessione) throws SQLException
 	{
@@ -330,6 +434,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		
 	}
 
+	/**
+	 * Adds the email.
+	 *
+	 * @param indirizzoEmail the indirizzo email
+	 * @param descrizione the descrizione
+	 * @param id_contatto the id contatto
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void addEmail(String indirizzoEmail, String descrizione, int id_contatto, Connection connessione) throws SQLException
 	{
@@ -349,6 +462,13 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	/**
+	 * Load account contatto.
+	 *
+	 * @param contatto the contatto
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void loadAccountContatto(Contatto contatto, Connection connessione) throws SQLException
 	{
@@ -377,6 +497,13 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		}
 	}
 	
+	/**
+	 * Delete contatto.
+	 *
+	 * @param codiceContatto the codice contatto
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void deleteContatto(int codiceContatto, Connection connessione) throws SQLException
 	{
@@ -390,6 +517,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				throw e;
 		}
 	}
+	
+	/**
+	 * Adds the info gruppo.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param nuovoGruppo the nuovo gruppo
+	 * @param connessione the connessione
+	 * @throws Exception the exception
+	 */
 	@Override
 	public void addInfoGruppo(String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws Exception
 	{
@@ -426,6 +562,14 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			connessione.close();
 		}
 	}
+	
+	/**
+	 * Delete gruppo.
+	 *
+	 * @param codiceGruppo the codice gruppo
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void deleteGruppo(int codiceGruppo, Connection connessione) throws SQLException
 	{
@@ -439,6 +583,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				throw e;
 		}
 	}
+	
+	/**
+	 * Change info gruppo.
+	 *
+	 * @param nomeRubrica the nome rubrica
+	 * @param nuovoGruppo the nuovo gruppo
+	 * @param connessione the connessione
+	 * @throws SQLException the SQL exception
+	 */
 	@Override
 	public void changeInfoGruppo (String nomeRubrica, Gruppo nuovoGruppo, Connection connessione) throws SQLException
 	{

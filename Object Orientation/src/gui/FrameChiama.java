@@ -16,12 +16,15 @@ import java.awt.event.ActionListener;
 import java.awt.Color;
 
 @SuppressWarnings("serial")
-public class FinestraChiama extends JFrame {
+public class FrameChiama extends JFrame {
 
 	private JPanel contentPane;
+	private FrameChiamaRiserva FinestraCR;
+	private JButton btnChiamaRiserva;
+	private JButton btnAnnulla;
 	private String numeroRiserva;
 
-	public FinestraChiama(Controller c, String numeroChiamato) {
+	public FrameChiama(Controller c, String numeroChiamato) {
 		setResizable(false);
 		JFrame frame = this;
 
@@ -52,26 +55,27 @@ public class FinestraChiama extends JFrame {
 			lblReindirizzamento.setBounds(10, 10, 416, 27);
 			contentPane.add(lblReindirizzamento);
 			
-			JButton btnChiama = new JButton("Chiama");
-			btnChiama.setFont(new Font("Arial", Font.PLAIN, 11));
-			btnChiama.setBackground(new Color(204,255,255));
-			btnChiama.setForeground(new Color(102,102,153));
-			btnChiama.setFocusPainted(false);
-			btnChiama.setBounds(95, 72, 225, 39);
-			contentPane.add(btnChiama);
-			btnChiama.addActionListener(new ActionListener() {
+			btnChiamaRiserva = new JButton("Chiama");
+			btnChiamaRiserva.setFont(new Font("Arial", Font.PLAIN, 11));
+			btnChiamaRiserva.setBackground(new Color(204,255,255));
+			btnChiamaRiserva.setForeground(new Color(102,102,153));
+			btnChiamaRiserva.setFocusPainted(false);
+			btnChiamaRiserva.setBounds(95, 72, 225, 39);
+			contentPane.add(btnChiamaRiserva);
+			
+			btnChiamaRiserva.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 				numeroRiserva = controller.getContattoSelezionato().reindirizza(numeroChiamato);
 				JLabel lblReindirizzato = new JLabel("Chiamando il numero di riserva " + numeroRiserva + "...");
 				lblReindirizzato.setHorizontalAlignment(SwingConstants.CENTER);
 				lblReindirizzato.setFont(new Font("Arial", Font.PLAIN, 16));
 				lblReindirizzato.setBounds(10, 10, 416, 27);
-				FinestraChiamaRiserva FinestraCR = new FinestraChiamaRiserva(numeroRiserva);
+				FinestraCR = new FrameChiamaRiserva(numeroRiserva);
 				FinestraCR.setVisible(true);
 				frame.dispose();
 				}
 			});
-			JButton btnAnnulla = new JButton("Annulla");
+			btnAnnulla = new JButton("Annulla");
 			btnAnnulla.setFont(new Font("Arial", Font.PLAIN, 11));
 			btnAnnulla.setForeground(new Color(102,102,153));
 			btnAnnulla.setBackground(new Color(204,255,255));
