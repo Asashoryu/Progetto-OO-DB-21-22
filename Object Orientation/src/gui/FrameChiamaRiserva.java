@@ -13,12 +13,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FrameChiamaRiserva.
+ */
 @SuppressWarnings("serial")
 public class FrameChiamaRiserva extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The btn chiudi. */
 	private JButton btnChiudi;
 
+	/**
+	 * Instantiates a new frame chiama riserva.
+	 *
+	 * @param NumeroDiRiserva the numero di riserva
+	 */
 	public FrameChiamaRiserva(String NumeroDiRiserva) {
 		setResizable(false);
 		JFrame frame = this;

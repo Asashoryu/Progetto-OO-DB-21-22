@@ -31,41 +31,108 @@ import java.awt.Component;
 
 import java.sql.SQLException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class AddContatto.
+ */
 @SuppressWarnings("serial")
 public class AddContatto extends JFrame {
 
+	/** The controller. */
 	private Controller controller;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field nome. */
 	private JTextField textFieldNome;
+	
+	/** The text field secondo nome. */
 	private JTextField textFieldSecondoNome;
+	
+	/** The text field cognome. */
 	private JTextField textFieldCognome;
+	
+	/** The lbl titolo. */
 	private JLabel lblTitolo;
+	
+	/** The lbl label nome. */
 	private JLabel lblLabelNome;
+	
+	/** The lbl secondo nome. */
 	private JLabel lblSecondoNome;
+	
+	/** The lbl cognome. */
 	private JLabel lblCognome;
+	
+	/** The text field num fisso. */
 	private JTextField textFieldNumFisso;
+	
+	/** The text field num mobile. */
 	private JTextField textFieldNumMobile;
+	
+	/** The text field via. */
 	private JTextField textFieldVia;
+	
+	/** The lbl num mobile. */
 	private JLabel lblNumMobile;
+	
+	/** The lbl num fisso. */
 	private JLabel lblNumFisso;
+	
+	/** The lbl via. */
 	private JLabel lblVia;
+	
+	/** The text field città. */
 	private JTextField textFieldCittà;
+	
+	/** The text field nazione. */
 	private JTextField textFieldNazione;
+	
+	/** The text field cap. */
 	private JTextField textFieldCap;
+	
+	/** The pannello ind principale. */
 	private JPanel pannelloIndPrincipale;
+	
+	/** The pannello num tel. */
 	private JPanel pannelloNumTel;
+	
+	/** The pannello num tel sec. */
 	private JPanel pannelloNumTelSec;
+	
+	/** The pannello email add sec. */
 	private JPanel pannelloEmailAddSec;
+	
+	/** The lbl num secondari. */
 	private JLabel lblNumSecondari;
+	
+	/** The lbl email secondarie. */
 	private JLabel lblEmailSecondarie;
+	
+	/** The pannello scrol num tel. */
 	private JPanel pannelloScrolNumTel;
+	
+	/** The pannello scroll mail. */
 	private JPanel pannelloScrollMail;
+	
+	/** The lbl immagine. */
 	private JLabel lblImmagine;
 	
+	/** The percorso immagine. */
 	private String percorsoImmagine = null;
 	
 
+	/**
+	 * Instantiates a new adds the contatto.
+	 *
+	 * @param c the c
+	 * @param frameChiamante the frame chiamante
+	 * @param lista the lista
+	 */
 	public AddContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		
 		setResizable(false);
@@ -654,6 +721,15 @@ public class AddContatto extends JFrame {
 		});
 	}
 	
+	/**
+	 * Crea elem scroll bar.
+	 *
+	 * @param fieldVia the field via
+	 * @param fieldCittà the field città
+	 * @param fieldNazione the field nazione
+	 * @param fieldCap the field cap
+	 * @return the j panel
+	 */
 	private JPanel creaElemScrollBar(String fieldVia, String fieldCittà, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
@@ -708,6 +784,13 @@ public class AddContatto extends JFrame {
 		return panel;
 	}
 	
+	/**
+	 * Crea sec numb.
+	 *
+	 * @param fieldTipo the field tipo
+	 * @param fieldNum the field num
+	 * @return the j panel
+	 */
 	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
 		JTextField textFieldDescSB;
@@ -730,6 +813,13 @@ public class AddContatto extends JFrame {
 		return  panel;
 	}
 	
+	/**
+	 * Crea sec mail.
+	 *
+	 * @param fieldTipo the field tipo
+	 * @param fieldEmail the field email
+	 * @return the j panel
+	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
 		JTextField textFieldDescMailSB;

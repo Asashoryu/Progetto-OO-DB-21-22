@@ -15,15 +15,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class FrameChiama.
+ */
 @SuppressWarnings("serial")
 public class FrameChiama extends JFrame {
 
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The Finestra CR. */
 	private FrameChiamaRiserva FinestraCR;
+	
+	/** The btn chiama riserva. */
 	private JButton btnChiamaRiserva;
+	
+	/** The btn annulla. */
 	private JButton btnAnnulla;
+	
+	/** The numero riserva. */
 	private String numeroRiserva;
 
+	/**
+	 * Instantiates a new frame chiama.
+	 *
+	 * @param c the c
+	 * @param numeroChiamato the numero chiamato
+	 */
 	public FrameChiama(Controller c, String numeroChiamato) {
 		setResizable(false);
 		JFrame frame = this;

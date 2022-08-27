@@ -21,14 +21,24 @@ import java.awt.Dimension;
 
 import java.sql.SQLException;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ListaContatti.
+ */
 @SuppressWarnings("serial")
 public class ListaContatti extends JFrame {
 	
+	/** The frame. */
 	private JFrame     frame;
+	
+	/** The controller. */
 	private Controller controller;
 	
 	/**
 	 * Crea frame.
+	 *
+	 * @param c the c
+	 * @param frameChiamante the frame chiamante
 	 */
 	public ListaContatti(Controller c, JFrame frameChiamante) {
 		setMinimumSize(new Dimension(610, 420));

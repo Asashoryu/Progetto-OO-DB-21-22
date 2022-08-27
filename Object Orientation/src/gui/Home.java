@@ -19,26 +19,47 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+// TODO: Auto-generated Javadoc
 /**
- * Classe che implementa il frame della home 
- *
+ * Classe che implementa il frame della home .
  */
 @SuppressWarnings("serial")
 public class Home extends JFrame {
 	
+	/** The controller. */
 	private Controller controller;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The lbl new label. */
 	private JLabel lblNewLabel;
+	
+	/** The combo box model. */
 	private DefaultComboBoxModel<Object> comboBoxModel;
+	
+	/** The combo box rubriche. */
 	private JComboBox<Object> comboBoxRubriche;
+	
+	/** The btn modifica. */
 	private JButton btnModifica;
+	
+	/** The txt utente selezionato. */
 	private JTextField txtUtenteSelezionato;
+	
+	/** The btn entra. */
 	private JButton btnEntra;
+	
+	/** The btn aggiungi. */
 	private JButton btnAggiungi;
+	
+	/** The btn elimina. */
 	private JButton btnElimina;
 
 	/**
-	 * Avvia l'interfaccia
+	 * Avvia l'interfaccia.
+	 *
+	 * @param c the c
 	 */
 	public Home(Controller c) {
 		controller=c;
@@ -48,7 +69,7 @@ public class Home extends JFrame {
 	}
 
 	/**
-	 * Inizializza i contenuti del frame
+	 * Inizializza i contenuti del frame.
 	 */
 	private void inizializza() {
 		

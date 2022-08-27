@@ -28,25 +28,65 @@ import java.awt.BorderLayout;
 
 import java.io.File;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class InfoContatto.
+ */
 @SuppressWarnings("serial")
 public class InfoContatto extends JFrame {
 
+	/** The controller. */
 	private Controller controller;
+	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The pannello num tel sec. */
 	private JPanel pannelloNumTelSec;
+	
+	/** The pannello scrol num tel. */
 	private JPanel pannelloScrolNumTel;
+	
+	/** The pannello scroll mail. */
 	private JPanel pannelloScrollMail;
+	
+	/** The text field nome. */
 	private JTextField textFieldNome;
+	
+	/** The text field secondo nome. */
 	private JTextField textFieldSecondoNome;
+	
+	/** The text field cognome. */
 	private JTextField textFieldCognome;
+	
+	/** The text field num fisso. */
 	private JTextField textFieldNumFisso;
+	
+	/** The text field num mobile. */
 	private JTextField textFieldNumMobile;
+	
+	/** The text field via. */
 	private JTextField textFieldVia;
+	
+	/** The text field città. */
 	private JTextField textFieldCittà;
+	
+	/** The text field nazione. */
 	private JTextField textFieldNazione;
+	
+	/** The text field cap. */
 	private JTextField textFieldCap;
 
+	/**
+	 * Instantiates a new info contatto.
+	 *
+	 * @param c the c
+	 * @param frameChiamante the frame chiamante
+	 * @param lista the lista
+	 */
 	public InfoContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		
 		
@@ -381,6 +421,23 @@ public class InfoContatto extends JFrame {
 		});
 	}
 
+	/**
+	 * Inizializza contatto.
+	 *
+	 * @param textFieldNome the text field nome
+	 * @param textFieldSecondoNome the text field secondo nome
+	 * @param textFieldCognome the text field cognome
+	 * @param textFieldVia the text field via
+	 * @param textFieldCittà the text field città
+	 * @param textFieldNazione the text field nazione
+	 * @param textFieldCap the text field cap
+	 * @param textFieldNumMobile the text field num mobile
+	 * @param textFieldNumFisso the text field num fisso
+	 * @param pannelloScrollIndirizziSec the pannello scroll indirizzi sec
+	 * @param pannelloScrolNumTel the pannello scrol num tel
+	 * @param pannelloScrollMail the pannello scroll mail
+	 * @param pannelloScrollAccount the pannello scroll account
+	 */
 	private void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
 								     JTextField textFieldCittà, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
 								     JTextField textFieldNumFisso, JPanel pannelloScrollIndirizziSec, JPanel pannelloScrolNumTel, JPanel pannelloScrollMail,
@@ -494,6 +551,15 @@ public class InfoContatto extends JFrame {
 		repaint();
 	}
 		
+	/**
+	 * Crea elem scroll bar.
+	 *
+	 * @param fieldVia the field via
+	 * @param fieldCittà the field città
+	 * @param fieldNazione the field nazione
+	 * @param fieldCap the field cap
+	 * @return the j panel
+	 */
 	private JPanel creaElemScrollBar(String fieldVia, String fieldCittà, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
@@ -560,6 +626,13 @@ public class InfoContatto extends JFrame {
 		return panel;
 	}
 	
+	/**
+	 * Crea sec numb.
+	 *
+	 * @param fieldTipo the field tipo
+	 * @param fieldNum the field num
+	 * @return the j panel
+	 */
 	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
 		JTextField textFieldDescSB;
@@ -588,6 +661,13 @@ public class InfoContatto extends JFrame {
 		return  panel;
 	}
 	
+	/**
+	 * Crea sec mail.
+	 *
+	 * @param fieldTipo the field tipo
+	 * @param fieldEmail the field email
+	 * @return the j panel
+	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
 		JTextField textFieldDescMailSB;
@@ -620,6 +700,14 @@ public class InfoContatto extends JFrame {
 		return  panel;
 	}
 	
+	/**
+	 * Crea account scroll bar.
+	 *
+	 * @param fornitore the fornitore
+	 * @param fraseStato the frase stato
+	 * @param nickname the nickname
+	 * @return the j panel
+	 */
 	private JPanel creaAccountScrollBar(String fornitore, String fraseStato, String nickname)
 	{
 		JPanel panel = new JPanel();

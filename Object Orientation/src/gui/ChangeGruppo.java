@@ -23,15 +23,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ChangeGruppo.
+ */
 @SuppressWarnings("serial")
 public class ChangeGruppo extends JFrame{
 	
+	/** The frame. */
 	private JFrame frame;
+	
+	/** The content pane. */
 	private JPanel contentPane;
+	
+	/** The text field nome. */
 	private JTextField textFieldNome;
+	
+	/** The lbl nome. */
 	private JLabel lblNome;
+	
+	/** The controller. */
 	private Controller controller;
 	
+	/**
+	 * Instantiates a new change gruppo.
+	 *
+	 * @param c the c
+	 * @param frameChiamante the frame chiamante
+	 * @param listaContattiChiamante the lista contatti chiamante
+	 * @param listaGruppiChiamante the lista gruppi chiamante
+	 */
 	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaContattiChiamante, JList<Object> listaGruppiChiamante) {
 		
 		setResizable(false);
@@ -194,6 +215,11 @@ public class ChangeGruppo extends JFrame{
 		
 	}
 	
+	/**
+	 * Inizializza frame.
+	 *
+	 * @param pannelloContatti the pannello contatti
+	 */
 	private void inizializzaFrame(JPanel pannelloContatti)
 	{
 		JPanel panel;
@@ -223,6 +249,12 @@ public class ChangeGruppo extends JFrame{
 		}
 	}
 	
+	/**
+	 * Check modificato.
+	 *
+	 * @param pannelloContatti the pannello contatti
+	 * @return true, if successful
+	 */
 	private boolean checkModificato(JPanel pannelloContatti)
 	{
 		Boolean modificato = false;
