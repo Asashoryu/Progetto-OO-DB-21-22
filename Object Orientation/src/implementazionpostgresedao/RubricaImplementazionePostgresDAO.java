@@ -1,4 +1,4 @@
-package implementazionedao;
+package implementazionpostgresedao;
 
 import model.Contatto;
 import model.Email;

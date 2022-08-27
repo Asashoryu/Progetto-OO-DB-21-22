@@ -8,9 +8,8 @@ import model.Indirizzo.tipoIndirizzo;
 
 import dao.RubricaDAO;
 import dao.SistemaDAO;
-
-import implementazionedao.RubricaImplementazionePostgresDAO;
-import implementazionedao.SistemaImplementazionePostgresDAO;
+import implementazionpostgresedao.RubricaImplementazionePostgresDAO;
+import implementazionpostgresedao.SistemaImplementazionePostgresDAO;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
