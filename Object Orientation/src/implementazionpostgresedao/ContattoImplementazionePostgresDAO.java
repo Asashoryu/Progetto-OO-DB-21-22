@@ -7,18 +7,13 @@ import java.sql.SQLException;
 import dao.ContattoDAO;
 import database.ConnessioneDatabase;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class ContattoImplementazionePostgresDAO.
- */
+/** Gestisce l'oggetto contatto e la sua connessione con il database. */
 public class ContattoImplementazionePostgresDAO implements ContattoDAO{
 	
-	/** The connection. */
+	/** Instanzia la connessione. */
 	private Connection connection;
 	
-	/**
-	 * Instantiates a new contatto implementazione postgres DAO.
-	 */
+	/**  Instaura la connessione con il database. */
 	public ContattoImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
@@ -29,14 +24,13 @@ public class ContattoImplementazionePostgresDAO implements ContattoDAO{
 	}
 	
 	/**
-	 * Adds the indirizzo.
-	 *
-	 * @param via the via
-	 * @param città the città
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param descrizione the descrizione
-	 * @param id the id
+	 * Aggiunge nel database un nuovo indirizzo con i suoi relativi campi.
+	 * @param via la via dell'indirizzo
+	 * @param città la città dell'indirizzo
+	 * @param nazione la nazione dell'indirizzo
+	 * @param cap il CAP dell'indirizzo
+	 * @param descrizione la descrizione data all'indirizzo
+	 * @param id l'identificativo del nuovo indirizzo
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -59,11 +53,11 @@ public class ContattoImplementazionePostgresDAO implements ContattoDAO{
 	}
 
 	/**
-	 * Adds the telefono.
+	 * Aggiunge nel database un nuovo numero di telefono.
 	 *
-	 * @param numero the numero
-	 * @param descrizione the descrizione
-	 * @param id_contatto the id contatto
+	 * @param numero cifre del numero da inserire 
+	 * @param descrizione la descrizione del numero
+	 * @param id_contatto l'identificativo del contatto a cui appartiene il nuovo numero
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -85,11 +79,11 @@ public class ContattoImplementazionePostgresDAO implements ContattoDAO{
 	}
 
 	/**
-	 * Adds the email.
+	 * Aggiunge una nuova email nel database con le sue relative informazioni.
 	 *
-	 * @param indirizzoEmail the indirizzo email
-	 * @param descrizione the descrizione
-	 * @param id_contatto the id contatto
+	 * @param indirizzoEmail l'indirizzo email da aggiungere
+	 * @param descrizione la descrizione data alla nuova email
+	 * @param id_contatto l'identificativo del contatto a cui appartiene la nuova email
 	 * @throws SQLException the SQL exception
 	 */
 	@Override

@@ -10,34 +10,28 @@ import dao.SistemaDAO;
 import database.ConnessioneDatabase;
 import model.Rubrica;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class SistemaImplementazionePostgresDAO.
- */
+/** Gestisce la connessione con il database. */
 public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	
-	/** The rubriche. */
+	/** ArrayList di utenti della rubrica. */
 	private ArrayList<Rubrica> rubriche;
 	
-	/** The connection. */
+	/** Connessione con il database. */
 	private Connection connection;
 	
-	/**
-	 * Instantiates a new sistema implementazione postgres DAO.
-	 */
+	/** Instaura la connessione con il database. */
 	public SistemaImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Load rubriche.
+	 * Carica l'ArrayList di utenti della rubrica dal database.
 	 *
-	 * @return the array list
+	 * @return ArrayList di utenti
 	 */
 	public ArrayList<Rubrica> loadRubriche() {
 		PreparedStatement recuperaRubriche;
@@ -56,7 +50,6 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 			connection.close();
 			rs.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	
@@ -64,10 +57,10 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	}
 	
 	/**
-	 * Update rubrica.
+	 * Modifica utente della rubrica nel database.
 	 *
-	 * @param vecchiaRubrica the vecchia rubrica
-	 * @param nuovaRubrica the nuova rubrica
+	 * @param vecchiaRubrica vecchio utente della rubrica da modificare
+	 * @param nuovaRubrica nuovo utente della rubrica
 	 * @throws SQLException the SQL exception
 	 */
 	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) throws SQLException {
@@ -89,9 +82,9 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	}
 	
 	/**
-	 * Adds the rubrica.
+	 * Carica un nuovo utente della rubrica nel database.
 	 *
-	 * @param nomeRubrica the nome rubrica
+	 * @param nomeRubrica nome utente della rubrica da inserire
 	 * @throws SQLException the SQL exception
 	 */
 	public void addRubrica(String nomeRubrica) throws SQLException {
@@ -108,9 +101,9 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	}
 	
 	/**
-	 * Delete rubrica.
+	 * Elimina un utente della rubrica dal database.
 	 *
-	 * @param nomeRubrica the nome rubrica
+	 * @param nomeRubrica nome utente della rubrica da eliminare
 	 * @throws SQLException the SQL exception
 	 */
 	public void deleteRubrica(String nomeRubrica) throws SQLException {
