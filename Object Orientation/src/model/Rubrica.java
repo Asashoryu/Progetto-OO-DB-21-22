@@ -2,19 +2,16 @@ package model;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Rubrica.
- */
+/** Gestisce l'oggetto Rubrica e la sua interazione con il controller. */
 public class Rubrica {
 	
-	/** The nome. */
+	/** nome della rubrica (inteso come il nome dell'utente della rubrica). */
 	private String nome;
 	
-	/** The contatti. */
+	/** contatti salvati nella rubrica in un ArrayList. */
 	private ArrayList<Contatto> contatti;
 	
-	/** The gruppi. */
+	/** gruppi salvati nella rubrica in un ArrayList. */
 	private ArrayList<Gruppo> gruppi;
 	
 	/**
@@ -27,73 +24,73 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Sets the nome.
+	 * Imposta il valore del nome localmente..
 	 *
-	 * @param nome the new nome
+	 * @param nome nome della rubrica
 	 */
 	public void setNome(String nome) {
 		this.nome=nome;
 	}
 	
 	/**
-	 * Gets the nome.
+	 * Ritorna il nome impostato localmente.
 	 *
-	 * @return the nome
+	 * @return nome della rubrica
 	 */
 	public String getNome() {
 		return nome;
 	}
 	
 	/**
-	 * Gets the contatti.
+	 * Ritorna l'ArrayList di contatti salvati in rubrica.
 	 *
-	 * @return the contatti
+	 * @return contatti
 	 */
 	public ArrayList<Contatto> getContatti() {
 		return contatti;
 	}
 	
 	/**
-	 * Sets the contatti.
+	 * Imposta il valore dell'ArrayList di contatti localmente.
 	 *
-	 * @param contatti the new contatti
+	 * @param contatti contatti
 	 */
 	public void setContatti(ArrayList<Contatto> contatti) {
 		this.contatti = contatti;
 	}
 	
 	/**
-	 * Gets the gruppi.
+	 * Ritorna l'ArrayList di gruppi.
 	 *
-	 * @return the gruppi
+	 * @return gruppi
 	 */
 	public ArrayList<Gruppo> getGruppi() {
 		return gruppi;
 	}
 
 	/**
-	 * Sets the gruppi.
+	 * Imposta il valore dell'ArrayList di gruppi localmente.
 	 *
-	 * @param gruppi the new gruppi
+	 * @param gruppi gruppi
 	 */
 	public void setGruppi(ArrayList<Gruppo> gruppi) {
 		this.gruppi = gruppi;
 	}
 	
 	/**
-	 * Aggiungi contatto.
+	 * Aggiungi un nuovo contatto nella rubrica.
 	 *
-	 * @param primonome the primonome
-	 * @param secondonome the secondonome
-	 * @param cognome the cognome
-	 * @param numMobile the num mobile
-	 * @param numFisso the num fisso
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param id the id
-	 * @return the contatto
+	 * @param primonome nome del contatto
+	 * @param secondonome secondo nome del contatto
+	 * @param cognome cognome del contatto
+	 * @param numMobile numero mobile del contatto
+	 * @param numFisso numero fisso del contatto
+	 * @param via via dell'indirizzo del contatto
+	 * @param citta città dell'indirizzo del contatto
+	 * @param nazione nazione dell'indirizzo del contatto
+	 * @param cap cap dell'indirizzo del contatto
+	 * @param id identificativo del contatto
+	 * @return contatto
 	 */
 	public Contatto aggiungiContatto(String primonome, String secondonome, String cognome,
                                  String numMobile, String numFisso, String via, String citta, String nazione, String cap, int id) 
@@ -117,8 +114,8 @@ public class Rubrica {
 	/**
 	 * Cerca per nome.
 	 *
-	 * @param text the text
-	 * @return the array list
+	 * @param text stringa o sottostringa da cercare come nome
+	 * @return ArrayList dei contatti trovati
 	 */
 	public ArrayList<Contatto> cercaPerNome(String text) 
 	{
@@ -137,8 +134,8 @@ public class Rubrica {
 	/**
 	 * Cerca per email.
 	 *
-	 * @param text the text
-	 * @return the array list
+	 * @param text stringa o sottostringa da cercare come email
+	 * @return ArrayList dei contatti trovati 
 	 */
 	public ArrayList<Contatto> cercaPerEmail(String text) {
 		ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
@@ -165,8 +162,8 @@ public class Rubrica {
 	/**
 	 * Cerca per account.
 	 *
-	 * @param text the text
-	 * @return the array list
+	 * @param text stringa o sottostringa da cercare come account
+	 * @return ArrayList dei contatti trovati 
 	 */
 	public ArrayList<Contatto> cercaPerAccount(String text) {
 		ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();
@@ -196,8 +193,8 @@ public class Rubrica {
 	/**
 	 * Cerca per numero.
 	 *
-	 * @param text the text
-	 * @return the array list
+	 * @param text stringa contenente il numero da cercare
+	 * @return ArrayList dei contatti trovati 
 	 */
 	public ArrayList<Contatto> cercaPerNumero(String text) {
 		ArrayList<Contatto> contattiTrovati = new ArrayList<Contatto>();

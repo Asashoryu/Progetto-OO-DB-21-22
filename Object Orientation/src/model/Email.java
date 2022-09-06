@@ -2,27 +2,24 @@ package model;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Email.
- */
+/** Gestisce l'oggetto Email e la sua interazione con il controller. */
 public class Email 
 {
 	
-	/** The stringa email. */
+	/** indirizzo email. */
 	private String stringaEmail;
 	
-	/** The tipo. */
+	/** tipo dell'indirizzo email. */
 	private String tipo;
 	
-	/** The account. */
+	/** ArrayList degli account. */
 	private ArrayList<Account> account;
 	
 	/**
-	 * Instantiates a new email.
+	 * Instanza una nuova email.
 	 *
-	 * @param stringaEmail the stringa email
-	 * @param tipo the tipo
+	 * @param stringaEmail email sottoforma di String
+	 * @param tipo tipo/descrizione dell'email
 	 */
 	public Email(String stringaEmail,String tipo) 
 	{
@@ -32,9 +29,9 @@ public class Email
 	}
 	
 	/**
-	 * Sets the stringa email.
+	 * Imposta il valore dell'email localmente.
 	 *
-	 * @param stringaEmail the new stringa email
+	 * @param stringaEmail stringa email di cui impostare il valore
 	 */
 	public void setStringaEmail(String stringaEmail) 
 	{
@@ -42,9 +39,9 @@ public class Email
 	}
 
 	/**
-	 * Sets the tipo.
+	 * Imposta il valore del tipo localmente.
 	 *
-	 * @param tipo the new tipo
+	 * @param tipo tipo/descrizione dell'email
 	 */
 	public void setTipo(String tipo) 
 	{
@@ -53,9 +50,9 @@ public class Email
 	}
 	
 	/**
-	 * Gets the stringa email.
+	 * Ritorna l'email impostata localmente.
 	 *
-	 * @return the stringa email
+	 * @return email
 	 */
 	public String getStringaEmail()
 	{
@@ -63,9 +60,9 @@ public class Email
 	}
 	
 	/**
-	 * Gets the tipo.
+	 * Ritorna il tipo impostato localmente.
 	 *
-	 * @return the tipo
+	 * @return tipo
 	 */
 	public String getTipo() 
 	{
@@ -73,9 +70,9 @@ public class Email
 	}
 
 	/**
-	 * Gets the account.
+	 * Ritorna l'account impostato localmente.
 	 *
-	 * @return the account
+	 * @return account come ArrayList
 	 */
 	public ArrayList<Account> getAccount() 
 	{
@@ -83,9 +80,9 @@ public class Email
 	}
 
 	/**
-	 * Sets the account.
+	 *Imposta il valore dell'account localmente.
 	 *
-	 * @param account the new account
+	 * @param account account da impostare
 	 */
 	public void setAccount(ArrayList<Account> account) 
 	{
@@ -93,11 +90,11 @@ public class Email
 	}
 	
 	/**
-	 * Adds the account.
+	 * Metodo per aggiungere nuovi account.
 	 *
-	 * @param fornitore the fornitore
-	 * @param fraseStato the frase stato
-	 * @param nickname the nickname
+	 * @param fornitore fornitore dell'account
+	 * @param fraseStato frase stato relativa all'account
+	 * @param nickname nickname dell'account
 	 */
 	public void addAccount(String fornitore, String fraseStato, String nickname)
 	{

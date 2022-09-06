@@ -1,22 +1,20 @@
 package model;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Telefono.
+/** Gestisce l'oggetto Telefono e la sua interazione con il controller.
  */
 public class Telefono {
 	
-	/** The numero. */
+	/** Numero telefonico. */
 	private String numero;
 	
-	/** The tipo. */
+	/** Tipo del numero telefonico. */
 	private String tipo;
 	
 	/**
-	 * Instantiates a new telefono.
+	 * Instanzia un nuovo oggetto telefono.
 	 *
-	 * @param numero the numero
-	 * @param tipo the tipo
+	 * @param numero numero telefonico
+	 * @param tipo tipo del numero telefonico
 	 */
 	public Telefono(String numero,String tipo) {
 		setNumero(numero);
@@ -24,36 +22,36 @@ public class Telefono {
 	}
 	
 	/**
-	 * Sets the numero.
+	 * Imposta il valore del numero localmente.
 	 *
-	 * @param numero the new numero
+	 * @param numero numero telefonico da impostare
 	 */
 	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
 	/**
-	 * Sets the tipo.
+	 * Imposta il valore del tipo del numero localmente.
 	 *
-	 * @param tipo the new tipo
+	 * @param tipo tipo da impostare
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 	
 	/**
-	 * Gets the numero.
+	 * Ritorna il numero telefonico impostato localmente.
 	 *
-	 * @return the numero
+	 * @return numero
 	 */
 	public String getNumero() {
 		return numero;
 	}
 	
 	/**
-	 * Gets the tipo.
+	 * Ritorna il tipo impostato localmente.
 	 *
-	 * @return the tipo
+	 * @return tipo
 	 */
 	public String getTipo() {
 		return tipo;

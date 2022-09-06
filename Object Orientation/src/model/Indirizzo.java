@@ -1,44 +1,39 @@
 package model;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Indirizzo.
- */
+/** Gestisce l'oggetto Indirizzo e la sua interazione con il controller.  */
 public class Indirizzo 
 {
 	
-	/**
-	 * The Enum tipoIndirizzo.
-	 */
+	/** Enumerazione di tipoIndirizzo per impostare il tipo come primario oppure secondario. */
 	public enum tipoIndirizzo{
-/** The Principale. */
+/** Tipo principale di indirizzo. */
 Principale, 
- /** The Secondario. */
+ /** Tipo secondario di indirizzo. */
  Secondario};
 	
-	/** The via. */
+	/** via dell'indirizzo. */
 	private String via;
 	
-	/** The citta. */
+	/** città dell'indirizzo. */
 	private String citta;
 	
-	/** The nazione. */
+	/** nazione dell'indirizzo. */
 	private String nazione;
 	
-	/** The cap. */
+	/** CAP (codice di avviamento postale) dell'indirizzo. */
 	private String cap;
 	
-	/** The tipo. */
+	/** tipo dell'indirizzo (principale o secondario). */
 	private tipoIndirizzo tipo;
 	
 	/**
-	 * Instantiates a new indirizzo.
+	 * Instanzia un nuovo indirizzo con le relative informazioni.
 	 *
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param tipo the tipo
+	 * @param via via dell'indirizzo da inserire
+	 * @param citta città dell'indirizzo da inserire
+	 * @param nazione nazione dell'indirizzo da inserire
+	 * @param cap cap dell'indirizzo da inserire
+	 * @param tipo tipo dell'indirizzo da inserire
 	 */
 	public Indirizzo(String via, String citta, String nazione, String cap, tipoIndirizzo tipo) {
 		setVia(via);
@@ -49,90 +44,90 @@ Principale,
 	}
 	
 	/**
-	 * Sets the via.
+	 * Imposta il valore della via localmente.
 	 *
-	 * @param via the new via
+	 * @param via via dell'indirizzo
 	 */
 	public void setVia(String via) {
 		this.via = via;
 	}
 	
 	/**
-	 * Sets the citta.
+	 * Imposta il valore della città localmente.
 	 *
-	 * @param citta the new citta
+	 * @param citta citta dell'indirizzo
 	 */
 	public void setCitta(String citta) {
 		this.citta = citta;
 	}
 	
 	/**
-	 * Sets the nazione.
+	 * Imposta il valore della nazione localmente.
 	 *
-	 * @param nazione the new nazione
+	 * @param nazione nazione dell'indirizzo
 	 */
 	public void setNazione(String nazione) {
 		this.nazione = nazione;
 	}
 	
 	/**
-	 * Sets the cap.
+	 * Imposta il valore del CAP localmente.
 	 *
-	 * @param cap the new cap
+	 * @param cap CAP dell'indirizzo
 	 */
 	public void setCap(String cap) {
 		this.cap = cap;
 	}
 
 	/**
-	 * Sets the tipo.
+	 * Imposta il valore del tipo localmente.
 	 *
-	 * @param tipo the new tipo
+	 * @param tipo tipo dell'indirizzo
 	 */
 	public void setTipo(tipoIndirizzo tipo) {
 		this.tipo = tipo;
 	}
 	
 	/**
-	 * Gets the via.
+	 * Ritorna la via impostata localmente.
 	 *
-	 * @return the via
+	 * @return via
 	 */
 	public String getVia() {
 		return via;
 	}
 	
 	/**
-	 * Gets the citta.
+	 * Ritorna la città impostata localmente.
 	 *
-	 * @return the citta
+	 * @return citta
 	 */
 	public String getCitta() {
 		return citta;
 	}
 	
 	/**
-	 * Gets the nazione.
+	 * Ritorna la nazione impostata localmente.
 	 *
-	 * @return the nazione
+	 * @return nazione
 	 */
 	public String getNazione() {
 		return nazione;
 	}
 	
 	/**
-	 * Gets the cap.
+	 * Ritorna il CAP impostato localmente.
 	 *
-	 * @return the cap
+	 * @return cap
 	 */
 	public String getCap() {
 		return cap;
 	}
 	
 	/**
-	 * Gets the tipo.
+	 * Ritorna il tipo dell'indirizzo impostato localmente.
 	 *
-	 * @return the tipo
+	 * @return tipo
 	 */
 	public tipoIndirizzo getTipo() {
 		return tipo;
