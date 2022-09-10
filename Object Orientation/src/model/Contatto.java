@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import model.Indirizzo.tipoIndirizzo;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Contatto.
- */
+/** Gestisce l'oggetto contatto e la sua interazione con il controller. */
 public class Contatto{
 	
 	/**  nome del contatto. */
@@ -37,11 +34,11 @@ public class Contatto{
 	/**
 	 *  costruttore del contatto con set di nome, secondo nome e cognome per la visualizzazione in listaContatto.
 	 *
-	 * @param primonome the primonome
-	 * @param secondonome the secondonome
-	 * @param cognome the cognome
-	 * @param pathImmagine the path immagine
-	 * @param id the id
+	 * @param primonome primo nome del contatto
+	 * @param secondonome secondo nome del contatto
+	 * @param cognome cognome del contatto
+	 * @param pathImmagine path/percorso dell'immagine
+	 * @param id identificativo del contatto nel DB
 	 */
 	public Contatto(String primonome, String secondonome, String cognome, String pathImmagine, int id) {
 		setNome(primonome);
@@ -57,16 +54,16 @@ public class Contatto{
 	/**
 	 *  costruttore di Contatto, con le informazioni essenziali indicate nella traccia.
 	 *
-	 * @param primonome the primonome
-	 * @param secondonome the secondonome
-	 * @param cognome the cognome
-	 * @param numMobile the num mobile
-	 * @param numFisso the num fisso
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param id the id
+	 * @param primonome primo nome del contatto
+	 * @param secondonome secondo nome del contatto
+	 * @param cognome cognome del contatto
+	 * @param numMobile numero mobile del contatto
+	 * @param numFisso numero fisso del contatto
+	 * @param via via dell'indirizzo del contatto
+	 * @param citta città dell'indirizzo del contatto
+	 * @param nazione nazione dell'indirizzo del contatto
+	 * @param cap cap dell'indirizzo del cap
+	 * @param id identificativo del contatto nel DB
 	 */
 	public Contatto(String primonome, String secondonome, String cognome,
                     String numMobile, String numFisso, String via, String citta, String nazione, String cap, int id)
@@ -88,9 +85,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  set del nome del contatto.
+	 * Imposta il valore del nome del contatto localmente.
 	 *
-	 * @param primonome the new nome
+	 * @param primonome nome del contatto
 	 */
 	public void setNome(String primonome) 
 	{
@@ -98,18 +95,18 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return del nome del contatto.
+	 *  Ritorna il nome del contatto.
 	 *
-	 * @return the nome
+	 * @return nome
 	 */
 	public String getNome() {
 		return primonome;
 	}
 	
 	/**
-	 *  set del secondo nome del contatto.
+	 *  Imposta il valore del secondo nome del contatto localmente.
 	 *
-	 * @param secondonome the new secondo nome
+	 * @param secondonome secondo nome del contatto
 	 */
 	public void setSecondoNome(String secondonome) 
 	{
@@ -117,9 +114,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return del secondo nome del contatto.
+	 *  Ritorna il secondo nome del contatto.
 	 *
-	 * @return the secondo nome
+	 * @return secondo nome
 	 */
 	public String getSecondoNome() 
 	{
@@ -127,9 +124,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  set del cognome del contatto.
+	 *  Imposta il valore del cognome del contatto localmente.
 	 *
-	 * @param cognome the new cognome
+	 * @param cognome cognome del contatto
 	 */
 	public void setCognome(String cognome) 
 	{
@@ -137,9 +134,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return del cognome del contatto.
+	 *  Ritorna il cognome del contatto.
 	 *
-	 * @return the cognome
+	 * @return cognome
 	 */
 	public String getCognome() 
 	{
@@ -147,25 +144,25 @@ public class Contatto{
 	}
 	
 	/**
-	 *  set del path dell'immagine profilo.
+	 *  Imposta il valore del path/percorso dell'immagine profilo del contatto localmente.
 	 *
-	 * @param pathImmagine the new path immagine
+	 * @param pathImmagine path dell'immagine 
 	 */
 	public void setPathImmagine(String pathImmagine) {
 		this.pathImmagine = pathImmagine;
 	}
 	
 	/**
-	 *  return del path dell'immagine profilo.
+	 *  Ritorna il path (percorso) dell'immagine profilo.
 	 *
-	 * @return the path immagine
+	 * @return path immagine
 	 */
 	public String getPathImmagine() {
 		return pathImmagine;
 	}
 	
 	/**
-	 *  set dell'id del contatto.
+	 *  Fissa l'id (identificativo) del contatto localmente.
 	 *
 	 * @param id the new id
 	 */
@@ -174,18 +171,18 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return dell'id del contatto.
+	 *  Ritorna l'id del contatto.
 	 *
-	 * @return the id
+	 * @return id
 	 */
 	public int getId() {
 		return id;
 	}
 	
 	/**
-	 *  return degli indirizzi del contatto.
+	 *  Ritorna gli indirizzi del contatto.
 	 *
-	 * @return the indirizzi
+	 * @return indirizzi come ArrayList
 	 */
 	public ArrayList<Indirizzo> getIndirizzi()
 	{
@@ -193,9 +190,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return dei telefoni del contatto.
+	 *  Ritorna i numeri telefonici del contatto.
 	 *
-	 * @return the telefoni
+	 * @return telefoni come ArrayList
 	 */
 	public ArrayList<Telefono> getTelefoni()
 	{
@@ -203,9 +200,9 @@ public class Contatto{
 	}
 	
 	/**
-	 *  return delle email del contatto.
+	 *  Ritorna le email del contatto.
 	 *
-	 * @return the email
+	 * @return email come ArrayList
 	 */
 	public ArrayList<Email> getEmail()
 	{
@@ -213,10 +210,10 @@ public class Contatto{
 	}
 	
 	/**
-	 *  metodo per aggiungere un numero di telefono al contatto.
+	 *  Metodo per aggiungere un numero di telefono al contatto.
 	 *
-	 * @param numero the numero
-	 * @param tipotelefono the tipotelefono
+	 * @param numero il numero di telefono
+	 * @param tipotelefono Descrizione del numero di telefono
 	 */
 	public void addTelefono(String numero, String tipotelefono) {
 		Telefono nuovoTelefono = new Telefono(numero, tipotelefono);
@@ -224,10 +221,10 @@ public class Contatto{
 	}
 	
 	/**
-	 *  metodo per aggiungere una email al contatto.
+	 *  Metodo per aggiungere una email al contatto.
 	 *
-	 * @param indirizzoemail the indirizzoemail
-	 * @param tipoemail the tipoemail
+	 * @param indirizzoemail indirizzo email
+	 * @param tipoemail tipo/descrizione dell'email
 	 */
 	public void addEmail(String indirizzoemail, String tipoemail) {
 		Email nuovaEmail = new Email(indirizzoemail, tipoemail);
@@ -235,13 +232,13 @@ public class Contatto{
 	}
 	
 	/**
-	 *  metodo per aggiungere un indirizzo al contatto.
+	 *  Metodo per aggiungere un indirizzo al contatto.
 	 *
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param tipo the tipo
+	 * @param via via dell'indirizzo
+	 * @param citta città dell'indirizzo
+	 * @param nazione nazione dell'indirizzo
+	 * @param cap CAP dell'indirizzo
+	 * @param tipo tipo/descrizione dell'indirizzo
 	 */
 	public void addIndirizzo(String via, String citta, String nazione, String cap, tipoIndirizzo tipo) {
 		Indirizzo nuovoIndirizzo = new Indirizzo(via, citta, nazione, cap, tipo);
@@ -249,10 +246,10 @@ public class Contatto{
 	}
 	
 	/**
-	 * Reindirizza.
+	 * Reindirizza la chiamata eseguita verso un numero del contatto verso un altro numero preselezionato.
 	 *
-	 * @param numeroDaReindirizzare the numero da reindirizzare
-	 * @return the string
+	 * @param numeroDaReindirizzare numero da chiamare e reindirizzare
+	 * @return il numero da chiamare dopo il reindirizzamento
 	 */
 	public String reindirizza(String numeroDaReindirizzare) {
 		Telefono telefonoTrovato = null;
@@ -263,19 +260,15 @@ public class Contatto{
 			if (telefono.getNumero().equals(numeroDaReindirizzare))
 			{
 				telefonoTrovato = telefono;
-				System.out.println("\nDebug: Trovato il numero chiamato in model "+ telefono.getTipo());
 			}
 			else 
 			{
-				System.out.println("D:" + telefono.getNumero()+ " di tipo " +telefono.getTipo());
 				if (telefono.getTipo().equals("Mobile") && telefonoMobile == null)
 				{
-					System.out.println("Debug: Trovato mobile");
 					telefonoMobile = telefono;
 				}
 				if (telefono.getTipo().equals("Fisso") && telefonoFisso == null)
 				{
-					System.out.println("Debug: Trovato fisso");
 					telefonoFisso = telefono;
 				}
 			}
@@ -284,12 +277,10 @@ public class Contatto{
 		{
 			if (telefonoTrovato.getTipo().equals("Mobile") && telefonoFisso != null)
 			{
-				System.out.println("Debug: Ritorna num fisso");
 				return telefonoFisso.getNumero();
 			}
 			if (telefonoTrovato.getTipo().equals("Fisso") && telefonoMobile != null)
 			{
-				System.out.println("Debug: Ritorna num mobile");
 				return telefonoMobile.getNumero();
 			}
 		}

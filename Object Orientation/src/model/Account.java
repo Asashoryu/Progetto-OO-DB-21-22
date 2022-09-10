@@ -1,30 +1,27 @@
 package model;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Account.
- */
+/** Gestisce l'oggetto Account e la sua interazione con il controller. */
 public class Account {
 	
-	/** The fornitore. */
+	/** Nome del fornitore dell'account. */
 	private String fornitore;
 	
-	/** The frase stato. */
+	/** Frase stato indicata nell'account. */
 	private String fraseStato;
 
-	/** The nickname. */
+	/** Nickname dell'account. */
 	private String nickname;
 	
-	/** The stringa email. */
+	/** Email a cui è associato l'account. */
 	private String stringaEmail;
 	
 	/**
-	 * Instantiates a new account.
+	 * Instanzia un nuovo account con le varie informazioni necessarie.
 	 *
-	 * @param fornitore the fornitore
-	 * @param fraseStato the frase stato
-	 * @param nickname the nickname
-	 * @param stringaEmail the stringa email
+	 * @param fornitore fornitore
+	 * @param fraseStato frase stato
+	 * @param nickname nickname
+	 * @param stringaEmail email
 	 */
 	public Account(String fornitore, String fraseStato, String nickname, String stringaEmail)
 	{
@@ -35,72 +32,72 @@ public class Account {
 	}
 
 	/**
-	 * Gets the fornitore.
+	 * Ritorna il fornitore salvato localmente.
 	 *
-	 * @return the fornitore
+	 * @return fornitore dell'account
 	 */
 	public String getFornitore() {
 		return fornitore;
 	}
 	
 	/**
-	 * Sets the fornitore.
+	 * Imposta il valore del fornitore localmente.
 	 *
-	 * @param fornitore the new fornitore
+	 * @param fornitore fornitore
 	 */
 	public void setFornitore(String fornitore) {
 		this.fornitore = fornitore;
 	}
 	
 	/**
-	 * Gets the frase stato.
+	 * Ritorna la frase stato salvata localmente.
 	 *
-	 * @return the frase stato
+	 * @return frase stato
 	 */
 	public String getFraseStato() {
 		return fraseStato;
 	}
 	
 	/**
-	 * Sets the frase stato.
+	 * Imposta il valore della frase stato localmente.
 	 *
-	 * @param fraseStato the new frase stato
+	 * @param fraseStato frase stato
 	 */
 	public void setFraseStato(String fraseStato) {
 		this.fraseStato = fraseStato;
 	}
 	
 	/**
-	 * Gets the nickname.
+	 * Ritorna il nickname salvato localmente.
 	 *
-	 * @return the nickname
+	 * @return nickname
 	 */
 	public String getNickname() {
 		return nickname;
 	}
 	
 	/**
-	 * Sets the nickname.
+	 * Imposta il valore del nickname localmente.
 	 *
-	 * @param nickname the new nickname
+	 * @param nickname nickname
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 
 	/**
-	 * Gets the stringa email.
+	 * Ritorna la stringa email salvata localmente.
 	 *
-	 * @return the stringa email
+	 * @returnstringa email
 	 */
 	public String getStringaEmail() {
 		return stringaEmail;
 	}
 
 	/**
-	 * Sets the stringa email.
+	 * Imposta la stringa email localmente.
 	 *
-	 * @param stringaEmail the new stringa email
+	 * @param stringaEmail stringa email
 	 */
 	public void setStringaEmail(String stringaEmail) {
 		this.stringaEmail = stringaEmail;

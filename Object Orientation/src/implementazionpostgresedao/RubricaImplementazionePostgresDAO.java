@@ -14,16 +14,13 @@ import java.util.ArrayList;
 import dao.RubricaDAO;
 import database.ConnessioneDatabase;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class RubricaImplementazionePostgresDAO.
- */
+/** Gestisce l'oggetto Rubrica e la sua connessione con il database. */
 public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	
-	/** The connection. */
+	/**  */
 	private Connection connection;
 	
-	/** The rs. */
+	
 	private ResultSet rs;
 	
 	/**
@@ -33,9 +30,9 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Apri connessione.
+	 * Instaura la connessione con il database.
 	 *
-	 * @return the connection
+	 * @return connection
 	 */
 	public Connection apriConnessione()
 	{
@@ -48,9 +45,9 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Gets the connessione.
+	 * Ritorna la connessione.
 	 *
-	 * @return the connessione
+	 * @return connessione
 	 */
 	public Connection getConnessione()
 	{
@@ -58,10 +55,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Load contatti.
+	 * Carica i contatti della rubrica nel database assieme a tutte le informazioni che possiedono.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param contatti the contatti
+	 * @param nomeRubrica il nome dell'utente della rubrica
+	 * @param contatti contatti da caricare
 	 */
 	@Override
 	public void loadContatti(String nomeRubrica, ArrayList<Contatto> contatti) {
@@ -149,11 +146,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Load gruppi.
+	 * Carica i gruppi della rubrica nel database.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param contatti the contatti
-	 * @param gruppi the gruppi
+	 * @param nomeRubrica nome dell'utente della rubrica
+	 * @param contatti contatti appartenenti ai vari gruppi
+	 * @param gruppi gruppi da caricare
 	 */
 	@Override
 	public void loadGruppi(String nomeRubrica, ArrayList<Contatto> contatti, ArrayList<Gruppo> gruppi) {
@@ -203,10 +200,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Genera contatto ID.
+	 * Genera un nuovo valido idenfiticato (ID) per un contatto.
 	 *
-	 * @param connessione the connessione
-	 * @return the int
+	 * @param connessione connessione
+	 * @return int
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -240,20 +237,20 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Adds the info contatto.
+	 * Carica nel database tutte le informazioni di un contatto.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param nome the nome
-	 * @param secondonome the secondonome
-	 * @param cognome the cognome
-	 * @param numMobile the num mobile
-	 * @param numFisso the num fisso
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param id the id
-	 * @param connessione the connessione
+	 * @param nomeRubrica nome dell'utente della rubrica
+	 * @param nome nome del contatto
+	 * @param secondonome secondo nome del contatto
+	 * @param cognome cognome del contatto
+	 * @param numMobile numero mobile del contatto
+	 * @param numFisso numero fisso del contatto
+	 * @param via via dell'indirizzo del contatto
+	 * @param citta città dell'indirizzo del contatto
+	 * @param nazione nazione dell'indirizzo del contatto
+	 * @param cap CAP dell'indirizzo del contatto
+	 * @param id identificativo del contatto
+	 * @param connessione connessione
 	 * @throws SQLException the SQL exception
 	 */
 	/* @returns id del contatto creato*/
@@ -285,20 +282,20 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Change info contatto.
+	 * Cambia le informazioni di un contatto nel database.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param nome the nome
-	 * @param secondonome the secondonome
-	 * @param cognome the cognome
-	 * @param numMobile the num mobile
-	 * @param numFisso the num fisso
-	 * @param via the via
-	 * @param citta the citta
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param vecchioContattoId the vecchio contatto id
-	 * @param connessione the connessione
+	 * @param nomeRubrica nome dell'utente della rubrica
+	 * @param nome nome del contatto
+	 * @param secondonome secondo nome del contatto
+	 * @param cognome cognome del contatto
+	 * @param numMobile numero mobile del contatto
+	 * @param numFisso numero fisso del contatto
+	 * @param via via dell'indirizzo del contatto
+	 * @param citta città dell'indirizzo del contatto
+	 * @param nazione nazione dell'indirizzo del contatto
+	 * @param cap CAP dell'indirizzo del contatto
+	 * @param vecchioContattoId vecchio identificativo del contatto
+	 * @param connessione connessione
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -348,11 +345,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Adds the immagine.
+	 * Carica l'immagine del contatto nel database.
 	 *
-	 * @param pathImmagine the path immagine
-	 * @param id the id
-	 * @param connessione the connessione
+	 * @param pathImmagine percorso dell'immagine
+	 * @param id identificativo del contatto a cui appartiene l'immagine
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -373,15 +370,15 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Adds the indirizzo.
+	 * Carica un indirizzo nel database.
 	 *
-	 * @param via the via
-	 * @param città the città
-	 * @param nazione the nazione
-	 * @param cap the cap
-	 * @param descrizione the descrizione
-	 * @param id the id
-	 * @param connessione the connessione
+	 * @param via via dell'indirizzo
+	 * @param città città dell'indirizzo
+	 * @param nazione nazione dell'indirizzo
+	 * @param cap CAP dell'indirizzo
+	 * @param descrizione descrizione dell'indirizzo
+	 * @param id identificativo del contatto a cui appartiene l'indirizzo
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -406,12 +403,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 
 	/**
-	 * Adds the telefono.
+	 * Carica un numero di telefono nel database.
 	 *
-	 * @param numero the numero
-	 * @param descrizione the descrizione
-	 * @param id_contatto the id contatto
-	 * @param connessione the connessione
+	 * @param numero numero di telefono 
+	 * @param descrizione descrizione del numero di telefono
+	 * @param id_contatto identificativo del contatto a cui appartiene il numero di telefono
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -435,12 +432,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 
 	/**
-	 * Adds the email.
+	 * Carica un email nel database con le sue relative informazioni.
 	 *
-	 * @param indirizzoEmail the indirizzo email
-	 * @param descrizione the descrizione
-	 * @param id_contatto the id contatto
-	 * @param connessione the connessione
+	 * @param indirizzoEmail indirizzo email
+	 * @param descrizione descrizione dell'email
+	 * @param id_contatto identificativo del contatto a cui appartiene l'email
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -463,10 +460,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Load account contatto.
+	 * Recupera account di un contatto dal database.
 	 *
-	 * @param contatto the contatto
-	 * @param connessione the connessione
+	 * @param contatto contatto di cui recuperare account
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -498,10 +495,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Delete contatto.
+	 * Elimina contatto dal database con eliminazione in cascata di tutte le sue ulteriori informazioni.
 	 *
-	 * @param codiceContatto the codice contatto
-	 * @param connessione the connessione
+	 * @param codiceContatto identificativo del contatto da eliminare
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -519,11 +516,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Adds the info gruppo.
+	 * Carica un gruppo e tutti i suoi contatti nel database.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param nuovoGruppo the nuovo gruppo
-	 * @param connessione the connessione
+	 * @param nomeRubrica nome utente della rubrica
+	 * @param nuovoGruppo nome gruppo
+	 * @param connessione connessione con il database
 	 * @throws Exception the exception
 	 */
 	@Override
@@ -564,10 +561,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Delete gruppo.
+	 * Elimina un gruppo dal database.
 	 *
-	 * @param codiceGruppo the codice gruppo
-	 * @param connessione the connessione
+	 * @param codiceGruppo identificativo del gruppo da eliminare
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override
@@ -585,11 +582,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	}
 	
 	/**
-	 * Change info gruppo.
+	 * Cambia informazioni di un gruppo nel database.
 	 *
-	 * @param nomeRubrica the nome rubrica
-	 * @param nuovoGruppo the nuovo gruppo
-	 * @param connessione the connessione
+	 * @param nomeRubrica nome dell'utente della rubrica
+	 * @param nuovoGruppo gruppo da cambiare
+	 * @param connessione connessione con il database
 	 * @throws SQLException the SQL exception
 	 */
 	@Override

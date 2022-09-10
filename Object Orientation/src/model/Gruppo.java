@@ -2,23 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
-// TODO: Auto-generated Javadoc
-/**
- * The Class Gruppo.
- */
+/** Gestisce l'oggetto Gruppo e la sua interazione con il controller. */
 public class Gruppo{
 	
-	/** The nome. */
+	/** nome del gruppo. */
 	private String nome;
 	
-	/** The id. */
+	/** Identificativo (id) del gruppo. */
 	private int id;
 	
-	/** The contatti. */
+	/** ArrayList dei contatti appartenenti al gruppo. */
 	private ArrayList<Contatto> contatti;
 	
 	/**
-	 * Instantiates a new gruppo.
+	 * Instanzia un nuovo gruppo tramite ArrayList di contatti.
 	 */
 	public Gruppo ()
 	{
@@ -26,10 +23,10 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Instantiates a new gruppo.
+	 * Instanzia un nuovo gruppo salvandone il nome e l'identificativo per il DB.
 	 *
-	 * @param nome the nome
-	 * @param id the id
+	 * @param nome nome del gruppo
+	 * @param id identificativo del gruppo
 	 */
 	public Gruppo (String nome, int id) {
 		setNome(nome);
@@ -38,10 +35,10 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Instantiates a new gruppo.
+	 * Instanzia un nuovo gruppo con il suo nome e i contatti che contiene.
 	 *
-	 * @param nome the nome
-	 * @param contatti the contatti
+	 * @param nome nome del gruppo
+	 * @param contatti contatti appartententi al gruppo
 	 */
 	public Gruppo (String nome, ArrayList<Contatto> contatti) {
 		setNome(nome);
@@ -49,54 +46,54 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Gets the nome.
+	 * Ritorna il nome del gruppo impostato localmente.
 	 *
-	 * @return the nome
+	 * @return nome del gruppo
 	 */
 	public String getNome() {
 		return nome;
 	}
 
 	/**
-	 * Sets the nome.
+	 * Imposta il valore del nome del gruppo localmente.
 	 *
-	 * @param nome the new nome
+	 * @param nome nome del gruppo da impostare localmente
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
 	/**
-	 * Gets the id.
+	 * Ritorna l'identificativo/id del gruppo impostato localmente.
 	 *
-	 * @return the id
+	 * @return id del gruppo
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * Sets the id.
+	 * Imposta il valore dell'id del gruppo localmente.
 	 *
-	 * @param id the new id
+	 * @param id identificativo del gruppo
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Gets the contatti.
+	 * Ritorna l'ArrayList di contatti del gruppo.
 	 *
-	 * @return the contatti
+	 * @return ArrayList contatti
 	 */
 	public ArrayList<Contatto> getContatti() {
 		return contatti;
 	}
 
 	/**
-	 * Sets the contatti.
+	 * Imposta il valore dell'ArrayList contatti localmente.
 	 *
-	 * @param contatti the new contatti
+	 * @param contatti ArrayList contatti
 	 */
 	public void setContatti(ArrayList<Contatto> contatti) {
 		this.contatti = contatti;
