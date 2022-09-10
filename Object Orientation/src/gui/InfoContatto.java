@@ -28,8 +28,7 @@ import java.awt.BorderLayout;
 
 import java.io.File;
 
-
-/**
+/** 
  * The Class InfoContatto.
  */
 @SuppressWarnings("serial")

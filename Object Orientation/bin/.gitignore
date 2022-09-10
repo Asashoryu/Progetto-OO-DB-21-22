@@ -1,1 +1,31 @@
+<<<<<<< HEAD
 /gui/
+=======
+/Account.class
+/AddContatto.class
+/AddGruppo.class
+/ChangeContatto.class
+/ChangeGruppo.class
+/Contatto.class
+/Email.class
+/FrameChiama.class
+/FrameChiamaRiserva.class
+/Gruppo.class
+/Home.class
+/IconaUNINA.jpg
+/Indirizzo$tipoIndirizzo.class
+/Indirizzo.class
+/InfoContatto.class
+/ListaContatti.class
+/MainEntryPoint.class
+/Rubrica.class
+/Sistema.class
+/Telefono.class
+/controller/
+/dao/
+/database/
+/default.jpg
+/gui/
+/implementazionpostgresedao/
+/model/
+>>>>>>> branch 'main' of https://github.com/Asashoryu/Progetto-OO-DB-21-22.git
