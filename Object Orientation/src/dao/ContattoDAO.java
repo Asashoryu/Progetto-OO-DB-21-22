@@ -2,7 +2,6 @@ package dao;
 
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Interface ContattoDAO.
  */
