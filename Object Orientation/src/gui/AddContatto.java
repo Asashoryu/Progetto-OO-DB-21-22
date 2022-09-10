@@ -749,6 +749,7 @@ public class AddContatto extends JFrame {
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
 		panel.add(textFieldViaSB);
+		textFieldViaSB.setCaretPosition(0);
 		textFieldViaSB.setColumns(10);
 									
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
@@ -759,6 +760,7 @@ public class AddContatto extends JFrame {
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
 		panel.add(textFieldCitt‡SB);
+		textFieldCitt‡SB.setCaretPosition(0);
 		textFieldCitt‡SB.setColumns(10);
 
 		JLabel lblNazioneSB = new JLabel("Nazione");
@@ -769,6 +771,7 @@ public class AddContatto extends JFrame {
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
 		panel.add(textFieldNazioneSB);
+		textFieldNazioneSB.setCaretPosition(0);
 		textFieldNazioneSB.setColumns(10);
 		
 		JLabel lblCapSB = new JLabel("CAP");
@@ -779,6 +782,7 @@ public class AddContatto extends JFrame {
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
 		panel.add(textFieldCapSB, BorderLayout.WEST);
+		textFieldCapSB.setCaretPosition(0);
 		textFieldCapSB.setColumns(10);
 		
 		return panel;
@@ -832,11 +836,13 @@ public class AddContatto extends JFrame {
 		textFieldDescMailSB = new JTextField();
 		textFieldDescMailSB.setText(fieldTipo);
 		textFieldDescMailSB.setColumns(5);
+		textFieldDescMailSB.setCaretPosition(0);
 		panel.add(textFieldDescMailSB);
 																		
 		textFieldMailSB = new JTextField();
 		textFieldMailSB.setText(fieldEmail);
 		textFieldMailSB.setColumns(5);
+		textFieldMailSB.setCaretPosition(0);
 		panel.add(textFieldMailSB);
 		
 		return  panel;

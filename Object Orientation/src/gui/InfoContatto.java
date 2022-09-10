@@ -407,16 +407,16 @@ public class InfoContatto extends JFrame {
 		btnChiama1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameChiama Chiama = new FrameChiama(c, textFieldNumMobile.getText().toString());
+				Chiama.setLocationRelativeTo(null);
 				Chiama.setVisible(true);
-				//frame.dispose();
 			}
 		});
 			
 		btnChiama2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameChiama Chiama = new FrameChiama(c, textFieldNumFisso.getText().toString());
+				Chiama.setLocationRelativeTo(null);
 				Chiama.setVisible(true);
-				//frame.dispose();
 			}
 		});
 	}
@@ -459,9 +459,9 @@ public class InfoContatto extends JFrame {
 		{
 			// immagine di default
 			img        = new ImageIcon(this.getClass().getResource("/default.jpg")).getImage();
-			imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			imgResized = img.getScaledInstance(160, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
-			lblImmagine.setBounds(633, 57, 170, 150);
+			lblImmagine.setBounds(633, 57, 160, 150);
 			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
@@ -469,10 +469,10 @@ public class InfoContatto extends JFrame {
 		else {
 			// immagine caricata
 			img        = new ImageIcon(controller.getContattoSelezionato().getPathImmagine()).getImage();
-			imgResized = img.getScaledInstance(150, 154, Image.SCALE_DEFAULT);
+			imgResized = img.getScaledInstance(160, 150, Image.SCALE_DEFAULT);
 			lblImmagine.setBackground(Color.LIGHT_GRAY);
 			lblImmagine.setBorder(new LineBorder(new Color(0, 0, 0)));
-			lblImmagine.setBounds(633, 57, 170, 150);
+			lblImmagine.setBounds(633, 57, 160, 150);
 			lblImmagine.setIcon(new ImageIcon(imgResized));
 			contentPane.add(lblImmagine);
 		}
@@ -647,6 +647,7 @@ public class InfoContatto extends JFrame {
 		textFieldDescSB.setEditable(false);
 		textFieldDescSB.setOpaque(true);
 		textFieldDescSB.setBackground(new Color(255,255,255));
+		textFieldDescSB.setCaretPosition(0);
 		panel.add(textFieldDescSB);
 		textFieldDescSB.setColumns(5);
 																		
@@ -686,6 +687,7 @@ public class InfoContatto extends JFrame {
 		textFieldDescMailSB.setEditable(false);
 		textFieldDescMailSB.setOpaque(true);
 		textFieldDescMailSB.setBackground(new Color(255,255,255));
+		textFieldDescMailSB.setCaretPosition(0);
 		textFieldDescMailSB.setColumns(5);
 		panel.add(textFieldDescMailSB);
 																		
@@ -694,6 +696,7 @@ public class InfoContatto extends JFrame {
 		textFieldMailSB.setEditable(false);
 		textFieldMailSB.setOpaque(true);
 		textFieldMailSB.setBackground(new Color(255,255,255));
+		textFieldMailSB.setCaretPosition(0);
 		textFieldMailSB.setColumns(5);
 		panel.add(textFieldMailSB);
 		
@@ -755,6 +758,7 @@ public class InfoContatto extends JFrame {
 		textFieldNickname.setEditable(false);
 		textFieldNickname.setOpaque(true);
 		textFieldNickname.setBackground(new Color(255,255,255));
+		textFieldNickname.setCaretPosition(0);
 		panel.add(textFieldNickname);
 		textFieldNickname.setColumns(10);
 	

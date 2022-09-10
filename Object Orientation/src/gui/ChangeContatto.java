@@ -1005,9 +1005,10 @@ public class ChangeContatto extends JFrame {
 
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
-		panel.add(textFieldViaSB);
 		textFieldViaSB.setColumns(10);
-									
+		textFieldViaSB.setCaretPosition(0);
+		panel.add(textFieldViaSB);	
+		
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
 		lblCitt‡SB.setOpaque(true);
 		lblCitt‡SB.setBackground(new Color(255, 255, 255));
@@ -1015,9 +1016,10 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
-		panel.add(textFieldCitt‡SB);
+		textFieldCitt‡SB.setCaretPosition(0);
 		textFieldCitt‡SB.setColumns(10);
-
+		panel.add(textFieldCitt‡SB);
+		
 		JLabel lblNazioneSB = new JLabel("Nazione");
 		lblNazioneSB.setOpaque(true);
 		lblNazioneSB.setBackground(new Color(255, 255, 255));
@@ -1025,8 +1027,9 @@ public class ChangeContatto extends JFrame {
 
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
-		panel.add(textFieldNazioneSB);
+		textFieldNazioneSB.setCaretPosition(0);
 		textFieldNazioneSB.setColumns(10);
+		panel.add(textFieldNazioneSB);
 		
 		JLabel lblCapSB = new JLabel("CAP");
 		lblCapSB.setOpaque(true);
@@ -1035,8 +1038,8 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
-		panel.add(textFieldCapSB, BorderLayout.WEST);
 		textFieldCapSB.setColumns(10);
+		panel.add(textFieldCapSB, BorderLayout.WEST);
 		
 		return panel;
 	}
@@ -1059,12 +1062,14 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldDescSB = new JTextField();
 		textFieldDescSB.setText(fieldTipo);
-		panel.add(textFieldDescSB);
+		textFieldDescSB.setCaretPosition(0);
 		textFieldDescSB.setColumns(5);
+		panel.add(textFieldDescSB);
 																		
 		textFieldNumSB = new JTextField();
 		textFieldNumSB.setText(fieldNum);
 		panel.add(textFieldNumSB);
+		textFieldNumSB.setCaretPosition(0);
 		textFieldNumSB.setColumns(5);
 		
 		return  panel;
@@ -1089,13 +1094,13 @@ public class ChangeContatto extends JFrame {
 		textFieldDescMailSB = new JTextField();
 		textFieldDescMailSB.setText(fieldTipo);
 		textFieldDescMailSB.setColumns(5);
+		textFieldDescMailSB.setCaretPosition(0);
 		panel.add(textFieldDescMailSB);
 																		
 		textFieldMailSB = new JTextField();
-		textFieldMailSB.setCaretPosition(0);
 		textFieldMailSB.setText(fieldEmail);
-		
 		textFieldMailSB.setColumns(5);
+		textFieldMailSB.setCaretPosition(0);
 		panel.add(textFieldMailSB);
 		
 		return  panel;

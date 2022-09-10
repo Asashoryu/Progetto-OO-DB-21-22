@@ -90,6 +90,7 @@ public class FrameChiama extends JFrame {
 				lblReindirizzato.setFont(new Font("Arial", Font.PLAIN, 16));
 				lblReindirizzato.setBounds(10, 10, 416, 27);
 				FinestraCR = new FrameChiamaRiserva(numeroRiserva);
+				FinestraCR.setLocationRelativeTo(null);
 				FinestraCR.setVisible(true);
 				frame.dispose();
 				}

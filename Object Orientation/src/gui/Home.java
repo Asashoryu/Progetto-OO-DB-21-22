@@ -115,10 +115,11 @@ public class Home extends JFrame {
 		
 		txtUtenteSelezionato = new JTextField("");
 		txtUtenteSelezionato.setBounds(269, 21, 90, 18);
-		panel.add(txtUtenteSelezionato);
 		txtUtenteSelezionato.setBackground(new Color(102, 255, 255));
 		txtUtenteSelezionato.setEditable(false);
+		txtUtenteSelezionato.setCaretPosition(0);
 		txtUtenteSelezionato.setColumns(10);
+		panel.add(txtUtenteSelezionato);
 		
 		btnEntra = new JButton("Entra");
 		btnEntra.setBounds(369, 21, 65, 18);
