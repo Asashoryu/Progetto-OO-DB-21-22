@@ -43,7 +43,6 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 			ResultSet rs = recuperaRubriche.executeQuery();
 			rubriche= new ArrayList<Rubrica>();
 			while (rs.next()) {
-				System.out.println("valore trovato: " + rs.getString("utente_id") );
 				Rubrica nuovaRubrica = new Rubrica(rs.getString("utente_id"));
 				rubriche.add(nuovaRubrica);	
 			}

@@ -140,7 +140,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			connection.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -183,18 +182,12 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 						}
 					}
 				}
-				System.out.println("Debug : contatti del nuovo gruppo");
-				for (Contatto contatto : nuovoGruppo.getContatti())
-				{
-					System.out.println("Debug : " + contatto.getNome());
-				}
 				gruppi.add(nuovoGruppo);
 			}
 			rsg.close();
 			connection.close();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -230,7 +223,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		catch (SQLException e) 
 		{
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			throw e;
 		}
 		
@@ -276,7 +268,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		catch (SQLException e) 
 		{
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			throw e;
 		}
 	}
@@ -339,7 +330,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		catch (SQLException e) 
 		{
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			throw e;
 		}
 	}
@@ -363,7 +353,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			aggiungiImmagine.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query di inserimento immagine");
 			e.printStackTrace();
 			throw e;
 		}
@@ -396,7 +385,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			aggiungiIndirizzo.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			e.printStackTrace();
 			throw e;
 		}
@@ -424,7 +412,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			aggiungiTelefono.executeUpdate();
 		} catch (SQLException e) {
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			e.printStackTrace();
 			throw e;
 		}
@@ -453,7 +440,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				aggiungiEmail.executeUpdate();
 		} catch (SQLException e) {
 				connessione.rollback();
-				System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 				e.printStackTrace();
 				throw e;
 		}
@@ -488,7 +474,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			}
 		} catch (SQLException e) {
 			connessione.rollback();
-			System.out.println("ROLLBACK: è stato rilevanto un errore nella query");
 			e.printStackTrace();
 			throw e;
 		}
@@ -551,7 +536,6 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			connessione.commit();
 			connessione.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			connessione.rollback();
 			throw e;
 		}

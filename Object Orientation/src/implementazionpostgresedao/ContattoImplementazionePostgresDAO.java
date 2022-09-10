@@ -18,7 +18,6 @@ public class ContattoImplementazionePostgresDAO implements ContattoDAO{
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
