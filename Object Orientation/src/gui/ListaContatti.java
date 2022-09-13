@@ -17,28 +17,25 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
-import java.awt.Dimension;
-
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ListaContatti.
+ * Frame che visualizza e gestisce ciascun contatto della rubrica tramite una lista.
  */
 @SuppressWarnings("serial")
 public class ListaContatti extends JFrame {
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame     frame;
 	
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
 	/**
-	 * Crea frame.
+	 * Costruttore di un nuovo frame ListaContatti.
 	 *
-	 * @param c the c
-	 * @param frameChiamante the frame chiamante
+	 * @param c controller
+	 * @param frameChiamante frame chiamante
 	 */
 	public ListaContatti(Controller c, JFrame frameChiamante) {
 		setResizable(false);
@@ -49,7 +46,6 @@ public class ListaContatti extends JFrame {
 		frame = this;
         controller = c;
   
-        // Display the window.
         frame.setTitle("Rubrica di "+controller.getRubricaSelezionata().getNome());
         frame.setBounds(500, 200,590,422);
         
@@ -93,6 +89,8 @@ public class ListaContatti extends JFrame {
 		
 		scrollPaneContatti.setViewportBorder(null);
 		getContentPane().add(scrollPaneContatti);
+		
+		/** carica la Jlist con i nomi dei contatti dal DB */
 		JList<Object> listaContatti = new JList<Object>(controller.getNomiContattiRubrica());
 		scrollPaneContatti.setViewportView(listaContatti);
 		listaContatti.setVisibleRowCount(-1);
@@ -100,8 +98,6 @@ public class ListaContatti extends JFrame {
 		listaContatti.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		listaContatti.setBorder(null);
 		listaContatti.setBackground(new Color(255, 255, 255));
-		
-		/** carica la Jlist con i nomi dei contatti dal DB */
 		
 		JButton btnModificaContatto = new JButton("Modifica");
 		btnModificaContatto.setForeground(new Color(102, 102, 153));
@@ -181,7 +177,6 @@ public class ListaContatti extends JFrame {
 		btnEliminaGruppo.setFocusPainted(false);
 		getContentPane().add(btnEliminaGruppo);
 		
-		
 		JButton btnVisualizzaTuttiContatti = new JButton("Tutti");
 		btnVisualizzaTuttiContatti.setForeground(new Color(102, 102, 153));
 		btnVisualizzaTuttiContatti.setToolTipText("Premi per mostrare l'elenco di tutti i contatti della rubrica");
@@ -202,13 +197,11 @@ public class ListaContatti extends JFrame {
 		/**
 		 * Per il pannello di ricerca
 		 */
-		
 		JTextField textFieldRicerca = new JTextField();
 		textFieldRicerca.setToolTipText("Inserire chiave (testo, numero ecc.) da ricercare");
 		textFieldRicerca.setBounds(223, 10, 158, 23);
 		getContentPane().add(textFieldRicerca);
 		textFieldRicerca.setColumns(10);
-		
 		
 		String[] FiltroRicerca = {"Nome", "Email", "Account", "Numero di Telefono"};
 		
@@ -232,6 +225,7 @@ public class ListaContatti extends JFrame {
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblNewLabel.setBounds(168, 10, 45, 23);
 		getContentPane().add(lblNewLabel);
+		
 		/**
 		 * Quando è premuto il button "Indietro"
 		 */
@@ -253,6 +247,7 @@ public class ListaContatti extends JFrame {
 				AddContatto.setVisible(true);
 			}
 		});
+		
 		/**
 		 * Quando è premuto il button "Visualizza contatto"
 		 */
@@ -260,7 +255,7 @@ public class ListaContatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
-					JFrame InfoContatto = new InfoContatto(controller, frame, listaContatti);
+					JFrame InfoContatto = new InfoContatto(controller, frame);
 					frame.dispose();
 					InfoContatto.setLocationRelativeTo(null);
 					InfoContatto.setVisible(true);
@@ -269,6 +264,7 @@ public class ListaContatti extends JFrame {
 				}
 			}
 		});
+		
 		/**
 		 * Quando è premuto il button "Modifica"
 		 */
@@ -285,8 +281,9 @@ public class ListaContatti extends JFrame {
 				}
 			}
 		});
+		
 		/**
-		 * TODO: Quando è premuto il button "Elimina"
+		 * Quando è premuto il button "Elimina"
 		 */
 		btnEliminaContatto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -294,12 +291,6 @@ public class ListaContatti extends JFrame {
 					// Elimina dalla memoria e dal DB
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
 					controller.deleteContattoSelezionato();
-					//TODO: Cancella dalla lista;
-//					DefaultListModel model = (DefaultListModel) listaContatti.getModel();
-//					int selectedIndex = listaContatti.getSelectedIndex();
-//					if (selectedIndex != -1) {
-//					    model.remove(selectedIndex);
-//					}
 					listaContatti.removeAll();
 					listaContatti.setListData(controller.getNomiContattiRubrica());
 					JOptionPane.showConfirmDialog(null, 
@@ -385,7 +376,6 @@ public class ListaContatti extends JFrame {
 				}
 			}
 		});
-		
 		
 		btnInvioRicerca.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

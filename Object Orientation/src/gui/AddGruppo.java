@@ -22,34 +22,33 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class AddGruppo.
+ * Frame che gestisce l'inserimento di un nuovo gruppo.
  */
 @SuppressWarnings("serial")
 public class AddGruppo extends JFrame{
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame frame;
 	
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The text field nome. */
+	/** Campo nome. */
 	private JTextField textFieldNome;
 	
-	/** The lbl nome. */
+	/** Label nome. */
 	private JLabel lblNome;
 	
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
 	/**
-	 * Instantiates a new adds the gruppo.
+	 * Costruttore di un nuovo frame AddGruppo.
 	 *
-	 * @param c the c
-	 * @param frameChiamante the frame chiamante
-	 * @param listaGruppiChiamante the lista gruppi chiamante
+	 * @param c controller
+	 * @param frameChiamante frame chiamante
+	 * @param lista lista di Gruppi da aggiornare col nuovo gruppo aggiunto
 	 */
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
 		
@@ -75,10 +74,6 @@ public class AddGruppo extends JFrame{
 		setContentPane(contentPane);
 		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
-		
-		/**
-		 * 
-		 */
 		
 		JPanel pannelloContattiMain = new JPanel();
 		pannelloContattiMain.setBounds(45, 90, 249, 243);
@@ -196,9 +191,9 @@ public class AddGruppo extends JFrame{
 	}
 	
 	/**
-	 * Inits the pannello contatti.
+	 * Costuisce un pannello dei contatti presenti nella rubrica
 	 *
-	 * @param pannelloContatti the pannello contatti
+	 * @param pannelloContatti pannello contatti
 	 */
 	private void initPannelloContatti(JPanel pannelloContatti)
 	{
@@ -210,17 +205,6 @@ public class AddGruppo extends JFrame{
 			checkbox = new JCheckBox(nomeContatto);
 			checkbox.setBackground(new Color(204, 255, 255));
 			
-			// ItemListener
-//			ItemListener itemListener = new ItemListener() {
-//				@Override
-//				public void itemStateChanged(ItemEvent itemEvent) {
-//					int state = itemEvent.getStateChange();
-//			        if (state == ItemEvent.SELECTED) {
-//			        	nuovoGruppo;
-//			        }
-//			    }
-//			};
-				  
 			panel.add(checkbox);
 			panel.setBackground(new Color(204, 255, 255));
 			pannelloContatti.add(panel);

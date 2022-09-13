@@ -35,107 +35,105 @@ import java.io.File;
 
 import java.sql.SQLException;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ChangeContatto.
+ * Frame che gestisce la modifica delle informazioni di un contatto.
  */
 @SuppressWarnings("serial")
 public class ChangeContatto extends JFrame {
 
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame frame;
 	
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The text field nome. */
+	/** Campo nome. */
 	private JTextField textFieldNome;
 	
-	/** The text field secondo nome. */
+	/** Campo secondo nome. */
 	private JTextField textFieldSecondoNome;
 	
-	/** The text field cognome. */
+	/** Campo cognome. */
 	private JTextField textFieldCognome;
 	
-	/** The lbl titolo. */
+	/** Label titolo. */
 	private JLabel lblTitolo;
 	
-	/** The lbl label nome. */
+	/** Label nome. */
 	private JLabel lblLabelNome;
 	
-	/** The lbl secondo nome. */
+	/** Label secondo nome. */
 	private JLabel lblSecondoNome;
 	
-	/** The lbl cognome. */
+	/** Label cognome. */
 	private JLabel lblCognome;
 	
-	/** The text field num fisso. */
+	/** Campo numero fisso. */
 	private JTextField textFieldNumFisso;
 	
-	/** The text field num mobile. */
+	/** Campo numero mobile. */
 	private JTextField textFieldNumMobile;
 	
-	/** The text field via. */
+	/** Campo via. */
 	private JTextField textFieldVia;
 	
-	/** The lbl num mobile. */
+	/** Label numero mobile. */
 	private JLabel lblNumMobile;
 	
-	/** The lbl num fisso. */
+	/** Label numero fisso. */
 	private JLabel lblNumFisso;
 	
-	/** The lbl via. */
+	/** Label via. */
 	private JLabel lblVia;
 	
-	/** The text field citt‡. */
+	/** Campo citt‡. */
 	private JTextField textFieldCitt‡;
 	
-	/** The text field nazione. */
+	/** Campo nazione. */
 	private JTextField textFieldNazione;
 	
-	/** The text field cap. */
+	/** Campo CAP. */
 	private JTextField textFieldCap;
 	
-	/** The pannello num tel. */
+	/** Pannello numero telefono. */
 	private JPanel pannelloNumTel;
 	
-	/** The pannello num tel sec. */
+	/** Pannello numeri telfono secondari. */
 	private JPanel pannelloNumTelSec;
 	
-	/** The pannello email add sec. */
+	/** Pannello email secondarie. */
 	private JPanel pannelloEmailAddSec;
 	
-	/** The lbl num secondari. */
+	/** Label numeri secondari. */
 	private JLabel lblNumSecondari;
 	
-	/** The lbl email secondarie. */
+	/** Label email secondarie. */
 	private JLabel lblEmailSecondarie;
 	
-	/** The pannello scrol num tel. */
+	/** Pannello scrol numeri telefono secondari. */
 	private JPanel pannelloScrolNumTel;
 	
-	/** The pannello scroll mail. */
+	/** Pannello scroll mail secondarie. */
 	private JPanel pannelloScrollMail;
 	
-	/** The lbl immagine. */
+	/** Label immagine. */
 	private JLabel lblImmagine;
 	
-	/** The modificato. */
+	/** Percorso immagine. */
+	private String percorsoImmagine = null;
+	
+	/** flag di controllo se sono state rinvenute modifiche da parte dell'utente. */
 	private boolean modificato = false;
 	
-	/** The percorso immagine. */
-	private String percorsoImmagine = null;
-
-
 	/**
-	 * Instantiates a new change contatto.
+	 * Costruttore di un nuovo frame ChangeContatto.
 	 *
-	 * @param c the c
-	 * @param frameChiamante the frame chiamante
-	 * @param lista the lista
+	 * @param c controller
+	 * @param frameChiamante frame chiamante
+	 * @param lista lista di Contatti da aggiornare col nuovo contatto modificato
 	 */
 	public ChangeContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
 		setResizable(false);
@@ -169,7 +167,6 @@ public class ChangeContatto extends JFrame {
 		/**
 		 * Inserimento
 		 */
-
 		JLabel lblNumeriTelefono = new JLabel("Numeri di telefono");
 		lblNumeriTelefono.setForeground(new Color(102, 102, 153));
 		lblNumeriTelefono.setHorizontalAlignment(SwingConstants.CENTER);
@@ -190,7 +187,6 @@ public class ChangeContatto extends JFrame {
 		panelMain.setBounds(38, 270, 228, 119);
 		contentPane.add(panelMain);
 		panelMain.setLayout(new BorderLayout(0, 0));
-		
 		
 		JPanel pannelloScrollIndirizziSec = new JPanel();
 		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -214,7 +210,6 @@ public class ChangeContatto extends JFrame {
 		
 		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Debug: cliccato '+'");
 				JPanel elemento;
 				int lastElemIndex;
 				JButton btnCancella     = new JButton();
@@ -235,7 +230,7 @@ public class ChangeContatto extends JFrame {
 					modificato = true;
 					
 					//TODO : controlli sulla validit‡ dell'inserimento
-					elemento = creaElemScrollBar(fieldVia.getText(), fieldCitt‡.getText(), fieldNazione.getText(), fieldCap.getText());
+					elemento = creaSecIndirizzo(fieldVia.getText(), fieldCitt‡.getText(), fieldNazione.getText(), fieldCap.getText());
 					pannelloScrollIndirizziSec.add(btnCancella);
 					pannelloScrollIndirizziSec.add(elemento);
 					/* button per cancellare un indirizzo secondario */
@@ -248,7 +243,6 @@ public class ChangeContatto extends JFrame {
 						}
 					});
 					lastElemIndex  = pannelloScrollIndirizziSec.getComponentCount() - 1;
-					System.out.println("L'ultimo elemento Ë: " + lastElemIndex);
 					revalidate();
 					repaint();
 				}
@@ -269,12 +263,6 @@ public class ChangeContatto extends JFrame {
 		pannelloIndPrincipale.add(panel);
 		panel.setLayout(new GridLayout(4,2));
 
-		/*lblLabelNome = new JLabel("Nome ");
-		lblLabelNome.setBackground(new Color(255, 255, 102));
-		lblLabelNome.setBounds(35, 11, 96, 13);
-		pannelloCredUtente.add(lblLabelNome);
-		lblLabelNome.setHorizontalAlignment(SwingConstants.CENTER);
-		*/
 		lblVia = new JLabel("Via");
 		lblVia.setOpaque(true);
 		lblVia.setBackground(new Color(255, 255, 255));
@@ -311,10 +299,6 @@ public class ChangeContatto extends JFrame {
 		panel.add(textFieldCap, BorderLayout.WEST);
 		textFieldCap.setColumns(10);
 		
-		/**
-		 * 
-		 */
-		
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setBackground(new Color(255, 255, 255));
 		pannelloCredUtente.setBounds(10, 49, 471, 58);
@@ -347,7 +331,6 @@ public class ChangeContatto extends JFrame {
 		textFieldNome.setBounds(45, 27, 90, 19);
 		pannelloCredUtente.add(textFieldNome);
 		textFieldNome.setColumns(10);
-		
 										
 		lblLabelNome = new JLabel("Nome ");
 		lblLabelNome.setForeground(new Color(102, 102, 153));
@@ -428,6 +411,7 @@ public class ChangeContatto extends JFrame {
 		/**
 		 * Button "+" aggiungi numero secondario
 		 */
+		
 		JButton btnAddSecNum = new JButton("+");
 		btnAddSecNum.setFocusPainted(false);
 		btnAddSecNum.setForeground(new Color(102, 102, 153));
@@ -435,7 +419,6 @@ public class ChangeContatto extends JFrame {
 		btnAddSecNum.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Debug: cliccato '+'");
 				JPanel numero;
 				int lastElemIndex;
 				JButton btnCancellaNumSec  = new JButton();
@@ -469,7 +452,6 @@ public class ChangeContatto extends JFrame {
 						}
 					});
 					lastElemIndex  = pannelloScrolNumTel.getComponentCount() - 1;
-					System.out.println("L'ultimo elemento Ë: " + lastElemIndex);
 					revalidate();
 					repaint();
 				}
@@ -508,13 +490,13 @@ public class ChangeContatto extends JFrame {
 		/**
 		 * Button "+" aggiungi email secondaria
 		 */
+		
 		JButton btnAddSecMail = new JButton("+");
 		btnAddSecMail.setFocusPainted(false);
 		btnAddSecMail.setForeground(new Color(102, 102, 153));
 		btnAddSecMail.setBackground(new Color(204, 255, 255));
 		btnAddSecMail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Debug: cliccato '+'");
 				
 				JPanel mail;
 				int lastMailIndex;;
@@ -547,7 +529,6 @@ public class ChangeContatto extends JFrame {
 						}
 					});
 					lastMailIndex  = pannelloScrollMail.getComponentCount() - 1;
-					System.out.println("L'ultima mail Ë: " + lastMailIndex);
 					revalidate();
 					repaint();
 				}
@@ -666,7 +647,6 @@ public class ChangeContatto extends JFrame {
 					if (modificato)
 					{
 					
-						System.out.println("DEBUG: Sono state trovate delle modifiche, i dati verranno aggiornati ora!");
 						try {
 							// modifica contatto
 							controller.changeContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione,
@@ -820,20 +800,20 @@ public class ChangeContatto extends JFrame {
 	}
 
 	/**
-	 * Inizializza contatto.
+	 * Riempie i campi del frame alla sua costruzione.
 	 *
-	 * @param textFieldNome the text field nome
-	 * @param textFieldSecondoNome the text field secondo nome
-	 * @param textFieldCognome the text field cognome
-	 * @param textFieldVia the text field via
-	 * @param textFieldCitt‡ the text field citt‡
-	 * @param textFieldNazione the text field nazione
-	 * @param textFieldCap the text field cap
-	 * @param textFieldNumMobile the text field num mobile
-	 * @param textFieldNumFisso the text field num fisso
-	 * @param pannelloScrollIndirizziSec the pannello scroll indirizzi sec
-	 * @param pannelloScrolNumTel the pannello scrol num tel
-	 * @param pannelloScrollMail the pannello scroll mail
+	 * @param textFieldNome campo nome
+	 * @param textFieldSecondoNome campo secondo nome
+	 * @param textFieldCognome campo cognome
+	 * @param textFieldVia campo via
+	 * @param textFieldCitt‡ campo citt‡
+	 * @param textFieldNazione campo nazione
+	 * @param textFieldCap campo CAP
+	 * @param textFieldNumMobile campo numero mobile
+	 * @param textFieldNumFisso campo numero fisso
+	 * @param pannelloScrollIndirizziSec pannello indirizzi secsecondari
+	 * @param pannelloScrolNumTel pannello numeri telefono secondari
+	 * @param pannelloScrollMail pannello mail secondarie
 	 */
 	public void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
 									 JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
@@ -890,10 +870,10 @@ public class ChangeContatto extends JFrame {
 				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				btnCancella.setBackground(new Color(204,255,255));
 				
-				elemento = creaElemScrollBar(controller.getContattoSelezionato().getIndirizzi().get(i).getVia(),
-											 controller.getContattoSelezionato().getIndirizzi().get(i).getCitta(),
-											 controller.getContattoSelezionato().getIndirizzi().get(i).getNazione(),
-											 controller.getContattoSelezionato().getIndirizzi().get(i).getCap());
+				elemento = creaSecIndirizzo(controller.getContattoSelezionato().getIndirizzi().get(i).getVia(),
+											controller.getContattoSelezionato().getIndirizzi().get(i).getCitta(),
+											controller.getContattoSelezionato().getIndirizzi().get(i).getNazione(),
+											controller.getContattoSelezionato().getIndirizzi().get(i).getCap());
 				pannelloScrollIndirizziSec.add(btnCancella);
 				pannelloScrollIndirizziSec.add(elemento);
 				/* button per cancellare un indirizzo secondario */
@@ -979,15 +959,15 @@ public class ChangeContatto extends JFrame {
 	}
 	
 	/**
-	 * Crea elem scroll bar.
+	 * Crea un pannello di indirizzi secondari.
 	 *
-	 * @param fieldVia the field via
-	 * @param fieldCitt‡ the field citt‡
-	 * @param fieldNazione the field nazione
-	 * @param fieldCap the field cap
-	 * @return the j panel
+	 * @param fieldVia campo via
+	 * @param fieldCitt‡ campo citt‡
+	 * @param fieldNazione campo nazione
+	 * @param fieldCap campo CAP
+	 * @return il JPanel di indirizzi secondari
 	 */
-	private JPanel creaElemScrollBar(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)
+	private JPanel creaSecIndirizzo(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,2));
@@ -1005,10 +985,11 @@ public class ChangeContatto extends JFrame {
 
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
-		textFieldViaSB.setColumns(10);
+		textFieldViaSB.setEditable(false);
+		panel.add(textFieldViaSB);
 		textFieldViaSB.setCaretPosition(0);
-		panel.add(textFieldViaSB);	
-		
+		textFieldViaSB.setColumns(10);
+									
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
 		lblCitt‡SB.setOpaque(true);
 		lblCitt‡SB.setBackground(new Color(255, 255, 255));
@@ -1016,10 +997,11 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
+		textFieldCitt‡SB.setEditable(false);
+		panel.add(textFieldCitt‡SB);
 		textFieldCitt‡SB.setCaretPosition(0);
 		textFieldCitt‡SB.setColumns(10);
-		panel.add(textFieldCitt‡SB);
-		
+
 		JLabel lblNazioneSB = new JLabel("Nazione");
 		lblNazioneSB.setOpaque(true);
 		lblNazioneSB.setBackground(new Color(255, 255, 255));
@@ -1027,9 +1009,10 @@ public class ChangeContatto extends JFrame {
 
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
+		textFieldNazioneSB.setEditable(false);
+		panel.add(textFieldNazioneSB);
 		textFieldNazioneSB.setCaretPosition(0);
 		textFieldNazioneSB.setColumns(10);
-		panel.add(textFieldNazioneSB);
 		
 		JLabel lblCapSB = new JLabel("CAP");
 		lblCapSB.setOpaque(true);
@@ -1038,18 +1021,20 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
-		textFieldCapSB.setColumns(10);
+		textFieldCapSB.setEditable(false);
 		panel.add(textFieldCapSB, BorderLayout.WEST);
+		textFieldCapSB.setCaretPosition(0);
+		textFieldCapSB.setColumns(10);
 		
 		return panel;
 	}
 	
 	/**
-	 * Crea sec numb.
+	 * Crea un pannello di numeri secondari.
 	 *
-	 * @param fieldTipo the field tipo
-	 * @param fieldNum the field num
-	 * @return the j panel
+	 * @param fieldTipo campo tipo
+	 * @param fieldNum campo numero
+	 * @return il JPanel di numeri secondari
 	 */
 	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
@@ -1062,25 +1047,25 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldDescSB = new JTextField();
 		textFieldDescSB.setText(fieldTipo);
-		textFieldDescSB.setCaretPosition(0);
-		textFieldDescSB.setColumns(5);
+		textFieldDescSB.setEditable(false);
 		panel.add(textFieldDescSB);
+		textFieldDescSB.setColumns(5);
 																		
 		textFieldNumSB = new JTextField();
 		textFieldNumSB.setText(fieldNum);
+		textFieldNumSB.setEditable(false);
 		panel.add(textFieldNumSB);
-		textFieldNumSB.setCaretPosition(0);
 		textFieldNumSB.setColumns(5);
 		
 		return  panel;
 	}
 	
 	/**
-	 * Crea sec mail.
+	 * Crea un pannello di mail secondarie.
 	 *
-	 * @param fieldTipo the field tipo
-	 * @param fieldEmail the field email
-	 * @return the j panel
+	 * @param campo tipo
+	 * @param campo email
+	 * @return il JPanel di mail secondarie
 	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
@@ -1093,12 +1078,14 @@ public class ChangeContatto extends JFrame {
 		
 		textFieldDescMailSB = new JTextField();
 		textFieldDescMailSB.setText(fieldTipo);
+		textFieldDescMailSB.setEditable(false);
 		textFieldDescMailSB.setColumns(5);
 		textFieldDescMailSB.setCaretPosition(0);
 		panel.add(textFieldDescMailSB);
 																		
 		textFieldMailSB = new JTextField();
 		textFieldMailSB.setText(fieldEmail);
+		textFieldMailSB.setEditable(false);
 		textFieldMailSB.setColumns(5);
 		textFieldMailSB.setCaretPosition(0);
 		panel.add(textFieldMailSB);

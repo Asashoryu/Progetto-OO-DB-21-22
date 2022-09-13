@@ -2,7 +2,7 @@ package model;
 
 import java.util.ArrayList;
 
-/** Gestisce l'oggetto Gruppo e la sua interazione con il controller. */
+/** Gestisce l'oggetto Gruppo. */
 public class Gruppo{
 	
 	/** nome del gruppo. */
@@ -15,7 +15,7 @@ public class Gruppo{
 	private ArrayList<Contatto> contatti;
 	
 	/**
-	 * Instanzia un nuovo gruppo tramite ArrayList di contatti.
+	 * Costruttore di un Gruppo.
 	 */
 	public Gruppo ()
 	{
@@ -23,7 +23,7 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Instanzia un nuovo gruppo salvandone il nome e l'identificativo per il DB.
+	 * Costruttore di un Gruppo, con impostazione del suo nome e del suo identificativo.
 	 *
 	 * @param nome nome del gruppo
 	 * @param id identificativo del gruppo
@@ -35,10 +35,10 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Instanzia un nuovo gruppo con il suo nome e i contatti che contiene.
+	 * Costruttore di un Gruppo, con impostazione del suo nome e dei contatti che contiene.
 	 *
 	 * @param nome nome del gruppo
-	 * @param contatti contatti appartententi al gruppo
+	 * @param contatti ArrayList di contatti appartententi al gruppo
 	 */
 	public Gruppo (String nome, ArrayList<Contatto> contatti) {
 		setNome(nome);
@@ -46,7 +46,7 @@ public class Gruppo{
 	}
 	
 	/**
-	 * Ritorna il nome del gruppo impostato localmente.
+	 * Ritorna il nome del gruppo.
 	 *
 	 * @return nome del gruppo
 	 */
@@ -55,16 +55,16 @@ public class Gruppo{
 	}
 
 	/**
-	 * Imposta il valore del nome del gruppo localmente.
+	 * Imposta il nome del gruppo.
 	 *
-	 * @param nome nome del gruppo da impostare localmente
+	 * @param nome nome del gruppo 
 	 */
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
 	/**
-	 * Ritorna l'identificativo/id del gruppo impostato localmente.
+	 * Ritorna l'identificativo/id del gruppo.
 	 *
 	 * @return id del gruppo
 	 */
@@ -73,7 +73,7 @@ public class Gruppo{
 	}
 
 	/**
-	 * Imposta il valore dell'id del gruppo localmente.
+	 * Imposta l'id del gruppo.
 	 *
 	 * @param id identificativo del gruppo
 	 */
@@ -82,7 +82,7 @@ public class Gruppo{
 	}
 
 	/**
-	 * Ritorna l'ArrayList di contatti del gruppo.
+	 * Ritorna i contatti del gruppo.
 	 *
 	 * @return ArrayList contatti
 	 */
@@ -91,7 +91,7 @@ public class Gruppo{
 	}
 
 	/**
-	 * Imposta il valore dell'ArrayList contatti localmente.
+	 * Imposta i contatti del gruppo.
 	 *
 	 * @param contatti ArrayList contatti
 	 */

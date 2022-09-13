@@ -15,33 +15,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class FrameChiama.
+ * Frame che gestisce la simulazione di una chiamata al numero selezionato.
  */
 @SuppressWarnings("serial")
 public class FrameChiama extends JFrame {
 
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The Finestra CR. */
+	/** Frame per chiamare il numero di riserva. */
 	private FrameChiamaRiserva FinestraCR;
 	
-	/** The btn chiama riserva. */
+	/** Button chiama riserva. */
 	private JButton btnChiamaRiserva;
 	
-	/** The btn annulla. */
+	/** Button annulla. */
 	private JButton btnAnnulla;
 	
-	/** The numero riserva. */
+	/** numero di riserva. */
 	private String numeroRiserva;
 
 	/**
-	 * Instantiates a new frame chiama.
+	 * Costruttore di un nuovo frame FrameChiama.
 	 *
-	 * @param c the c
-	 * @param numeroChiamato the numero chiamato
+	 * @param c controller
+	 * @param numeroChiamato numero chiamato
 	 */
 	public FrameChiama(Controller c, String numeroChiamato) {
 		setResizable(false);
@@ -63,7 +62,7 @@ public class FrameChiama extends JFrame {
 		lblChiamando.setBounds(10, 10, 416, 47);
 		contentPane.add(lblChiamando);
 		
-		//Timer che dopo 3 secondi fa azione: elimina precedente label e ne aggiunge un altra con un bottone.
+		//Timer che dopo 3 secondi elimina il frame presente e ne crea uno nuovo che simula il reindirizzamento della chiamata a un nuovo numero.
 		new Timer(3_000, (e) -> {
 			lblChiamando.setVisible(false);
 			contentPane.repaint();

@@ -13,23 +13,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class FrameChiamaRiserva.
+ * Frame che gestisce la simulazione di un reindirizzamento della chiamata al numero di riserva.
  */
 @SuppressWarnings("serial")
 public class FrameChiamaRiserva extends JFrame {
 
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The btn chiudi. */
+	/** Button chiudi la chiamata. */
 	private JButton btnChiudi;
 
 	/**
-	 * Instantiates a new frame chiama riserva.
+	 * Costruttore di un nuovo frame FrameChiamaRiserva.
 	 *
-	 * @param NumeroDiRiserva the numero di riserva
+	 * @param NumeroDiRiserva numero di riserva
 	 */
 	public FrameChiamaRiserva(String NumeroDiRiserva) {
 		setResizable(false);
@@ -50,7 +49,7 @@ public class FrameChiamaRiserva extends JFrame {
 		lblChiamandoR.setBounds(0, 10, 426, 42);
 		contentPane.add(lblChiamandoR);
 		
-		//Medesimo timer di FinestraChiama
+		// Timer che dopo 3 secondi fa fallire la chiamata al numero di riserva
 		new Timer(3_000, (e) -> {
 			contentPane.repaint();
 			lblChiamandoR.setVisible(false);

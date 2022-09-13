@@ -2,21 +2,21 @@ package model;
 
 import java.util.ArrayList;
 
-/** Gestisce l'oggetto Sistema e la sua interazione col controller.
+/** Gestisce l'oggetto Sistema.
  */
 public class Sistema {
 	
-	/** ArrayList di rubriche (oggetti rubrica). */
+	/** ArrayList di rubriche contenute nel sistema. */
 	private ArrayList<Rubrica> rubriche;
 	
 	/**
-	 * Instanzia un nuovo oggetto sistema.
+	 * Costruttore del Sistema.
 	 */
 	public Sistema() {
 	}
 	
 	/**
-	 * Ritorna l'ArrayList di rubriche impostato localmente.
+	 * Ritorna le rubriche trovate nel Sistema.
 	 *
 	 * @return ArrayList di rubriche
 	 */
@@ -25,7 +25,7 @@ public class Sistema {
 	}
 	
 	/**
-	 * Imposta il valore dell'ArrayList rubriche localmente.
+	 * Aggiunge le rubriche nel Sistema.
 	 *
 	 * @param rubriche the new rubriche
 	 */

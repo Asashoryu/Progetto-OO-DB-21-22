@@ -2,21 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
-/** Gestisce l'oggetto Email e la sua interazione con il controller. */
+/** Gestisce l'oggetto Email. */
 public class Email 
 {
-	
 	/** indirizzo email. */
 	private String stringaEmail;
 	
-	/** tipo dell'indirizzo email. */
+	/** descrizione dell'indirizzo email. */
 	private String tipo;
 	
-	/** ArrayList degli account. */
+	/** ArrayList degli account recuperati tramite questa email. */
 	private ArrayList<Account> account;
 	
 	/**
-	 * Instanza una nuova email.
+	 * Costruttore di una Email.
 	 *
 	 * @param stringaEmail email sottoforma di String
 	 * @param tipo tipo/descrizione dell'email
@@ -29,7 +28,7 @@ public class Email
 	}
 	
 	/**
-	 * Imposta il valore dell'email localmente.
+	 * Imposta il nome dell'email.
 	 *
 	 * @param stringaEmail stringa email di cui impostare il valore
 	 */
@@ -39,7 +38,7 @@ public class Email
 	}
 
 	/**
-	 * Imposta il valore del tipo localmente.
+	 * Imposta la descrizione.
 	 *
 	 * @param tipo tipo/descrizione dell'email
 	 */
@@ -50,7 +49,7 @@ public class Email
 	}
 	
 	/**
-	 * Ritorna l'email impostata localmente.
+	 * Ritorna l'email.
 	 *
 	 * @return email
 	 */
@@ -60,9 +59,9 @@ public class Email
 	}
 	
 	/**
-	 * Ritorna il tipo impostato localmente.
+	 * Ritorna la descrizione .
 	 *
-	 * @return tipo
+	 * @return descrizione dell'email
 	 */
 	public String getTipo() 
 	{
@@ -70,7 +69,7 @@ public class Email
 	}
 
 	/**
-	 * Ritorna l'account impostato localmente.
+	 * Ritorna gli account associati alla data email.
 	 *
 	 * @return account come ArrayList
 	 */
@@ -80,7 +79,7 @@ public class Email
 	}
 
 	/**
-	 *Imposta il valore dell'account localmente.
+	 * Imposta il valore dell'account.
 	 *
 	 * @param account account da impostare
 	 */
@@ -90,7 +89,7 @@ public class Email
 	}
 	
 	/**
-	 * Metodo per aggiungere nuovi account.
+	 * Aggiunge gli account.
 	 *
 	 * @param fornitore fornitore dell'account
 	 * @param fraseStato frase stato relativa all'account

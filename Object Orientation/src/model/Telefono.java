@@ -1,20 +1,20 @@
 package model;
 
-/** Gestisce l'oggetto Telefono e la sua interazione con il controller.
+/** Gestisce l'oggetto Telefono.
  */
 public class Telefono {
 	
 	/** Numero telefonico. */
 	private String numero;
 	
-	/** Tipo del numero telefonico. */
+	/** Descrizione del numero telefonico. */
 	private String tipo;
 	
 	/**
-	 * Instanzia un nuovo oggetto telefono.
+	 * Costruttore di un oggetto Telefono, con set di numero e descrizione
 	 *
 	 * @param numero numero telefonico
-	 * @param tipo tipo del numero telefonico
+	 * @param tipo descrizione del numero telefonico
 	 */
 	public Telefono(String numero,String tipo) {
 		setNumero(numero);
@@ -22,7 +22,7 @@ public class Telefono {
 	}
 	
 	/**
-	 * Imposta il valore del numero localmente.
+	 * Imposta il numero.
 	 *
 	 * @param numero numero telefonico da impostare
 	 */
@@ -31,7 +31,7 @@ public class Telefono {
 	}
 
 	/**
-	 * Imposta il valore del tipo del numero localmente.
+	 * Imposta la desrizione del numero.
 	 *
 	 * @param tipo tipo da impostare
 	 */
@@ -40,7 +40,7 @@ public class Telefono {
 	}
 	
 	/**
-	 * Ritorna il numero telefonico impostato localmente.
+	 * Ritorna il numero telefonico.
 	 *
 	 * @return numero
 	 */
@@ -49,7 +49,7 @@ public class Telefono {
 	}
 	
 	/**
-	 * Ritorna il tipo impostato localmente.
+	 * Ritorna la descrizione del numero.
 	 *
 	 * @return tipo
 	 */

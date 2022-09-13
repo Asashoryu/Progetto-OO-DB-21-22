@@ -23,29 +23,29 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 
-/** Gestisce l'interazione dell'interfaccia gui col model e col DB. */
+/** Gestisce l'interazione dell'interfaccia GUI col model e col DB. */
 public class Controller {
 	
 	/** Oggetto contenitore delle rubriche. */
 	private Sistema sistema;
 	
-	/** Rubrica selezionata dalla gui e accedibile a tempo costante dal controller, soggetta a operazioni di modifica,
+	/** Rubrica selezionata dalla GUI e accedibile a tempo costante dal controller, soggetta a operazioni di modifica,
 	 *  cancellazione o selezione. */
 	private Rubrica rubricaSelezionata;
 	
-	/** Contatto selezionato dalla gui e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
+	/** Contatto selezionato dalla GUI e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
 	 *  cancellazione o selezione. */
 	private Contatto contattoSelezionato;
 	
-	/** Gruppo selezionato dalla gui e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
+	/** Gruppo selezionato dalla GUI e accedibile a tempo costante dal controller, soggetto alle operazioni di modifica,
 	 *  cancellazione o selezione. */
 	private Gruppo gruppoSelezionato;
 	
 	/** Oggetto connessione che consente di conservare il collegamento col DB in modo da gestire una transazione composta
-	 * da più query atomiche . */
+	 * da più query atomiche. */
 	private Connection connTransazione;
 	
-	/** Costruttore del Controller. Istanzia il {@link Sistema} e ne carica le rubriche all'avvio della gui */
+	/** Costruttore del Controller. Istanzia il {@link Sistema} e ne carica le rubriche all'avvio della GUI */
 	public Controller() 
 	{
 		sistema = new Sistema();
@@ -256,7 +256,6 @@ public class Controller {
 		// allora i contatti sono caricati dal DB
 		if(rubricaSelezionata.getContatti() == null) 
 		{
-			System.out.println("Rubrica selezionata è: " + rubricaSelezionata.getNome());
 			contatti = new ArrayList<>();
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
 			rubricaPosgr.apriConnessione();
@@ -384,7 +383,7 @@ public class Controller {
 	{
 		connTransazione.commit();
 		connTransazione.close();
-		System.out.println("Commit riuscito");
+		System.out.println("COMMIT RIUSCITO");
 		rubricaSelezionata.getContatti().add(contatto);
 		connTransazione = null;
 	}
@@ -420,7 +419,7 @@ public class Controller {
 		Boolean modifica;
 		connTransazione.commit();
 		connTransazione.close();
-		System.out.println("Commit riuscito");
+		System.out.println("COMMIT RIUSCITO");
 		// sostituisco il nuovo contatto col vecchio in rubrica
 		indiceVecchioRubrica = rubricaSelezionata.getContatti().indexOf(contattoSelezionato);
 		rubricaSelezionata.getContatti().remove(contattoSelezionato);
@@ -875,12 +874,10 @@ public class Controller {
 		// Inserimento indirizzi secondari
 		for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 		{
-			System.out.println("Debug: Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compIndirizzoSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\t Debug: Entrato nell'if del for");
 				String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
 				String cittàSec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
 				String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
@@ -891,12 +888,10 @@ public class Controller {
 		// Inserimento numeri secondari
 		for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
 		{
-			System.out.println("Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compNumeroSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\tEntrato nell'if del for");
 				String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
 				String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
 				addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
@@ -905,12 +900,10 @@ public class Controller {
 		// Inserimento email secondarie
 		for (Component compEmailSec : pannelloScrollMail.getComponents())
 		{
-			System.out.println("Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compEmailSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\tEntrato nell'if del for");
 				String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
 				String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
 				addEmailSec(nuovoContatto, emailSec, descrizioneSec);
@@ -967,12 +960,10 @@ public class Controller {
 		// Inserimento indirizzi secondari
 		for (Component compIndirizzoSec : pannelloScrollIndirizziSec.getComponents())
 		{
-			System.out.println("Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compIndirizzoSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\tEntrato nell'if del for");
 				String viaSec     = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[1]).getText();
 				String cittàSec   = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[3]).getText();
 				String nazioneSec = ((JTextField)((JPanel) compIndirizzoSec).getComponents()[5]).getText();
@@ -983,12 +974,10 @@ public class Controller {
 		// Inserimento numeri secondari
 		for (Component compNumeroSec : pannelloScrolNumTel.getComponents())
 		{
-			System.out.println("Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compNumeroSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\tEntrato nell'if del for");
 				String descrizioneSec = ((JTextField)((JPanel) compNumeroSec).getComponents()[0]).getText();
 				String numeroSec      = ((JTextField)((JPanel) compNumeroSec).getComponents()[1]).getText();
 				addTelefonoSec(nuovoContatto, numeroSec, descrizioneSec);
@@ -997,12 +986,10 @@ public class Controller {
 		// Inserimento email secondarie
 		for (Component compEmailSec : pannelloScrollMail.getComponents())
 		{
-			System.out.println("Primo ciclo for");
 			// se non è un button allora è il pannello con gli indirizzi
 			if(compEmailSec instanceof JPanel)
 			{
 				// estraggo le informazioni dal panel trovato
-				System.out.println("\tEntrato nell'if del for");
 				String descrizioneSec = ((JTextField)((JPanel) compEmailSec).getComponents()[0]).getText();
 				String emailSec       = ((JTextField)((JPanel) compEmailSec).getComponents()[1]).getText();
 				addEmailSec(nuovoContatto, emailSec, descrizioneSec);
@@ -1040,7 +1027,6 @@ public class Controller {
 				if (checkbox.isSelected())
 				{
 					contatti.add(getRubricaSelezionata().getContatti().get(indice));
-					System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + getRubricaSelezionata().getContatti().get(indice).getNome());
 				}
 			}
 			indice++;
@@ -1074,7 +1060,6 @@ public class Controller {
 				if (checkbox.isSelected())
 				{
 					contatti.add(getRubricaSelezionata().getContatti().get(indice));
-					System.out.println(" Debug: "+checkbox.getText() + " e quello salvato è " + getRubricaSelezionata().getContatti().get(indice).getNome());
 				}
 			}
 			indice++;

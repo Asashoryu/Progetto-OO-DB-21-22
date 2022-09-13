@@ -2,20 +2,20 @@ package model;
 
 import java.util.ArrayList;
 
-/** Gestisce l'oggetto Rubrica e la sua interazione con il controller. */
+/** Gestisce l'oggetto Rubrica. */
 public class Rubrica {
 	
 	/** nome della rubrica (inteso come il nome dell'utente della rubrica). */
 	private String nome;
 	
-	/** contatti salvati nella rubrica in un ArrayList. */
+	/** contatti della rubrica. */
 	private ArrayList<Contatto> contatti;
 	
-	/** gruppi salvati nella rubrica in un ArrayList. */
+	/** gruppi della rubrica. */
 	private ArrayList<Gruppo> gruppi;
 	
 	/**
-	 *  Alla creazione di una rubrica vengono caricati tutti i suoi contatti.
+	 * Costruttore di una Rubrica.
 	 *
 	 * @param nome the nome
 	 */
@@ -24,7 +24,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Imposta il valore del nome localmente..
+	 * Imposta il valore del nome.
 	 *
 	 * @param nome nome della rubrica
 	 */
@@ -33,7 +33,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Ritorna il nome impostato localmente.
+	 * Ritorna il nome.
 	 *
 	 * @return nome della rubrica
 	 */
@@ -42,16 +42,16 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Ritorna l'ArrayList di contatti salvati in rubrica.
+	 * Ritorna i contatti salvati in rubrica.
 	 *
-	 * @return contatti
+	 * @return ArrayList di contatti
 	 */
 	public ArrayList<Contatto> getContatti() {
 		return contatti;
 	}
 	
 	/**
-	 * Imposta il valore dell'ArrayList di contatti localmente.
+	 * Imposta i contatti della rubrica.
 	 *
 	 * @param contatti contatti
 	 */
@@ -60,16 +60,16 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Ritorna l'ArrayList di gruppi.
+	 * Ritorna i gruppi.
 	 *
-	 * @return gruppi
+	 * @return ArrayList di gruppi
 	 */
 	public ArrayList<Gruppo> getGruppi() {
 		return gruppi;
 	}
 
 	/**
-	 * Imposta il valore dell'ArrayList di gruppi localmente.
+	 * Imposta i gruppi .
 	 *
 	 * @param gruppi gruppi
 	 */
@@ -112,7 +112,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Cerca per nome.
+	 * Cerca contatti per nome.
 	 *
 	 * @param text stringa o sottostringa da cercare come nome
 	 * @return ArrayList dei contatti trovati
@@ -131,7 +131,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Cerca per email.
+	 * Cerca contatti per email.
 	 *
 	 * @param text stringa o sottostringa da cercare come email
 	 * @return ArrayList dei contatti trovati 
@@ -158,7 +158,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Cerca per account.
+	 * Cerca contatti per account.
 	 *
 	 * @param text stringa o sottostringa da cercare come account
 	 * @return ArrayList dei contatti trovati 
@@ -188,7 +188,7 @@ public class Rubrica {
 	}
 	
 	/**
-	 * Cerca per numero.
+	 * Cerca contatti per numero.
 	 *
 	 * @param text stringa contenente il numero da cercare
 	 * @return ArrayList dei contatti trovati 

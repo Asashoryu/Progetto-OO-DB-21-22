@@ -2,34 +2,33 @@ package database;
 
 import java.sql.*;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ConnessioneDatabase.
+ * Gestisce la connessione al DB Postgres
  */
 public class ConnessioneDatabase {
 	
-	/** The instance. */
+	/** Instance. */
 	private static ConnessioneDatabase instance;
 	
-	/** The connection. */
+	/** Connection. */
 	private Connection connection = null;
 	
-	/** The nomeutente. */
+	/** Nome utente. */
 	private String nomeutente = "postgres";
 	
-	/** The password. */
+	/** Password. */
 	private String password = "1234";
 	
-	/** The url. */
+	/** Url. */
 	private String url = "jdbc:postgresql://localhost:5432/Rubrica";
 	
-	/** The driver. */
+	/** Driver. */
 	private String driver = "org.postgresql.Driver";
 	
 	/**
-	 * Instantiates a new connessione database.
+	 * Costruttore che istanzia una nuova connessione al DB.
 	 *
-	 * @throws SQLException the SQL exception
+	 * @throws SQLException SQL exception
 	 */
 	public ConnessioneDatabase() throws SQLException {
 		try {
@@ -37,25 +36,25 @@ public class ConnessioneDatabase {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, nomeutente, password);
 		} catch (ClassNotFoundException ex) {
-			System.out.println("Database Connection Creation Failed : " + ex.getMessage());
+			System.out.println("Connessione al DB fallita : " + ex.getMessage());
 			ex.printStackTrace();
 		}
 	}
 
 	/**
-	 * Gets the connection.
+	 * Ritorna la connessione al DB.
 	 *
-	 * @return the connection
+	 * @return connection
 	 */
 	public Connection getConnection() {
 			return connection;
 	}
 	
 	/**
-	 * Gets the single instance of ConnessioneDatabase.
+	 * Ritorna una nuova connessione al DB con accesso statico.
 	 *
-	 * @return single instance of ConnessioneDatabase
-	 * @throws SQLException the SQL exception
+	 * @return Singola istanza di ConnessioneDatabase
+	 * @throws SQLException SQL exception
 	 */
 	public static ConnessioneDatabase getInstance() throws SQLException {
 		if (instance == null) {

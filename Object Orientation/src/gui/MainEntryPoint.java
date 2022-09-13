@@ -3,15 +3,14 @@ package gui;
 import java.awt.EventQueue;
 
 import controller.Controller;
-// TODO: Auto-generated Javadoc
 
 /**
- * Classe di avvio dell'interfaccia del programma.
+ * Gestisce l'avvio dell'applicazione.
  */
 public class MainEntryPoint {
 	
 	/**
-	 * Launch the application.
+	 * Avvia l'applicazione.
 	 *
 	 * @param args the arguments
 	 */

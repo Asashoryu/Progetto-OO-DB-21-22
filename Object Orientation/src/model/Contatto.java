@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import model.Indirizzo.tipoIndirizzo;
 
-/** Gestisce l'oggetto contatto e la sua interazione con il controller. */
+/** Gestisce l'oggetto Contatto. */
 public class Contatto{
 	
 	/**  nome del contatto. */
@@ -32,7 +32,7 @@ public class Contatto{
 	private int id;
 	
 	/**
-	 *  costruttore del contatto con set di nome, secondo nome e cognome per la visualizzazione in listaContatto.
+	 * Costruttore di un Contatto con set di nome, secondo nome, cognome e immagine.
 	 *
 	 * @param primonome primo nome del contatto
 	 * @param secondonome secondo nome del contatto
@@ -52,7 +52,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  costruttore di Contatto, con le informazioni essenziali indicate nella traccia.
+	 *  Costruttore di un Contatto, con set di nome, secondo nome e cognome.
 	 *
 	 * @param primonome primo nome del contatto
 	 * @param secondonome secondo nome del contatto
@@ -85,7 +85,7 @@ public class Contatto{
 	}
 	
 	/**
-	 * Imposta il valore del nome del contatto localmente.
+	 * Imposta il nome del contatto.
 	 *
 	 * @param primonome nome del contatto
 	 */
@@ -104,7 +104,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Imposta il valore del secondo nome del contatto localmente.
+	 *  Imposta il del secondo nome del contatto.
 	 *
 	 * @param secondonome secondo nome del contatto
 	 */
@@ -124,7 +124,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Imposta il valore del cognome del contatto localmente.
+	 *  Imposta il cognome del contatto.
 	 *
 	 * @param cognome cognome del contatto
 	 */
@@ -144,7 +144,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Imposta il valore del path/percorso dell'immagine profilo del contatto localmente.
+	 *  Imposta il path/percorso dell'immagine profilo del contatto.
 	 *
 	 * @param pathImmagine path dell'immagine 
 	 */
@@ -162,7 +162,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Fissa l'id (identificativo) del contatto localmente.
+	 *  Fissa l'id (identificativo) del contatto.
 	 *
 	 * @param id the new id
 	 */
@@ -210,7 +210,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Metodo per aggiungere un numero di telefono al contatto.
+	 *  Aggiunge un numero di telefono al contatto.
 	 *
 	 * @param numero il numero di telefono
 	 * @param tipotelefono Descrizione del numero di telefono
@@ -221,7 +221,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Metodo per aggiungere una email al contatto.
+	 *  Aggiunge una email al contatto.
 	 *
 	 * @param indirizzoemail indirizzo email
 	 * @param tipoemail tipo/descrizione dell'email
@@ -232,7 +232,7 @@ public class Contatto{
 	}
 	
 	/**
-	 *  Metodo per aggiungere un indirizzo al contatto.
+	 *  Aggiunge un indirizzo al contatto.
 	 *
 	 * @param via via dell'indirizzo
 	 * @param citta città dell'indirizzo
@@ -246,10 +246,10 @@ public class Contatto{
 	}
 	
 	/**
-	 * Reindirizza la chiamata eseguita verso un numero del contatto verso un altro numero preselezionato.
+	 * Reindirizza la chiamata eseguita da un numero del contatto verso un altro numero disponibile.
 	 *
-	 * @param numeroDaReindirizzare numero da chiamare e reindirizzare
-	 * @return il numero da chiamare dopo il reindirizzamento
+	 * @param numeroDaReindirizzare numero chiamato
+	 * @return numero reindirizzato
 	 */
 	public String reindirizza(String numeroDaReindirizzare) {
 		Telefono telefonoTrovato = null;

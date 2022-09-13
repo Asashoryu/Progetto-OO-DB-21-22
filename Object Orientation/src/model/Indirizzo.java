@@ -1,15 +1,16 @@
 package model;
 
-/** Gestisce l'oggetto Indirizzo e la sua interazione con il controller.  */
+/** Gestisce l'oggetto Indirizzo. */
 public class Indirizzo 
 {
 	
-	/** Enumerazione di tipoIndirizzo per impostare il tipo come primario oppure secondario. */
+	/** Enumerazione dei tipi di indirizzo che possono essere creati. */
 	public enum tipoIndirizzo{
-/** Tipo principale di indirizzo. */
-Principale, 
- /** Tipo secondario di indirizzo. */
- Secondario};
+		/** Tipo indirizzo principale. */
+		Principale, 
+		 /** Tipo indirizzo secondario. */
+		 Secondario
+	};
 	
 	/** via dell'indirizzo. */
 	private String via;
@@ -27,7 +28,7 @@ Principale,
 	private tipoIndirizzo tipo;
 	
 	/**
-	 * Instanzia un nuovo indirizzo con le relative informazioni.
+	 * Costruttore di un Indirizzo.
 	 *
 	 * @param via via dell'indirizzo da inserire
 	 * @param citta città dell'indirizzo da inserire
@@ -44,7 +45,7 @@ Principale,
 	}
 	
 	/**
-	 * Imposta il valore della via localmente.
+	 * Imposta il nome della via.
 	 *
 	 * @param via via dell'indirizzo
 	 */
@@ -53,7 +54,7 @@ Principale,
 	}
 	
 	/**
-	 * Imposta il valore della città localmente.
+	 * Imposta il nome della città.
 	 *
 	 * @param citta citta dell'indirizzo
 	 */
@@ -62,7 +63,7 @@ Principale,
 	}
 	
 	/**
-	 * Imposta il valore della nazione localmente.
+	 * Imposta il nome della nazione.
 	 *
 	 * @param nazione nazione dell'indirizzo
 	 */
@@ -71,7 +72,7 @@ Principale,
 	}
 	
 	/**
-	 * Imposta il valore del CAP localmente.
+	 * Imposta il CAP.
 	 *
 	 * @param cap CAP dell'indirizzo
 	 */
@@ -80,7 +81,7 @@ Principale,
 	}
 
 	/**
-	 * Imposta il valore del tipo localmente.
+	 * Imposta il il tipo dell'indirizzo.
 	 *
 	 * @param tipo tipo dell'indirizzo
 	 */
@@ -89,7 +90,7 @@ Principale,
 	}
 	
 	/**
-	 * Ritorna la via impostata localmente.
+	 * Ritorna la via.
 	 *
 	 * @return via
 	 */
@@ -98,7 +99,7 @@ Principale,
 	}
 	
 	/**
-	 * Ritorna la città impostata localmente.
+	 * Ritorna la città .
 	 *
 	 * @return citta
 	 */
@@ -107,7 +108,7 @@ Principale,
 	}
 	
 	/**
-	 * Ritorna la nazione impostata localmente.
+	 * Ritorna la nazione .
 	 *
 	 * @return nazione
 	 */
@@ -116,7 +117,7 @@ Principale,
 	}
 	
 	/**
-	 * Ritorna il CAP impostato localmente.
+	 * Ritorna il CAP .
 	 *
 	 * @return cap
 	 */
@@ -125,7 +126,7 @@ Principale,
 	}
 	
 	/**
-	 * Ritorna il tipo dell'indirizzo impostato localmente.
+	 * Ritorna il tipo dell'indirizzo .
 	 *
 	 * @return tipo
 	 */

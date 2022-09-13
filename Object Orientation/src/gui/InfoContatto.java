@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -29,65 +28,63 @@ import java.awt.BorderLayout;
 import java.io.File;
 
 /** 
- * The Class InfoContatto.
+ * Frame che gestisce la simulazione di una chiamata al numero selezionato.
  */
 @SuppressWarnings("serial")
 public class InfoContatto extends JFrame {
 
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame frame;
 	
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The pannello num tel sec. */
-	private JPanel pannelloNumTelSec;
-	
-	/** The pannello scrol num tel. */
-	private JPanel pannelloScrolNumTel;
-	
-	/** The pannello scroll mail. */
-	private JPanel pannelloScrollMail;
-	
-	/** The text field nome. */
+	/** Campo nome. */
 	private JTextField textFieldNome;
 	
-	/** The text field secondo nome. */
+	/** Campo secondo nome. */
 	private JTextField textFieldSecondoNome;
 	
-	/** The text field cognome. */
+	/** Campo cognome. */
 	private JTextField textFieldCognome;
 	
-	/** The text field num fisso. */
+	/** Campo numero fisso. */
 	private JTextField textFieldNumFisso;
 	
-	/** The text field num mobile. */
+	/** Campo numero mobile. */
 	private JTextField textFieldNumMobile;
 	
-	/** The text field via. */
+	/** Campo via. */
 	private JTextField textFieldVia;
 	
-	/** The text field citt‡. */
+	/** Campo citt‡. */
 	private JTextField textFieldCitt‡;
 	
-	/** The text field nazione. */
+	/** Campo nazione. */
 	private JTextField textFieldNazione;
 	
-	/** The text field cap. */
+	/** Campo CAP. */
 	private JTextField textFieldCap;
-
+	
+	/** Pannello numeri telefono secondari. */
+	private JPanel pannelloNumTelSec;
+	
+	/** Pannello scroll numeri telefono secondari. */
+	private JPanel pannelloScrolNumTel;
+	
+	/** Pannello scroll mail secondarie. */
+	private JPanel pannelloScrollMail;
+	
 	/**
-	 * Instantiates a new info contatto.
+	 * Costruttore di un nuovo frame InfoContatto.
 	 *
-	 * @param c the c
-	 * @param frameChiamante the frame chiamante
-	 * @param lista the lista
+	 * @param c controller
+	 * @param frameChiamante frame chiamante
 	 */
-	public InfoContatto(Controller c, JFrame frameChiamante, JList<Object> lista) {
-		
+	public InfoContatto(Controller c, JFrame frameChiamante) {
 		
 		setResizable(false);
 		setForeground(Color.WHITE);
@@ -95,10 +92,11 @@ public class InfoContatto extends JFrame {
 		setMaximumSize(new Dimension(550, 580));
 		getContentPane().setBackground(new Color(224, 255, 255));
 		
-
 		frame = this;
 		controller = c;
-		frame.setTitle("Informazioni del contatto "+controller.getContattoSelezionato().getNome() + " " + controller.getContattoSelezionato().getSecondoNome() + " " + controller.getContattoSelezionato().getCognome());
+		frame.setTitle("Informazioni del contatto " +controller.getContattoSelezionato().getNome() + " " 
+		                                            + controller.getContattoSelezionato().getSecondoNome() + " " 
+				                                    + controller.getContattoSelezionato().getCognome() );
 		frame.setBounds(500, 200, 660, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -127,9 +125,6 @@ public class InfoContatto extends JFrame {
 		pannelloIndPrincipale_1.setBackground(new Color(255, 255, 255));
 		pannelloIndPrincipale_1.setBounds(24, 137, 249, 90);
 		contentPane.add(pannelloIndPrincipale_1);
-		
-		
-		
 		
 		JPanel pannelloCredUtente = new JPanel();
 		pannelloCredUtente.setLayout(null);
@@ -213,7 +208,6 @@ public class InfoContatto extends JFrame {
 		textFieldSecondoNome.setText(controller.getContattoSelezionato().getSecondoNome());
 		textFieldCognome.setText(controller.getContattoSelezionato().getCognome());
 		
-		// TODO : punto di riferimento
 		JPanel pannelloScrollIndirizziSec = new JPanel();
 		pannelloScrollIndirizziSec.setBorder(null);
 		pannelloScrollIndirizziSec.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -233,7 +227,6 @@ public class InfoContatto extends JFrame {
 		pannelloScrollIndirizziSec.setLayout(new BoxLayout(pannelloScrollIndirizziSec, BoxLayout.PAGE_AXIS));
 		scrollPane.setPreferredSize(pannelloScrollIndirizziSec.getSize());
 		panelMain.add(scrollPane, BorderLayout.CENTER);
-		
 		
 		JLabel lblNewLabel = new JLabel("Indirizzi Secondari");
 		lblNewLabel.setForeground(new Color(102, 102, 153));
@@ -355,7 +348,7 @@ public class InfoContatto extends JFrame {
 		lblAccount.setForeground(new Color(102, 102, 153));
 		lblAccount.setBounds(332, 414, 200, 13);
 		contentPane.add(lblAccount);
-		// TODO : qui
+		
 		JPanel pannelloAccount = new JPanel();
 		pannelloAccount.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pannelloAccount.setBackground(new Color(255, 240, 245));
@@ -382,10 +375,7 @@ public class InfoContatto extends JFrame {
 		inizializzaContatto(textFieldNome,textFieldSecondoNome, textFieldCognome, textFieldVia, textFieldCitt‡, textFieldNazione, textFieldCap,
 	            textFieldNumMobile, textFieldNumFisso, pannelloScrollIndirizziSec, pannelloScrolNumTel, pannelloScrollMail, pannelloScrollAccount);
 		
-		
-		
-		
-		//Bottoni di chiamata dei numeri
+		// button di chiamata dei numeri
 		JButton btnChiama1 = new JButton("Chiama");
 		btnChiama1.setForeground(new Color(102, 102, 153));
 		btnChiama1.setBackground(new Color(255, 255, 255));
@@ -402,7 +392,6 @@ public class InfoContatto extends JFrame {
 		btnChiama2.setFocusPainted(false);
 		contentPane.add(btnChiama2);
 
-		
 		btnChiama1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FrameChiama Chiama = new FrameChiama(c, textFieldNumMobile.getText().toString());
@@ -421,21 +410,21 @@ public class InfoContatto extends JFrame {
 	}
 
 	/**
-	 * Inizializza contatto.
+	 * Inizializza il frame con le informazioni del contatto.
 	 *
-	 * @param textFieldNome the text field nome
-	 * @param textFieldSecondoNome the text field secondo nome
-	 * @param textFieldCognome the text field cognome
-	 * @param textFieldVia the text field via
-	 * @param textFieldCitt‡ the text field citt‡
-	 * @param textFieldNazione the text field nazione
-	 * @param textFieldCap the text field cap
-	 * @param textFieldNumMobile the text field num mobile
-	 * @param textFieldNumFisso the text field num fisso
-	 * @param pannelloScrollIndirizziSec the pannello scroll indirizzi sec
-	 * @param pannelloScrolNumTel the pannello scrol num tel
-	 * @param pannelloScrollMail the pannello scroll mail
-	 * @param pannelloScrollAccount the pannello scroll account
+	 * @param textFieldNome campo nome
+	 * @param textFieldSecondoNome campo secondo nome
+	 * @param textFieldCognome campo cognome
+	 * @param textFieldVia campo via
+	 * @param textFieldCitt‡ campo citt‡
+	 * @param textFieldNazione campo nazione
+	 * @param textFieldCap campo CAP
+	 * @param textFieldNumMobile campo numero mobile
+	 * @param textFieldNumFisso campo numero fisso
+	 * @param pannelloScrollIndirizziSec pannello indirizzi secsecondari
+	 * @param pannelloScrolNumTel pannello numeri telefono secondari
+	 * @param pannelloScrollMail pannello mail secondarie
+	 * @param pannelloScrollAccount pannello account associati
 	 */
 	private void inizializzaContatto(JTextField textFieldNome, JTextField textFieldSecondoNome, JTextField textFieldCognome, JTextField textFieldVia,
 								     JTextField textFieldCitt‡, JTextField textFieldNazione, JTextField textFieldCap, JTextField textFieldNumMobile,
@@ -491,7 +480,7 @@ public class InfoContatto extends JFrame {
 				JLabel lblSpace     = new JLabel(" ");
 				lblSpace.setBackground(new Color(255,255,255));
 				
-				elemento = creaElemScrollBar(controller.getContattoSelezionato().getIndirizzi().get(i).getVia(),
+				elemento = creaSecIndirizzo(controller.getContattoSelezionato().getIndirizzi().get(i).getVia(),
 						 					 controller.getContattoSelezionato().getIndirizzi().get(i).getCitta(),
 						 					 controller.getContattoSelezionato().getIndirizzi().get(i).getNazione(),
 						 					 controller.getContattoSelezionato().getIndirizzi().get(i).getCap());
@@ -536,7 +525,7 @@ public class InfoContatto extends JFrame {
 			{ 
 				JPanel accountJP;
 				
-				accountJP = creaAccountScrollBar(controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getFornitore(),
+				accountJP = creaAccount(controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getFornitore(),
 												 controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getFraseStato(),
 												 controller.getContattoSelezionato().getEmail().get(i).getAccount().get(j).getNickname());
 				pannelloScrollAccount.add(accountJP);
@@ -550,16 +539,7 @@ public class InfoContatto extends JFrame {
 		repaint();
 	}
 		
-	/**
-	 * Crea elem scroll bar.
-	 *
-	 * @param fieldVia the field via
-	 * @param fieldCitt‡ the field citt‡
-	 * @param fieldNazione the field nazione
-	 * @param fieldCap the field cap
-	 * @return the j panel
-	 */
-	private JPanel creaElemScrollBar(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)
+	private JPanel creaSecIndirizzo(String fieldVia, String fieldCitt‡, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(4,2));
@@ -569,18 +549,17 @@ public class InfoContatto extends JFrame {
 		JTextField textFieldCitt‡SB;
 		JTextField textFieldNazioneSB;
 		JTextField textFieldCapSB;
-		
+
 		JLabel lblViaSB = new JLabel("Via");
 		lblViaSB.setOpaque(true);
 		lblViaSB.setBackground(new Color(255, 255, 255));
 		panel.add(lblViaSB);
-		
+
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
 		textFieldViaSB.setEditable(false);
-		textFieldViaSB.setOpaque(true);
-		textFieldViaSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldViaSB);
+		textFieldViaSB.setCaretPosition(0);
 		textFieldViaSB.setColumns(10);
 									
 		JLabel lblCitt‡SB = new JLabel("Citt\u00E0");
@@ -591,9 +570,8 @@ public class InfoContatto extends JFrame {
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
 		textFieldCitt‡SB.setEditable(false);
-		textFieldCitt‡SB.setOpaque(true);
-		textFieldCitt‡SB.setBackground(new Color(255,255,255));
 		panel.add(textFieldCitt‡SB);
+		textFieldCitt‡SB.setCaretPosition(0);
 		textFieldCitt‡SB.setColumns(10);
 
 		JLabel lblNazioneSB = new JLabel("Nazione");
@@ -604,9 +582,8 @@ public class InfoContatto extends JFrame {
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
 		textFieldNazioneSB.setEditable(false);
-		textFieldNazioneSB.setOpaque(true);
-		textFieldNazioneSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldNazioneSB);
+		textFieldNazioneSB.setCaretPosition(0);
 		textFieldNazioneSB.setColumns(10);
 		
 		JLabel lblCapSB = new JLabel("CAP");
@@ -617,20 +594,19 @@ public class InfoContatto extends JFrame {
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
 		textFieldCapSB.setEditable(false);
-		textFieldCapSB.setOpaque(true);
-		textFieldCapSB.setBackground(new Color(255,255,255));
 		panel.add(textFieldCapSB, BorderLayout.WEST);
+		textFieldCapSB.setCaretPosition(0);
 		textFieldCapSB.setColumns(10);
 		
 		return panel;
 	}
 	
 	/**
-	 * Crea sec numb.
+	 * Crea un pannello di numeri secondari.
 	 *
-	 * @param fieldTipo the field tipo
-	 * @param fieldNum the field num
-	 * @return the j panel
+	 * @param fieldTipo campo tipo
+	 * @param fieldNum campo numero
+	 * @return il JPanel di numeri secondari
 	 */
 	private JPanel creaSecNumb(String fieldTipo, String fieldNum)
 	{
@@ -644,17 +620,12 @@ public class InfoContatto extends JFrame {
 		textFieldDescSB = new JTextField();
 		textFieldDescSB.setText(fieldTipo);
 		textFieldDescSB.setEditable(false);
-		textFieldDescSB.setOpaque(true);
-		textFieldDescSB.setBackground(new Color(255,255,255));
-		textFieldDescSB.setCaretPosition(0);
 		panel.add(textFieldDescSB);
 		textFieldDescSB.setColumns(5);
 																		
 		textFieldNumSB = new JTextField();
-		textFieldNumSB.setEditable(false);
-		textFieldNumSB.setOpaque(true);
-		textFieldNumSB.setBackground(new Color(255,255,255));
 		textFieldNumSB.setText(fieldNum);
+		textFieldNumSB.setEditable(false);
 		panel.add(textFieldNumSB);
 		textFieldNumSB.setColumns(5);
 		
@@ -662,11 +633,11 @@ public class InfoContatto extends JFrame {
 	}
 	
 	/**
-	 * Crea sec mail.
+	 * Crea un pannello di mail secondarie.
 	 *
-	 * @param fieldTipo the field tipo
-	 * @param fieldEmail the field email
-	 * @return the j panel
+	 * @param campo tipo
+	 * @param campo email
+	 * @return il JPanel di mail secondarie
 	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
 	{
@@ -676,41 +647,33 @@ public class InfoContatto extends JFrame {
 		
 		panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 2));
-		panel.setMaximumSize(new Dimension(450,70));
-		panel.setPreferredSize(new Dimension(300,50));
-		
 		
 		textFieldDescMailSB = new JTextField();
-		
 		textFieldDescMailSB.setText(fieldTipo);
 		textFieldDescMailSB.setEditable(false);
-		textFieldDescMailSB.setOpaque(true);
-		textFieldDescMailSB.setBackground(new Color(255,255,255));
-		textFieldDescMailSB.setCaretPosition(0);
 		textFieldDescMailSB.setColumns(5);
+		textFieldDescMailSB.setCaretPosition(0);
 		panel.add(textFieldDescMailSB);
 																		
 		textFieldMailSB = new JTextField();
 		textFieldMailSB.setText(fieldEmail);
 		textFieldMailSB.setEditable(false);
-		textFieldMailSB.setOpaque(true);
-		textFieldMailSB.setBackground(new Color(255,255,255));
-		textFieldMailSB.setCaretPosition(0);
 		textFieldMailSB.setColumns(5);
+		textFieldMailSB.setCaretPosition(0);
 		panel.add(textFieldMailSB);
 		
 		return  panel;
 	}
 	
 	/**
-	 * Crea account scroll bar.
+	 * Crea un pannello di account associati alle email del contatto.
 	 *
-	 * @param fornitore the fornitore
-	 * @param fraseStato the frase stato
-	 * @param nickname the nickname
-	 * @return the j panel
+	 * @param fornitore fornitore
+	 * @param fraseStato frase stato
+	 * @param nickname nickname
+	 * @return il JPanel di account
 	 */
-	private JPanel creaAccountScrollBar(String fornitore, String fraseStato, String nickname)
+	private JPanel creaAccount(String fornitore, String fraseStato, String nickname)
 	{
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(3,2));

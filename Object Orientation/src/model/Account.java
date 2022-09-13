@@ -1,6 +1,6 @@
 package model;
 
-/** Gestisce l'oggetto Account e la sua interazione con il controller. */
+/** Gestisce l'oggetto Account. */
 public class Account {
 	
 	/** Nome del fornitore dell'account. */
@@ -16,7 +16,7 @@ public class Account {
 	private String stringaEmail;
 	
 	/**
-	 * Instanzia un nuovo account con le varie informazioni necessarie.
+	 * Costruttore di un Account.
 	 *
 	 * @param fornitore fornitore
 	 * @param fraseStato frase stato
@@ -32,7 +32,7 @@ public class Account {
 	}
 
 	/**
-	 * Ritorna il fornitore salvato localmente.
+	 * Ritorna il nome del fornitore.
 	 *
 	 * @return fornitore dell'account
 	 */
@@ -41,7 +41,7 @@ public class Account {
 	}
 	
 	/**
-	 * Imposta il valore del fornitore localmente.
+	 * Imposta il valore del fornitore.
 	 *
 	 * @param fornitore fornitore
 	 */
@@ -50,7 +50,7 @@ public class Account {
 	}
 	
 	/**
-	 * Ritorna la frase stato salvata localmente.
+	 * Ritorna la frase stato.
 	 *
 	 * @return frase stato
 	 */
@@ -59,7 +59,7 @@ public class Account {
 	}
 	
 	/**
-	 * Imposta il valore della frase stato localmente.
+	 * Imposta la frase stato.
 	 *
 	 * @param fraseStato frase stato
 	 */
@@ -68,7 +68,7 @@ public class Account {
 	}
 	
 	/**
-	 * Ritorna il nickname salvato localmente.
+	 * Ritorna il nickname.
 	 *
 	 * @return nickname
 	 */
@@ -77,7 +77,7 @@ public class Account {
 	}
 	
 	/**
-	 * Imposta il valore del nickname localmente.
+	 * Imposta il nickname.
 	 *
 	 * @param nickname nickname
 	 */
@@ -86,7 +86,7 @@ public class Account {
 	}
 
 	/**
-	 * Ritorna la stringa email salvata localmente.
+	 * Ritorna la stringa email.
 	 *
 	 * @returnstringa email
 	 */
@@ -95,7 +95,7 @@ public class Account {
 	}
 
 	/**
-	 * Imposta la stringa email localmente.
+	 * Imposta la stringa email.
 	 *
 	 * @param stringaEmail stringa email
 	 */

@@ -23,35 +23,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ChangeGruppo.
+ * Frame che gestisce la modifica delle informazioni di un gruppo.
  */
 @SuppressWarnings("serial")
 public class ChangeGruppo extends JFrame{
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame frame;
 	
-	/** The content pane. */
+	/** Pannello dei contenuti. */
 	private JPanel contentPane;
 	
-	/** The text field nome. */
+	/** Campo nome. */
 	private JTextField textFieldNome;
 	
-	/** The lbl nome. */
+	/** Label nome. */
 	private JLabel lblNome;
 	
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
 	/**
-	 * Instantiates a new change gruppo.
+	 * Costruttore di un nuovo frame AddGruppo.
 	 *
-	 * @param c the c
-	 * @param frameChiamante the frame chiamante
-	 * @param listaContattiChiamante the lista contatti chiamante
-	 * @param listaGruppiChiamante the lista gruppi chiamante
+	 * @param c controller
+	 * @param frameChiamante frame chiamante
+	 * @param listaContattiChiamante lista di Contatti che deve riflettere l'eventuale cambio dei contatti del gruppo
+	 * @param listaGruppiChiamante lista di Gruppi da aggiornare col gruppo modificato
 	 */
 	public ChangeGruppo(Controller c, JFrame frameChiamante, JList<Object> listaContattiChiamante, JList<Object> listaGruppiChiamante) {
 		
@@ -78,10 +77,6 @@ public class ChangeGruppo extends JFrame{
 		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 		
-		/**
-		 * 
-		 */
-		
 		JPanel pannelloContattiMain = new JPanel();
 		pannelloContattiMain.setBackground(new Color(255, 255, 255));
 		pannelloContattiMain.setBounds(45, 90, 249, 243);
@@ -100,8 +95,6 @@ public class ChangeGruppo extends JFrame{
 		scrollPaneContatti.setPreferredSize(pannelloContatti.getSize());
 		pannelloContattiMain.add(scrollPaneContatti, BorderLayout.CENTER);
 		
-		
-		
 		JPanel pannelloNomeGruppo = new JPanel();
 		pannelloNomeGruppo.setBackground(new Color(255, 255, 255));
 		pannelloNomeGruppo.setBounds(84, 10, 169, 58);
@@ -118,8 +111,6 @@ public class ChangeGruppo extends JFrame{
 		lblNome.setBounds(23, 9, 120, 13);
 		pannelloNomeGruppo.add(lblNome);
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
-		
-		
 		
 		/**
 		 * Button "annulla"
@@ -159,7 +150,6 @@ public class ChangeGruppo extends JFrame{
 						{
 							// estraggo le informazioni dal panel trovato
 							JCheckBox checkbox = ((JCheckBox)((JPanel) scrollComponent).getComponents()[0]);
-//						controller.addIndirizzoSec(nuovoContatto, viaSec, citt‡Sec, nazioneSec, capSec);
 							if (checkbox.isSelected())
 							{
 								selezionatoAlmenoUno = true;
@@ -216,9 +206,9 @@ public class ChangeGruppo extends JFrame{
 	}
 	
 	/**
-	 * Inizializza frame.
+	 * Inizializza i campi del frame con le informazioni del gruppo
 	 *
-	 * @param pannelloContatti the pannello contatti
+	 * @param pannelloContatti pannello contatti
 	 */
 	private void inizializzaFrame(JPanel pannelloContatti)
 	{
@@ -241,7 +231,6 @@ public class ChangeGruppo extends JFrame{
 				}
 			}
 			
-//			 ItemListener
 			panel.add(checkbox);
 			panel.setBackground(new Color(204, 255, 255));
 			pannelloContatti.add(panel);
@@ -250,10 +239,10 @@ public class ChangeGruppo extends JFrame{
 	}
 	
 	/**
-	 * Check modificato.
+	 * Controlla se il frame Ë stato modificato dall'utente.
 	 *
-	 * @param pannelloContatti the pannello contatti
-	 * @return true, if successful
+	 * @param pannelloContatti pannello contatti
+	 * @return true se il frame Ë stato modificato, false altrimenti
 	 */
 	private boolean checkModificato(JPanel pannelloContatti)
 	{

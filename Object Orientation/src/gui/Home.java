@@ -19,47 +19,46 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-// TODO: Auto-generated Javadoc
 /**
- * Classe che implementa il frame della home .
+ * Frame che gestisce le rubriche presenti nel sistema
  */
 @SuppressWarnings("serial")
 public class Home extends JFrame {
 	
-	/** The controller. */
+	/** Controller. */
 	private Controller controller;
 	
-	/** The frame. */
+	/** Questo frame. */
 	private JFrame frame;
 	
-	/** The lbl new label. */
-	private JLabel lblNewLabel;
+	/** Label utente possessore della rubrica. */
+	private JLabel lblUtente;
 	
-	/** The combo box model. */
+	/** Model della combobox di rubriche. */
 	private DefaultComboBoxModel<Object> comboBoxModel;
 	
-	/** The combo box rubriche. */
+	/** Combobox di rubriche. */
 	private JComboBox<Object> comboBoxRubriche;
 	
-	/** The btn modifica. */
-	private JButton btnModifica;
-	
-	/** The txt utente selezionato. */
+	/** Campo utente selezionato. */
 	private JTextField txtUtenteSelezionato;
 	
-	/** The btn entra. */
+	/** Button modifica. */
+	private JButton btnModifica;
+	
+	/** Button entra. */
 	private JButton btnEntra;
 	
-	/** The btn aggiungi. */
+	/** Button aggiungi. */
 	private JButton btnAggiungi;
 	
-	/** The btn elimina. */
+	/** Button elimina. */
 	private JButton btnElimina;
 
 	/**
-	 * Avvia l'interfaccia.
+	 * Costruttore della Home con inizializzazione dell'interfaccia.
 	 *
-	 * @param c the c
+	 * @param c controller
 	 */
 	public Home(Controller c) {
 		controller=c;
@@ -102,11 +101,11 @@ public class Home extends JFrame {
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		lblNewLabel = new JLabel("Utente");
-		lblNewLabel.setBounds(117, 21, 57, 18);
-		panel.add(lblNewLabel);
-		lblNewLabel.setForeground(new Color(102, 102, 153));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUtente = new JLabel("Utente");
+		lblUtente.setBounds(117, 21, 57, 18);
+		panel.add(lblUtente);
+		lblUtente.setForeground(new Color(102, 102, 153));
+		lblUtente.setHorizontalAlignment(SwingConstants.CENTER);
 		comboBoxRubriche = new JComboBox<Object>(comboBoxModel);
 		comboBoxRubriche.setBounds(169, 21, 90, 18);
 		panel.add(comboBoxRubriche);
@@ -159,6 +158,10 @@ public class Home extends JFrame {
 		lblImmagine.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImmagine.setBackground(Color.LIGHT_GRAY);
 		lblImmagine.setIcon(new ImageIcon(imgResized));
+		
+		/**
+		 * Quando è premuto il button "modifica"
+		 */
 		btnModifica.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -179,21 +182,19 @@ public class Home extends JFrame {
 							comboBoxModel.removeElementAt(indiceSelezionato);
 							comboBoxModel.insertElementAt((Object) controller.getRubricaSelezionata().getNome(),indiceSelezionato);
 							comboBoxRubriche.setSelectedIndex(indiceSelezionato);
-							System.out.println("Utente modificato in "+ comboBoxRubriche.getSelectedItem().toString());
 						} catch (Exception e2) 
 						{
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
 	                                                			JOptionPane.ERROR_MESSAGE );
 						}
-						for(String s : controller.getNomiRubriche()) 
-						{
-							System.out.print(s +"   ");
-						}
-						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
 				}
 			}
 		});
+		
+		/**
+		 * Quando è premuto il button "elimina"
+		 */
 		btnElimina.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -225,16 +226,14 @@ public class Home extends JFrame {
 							JOptionPane.showMessageDialog( null, "Valore non valido" , "Errore",
                                             		   	   JOptionPane.ERROR_MESSAGE );
 						}
-						//debug manuale
-						for(String s : controller.getNomiRubriche()) 
-						{
-							System.out.print(s +"   ");
-						}
-						System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 					}
 				}
 			}
 		});
+		
+		/**
+		 * Quando è premuto il button "aggiungi"
+		 */
 		btnAggiungi.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -248,11 +247,9 @@ public class Home extends JFrame {
 						//aggiunge la rubrica nel DB e in memoria	
 						controller.addRubrica(stringaDaInserire);
 						//Una volta effetuate le modifiche nel DB e in memoria, si aggiorna il frame
-						System.out.println("Valore aggiunto con successo!\n");
 						comboBoxRubriche.addItem((Object) stringaDaInserire);
 						comboBoxRubriche.setSelectedIndex(comboBoxModel.getIndexOf(stringaDaInserire));
 						txtUtenteSelezionato.setText(stringaDaInserire);
-						System.out.println("Utente aggiunto è "+ comboBoxRubriche.getSelectedItem().toString());
 					} 
 					catch (Exception e2) 
 					{
@@ -260,15 +257,14 @@ public class Home extends JFrame {
 						JOptionPane.showMessageDialog( null, e2.getMessage(), "Errore",
                                              		   JOptionPane.ERROR_MESSAGE );
 					}
-					//debug manuale
-					for(String s : controller.getNomiRubriche()) 
-					{
-						System.out.print(s +"   ");
-					}
-					//System.out.println(" La Rubrica Selezionata è: "+controller.getRubricaSelezionata().getNome());
 				}
 			}
 		});
+		
+		/**
+		 * Quando è premuto il button "entra" sono caricati i contatti
+		 * dell'utente selezionato e il frame presente è posto a invisibile
+		 */
 		btnEntra.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
@@ -284,19 +280,22 @@ public class Home extends JFrame {
 						e1.printStackTrace();
 					}
 					JFrame contattiFrame = new ListaContatti(controller, frame);
-					System.out.println("Frame Contatti caricato");
 					frame.setVisible(false);
 					contattiFrame.setVisible(true);
 				}
 			}
 		});
+		
+		/**
+		 * Quando è selezionato un campo della combobox il suo valore 
+		 * è visualizzato nella label a fianco
+		 */
 		comboBoxRubriche.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
-				if(comboBoxModel.getSelectedItem()!=null) 
+				if(comboBoxModel.getSelectedItem() != null) 
 				{
-					System.out.println("Entrato nell'action listener di combobox  " + e.getActionCommand());
 					txtUtenteSelezionato.setText(comboBoxModel.getSelectedItem().toString());
 				}
 				else 
@@ -307,36 +306,13 @@ public class Home extends JFrame {
 		});
 		
 		/**
-		 * All'avvio la combobox e il label visualizzano il
+		 * All'avvio, la combobox e il label visualizzano il
 		 * primo utente caricato, se presente
 		 */
-		if(controller.getRubriche().size()!=0) 
+		if(controller.getRubriche().size() != 0) 
 		{
 			txtUtenteSelezionato.setText(comboBoxRubriche.getItemAt(0).toString());
 			controller.setRubricaSelezionata(0);
 		}
-		
-		/**
-		 * Quando è selezionato un campo della combobox il suo valore 
-		 * è visualizzato nella label affianco
-		 */
-		
-		/**
-		 * Quando è premuto il button "entra" sono caricati i contatti
-		 * dell'utente selezionato e il frame presente è posto a invisibile
-		 */
-		
-		/**
-		 * Quando è premuto il button "aggiungi"
-		 */
-		
-		/**
-		 * Quando è premuto il button "elimina"
-		 */
-			
-		/**
-		 * Quando è premuto il button "modifica"
-		 */
-		
 	}
 }

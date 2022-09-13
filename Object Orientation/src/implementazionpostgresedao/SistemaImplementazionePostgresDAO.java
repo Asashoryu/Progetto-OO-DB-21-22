@@ -10,16 +10,16 @@ import dao.SistemaDAO;
 import database.ConnessioneDatabase;
 import model.Rubrica;
 
-/** Gestisce la connessione con il database. */
+/** Gestisce l'oggetto Sistema e la sua connessione al DB. */
 public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	
 	/** ArrayList di utenti della rubrica. */
 	private ArrayList<Rubrica> rubriche;
 	
-	/** Connessione con il database. */
+	/** Connessione al DB. */
 	private Connection connection;
 	
-	/** Instaura la connessione con il database. */
+	/** Costruttore di un oggetto SistemaImplementazionePostgresDAO e instaura la connessione con il DB. */
 	public SistemaImplementazionePostgresDAO() {
 		try {
 			connection = ConnessioneDatabase.getInstance().getConnection();
@@ -29,9 +29,9 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	}
 
 	/**
-	 * Carica l'ArrayList di utenti della rubrica dal database.
+	 * Carica le rubriche dal DB.
 	 *
-	 * @return ArrayList di utenti
+	 * @return ArrayList di rubriche
 	 */
 	public ArrayList<Rubrica> loadRubriche() {
 		PreparedStatement recuperaRubriche;
@@ -58,9 +58,9 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	/**
 	 * Modifica utente della rubrica nel database.
 	 *
-	 * @param vecchiaRubrica vecchio utente della rubrica da modificare
-	 * @param nuovaRubrica nuovo utente della rubrica
-	 * @throws SQLException the SQL exception
+	 * @param vecchiaRubrica vecchio nome della rubrica da modificare
+	 * @param nuovaRubrica nuovo nome della rubrica modificata
+	 * @throws SQLException SQL exception
 	 */
 	public void updateRubrica(String vecchiaRubrica, String nuovaRubrica) throws SQLException {
 		System.out.println("UPDATE Rubrica "+
@@ -83,8 +83,8 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	/**
 	 * Carica un nuovo utente della rubrica nel database.
 	 *
-	 * @param nomeRubrica nome utente della rubrica da inserire
-	 * @throws SQLException the SQL exception
+	 * @param nomeRubrica nome della rubrica da inserire
+	 * @throws SQLException SQL exception
 	 */
 	public void addRubrica(String nomeRubrica) throws SQLException {
 		System.out.println("INSERT INTO Rubrica VALUES "+"(\'"+nomeRubrica+"\')");
@@ -102,8 +102,8 @@ public class SistemaImplementazionePostgresDAO implements SistemaDAO{
 	/**
 	 * Elimina un utente della rubrica dal database.
 	 *
-	 * @param nomeRubrica nome utente della rubrica da eliminare
-	 * @throws SQLException the SQL exception
+	 * @param nomeRubrica nome della rubrica da eliminare
+	 * @throws SQLException SQL exception
 	 */
 	public void deleteRubrica(String nomeRubrica) throws SQLException {
 		System.out.println("DELETE FROM Rubrica WHERE utente_id = "+"\'"+nomeRubrica+"\'");
