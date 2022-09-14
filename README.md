@@ -16,8 +16,8 @@ Silvio Barra | Basi di Dati | silvio.barra@unina.it
 Porfirio Tramontana | Object Orientation | ptramont@unina.it
 
 ## Documentazioni
-Basi di Dati : (https://www.overleaf.com/project/62b9431b251866f028d9cd32)
-Object Oriention : 
+Basi di Dati : https://www.overleaf.com/project/62b9431b251866f028d9cd32  
+Object Oriention : https://www.overleaf.com/project/6321d81a9f616b14debbd5fa
 
 ## Tecnologie usate
 * PostgreSQL 14.0, compiled by Visual C++ build 1914, 64-bit (PgAdmin 4 version 5.7)
