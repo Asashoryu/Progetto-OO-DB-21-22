@@ -1067,5 +1067,18 @@ public class Controller {
 		Gruppo nuovoGruppo = new Gruppo(textFieldNome.getText(), contatti);
 		changeInfoGruppo(nuovoGruppo);
 	}
+	
+	/**
+	 * Restituisce un nuovo numero da chiamare nel caso in cui la chiamata al numero passato non ha avuto successo
+	 * 
+	 * @param numeroDaReindirizzare numero rispetto al quale svolgere il reindirizzamento
+	 * 
+	 * @return numero reindirizzato verso cui riprovare la chiamata
+	 * @see Contatto
+	 */
+	public String reindirizza(String numeroDaReindirizzare) 
+	{
+		return getContattoSelezionato().reindirizza(numeroDaReindirizzare);
+	}
 }
 	

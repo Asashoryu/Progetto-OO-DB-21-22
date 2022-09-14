@@ -391,18 +391,22 @@ public class InfoContatto extends JFrame {
 		btnChiama2.setBounds(498, 174, 85, 21);
 		btnChiama2.setFocusPainted(false);
 		contentPane.add(btnChiama2);
-
+		
+		/** Chiama il numero mobile*/
 		btnChiama1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameChiama Chiama = new FrameChiama(c, textFieldNumMobile.getText().toString());
+				FrameChiama Chiama = new FrameChiama(c, frame, textFieldNumMobile.getText().toString());
+				frame.setVisible(false);
 				Chiama.setLocationRelativeTo(null);
 				Chiama.setVisible(true);
 			}
 		});
-			
+		
+		/** Chiama il numero fisso*/
 		btnChiama2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameChiama Chiama = new FrameChiama(c, textFieldNumFisso.getText().toString());
+				FrameChiama Chiama = new FrameChiama(c, frame, textFieldNumFisso.getText().toString());
+				frame.setVisible(false);
 				Chiama.setLocationRelativeTo(null);
 				Chiama.setVisible(true);
 			}

@@ -40,9 +40,10 @@ public class FrameChiama extends JFrame {
 	 * Costruttore di un nuovo frame FrameChiama.
 	 *
 	 * @param c controller
+     * @param frameInfoContatti frame InfoContatti a cui ritornare
 	 * @param numeroChiamato numero chiamato
 	 */
-	public FrameChiama(Controller c, String numeroChiamato) {
+	public FrameChiama(Controller c, JFrame frameInfoContatti, String numeroChiamato) {
 		setResizable(false);
 		JFrame frame = this;
 
@@ -81,19 +82,21 @@ public class FrameChiama extends JFrame {
 			btnChiamaRiserva.setBounds(95, 72, 225, 39);
 			contentPane.add(btnChiamaRiserva);
 			
+			/** Quando si sceglie di chiamare il numero di riserva*/
 			btnChiamaRiserva.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-				numeroRiserva = controller.getContattoSelezionato().reindirizza(numeroChiamato);
-				JLabel lblReindirizzato = new JLabel("Chiamando il numero di riserva " + numeroRiserva + "...");
-				lblReindirizzato.setHorizontalAlignment(SwingConstants.CENTER);
-				lblReindirizzato.setFont(new Font("Arial", Font.PLAIN, 16));
-				lblReindirizzato.setBounds(10, 10, 416, 27);
-				FinestraCR = new FrameChiamaRiserva(numeroRiserva);
-				FinestraCR.setLocationRelativeTo(null);
-				FinestraCR.setVisible(true);
-				frame.dispose();
+					numeroRiserva = controller.reindirizza(numeroChiamato);
+					JLabel lblReindirizzato = new JLabel("Chiamando il numero di riserva " + numeroRiserva + "...");
+					lblReindirizzato.setHorizontalAlignment(SwingConstants.CENTER);
+					lblReindirizzato.setFont(new Font("Arial", Font.PLAIN, 16));
+					lblReindirizzato.setBounds(10, 10, 416, 27);
+					FinestraCR = new FrameChiamaRiserva(frameInfoContatti, numeroRiserva);
+					FinestraCR.setLocationRelativeTo(null);
+					FinestraCR.setVisible(true);
+					frame.dispose();
 				}
 			});
+			
 			btnAnnulla = new JButton("Annulla");
 			btnAnnulla.setFont(new Font("Arial", Font.PLAIN, 11));
 			btnAnnulla.setForeground(new Color(102,102,153));
@@ -101,8 +104,11 @@ public class FrameChiama extends JFrame {
 			btnAnnulla.setFocusPainted(false);
 			btnAnnulla.setBounds(95, 120, 225, 39);
 			contentPane.add(btnAnnulla);
+			
+			/** Quando è cliccato il button "Annulla"*/
 			btnAnnulla.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					frameInfoContatti.setVisible(true);
 					frame.dispose();
 				}
 			});

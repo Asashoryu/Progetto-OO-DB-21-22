@@ -28,9 +28,10 @@ public class FrameChiamaRiserva extends JFrame {
 	/**
 	 * Costruttore di un nuovo frame FrameChiamaRiserva.
 	 *
+	 * @param frameInfoContatti frame InfoContatti a cui ritornare
 	 * @param NumeroDiRiserva numero di riserva
 	 */
-	public FrameChiamaRiserva(String NumeroDiRiserva) {
+	public FrameChiamaRiserva(JFrame frameInfoContatti, String NumeroDiRiserva) {
 		setResizable(false);
 		JFrame frame = this;
 		
@@ -67,8 +68,11 @@ public class FrameChiamaRiserva extends JFrame {
 			btnChiudi.setFocusPainted(false);
 			btnChiudi.setBounds(95, 72, 225, 39);
 			contentPane.add(btnChiudi);
+			
+			/** Quando è cliccato il button "Chiudi"*/
 			btnChiudi.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+				frameInfoContatti.setVisible(true);
 				frame.dispose();
 				}
 			});

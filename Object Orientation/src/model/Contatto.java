@@ -249,6 +249,7 @@ public class Contatto{
 	 * Reindirizza la chiamata eseguita da un numero del contatto verso un altro numero disponibile.
 	 *
 	 * @param numeroDaReindirizzare numero chiamato
+	 * 
 	 * @return numero reindirizzato
 	 */
 	public String reindirizza(String numeroDaReindirizzare) {
