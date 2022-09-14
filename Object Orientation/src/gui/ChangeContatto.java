@@ -144,8 +144,14 @@ public class ChangeContatto extends JFrame {
 
 		frame = this;
 		controller = c;
-
-		frame.setTitle("Modifica del Contatto " + controller.getContattoSelezionato().getNome() + " " +  controller.getContattoSelezionato().getSecondoNome() + " " + controller.getContattoSelezionato().getCognome());
+		if (controller.getContattoSelezionato().getSecondoNome() == null)
+		{
+			frame.setTitle("Modifica del Contatto " + controller.getContattoSelezionato().getNome() + " " + controller.getContattoSelezionato().getCognome());
+		}
+		else 
+		{
+			frame.setTitle("Modifica del Contatto " + controller.getContattoSelezionato().getNome() + " " +  controller.getContattoSelezionato().getSecondoNome() + " " + controller.getContattoSelezionato().getCognome());
+		}
 		frame.setBounds(500, 200, 660, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
@@ -211,7 +217,6 @@ public class ChangeContatto extends JFrame {
 		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JPanel elemento;
-				int lastElemIndex;
 				JButton btnCancella     = new JButton();
 				JTextField fieldVia     = new JTextField();
 				JTextField fieldCittà   = new JTextField();
@@ -229,7 +234,6 @@ public class ChangeContatto extends JFrame {
 					// Si registra l'aggiunta di un nuovo indirizzo secodnario
 					modificato = true;
 					
-					//TODO : controlli sulla validità dell'inserimento
 					elemento = creaSecIndirizzo(fieldVia.getText(), fieldCittà.getText(), fieldNazione.getText(), fieldCap.getText());
 					pannelloScrollIndirizziSec.add(btnCancella);
 					pannelloScrollIndirizziSec.add(elemento);
@@ -242,7 +246,6 @@ public class ChangeContatto extends JFrame {
 							repaint();
 						}
 					});
-					lastElemIndex  = pannelloScrollIndirizziSec.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -420,7 +423,6 @@ public class ChangeContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JPanel numero;
-				int lastElemIndex;
 				JButton btnCancellaNumSec  = new JButton();
 				JTextField fieldTipo       = new JTextField();
 				JTextField fieldNum      = new JTextField();
@@ -451,7 +453,6 @@ public class ChangeContatto extends JFrame {
 							repaint();
 						}
 					});
-					lastElemIndex  = pannelloScrolNumTel.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -499,7 +500,6 @@ public class ChangeContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JPanel mail;
-				int lastMailIndex;;
 				JButton btnCancellaMailSec = new JButton();
 				JTextField fieldTipo     = new JTextField();
 				JTextField fieldEmail      = new JTextField();
@@ -514,7 +514,6 @@ public class ChangeContatto extends JFrame {
 					// Si registra l'aggiunta di una nuova email
 					modificato = true;
 					
-					//TODO : controlli sulla validità dell'inserimento
 					mail = creaSecMail(fieldTipo.getText(), fieldEmail.getText());
 					mail.setMaximumSize(new Dimension(500, 20));
 					pannelloScrollMail.add(btnCancellaMailSec);
@@ -524,11 +523,10 @@ public class ChangeContatto extends JFrame {
 						public void actionPerformed(ActionEvent e) {							
 							pannelloScrollMail.remove(btnCancellaMailSec);
 							pannelloScrollMail.remove(mail);
-							revalidate();
-							repaint();
+							pannelloScrollMail.revalidate();
+							pannelloScrollMail.repaint();
 						}
 					});
-					lastMailIndex  = pannelloScrollMail.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -884,6 +882,8 @@ public class ChangeContatto extends JFrame {
 						
 						pannelloScrollIndirizziSec.remove(btnCancella);
 						pannelloScrollIndirizziSec.remove(elemento);
+						revalidate();
+						repaint();
 					}
 				});
 			}
@@ -926,6 +926,8 @@ public class ChangeContatto extends JFrame {
 						
 						pannelloScrolNumTel.remove(btnCancellaNumSec);
 						pannelloScrolNumTel.remove(numero);
+						revalidate();
+						repaint();
 					}
 				});
 			}
@@ -953,6 +955,8 @@ public class ChangeContatto extends JFrame {
 					
 					pannelloScrollMail.remove(btnCancellaMailSec);
 					pannelloScrollMail.remove(mail);
+					revalidate();
+					repaint();
 				}
 			});
 		}

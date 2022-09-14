@@ -94,9 +94,17 @@ public class InfoContatto extends JFrame {
 		
 		frame = this;
 		controller = c;
-		frame.setTitle("Informazioni del contatto " +controller.getContattoSelezionato().getNome() + " " 
-		                                            + controller.getContattoSelezionato().getSecondoNome() + " " 
-				                                    + controller.getContattoSelezionato().getCognome() );
+		if (controller.getContattoSelezionato().getSecondoNome() == null)
+		{
+			frame.setTitle("Informazioni del contatto " +controller.getContattoSelezionato().getNome() + " " 
+					+ controller.getContattoSelezionato().getCognome() );
+		}
+		else 
+		{
+			frame.setTitle("Informazioni del contatto " +controller.getContattoSelezionato().getNome() + " " 
+					+ controller.getContattoSelezionato().getSecondoNome() + " " 
+					+ controller.getContattoSelezionato().getCognome() );
+		}
 		frame.setBounds(500, 200, 660, 460);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
