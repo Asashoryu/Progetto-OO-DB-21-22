@@ -211,6 +211,8 @@ public class AddContatto extends JFrame {
 				JPanel elemento;
 				int lastElemIndex;
 				JButton btnCancella     = new JButton();
+				btnCancella.setBackground(Color.GREEN);
+				btnCancella.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldVia     = new JTextField();
 				JTextField fieldCitt‡   = new JTextField();
@@ -398,6 +400,8 @@ public class AddContatto extends JFrame {
 				JPanel numero;
 				int lastElemIndex;
 				JButton btnCancellaNumSec  = new JButton();
+				btnCancellaNumSec.setBackground(Color.GREEN);
+				btnCancellaNumSec.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancellaNumSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo       = new JTextField();
 				JTextField fieldNum      = new JTextField();
@@ -471,6 +475,8 @@ public class AddContatto extends JFrame {
 				JPanel mail;
 				int lastMailIndex;;
 				JButton btnCancellaMailSec = new JButton();
+				btnCancellaMailSec.setBackground(Color.GREEN);
+				btnCancellaMailSec.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo     = new JTextField();
 				JTextField fieldEmail      = new JTextField();
@@ -733,6 +739,7 @@ public class AddContatto extends JFrame {
 		textFieldViaSB = new JTextField();
 		textFieldViaSB.setText(fieldVia);
 		textFieldViaSB.setEditable(false);
+		textFieldViaSB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldViaSB);
 		textFieldViaSB.setCaretPosition(0);
 		textFieldViaSB.setColumns(10);
@@ -745,6 +752,7 @@ public class AddContatto extends JFrame {
 		textFieldCitt‡SB = new JTextField();
 		textFieldCitt‡SB.setText(fieldCitt‡);
 		textFieldCitt‡SB.setEditable(false);
+		textFieldCitt‡SB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldCitt‡SB);
 		textFieldCitt‡SB.setCaretPosition(0);
 		textFieldCitt‡SB.setColumns(10);
@@ -757,6 +765,7 @@ public class AddContatto extends JFrame {
 		textFieldNazioneSB = new JTextField();
 		textFieldNazioneSB.setText(fieldNazione);
 		textFieldNazioneSB.setEditable(false);
+		textFieldNazioneSB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldNazioneSB);
 		textFieldNazioneSB.setCaretPosition(0);
 		textFieldNazioneSB.setColumns(10);
@@ -769,6 +778,7 @@ public class AddContatto extends JFrame {
 		textFieldCapSB = new JTextField();
 		textFieldCapSB.setText(fieldCap);
 		textFieldCapSB.setEditable(false);
+		textFieldCapSB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldCapSB, BorderLayout.WEST);
 		textFieldCapSB.setCaretPosition(0);
 		textFieldCapSB.setColumns(10);
@@ -795,12 +805,14 @@ public class AddContatto extends JFrame {
 		textFieldDescSB = new JTextField();
 		textFieldDescSB.setText(fieldTipo);
 		textFieldDescSB.setEditable(false);
+		textFieldDescSB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldDescSB);
 		textFieldDescSB.setColumns(5);
 																		
 		textFieldNumSB = new JTextField();
 		textFieldNumSB.setText(fieldNum);
 		textFieldNumSB.setEditable(false);
+		textFieldNumSB.setBackground(new Color(255, 255, 255));
 		panel.add(textFieldNumSB);
 		textFieldNumSB.setColumns(5);
 		
@@ -826,6 +838,7 @@ public class AddContatto extends JFrame {
 		textFieldDescMailSB = new JTextField();
 		textFieldDescMailSB.setText(fieldTipo);
 		textFieldDescMailSB.setEditable(false);
+		textFieldDescMailSB.setBackground(new Color(255, 255, 255));
 		textFieldDescMailSB.setColumns(5);
 		textFieldDescMailSB.setCaretPosition(0);
 		panel.add(textFieldDescMailSB);
@@ -833,6 +846,7 @@ public class AddContatto extends JFrame {
 		textFieldMailSB = new JTextField();
 		textFieldMailSB.setText(fieldEmail);
 		textFieldMailSB.setEditable(false);
+		textFieldMailSB.setBackground(new Color(255, 255, 255));
 		textFieldMailSB.setColumns(5);
 		textFieldMailSB.setCaretPosition(0);
 		panel.add(textFieldMailSB);
