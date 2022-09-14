@@ -209,9 +209,8 @@ public class AddContatto extends JFrame {
 		btnAggiungiIndirizzo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JPanel elemento;
-				int lastElemIndex;
 				JButton btnCancella     = new JButton();
-				btnCancella.setBackground(Color.GREEN);
+				btnCancella.setBackground(new Color(204,255,255));
 				btnCancella.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancella.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldVia     = new JTextField();
@@ -227,7 +226,6 @@ public class AddContatto extends JFrame {
 				int option = JOptionPane.showConfirmDialog(null, message, "Riempire i campi", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION)
 				{
-					//TODO : controlli sulla validità dell'inserimento
 					elemento = creaSecIndirizzo(fieldVia.getText(), fieldCittà.getText(), fieldNazione.getText(), fieldCap.getText());
 					pannelloScrollIndirizziSec.add(btnCancella);
 					pannelloScrollIndirizziSec.add(elemento);
@@ -240,7 +238,6 @@ public class AddContatto extends JFrame {
 							repaint();
 						}
 					});
-					lastElemIndex  = pannelloScrollIndirizziSec.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -398,9 +395,8 @@ public class AddContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JPanel numero;
-				int lastElemIndex;
 				JButton btnCancellaNumSec  = new JButton();
-				btnCancellaNumSec.setBackground(Color.GREEN);
+				btnCancellaNumSec.setBackground(new Color(204,255,255));
 				btnCancellaNumSec.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancellaNumSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo       = new JTextField();
@@ -429,7 +425,6 @@ public class AddContatto extends JFrame {
 							repaint();
 						}
 					});
-					lastElemIndex  = pannelloScrolNumTel.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -473,9 +468,8 @@ public class AddContatto extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				JPanel mail;
-				int lastMailIndex;;
 				JButton btnCancellaMailSec = new JButton();
-				btnCancellaMailSec.setBackground(Color.GREEN);
+				btnCancellaMailSec.setBackground(new Color(204,255,255));
 				btnCancellaMailSec.setToolTipText("Premere per eliminare interamente l'elemento sottostante appena inserito e non ancora aggiunto in memoria.");
 				btnCancellaMailSec.setToolTipText("Permette di eliminare interamente l'elemento sottostante");
 				JTextField fieldTipo     = new JTextField();
@@ -485,10 +479,9 @@ public class AddContatto extends JFrame {
 				    "Inserisci l'email     :", fieldEmail,
 				};
 				
-				int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, message, "Riempire i campi", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION)
 				{
-					//TODO : controlli sulla validità dell'inserimento
 					mail = creaSecMail(fieldTipo.getText(), fieldEmail.getText());
 					mail.setMaximumSize(new Dimension( 500, 20));
 					pannelloScrollMail.add(btnCancellaMailSec);
@@ -502,7 +495,6 @@ public class AddContatto extends JFrame {
 							repaint();
 						}
 					});
-					lastMailIndex  = pannelloScrollMail.getComponentCount() - 1;
 					revalidate();
 					repaint();
 				}
@@ -636,7 +628,6 @@ public class AddContatto extends JFrame {
 							      "Errore di inserimento nel Database", JOptionPane.ERROR_MESSAGE);
 						System.out.println("Non è stato possibile inserire il contatto in memoria");
 					} catch (Exception e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 						JOptionPane.showMessageDialog(null, e1.getMessage(),
 							      "Errore di inserimento", JOptionPane.ERROR_MESSAGE);

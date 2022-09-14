@@ -515,7 +515,7 @@ public class ChangeContatto extends JFrame {
 				    "Inserisci l'email     :", fieldEmail,
 				};
 				
-				int option = JOptionPane.showConfirmDialog(null, message, "Enter all your values", JOptionPane.OK_CANCEL_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, message, "Riempire i campi", JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION)
 				{
 					// Si registra l'aggiunta di una nuova email
