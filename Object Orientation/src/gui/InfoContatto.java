@@ -553,11 +553,13 @@ public class InfoContatto extends JFrame {
 	}
 		
 	/**
-	 * Crea un pannello di mail secondarie.
+	 * Crea un pannello di indirizzi secondari.
 	 *
-	 * @param fieldTipo campo tipo
-	 * @param fieldEmail campo email
-	 * @return il JPanel di mail secondarie
+	 * @param fieldVia campo via
+	 * @param fieldCittà campo città
+	 * @param fieldNazione campo nazione
+	 * @param fieldCap campo CAP
+	 * @return il JPanel di indirizzi secondari
 	 */
 	private JPanel creaSecIndirizzo(String fieldVia, String fieldCittà, String fieldNazione, String fieldCap)
 	{
