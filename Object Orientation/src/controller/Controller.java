@@ -665,6 +665,7 @@ public class Controller {
 	public void deleteContattoSelezionato() throws SQLException {
 		// TODO Auto-generated method stub
 		Connection conn;
+		Boolean modifica;
 		try {
 			// cancellazione dal DB
 			RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
@@ -673,6 +674,31 @@ public class Controller {
 			conn = null;
 			// cancellazione dalla memoria
 			rubricaSelezionata.getContatti().remove(contattoSelezionato);
+			for (Gruppo gruppo : rubricaSelezionata.getGruppi())
+			{
+				modifica = false;
+				for (Contatto contatto : gruppo.getContatti())
+				{
+					if (contatto == contattoSelezionato)
+					{
+						modifica = true;
+					}
+				}
+				if (modifica == true)
+				{
+					gruppo.getContatti().remove(contattoSelezionato);
+				}
+				// se il gruppo è vuoto viene eliminato
+			}
+			//eliminazione gruppi senza contatti
+			for (int i = 0; i < rubricaSelezionata.getGruppi().size(); i++)
+			{
+				if(rubricaSelezionata.getGruppi().get(i).getContatti().size() == 0)
+				{
+					rubricaSelezionata.getGruppi().remove(i);
+					i--;
+				}
+			}
 		} catch (SQLException e) {
 			throw e;
 		}
@@ -948,9 +974,9 @@ public class Controller {
 		inizializzaModifica();
 		// ricreo il contatto con le nuove informazioni
 		nuovoContatto = changeInfoContatto(textFieldNome.getText(),      textFieldSecondoNome.getText(), textFieldCognome.getText(),
-														textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
-														textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
-		// INSERIMENTI SECONDARI
+										   textFieldNumMobile.getText(), textFieldNumFisso.getText(),    textFieldVia.getText(),
+										   textFieldCittà.getText(),     textFieldNazione.getText(),     textFieldCap.getText());
+		// INSERIMENTI SECONDARIdfdasfda
 		// inserimento immagine
 		if (percorsoImmagine != null)
 		{

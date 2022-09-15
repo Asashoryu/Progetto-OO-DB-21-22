@@ -161,7 +161,7 @@ public class ListaContatti extends JFrame {
 		btnModificaGruppo.setFocusPainted(false);
 		getContentPane().add(btnModificaGruppo);
 		
-		JButton btnVisualizzaGruppo = new JButton("Visualizza gruppo");
+		JButton btnVisualizzaGruppo = new JButton("Visualizza Gruppo");
 		btnVisualizzaGruppo.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnVisualizzaGruppo.setForeground(new Color(102, 102, 153));
 		btnVisualizzaGruppo.setBackground(new Color(204, 255, 255));
@@ -291,12 +291,19 @@ public class ListaContatti extends JFrame {
 					// Elimina dalla memoria e dal DB
 					controller.setContattoSelezionato(listaContatti.getSelectedIndex());
 					controller.deleteContattoSelezionato();
-					listaContatti.removeAll();
-					listaContatti.setListData(controller.getNomiContattiRubrica());
+					if (controller.getGruppoSelezionato() != null)
+					{
+						listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					}
+					else 
+					{
+						listaContatti.setListData(controller.getNomiContattiRubrica());
+					}
+					listaGruppi.setListData(controller.getNomiGruppiRubrica());
 					JOptionPane.showConfirmDialog(null, 
 			                "Contatto cancellato con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
-					listaContatti.revalidate();
-					listaContatti.repaint();
+					revalidate();
+					repaint();
 				} catch (Exception e2) {
 					// TODO: handle exception
 					e2.printStackTrace();

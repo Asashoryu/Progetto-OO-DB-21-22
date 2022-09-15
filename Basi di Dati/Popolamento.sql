@@ -59,12 +59,12 @@ INSERT INTO Account(Fornitore,Indirizzoemail,FraseStato,Nickname) VALUES
 ('Telegram','PAmabile@libero.it','Gli smussi dei poligoni smussano anche il cuore degli uomini','Pasqua'),
 ('Unina','Pasquale.Amabile@studenti.unina.it','Ci vuole un po'' di coraggio per entrare in uno stand di un venditore ambulante','Amabile Pasquale'),
 
-('BestFornitore!','associa@gmail.com','Anche i gelati che si mangiano d''inverno non sono poi così male','Antonio666'),
+('BestFornitore!','a@gmail.com','Anche i gelati che si mangiano d''inverno non sono poi così male','Antonio666'),
 ('OddJobs','test@libero.com','Una vita senza scommesse è come del sushi senza wasabi','Gintoki'),
 ('Facebook','altra@gmail.com','Per favore, prestate attenzione quando separate la spazzatura','Fuocoacqua Wallace'),
 ('BestFornitore!','altra@gmail.com','Il nemico di ieri in qualche modo è anche il nemico di oggi','Mr. FW'),
-('BestFornitore!','a@gmail.com','Quando guidi un treno, metti sempre tutte e due le mani sulla manopola!','SnyderSniper'),
-('BestFornitore!','test@gmail.com','La vita e i videogiochi sono pieni di bug','GodlyHellFire'),
+('Telegram','a@gmail.com','Quando guidi un treno, metti sempre tutte e due le mani sulla manopola!','SnyderSniper'),
+('BestFornitore!','test@libero.com','La vita e i videogiochi sono pieni di bug','GodlyHellFire'),
 ('OddJobs','altra@gmail.com','Le donne che dicono "O me o il lavoro" meritano un German Suplex','Shinpun-kun');
 
 INSERT INTO Indirizzo(Via,Città,Nazione,CAP,Descrizione,Contatto_FK) VALUES 
