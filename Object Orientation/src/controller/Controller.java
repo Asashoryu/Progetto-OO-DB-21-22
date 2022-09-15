@@ -473,7 +473,7 @@ public class Controller {
                             		 String numMobile, String numFisso, String via, String citta, String nazione, String cap,
                             		 int id) throws SQLException
 	 {
-		Contatto contatto;
+		Contatto contatto; 
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO(); 
 		try
 		{
