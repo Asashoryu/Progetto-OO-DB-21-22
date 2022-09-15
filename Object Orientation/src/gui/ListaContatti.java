@@ -45,6 +45,8 @@ public class ListaContatti extends JFrame {
 		
 		frame = this;
         controller = c;
+        controller.setContattoSelezionato(0);
+        controller.setNullGruppoSelezionato();
   
         frame.setTitle("Rubrica di "+controller.getRubricaSelezionata().getNome());
         frame.setBounds(500, 200,590,422);
