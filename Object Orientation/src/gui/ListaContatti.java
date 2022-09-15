@@ -378,6 +378,9 @@ public class ListaContatti extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					controller.setGruppoSelezionato(listaGruppi.getSelectedIndex());
+					listaContatti.setListData(controller.getNomiContattiGruppoSelezionato());
+					revalidate();
+					repaint();
 					JFrame changeGruppo = new ChangeGruppo(controller, frame, listaContatti, listaGruppi);
 					frame.setVisible(false);
 					changeGruppo.setLocationRelativeTo(null);
