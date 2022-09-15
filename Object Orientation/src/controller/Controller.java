@@ -474,7 +474,7 @@ public class Controller {
                             		 int id) throws SQLException
 	 {
 		Contatto contatto;
-		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
+		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO(); 
 		try
 		{
 			rubricaPosgr.addInfoContatto(rubricaSelezionata.getNome(), nome, secondonome, cognome, numMobile, numFisso, via, citta,
