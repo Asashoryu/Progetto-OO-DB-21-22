@@ -70,7 +70,6 @@ Nickname VARCHAR(30)
 ALTER TABLE Account
  ADD CONSTRAINT account_pk PRIMARY KEY(Account_ID),
  ADD CONSTRAINT unique_provider_email UNIQUE (Fornitore,IndirizzoEmail);
- 
 
 --Crea la tabella Email
 CREATE TABLE Email(
@@ -175,7 +174,81 @@ CREATE OR REPLACE TRIGGER group_coherency_membership
 	BEFORE INSERT ON Composizione
 	FOR EACH ROW
 	EXECUTE PROCEDURE group_coherency_membership_f();
+
+--Bloccare l'inserimento di gruppi con lo stesso nome nella stessa rubrica
+CREATE OR REPLACE FUNCTION block_homonymus_groups_in_same_rubric_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		-- controllo se esistono gruppi vuoti, cioè senza contatti
+		if (select count(*) from gruppo where nome = NEW.nome AND rubrica_fk = NEW.rubrica_fk) > 1
+		THEN
+			RAISE EXCEPTION 'Si sta provando a inserire gruppo già presente in questa rubica';
+			--Al primo errore, viene fatto un rollback della transazione in uso che rimuove ogni cambiamento
+			ROLLBACK;
+			return NULL;
+		ELSE
+			return NEW;
+		END IF;
+	END; $$;
 	
+CREATE CONSTRAINT TRIGGER block_homonymus_groups_in_same_rubric
+	AFTER INSERT ON Gruppo
+	DEFERRABLE
+	FOR EACH ROW
+	EXECUTE PROCEDURE block_homonymus_groups_in_same_rubric_f();
+
+--Un gruppo deve avere sempre almeno un contatto
+CREATE OR REPLACE FUNCTION block_void_groups_insertion_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	BEGIN
+		-- controllo se esistono gruppi vuoti, cioè senza contatti
+		if (select count(*) from gruppo as g where (select count(*) from composizione as c where c.gruppo_fk = g.gruppo_id) < 1) > 0
+		THEN
+			RAISE EXCEPTION 'Si sta provando a inserire un gruppo vuoto, ma si richiede che abbia almeno un contatto';
+			--Al primo errore, viene fatto un rollback della transazione in uso che rimuove ogni cambiamento
+			ROLLBACK;
+			return NULL;
+		ELSE
+			return NEW;
+		END IF;
+	END; $$;
+	
+CREATE CONSTRAINT TRIGGER block_void_groups_insertion
+	AFTER INSERT ON Gruppo
+	DEFERRABLE
+	FOR EACH ROW
+	EXECUTE PROCEDURE block_void_groups_insertion_f();
+	
+--Un gruppo che rimane senza contatti viene cancellato automaticamente
+CREATE OR REPLACE FUNCTION delete_void_groups_f()
+	RETURNS TRIGGER
+	LANGUAGE PLPGSQL
+	AS $$
+	DECLARE
+		cur_groups CURSOR FOR
+			   	   SELECT *
+			       FROM gruppo
+			       WHERE (SELECT count(*)
+				          FROM composizione
+				          WHERE Gruppo_FK = Gruppo_ID) < 1;
+	BEGIN
+		FOR cur_var IN cur_groups LOOP
+			DELETE FROM Gruppo WHERE Gruppo_ID = cur_var.Gruppo_ID;
+		END LOOP;
+		RETURN NEW;
+	END; $$;
+
+CREATE CONSTRAINT TRIGGER delete_void_groups
+	AFTER DELETE ON Composizione 
+	DEFERRABLE
+	FOR EACH ROW
+	EXECUTE PROCEDURE delete_void_groups_f();
+	
+
 --Vincolo per l'unicità	dell'email per rubrica
 CREATE OR REPLACE FUNCTION unique_email_f()
 	RETURNS TRIGGER
@@ -310,23 +383,6 @@ CREATE OR REPLACE TRIGGER unchangeable_address_description
 	BEFORE UPDATE ON Indirizzo
 	FOR EACH ROW
 	EXECUTE PROCEDURE unchangeable_address_description_f();
-	
---blocca l'inserimento in Contatto
---CREATE OR REPLACE FUNCTION block_direct_insertion_f()
---	RETURNS TRIGGER
---	LANGUAGE PLPGSQL
---	AS $$
---	BEGIN
---		RAISE EXCEPTION 'Inserimento diretto in contatto bloccato';
---		ROLLBACK;
---		RETURN OLD;
---	END; $$;
-	
---CREATE constraint TRIGGER block_direct_insertion
---	AFTER INSERT ON Contatto
---	DEFERRABLE
---	FOR EACH ROW
---	EXECUTE PROCEDURE block_direct_insertion_f();	
 	
 --Regola attiva che verifica se alla fine di una transazione un contatto
 --abbia almeno un numero mobile e uno fisso
