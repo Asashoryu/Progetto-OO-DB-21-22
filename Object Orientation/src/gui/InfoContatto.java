@@ -552,6 +552,13 @@ public class InfoContatto extends JFrame {
 		repaint();
 	}
 		
+	/**
+	 * Crea un pannello di mail secondarie.
+	 *
+	 * @param fieldTipo campo tipo
+	 * @param fieldEmail campo email
+	 * @return il JPanel di mail secondarie
+	 */
 	private JPanel creaSecIndirizzo(String fieldVia, String fieldCittà, String fieldNazione, String fieldCap)
 	{
 		JPanel panel = new JPanel();
@@ -654,8 +661,8 @@ public class InfoContatto extends JFrame {
 	/**
 	 * Crea un pannello di mail secondarie.
 	 *
-	 * @param campo tipo
-	 * @param campo email
+	 * @param fieldTipo campo tipo
+	 * @param fieldEmail campo email
 	 * @return il JPanel di mail secondarie
 	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)

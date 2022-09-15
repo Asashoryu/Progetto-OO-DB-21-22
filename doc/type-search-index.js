@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"gui","l":"FrameChiama"}];updateSearchResults();
+typeSearchIndex = [{"p":"gui","l":"AddContatto"},{"l":"All Classes and Interfaces","u":"allclasses-index.html"}];updateSearchResults();

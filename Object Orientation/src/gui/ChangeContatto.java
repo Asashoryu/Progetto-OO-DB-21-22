@@ -1080,8 +1080,8 @@ public class ChangeContatto extends JFrame {
 	/**
 	 * Crea un pannello di mail secondarie.
 	 *
-	 * @param campo tipo
-	 * @param campo email
+	 * @param fieldTipo campo tipo
+	 * @param fieldEmail campo email
 	 * @return il JPanel di mail secondarie
 	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)

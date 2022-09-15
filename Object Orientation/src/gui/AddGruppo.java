@@ -48,7 +48,7 @@ public class AddGruppo extends JFrame{
 	 *
 	 * @param c controller
 	 * @param frameChiamante frame chiamante
-	 * @param lista lista di Gruppi da aggiornare col nuovo gruppo aggiunto
+	 * @param listaGruppiChiamante lista di Gruppi da aggiornare col nuovo gruppo aggiunto
 	 */
 	public AddGruppo(Controller c, JFrame frameChiamante, JList<Object> listaGruppiChiamante) {
 		

@@ -88,7 +88,7 @@ public class Account {
 	/**
 	 * Ritorna la stringa email.
 	 *
-	 * @returnstringa email
+	 * @return stringa email
 	 */
 	public String getStringaEmail() {
 		return stringaEmail;

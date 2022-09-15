@@ -25,7 +25,6 @@ import java.awt.Image;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.Component;
 
@@ -54,9 +53,6 @@ public class AddContatto extends JFrame {
 	
 	/** Campo cognome. */
 	private JTextField textFieldCognome;
-	
-	/** Label titolo. */
-	private JLabel lblTitolo;
 	
 	/** Label nome. */
 	private JLabel lblLabelNome;
@@ -807,8 +803,8 @@ public class AddContatto extends JFrame {
 	/**
 	 * Crea un pannello di mail secondarie.
 	 *
-	 * @param campo tipo
-	 * @param campo email
+	 * @param fieldTipo campo tipo
+	 * @param fieldEmail campo email
 	 * @return il JPanel di mail secondarie
 	 */
 	private JPanel creaSecMail(String fieldTipo, String fieldEmail)
