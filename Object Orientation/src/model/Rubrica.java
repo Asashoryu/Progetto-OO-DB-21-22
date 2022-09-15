@@ -124,6 +124,7 @@ public class Rubrica {
 		{
 			if (contatto.getNome().matches("(?i).*"+text+".*"))
 			{
+				System.out.println(contatto.getNome());
 				contattiTrovati.add(contatto);
 			}
 		}
@@ -147,6 +148,7 @@ public class Rubrica {
 				if (email.getStringaEmail().matches("(?i).*"+text+".*"))
 				{
 					match = true;
+					System.out.println(contatto.getNome()+" : "+email.getStringaEmail());
 				}
 			}
 			if (match == true)
@@ -176,6 +178,7 @@ public class Rubrica {
 					if (account.getNickname().matches("(?i).*"+text+".*"))
 					{
 						match = true;
+						System.out.println(contatto.getNome()+" : "+account.getNickname());
 					}
 				}
 			}
@@ -204,6 +207,7 @@ public class Rubrica {
 				if (telefono.getNumero().matches("(?i).*"+text+".*"))
 				{
 					match = true;
+					System.out.println(contatto.getNome()+" : "+telefono.getNumero());
 				}
 			}
 			if (match == true)
