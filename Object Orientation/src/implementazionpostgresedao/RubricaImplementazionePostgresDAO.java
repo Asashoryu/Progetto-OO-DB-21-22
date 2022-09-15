@@ -205,6 +205,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		
 		try
 		{
+			System.out.println("SET CONSTRAINTS ALL DEFERRED;");
+			PreparedStatement deferTrigger = connessione.prepareStatement(
+				"SET CONSTRAINTS ALL DEFERRED;");
+			deferTrigger.execute();
 			System.out.println("SELECT generate_new_contatto_id(); ");
 			PreparedStatement initEGeneraContattoID = connessione.prepareStatement
 					(
@@ -294,6 +298,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				               int vecchioContattoId, Connection connessione) throws SQLException {
 		
 		try {
+				System.out.println("SET CONSTRAINTS ALL DEFERRED;");
+				PreparedStatement deferTrigger = connessione.prepareStatement(
+					"SET CONSTRAINTS ALL DEFERRED;");
+				deferTrigger.execute();
 				// Memorizzo i gruppi in cui il contatto è presente
 				System.out.println("SELECT * FROM Composizione WHERE Contatto_FK = " + vecchioContattoId + ";");
 				PreparedStatement selezionaGruppi = connessione.prepareStatement(
@@ -513,6 +521,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 		ResultSet rs;
 		try {
 			connessione.setAutoCommit(false);
+			System.out.println("SET CONSTRAINTS ALL DEFERRED;");
+			PreparedStatement deferTrigger = connessione.prepareStatement(
+				"SET CONSTRAINTS ALL DEFERRED;");
+			deferTrigger.execute();
 			System.out.println("SELECT generate_new_gruppo_id();");
 			PreparedStatement generaId = connessione.prepareStatement(
 					"SELECT generate_new_gruppo_id();"
@@ -577,6 +589,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 	{
 		try {
 			connessione.setAutoCommit(false);
+			System.out.println("SET CONSTRAINTS ALL DEFERRED;");
+			PreparedStatement deferTrigger = connessione.prepareStatement(
+				"SET CONSTRAINTS ALL DEFERRED;");
+			deferTrigger.execute();
 			// eliminazione del gruppo corrente
 			System.out.println("DELETE FROM Gruppo WHERE Gruppo_ID = " + nuovoGruppo.getId() + ";");
 			PreparedStatement cancellaGruppo = connessione.prepareStatement(

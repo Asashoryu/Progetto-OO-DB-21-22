@@ -304,6 +304,8 @@ public class ListaContatti extends JFrame {
 			                "Contatto cancellato con successo!", "Inserimento completato", JOptionPane.DEFAULT_OPTION);
 					revalidate();
 					repaint();
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun contatto selezionato");
 				} catch (Exception e2) {
 					// TODO: handle exception
 					e2.printStackTrace();
@@ -363,6 +365,8 @@ public class ListaContatti extends JFrame {
 							"Gruppo cancellato con successo!", "Cancellazione riuscita", JOptionPane.DEFAULT_OPTION);
 					listaGruppi.revalidate();
 					listaGruppi.repaint();
+				} catch (IndexOutOfBoundsException e2) {
+					System.out.println("Nessun gruppo selezionato");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

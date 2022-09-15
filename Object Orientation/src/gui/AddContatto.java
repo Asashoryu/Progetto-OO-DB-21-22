@@ -156,11 +156,6 @@ public class AddContatto extends JFrame {
 		getContentPane().setBackground(new Color(255, 255, 255));
 		contentPane.setLayout(null);
 
-		lblTitolo = new JLabel("Inserire le informazioni del contatto della rubrica di <dynamic> da aggiungere:");
-		lblTitolo.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTitolo.setBounds(10, 10, 519, 19);
-		contentPane.add(lblTitolo);
-		
 		/**
 		 * Inserimento
 		 */
@@ -173,7 +168,6 @@ public class AddContatto extends JFrame {
 		lblIndirizzoFisico.setForeground(new Color(102, 102, 153));
 		lblIndirizzoFisico.setBounds(34, 107, 111, 13);
 		contentPane.add(lblIndirizzoFisico);
-
 		
 		/**
 		 * Indirizzi fisici secondari

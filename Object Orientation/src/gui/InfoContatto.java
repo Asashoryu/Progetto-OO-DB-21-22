@@ -94,7 +94,8 @@ public class InfoContatto extends JFrame {
 		
 		frame = this;
 		controller = c;
-		if (controller.getContattoSelezionato().getSecondoNome() == null)
+		if (controller.getContattoSelezionato().getSecondoNome() == null || 
+			controller.getContattoSelezionato().getSecondoNome().isBlank())
 		{
 			frame.setTitle("Informazioni del contatto " +controller.getContattoSelezionato().getNome() + " " 
 					+ controller.getContattoSelezionato().getCognome() );
