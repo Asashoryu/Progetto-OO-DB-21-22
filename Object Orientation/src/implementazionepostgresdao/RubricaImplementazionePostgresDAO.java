@@ -119,10 +119,10 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 				{
 					nuovoContatto.addEmail(rse.getString("indirizzoemail"), rse.getString("descrizione"));
 					System.out.println("SELECT * FROM Associa, Email, Account "
-							         + "WHERE email_id = email_fk AND account_id = account_fk AND email_id = "+rse.getInt("email_id")+ "; ");
+							         + "WHERE email_id = email_fk AND fornitore = fornitoreAccount AND account.indirizzoemail = indirizzoemailaccount AND email_id = "+rse.getInt("email_id")+ "; ");
 					recuperaAccount = connection.prepareStatement(
 							"SELECT * FROM Associa, Email, Account "
-					      + "WHERE email_id = email_fk AND account_id = account_fk AND email_id = "+rse.getInt("email_id")+ "; "
+					      + "WHERE email_id = email_fk AND fornitore = fornitoreAccount AND account.indirizzoemail = indirizzoemailaccount AND email_id = "+rse.getInt("email_id")+ "; "
 							);
 					ResultSet rsea = recuperaAccount.executeQuery();
 					while (rsea.next())
@@ -466,11 +466,11 @@ public class RubricaImplementazionePostgresDAO implements RubricaDAO{
 			for (Email email : contatto.getEmail())
 			{
 				System.out.println("SELECT * FROM Associa, Email, Account "
-						         + " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
+						         + " WHERE email_id = email_fk AND fornitore = fornitoreAccount AND account.indirizzoemail = indirizzoemailaccount AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
 						);
 				PreparedStatement recuperaAccount = connessione.prepareStatement(
 						"SELECT * FROM Associa, Email, Account "
-					  + " WHERE email_id = email_fk AND account_id = account_fk AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
+					  + " WHERE email_id = email_fk AND fornitore = fornitoreAccount AND account.indirizzoemail = indirizzoemailaccount AND Email.indirizzoemail = '" + email.getStringaEmail() + "'; "
 						);
 				ResultSet rsa = recuperaAccount.executeQuery();
 				while (rsa.next())

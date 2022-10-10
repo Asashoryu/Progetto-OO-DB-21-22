@@ -1,6 +1,6 @@
 --Inizio transazione begin commit
 BEGIN;
---questo comando indica di differire tutti
+--questo comando indica di differire il controllo dei vincoli messi a deferrable
 SET CONSTRAINTS ALL DEFERRED;
 
 INSERT INTO Rubrica VALUES
@@ -145,4 +145,4 @@ INSERT INTO Email(IndirizzoEmail,Descrizione,Contatto_FK) VALUES
 ('PAmabile@libero.it','Secondaria',13),
 ('Pasquale.Amabile@studenti.unina.it','Universitaria',13);
 
-commit;
+COMMIT;

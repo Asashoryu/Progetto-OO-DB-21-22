@@ -542,7 +542,7 @@ public class Controller {
 	private void addImmagine(Contatto contatto, String pathImmagine) throws SQLException {
 		// TODO Auto-generated method stub
 		RubricaDAO rubricaPosgr = new RubricaImplementazionePostgresDAO();
-		try 
+		try
 		{
 			rubricaPosgr.addImmagine(pathImmagine, contatto.getId(), connTransazione);
 			contatto.setPathImmagine(pathImmagine);
