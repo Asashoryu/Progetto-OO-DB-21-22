@@ -16,7 +16,7 @@ Silvio Barra | Basi di Dati | silvio.barra@unina.it
 Porfirio Tramontana | Object Orientation | ptramont@unina.it
 
 ## Documentazioni
-Basi di Dati     : https://www.overleaf.com/read/ynbtfykqxpxq
+Basi di Dati     : https://www.overleaf.com/read/ynbtfykqxpxq  
 Object Oriention : https://www.overleaf.com/read/jxgkxxcjxnkd
 
 ## Tecnologie usate
