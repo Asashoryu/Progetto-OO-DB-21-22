@@ -213,7 +213,7 @@ CREATE OR REPLACE FUNCTION block_homonymous_groups_in_same_rubric_f()
 	LANGUAGE PLPGSQL
 	AS $$
 	BEGIN
-		-- si controlla se esistono gruppi vuoti, cioè senza contatti
+		-- verifico se esistono degli omonimi nella stessa rubrica
 		IF (SELECT COUNT(*) FROM gruppo WHERE nome = NEW.nome AND rubrica_fk = NEW.rubrica_fk) > 1
 		THEN
 			RAISE EXCEPTION USING ERRCODE = 'BLKHG';
@@ -442,7 +442,7 @@ CREATE OR REPLACE TRIGGER check_mobile_landline_numbers_existence
 --AUTOMAZIONI
 
 
---Un gruppo che resta senza contatti viene cancellato automaticamente
+-- Regola attiva che cancella automaticamente quei gruppi che restano senza contatti
 CREATE OR REPLACE FUNCTION automatic_void_groups_deletion_f()
 	RETURNS TRIGGER
 	LANGUAGE PLPGSQL
@@ -543,7 +543,7 @@ CREATE OR REPLACE FUNCTION generate_new_gruppo_id()
 	LANGUAGE PLPGSQL
 	AS $$
 	DECLARE
-		--Seleziono e conservo un nuovo identificativo per il contato
+		--Seleziono e conservo un nuovo identificativo per il gruppo
 		codice_gruppo     INTEGER; 
 		nuovo_codice_valido INTEGER := (SELECT max(gruppo_id) FROM Gruppo) + 1;
 	BEGIN
@@ -558,7 +558,7 @@ CREATE OR REPLACE FUNCTION generate_new_gruppo_id()
 	END; $$;
 	
 --Funzione che garantisce il corretto inserimento di un contatto con le informazioni principali:
---un numero fisso, uno mobile e un indirizzo fisico.
+--un numero fisso, uno mobile e un indirizzo fisico principale.
 --coherent_insertion_f(utente_rubrica, nome_contatto, secondonome_contatto, cognome_contatto,
 --                     num_mobile, num_fisso, via, citta, nazione, cap, indirizzo_email, descrizione_email, contatto_id)
 CREATE OR REPLACE PROCEDURE coherent_insertion_f(rubrica_par Rubrica.utente_id%TYPE,     nome_par Contatto.nome%TYPE,
@@ -582,7 +582,7 @@ CREATE OR REPLACE PROCEDURE coherent_insertion_f(rubrica_par Rubrica.utente_id%T
 		  			  VALUES (via_par, 'Principale', citta_par, nazione_par, cap_par, codice_contatto);
 	END; $$;
 	
---Funzione reindirizza
+--Nel caso del fallimento di una chiamata a un certo contatto, la funzione ritorna un numero alternativo dello stesso contatto a cui reindirizzare la chiamata (mobile->fisso; fisso->mobile; non fisso e non mobile->fisso o mobile)
 CREATE OR REPLACE FUNCTION reindirizza(contatto_chiamato Contatto.contatto_id%TYPE, numero_chiamato Telefono.numero%TYPE)
  	RETURNS Telefono.numero%TYPE
 	LANGUAGE PLPGSQL
@@ -627,7 +627,7 @@ CREATE OR REPLACE FUNCTION reindirizza(contatto_chiamato Contatto.contatto_id%TY
 		RETURN numero_reindirizzato;
 	END; $$;
 
---Funzione che generalizza la ricerca dei contatti secondo un criterio indicato (nome, numero, email o account)
+--Funzione che generalizza la ricerca dei contatti secondo un criterio indicato (nome, numero, email o account) e restituisce una tabella di codici di contatti che soddisfano il match
 CREATE OR REPLACE FUNCTION cerca(criterio_ricerca VARCHAR, rubrica Rubrica.utente_id%TYPE, testo_ricerca VARCHAR)
 	RETURNS TABLE(
 				contatto_id Contatto.contatto_id%TYPE)
@@ -653,7 +653,7 @@ CREATE OR REPLACE FUNCTION cerca(criterio_ricerca VARCHAR, rubrica Rubrica.utent
 		END IF;
 	END; $$;
 
---Funzione che cerca i contatti per nome
+--Funzione che cerca i contatti per nome e restituisce una tabella di contatti
 CREATE OR REPLACE FUNCTION cerca_per_nome(rubrica Rubrica.utente_id%TYPE, nome_cercato Contatto.nome%TYPE)
 	RETURNS TABLE(
 				contatto_id Contatto.contatto_id%TYPE,
@@ -671,7 +671,7 @@ CREATE OR REPLACE FUNCTION cerca_per_nome(rubrica Rubrica.utente_id%TYPE, nome_c
 			WHERE rubrica = C1.rubrica_fk AND (position(lower(nome_cercato) in lower(C1.nome)) <> 0);
 	END; $$;
 	
---Funzione che cerca i contatti per numero di telefono
+--Funzione che cerca i contatti per numero di telefono e restituisce una tabella di numeri di telefono
 CREATE OR REPLACE FUNCTION cerca_per_numero(rubrica Rubrica.utente_id%TYPE, numero_cercato Telefono.numero%TYPE)
 	RETURNS TABLE(
 				contatto_id Telefono.contatto_fk%TYPE,
@@ -689,7 +689,7 @@ CREATE OR REPLACE FUNCTION cerca_per_numero(rubrica Rubrica.utente_id%TYPE, nume
 				  C1.contatto_id = T1.contatto_fk;
 	END; $$;
 	
---Funzione che cerca i contatti per indirizzo email
+--Funzione che cerca i contatti per indirizzo email e restituisce una tabella di indirizzi email
 CREATE OR REPLACE FUNCTION cerca_per_email(rubrica Rubrica.utente_id%TYPE, email_cercata VARCHAR)
 	RETURNS TABLE(
 				contatto_id Email.contatto_fk%TYPE,
@@ -706,7 +706,7 @@ CREATE OR REPLACE FUNCTION cerca_per_email(rubrica Rubrica.utente_id%TYPE, email
 				  C1.contatto_id = E1.contatto_fk;
 	END; $$;
 
---Funzione che cerca i contatti per nickname dell'account
+--Funzione che cerca i contatti per nickname dell'account e restituisce una tabella di nickname di account associati a rispetivi contatti
 CREATE OR REPLACE FUNCTION cerca_per_account(rubrica Rubrica.utente_id%TYPE, nickname_cercato Account.nickname%TYPE)
 	RETURNS TABLE(
 				contatto_id Contatto.contatto_id%TYPE,
